@@ -1,7 +1,7 @@
 use_frameworks!
 platform :ios, "8.0"
 
-target "Paper" do
+target "Qimokaola" do
     pod 'AFNetworking'
     pod 'MBProgressHUD'
     pod 'FMDB'
