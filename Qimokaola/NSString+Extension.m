@@ -6,9 +6,9 @@
 //  Copyright © 2016年 Administrator. All rights reserved.
 //
 
-#import "NSString+URLEncode.h"
+#import "NSString+Extension.h"
 
-@implementation NSString (URLEncode)
+@implementation NSString (Extension)
 
 - (NSString *)URLEncodedString
 {

@@ -153,79 +153,41 @@
     });
     
     
-    
-    [[UMComDataRequestManager defaultManager] userCustomAccountLoginWithName:@""
-                                                                    sourceId:@"12345"
-                                                                    icon_url:@"http://dev.umeng.com/system/images/W1siZiIsIjIwMTYvMDYvMjAvMTNfNTFfMzBfODM2X0g1X2RlbW8ucG5nIl1d/H5%20demo.png"
-                                                                      gender:0
-                                                                         age:20
-                                                                      custom:@""
-                                                                       score:0
-                                                                  levelTitle:@""
-                                                                       level:1
-                                                           contextDictionary:@{}
-                                                                userNameType:userNameNoRestrict
-                                                              userNameLength:userNameLengthNoRestrict
-                                                                  completion:^(NSDictionary *responseObject, NSError *error) {
-                                                        
-                                                                      NSLog(@"登陆成功 :%@", responseObject);
-                                                                      
-                                                                      if (error) {
-                                                                          NSLog(@"登录发生错误 ;%@", error);
-                                                                      } else {
-                                                                          if ([responseObject isKindOfClass:[NSDictionary class]]) {
-                                                                              UMComUser *user = responseObject[UMComModelDataKey];
-                                                                              if (user) {
-                                                                                  [UMComSession sharedInstance].loginUser = user;
-                                                                                  [[UMComDataBaseManager shareManager] saveRelatedIDTableWithType:UMComRelatedRegisterUserID withUsers:@[user]];
-                                                                                  
-                                                                                  //[UMComSession sharedInstance].token = responseObject[UMComTokenKey];
-                                                                                  
-                                                                                  [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoginSucceedNotification object:nil];
-                                                                              }
-                                                                          }
-                                                                      }
-                                                                      
-                                                               }];
-    
-    
-    [[UMComDataRequestManager defaultManager] userCustomAccountLoginWithName:@"凌子文"
-                                                                    sourceId:@"727489038"
+    [[UMComDataRequestManager defaultManager] userCustomAccountLoginWithName:@"ABC"
+                                                                    sourceId:@"13110691985"
                                                                     icon_url:nil
-                                                                      gender:0
+                                                                      gender:1
                                                                          age:20
-                                                                      custom:@""
+                                                                      custom:@"727489038"
                                                                        score:0.f
-                                                                  levelTitle:@""
+                                                                  levelTitle:@"102"
                                                                        level:0
                                                            contextDictionary:@{}
                                                                 userNameType:userNameNoRestrict
                                                               userNameLength:userNameLengthNoRestrict
                                                                   completion:^(NSDictionary *responseObject, NSError *error) {
-                                                                      
-                                                                      NSLog(@"登陆成功 :%@", responseObject);
-                                                                      
+                                                                      NSLog(@"登陆成功");
                                                                       if (error) {
                                                                           NSLog(@"登录发生错误 ;%@", error);
                                                                       } else {
                                                                           if ([responseObject isKindOfClass:[NSDictionary class]]) {
                                                                               UMComUser *user = responseObject[UMComModelDataKey];
                                                                               if (user) {
+                                                                                  
+                                                                                  NSLog(@"%@", user.custom);
+                                                                                  
                                                                                   [UMComSession sharedInstance].loginUser = user;
                                                                                   [[UMComDataBaseManager shareManager] saveRelatedIDTableWithType:UMComRelatedRegisterUserID withUsers:@[user]];
                                                                                   
                                                                                   //[UMComSession sharedInstance].token = responseObject[UMComTokenKey];
                                                                                   
-                                                                                  [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoginSucceedNotification object:nil];
+//                                                                                  [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoginSucceedNotification object:nil];
                                                                               }
                                                                           }
                                                                       }
 
                                                                       
                                                                   }];
-    
-
-    
     
     MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
        

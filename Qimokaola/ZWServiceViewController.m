@@ -10,7 +10,7 @@
 #import "Masonry.h"
 #import "MBProgressHUD.h"
 #import "ZWServiceCollectionViewCell.h"
-#import "UIColor+CommonColor.h"
+#import "UIColor+Extension.h"
 #import "ZWAboutUsViewController.h"
 #import "ZWBrowserViewController.h"
 #import "MJRefresh.h"

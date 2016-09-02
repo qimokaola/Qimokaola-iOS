@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSDate (CommomDate)
+@interface NSDate (Extension)
 
 + (NSString *)current;
 

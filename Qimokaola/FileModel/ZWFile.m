@@ -6,9 +6,9 @@
 //
 
 #import "ZWFile.h"
-#import "ZWUtilsCenter.h"
 #import "FMDB.h"
 #import "AppDelegate.h"
+#import "ZWFileTool.h"
 
 
 NSString *const kZWFilesName = @"name";
@@ -68,9 +68,9 @@ static NSString *const querySQL = @"SELECT * FROM download_info WHERE link = '%@
     // passed into the model class doesn't break the parsing.
     if(self && [dict isKindOfClass:[NSDictionary class]]) {
         self.name = [self objectOrNilForKey:kZWFilesName fromDictionary:dict];
-        self.size = [ZWUtilsCenter sizeWithDouble:[[self objectOrNilForKey:kZWFilesSize fromDictionary:dict] doubleValue]];
+        self.size = [ZWFileTool sizeWithDouble:[[self objectOrNilForKey:kZWFilesSize fromDictionary:dict] doubleValue]];
         self.path = filePath;
-        self.type = [ZWUtilsCenter typeWithName:self.name];
+        self.type = [ZWFileTool typeWithName:self.name];
         self.url = [NSString stringWithFormat:@"%@%@", URLString, self.name];
         
         [DBQueue inDatabase:^(FMDatabase *db) {

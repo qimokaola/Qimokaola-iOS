@@ -7,7 +7,7 @@
 //
 
 #import "ZWDownloadedViewController.h"
-#import "UIColor+CommonColor.h"
+#import "UIColor+Extension.h"
 #import "FMDB.h"
 #import "AppDelegate.h"
 #import "ZWDownloadInfoModel.h"
@@ -17,7 +17,7 @@
 #import "Masonry.h"
 #import "ZWFileDetailViewController.h"
 #import "ZWFile.h"
-#import "ZWUtilsCenter.h"
+#import "ZWPathTool.h"
 
 @interface ZWDownloadedViewController () <UISearchResultsUpdating, UISearchControllerDelegate>
 
@@ -28,7 +28,6 @@
 
 //搜索控件
 @property (nonatomic, strong) UISearchController *searchController;
-
 @end
 
 @implementation ZWDownloadedViewController
@@ -36,6 +35,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initView];
+
 }
 
 
@@ -227,7 +227,7 @@
         
         NSString *deleteSql = [NSString stringWithFormat:
                                @"DELETE FROM download_info WHERE link = '%@'", model.link];
-        if ([[NSFileManager defaultManager] removeItemAtPath:[[ZWUtilsCenter downloadDirectory] stringByAppendingPathComponent:model.name] error:NULL]) {
+        if ([[NSFileManager defaultManager] removeItemAtPath:[[ZWPathTool downloadDirectory] stringByAppendingPathComponent:model.name] error:NULL]) {
             
             [self.DBQueue inDatabase:^(FMDatabase *db) {
                 

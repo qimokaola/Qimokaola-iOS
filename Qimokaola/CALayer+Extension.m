@@ -6,9 +6,9 @@
 //  Copyright © 2016年 Administrator. All rights reserved.
 //
 
-#import "CALayer+BorderColorFromUIColor.h"
+#import "CALayer+Extension.h"
 
-@implementation CALayer (BorderColorFromUIColor)
+@implementation CALayer (Extension)
 
 - (void)setBorderColorFromUIColor:(UIColor *)borderColorFromUIColor {
     objc_setAssociatedObject(self, @selector(borderColorFromUIColor), borderColorFromUIColor, OBJC_ASSOCIATION_RETAIN_NONATOMIC);

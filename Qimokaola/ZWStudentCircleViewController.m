@@ -10,11 +10,24 @@
 #import "MJRefresh.h"
 #import "SDCycleScrollView.h"
 #import "ReactiveCocoa.h"
+#import <UMCommunitySDK/UMComDataRequestManager.h>
+#import <UMComDataStorage/UMComTopic.h>
+#import "YYKit.h"
+#import "ZWHUDTool.h"
+#import "ZWFeedTableViewController.h"
+#import "LinqToObjectiveC.h"
+
+typedef NS_ENUM(NSInteger, ZWFetchedDataSource) {
+    ZWFetchedDataSourceFromHeader,
+    ZWFetchedDataSourceFromFooter
+};
 
 @interface ZWStudentCircleViewController () <SDCycleScrollViewDelegate>
 
-@property (nonatomic, strong) NSArray *channels;
+@property (nonatomic, strong) NSMutableArray<UMComTopic *> *topics;
 @property (nonatomic, strong) SDCycleScrollView *cycleScrollView;
+@property (nonatomic, strong) UIImage *placeholderImage;
+@property (nonatomic, copy) NSString *nextPageURL;
 
 @end
 
@@ -22,7 +35,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
     self.cycleScrollView.autoScroll = YES;
     [self.cycleScrollView adjustWhenControllerViewWillAppera];
 }
@@ -42,16 +54,13 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
-    __weak __typeof(self) weakSelf = self;
+    //__weak __typeof(self) weakSelf = self;
     
-    self.channels = @[
-                      @{@"img" : @"ppt", @"title" : @"负能量垃圾桶"},
-                      @{@"img" : @"doc", @"title" : @"我要脱单"},
-                      @{@"img" : @"doc", @"title" : @"分享壁纸吧"},
-                      @{@"img" : @"7z", @"title" : @"那些值得看的电影"},
-                      @{@"img" : @"rar", @"title" : @"有没有什么好吃的呢"},
-                      @{@"img" : @"jpg", @"title" : @"推荐好玩的游戏吧"},
-                      ];
+    self.title = @"学生圈";
+    
+    self.placeholderImage = [[UIImage imageNamed:@"avatar"] imageByResizeToSize:CGSizeMake(40, 40)];
+    
+    self.topics = [NSMutableArray array];
     
     NSArray *imgs = @[
                       @"pic1.jpg",
@@ -62,14 +71,21 @@
     
     self.cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, kScreenWidth, 150) shouldInfiniteLoop:YES imageNamesGroup:imgs];
     self.cycleScrollView.delegate = self;
+    self.cycleScrollView.autoScrollTimeInterval = 5;
     self.tableView.tableHeaderView = self.cycleScrollView;
     
-    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        NSLog(@"this is a pull to refresh");
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [weakSelf.tableView.mj_header endRefreshing];
-        });
-    }];
+    UIView *footerView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.tableView.tableFooterView = footerView;
+    
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(fetchTopicData)];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        [self.tableView.mj_header beginRefreshing];
+        
+    });
+    
+    self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(fetchNextPageTopicData)];
     
     [[[NSNotificationCenter defaultCenter] rac_addObserverForName:UIApplicationDidEnterBackgroundNotification object:nil] subscribeNext:^(id x) {
         self.cycleScrollView.autoScroll = NO;
@@ -84,18 +100,79 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)startRefresh {
+- (void)fetchTopicData {
+    [[UMComDataRequestManager defaultManager] fetchTopicsAllWithCount:5 completion:^(NSDictionary *responseObject, NSError *error) {
+        
+        [self fetchedNewData:responseObject sourceType:ZWFetchedDataSourceFromHeader];
+        
+    }];
+}
+
+- (void)fetchNextPageTopicData {
     
+    if (!self.nextPageURL) {
+        
+        [ZWHUDTool showHUDInView:self.navigationController.view withTitle:@"已经到底了..." message:nil duration:1.0];
+        
+        [self.tableView.mj_footer endRefreshing];
+        
+        return;
+    }
+    
+    [[UMComDataRequestManager defaultManager] fetchNextPageWithNextPageUrl:self.nextPageURL pageRequestType:UMComRequestType_AllTopic completion:^(NSDictionary *responseObject, NSError *error) {
+        
+       [self fetchedNewData:responseObject sourceType:ZWFetchedDataSourceFromFooter];
+        
+    }];
+    
+}
+
+- (void)fetchedNewData:(NSDictionary *)data sourceType:(ZWFetchedDataSource)source {
+    
+    NSArray<UMComTopic *> *tmp = [data objectForKey:@"data"];
+    
+    NSMutableArray<UMComTopic *> *fetchedTopics = [NSMutableArray array];
+    
+    for (UMComTopic *topic in tmp) {
+        
+        NSLog(@"%@", topic.custom);
+        [fetchedTopics addObject:topic];
+        
+    }
+    
+    NSLog(@"Fetched %ld group data. next page url: %@", fetchedTopics.count, [data objectForKey:@"next_page_url"]);
+    
+    if (source == ZWFetchedDataSourceFromHeader) {
+        
+        [self.tableView.mj_header endRefreshing];
+        
+        if ([[NSSet setWithArray:fetchedTopics] isSubsetOfSet:[NSSet setWithArray:self.topics]]) {
+            
+            NSLog(@"无新数据");
+            
+            return;
+        }
+    } else {
+        
+        [self.tableView.mj_footer endRefreshing];
+        
+    }
+    
+    
+    self.nextPageURL = [data objectForKey:@"next_page_url"];
+    
+    [self.topics addObjectsFromArray:fetchedTopics];
+    [self.tableView reloadData];
 }
 
 #pragma mark SDCycleScrollViewDelegate
 
 - (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didScrollToIndex:(NSInteger)index {
-    NSLog(@"did scroll to %lu", index);
+    //NSLog(@"did scroll to %lu", index);
 }
 
 - (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index {
-    NSLog(@"did select %lu", index);
+    //NSLog(@"did select %lu", index);
 }
 
 #pragma mark - Table view data source
@@ -105,7 +182,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.channels.count;
+    return self.topics.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -113,13 +190,16 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellID];
-    
+        cell.detailTextLabel.font = [UIFont systemFontOfSize:12];
+        cell.detailTextLabel.textColor = [UIColor lightGrayColor];
     }
     
-    NSDictionary *channel = self.channels[indexPath.row];
-    cell.textLabel.text = channel[@"title"];
-    cell.imageView.image = [UIImage imageNamed:channel[@"img"]];
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    
+    UMComTopic *topic = [self.topics objectAtIndex:indexPath.row];
+    
+    cell.textLabel.text = topic.name;
+    cell.detailTextLabel.text = topic.descriptor;
+    [cell.imageView setImageWithURL:[NSURL URLWithString:topic.icon_url] placeholder:self.placeholderImage];
     
     return cell;
 }
@@ -131,11 +211,11 @@
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     });
     
+    ZWFeedTableViewController *feedListViewController = [[ZWFeedTableViewController alloc] init];
+    feedListViewController.topic = self.topics[indexPath.row];
+    [self.navigationController pushViewController:feedListViewController animated:YES];
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 10;
-}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 60;

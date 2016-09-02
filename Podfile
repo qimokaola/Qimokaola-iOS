@@ -12,4 +12,7 @@ target "Qimokaola" do
     pod 'SDWebImage'
     pod 'ReactiveCocoa', '~> 2.5'
     pod 'YYKit'
+    pod 'SDAutoLayout'
+    pod 'LEETheme'
+    pod 'LinqToObjectiveC'
 end

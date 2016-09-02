@@ -7,10 +7,10 @@
 //
 
 #import "ZWDownloadCenter.h"
-#import "ZWUtilsCenter.h"
-#import "NSString+URLEncode.h"
+#import "NSString+Extension.h"
 #import "AppDelegate.h"
-#import "NSDate+CommomDate.h"
+#import "NSDate+Extension.h"
+#import "ZWPathTool.h"
 
 static NSString *const ConfigurationIdentifier = @"ZWDownloadCenteridentifier";
 
@@ -47,7 +47,7 @@ static ZWDownloadCenter *downloadCenter = nil;
 
 - (NSString *)resumeFile {
     if (_resumeFile == nil) {
-        _resumeFile = [[ZWUtilsCenter resumeDataDirectory] stringByAppendingPathComponent:@"ResumeData.archive"];
+        _resumeFile = [[ZWPathTool resumeDataDirectory] stringByAppendingPathComponent:@"ResumeData.archive"];
     }
     return _resumeFile;
 }
@@ -287,7 +287,7 @@ static ZWDownloadCenter *downloadCenter = nil;
     
     NSString *fileName = file.name;
     
-    NSString *destination = [[ZWUtilsCenter downloadDirectory] stringByAppendingPathComponent:fileName];
+    NSString *destination = [[ZWPathTool downloadDirectory] stringByAppendingPathComponent:fileName];
     
     NSError *error = nil;
     

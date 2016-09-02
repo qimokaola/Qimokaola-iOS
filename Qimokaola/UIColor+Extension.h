@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UIColor (CommonColor)
+@interface UIColor (Extension)
 
 + (instancetype)universalColor;
 

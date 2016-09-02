@@ -7,10 +7,10 @@
 //
 
 #import "AppDelegate.h"
+#import "ZWPathTool.h"
 #import "UMSocial.h"
 #import "UMSocialQQHandler.h"
 #import "JSPatch/JSPatch.h"
-#import "ZWUtilsCenter.h"
 #import "ZWDownloadCenter.h"
 #import "ZWAdvertisementView.h"
 #import "YYFPSLabel.h"
@@ -23,8 +23,9 @@
 #import "UMMobClick/MobClick.h"
 #import <UMCommunitySDK/UMCommunitySDK.h>
 #import "UMPushSDK_1.3.0/UMessage.h"
+#import "ZWHUDTool.h"
 
-@interface AppDelegate () <UIAlertViewDelegate>
+@interface AppDelegate ()
 
 @end
 
@@ -35,7 +36,6 @@
     //__weak __typeof(self) weakSelf = self;
     
     application.applicationIconBadgeNumber = 0;
-    
     
     //JSPatch
     [JSPatch startWithAppKey:@"c0e20e35c39ad9b8"];
@@ -82,7 +82,6 @@
     //for log
     [UMessage setLogEnabled:YES];
     
-    
     // 初始化友盟微社区SDK
     [UMCommunitySDK setAppkey:@"57b447c6e0f55af52e000e0b" withAppSecret:@"6133327b2d31ba894071c89b186284ac"];
     
@@ -92,15 +91,14 @@
     [MobClick startWithConfigure:UMConfigInstance];//配置以上参数后调用此方法初始化SDK！
 
     //初始化QQ分享SDK
+    [UMSocialData setAppKey:@"57b447c6e0f55af52e000e0b"];
     [UMSocialQQHandler setQQWithAppId:@"1104906908" appKey:@"F3gD6ULgbrpPSqqF" url:@"http://www.baidu.com"];
-    
     
     //0.5秒后开始监听
     [self performSelector:@selector(monitorNetworkStatus) withObject:nil afterDelay:0.5f];
     
-    
     //创建数据库队列
-    self.DBQueue = [FMDatabaseQueue databaseQueueWithPath:[[ZWUtilsCenter documentDirectory] stringByAppendingPathComponent:@"Download_Info.db"]];
+    self.DBQueue = [FMDatabaseQueue databaseQueueWithPath:[[ZWPathTool documentDirectory] stringByAppendingPathComponent:@"Download_Info.db"]];
     [self.DBQueue inDatabase:^(FMDatabase *db) {
         if ([db open]) {
             NSString *sqlCreateTable = @"CREATE TABLE IF NOT EXISTS download_info (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, course TEXT, link TEXT, type TEXT, size TEXT, time TEXT)";
@@ -115,13 +113,9 @@
     
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
     
-    YYFPSLabel *fpsLabel = [[YYFPSLabel alloc] initWithFrame:CGRectMake(0, kScreenHeight - 88, 50, 10)];
-    [fpsLabel sizeToFit];
-    [application.keyWindow addSubview:fpsLabel];
-    
     BOOL isLogin = [[NSUserDefaults standardUserDefaults] boolForKey:@"LoginState"];
     //检测是否已经登录
-    if (YES) {
+    if (isLogin) {
         
         [self setWindowRootControllerWithClass:[ZWTabBarController class]];
         
@@ -154,7 +148,9 @@
         [self setWindowRootControllerWithClass:[ZWLoginAndRegisterViewController class]];
     }
     
-  //  sleep(5.0);
+    YYFPSLabel *fpsLabel = [[YYFPSLabel alloc] initWithFrame:CGRectMake(0, kScreenHeight - 100, 0, 0)];
+    [fpsLabel sizeToFit];
+    [self.window addSubview:fpsLabel];
     
     return YES;
 }
@@ -193,7 +189,7 @@
         
         if (status == AFNetworkReachabilityStatusNotReachable) {
             
-            [ZWUtilsCenter showHUDWithTitle:@"无网络连接" message:nil duration:1.5];
+            [ZWHUDTool showHUDWithTitle:@"无网络连接" message:nil duration:1.5];
             
         }
         

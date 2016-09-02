@@ -7,17 +7,18 @@
 //
 
 #import "ZWAppCache.h"
-#import "ZWUtilsCenter.h"
+#import "ZWPathTool.h"
+
 
 @implementation ZWAppCache
 
 + (ZWFileModel *)loadCachedFileModel {
-    id result = [NSKeyedUnarchiver unarchiveObjectWithFile:[[ZWUtilsCenter appCacheDirectory] stringByAppendingPathComponent:@"FileModel.archive"]];
+    id result = [NSKeyedUnarchiver unarchiveObjectWithFile:[[ZWPathTool appCacheDirectory] stringByAppendingPathComponent:@"FileModel.archive"]];
     return (ZWFileModel *)result;
 }
 
 + (BOOL)saveCacheFileModel:(ZWFileModel *)model {
-    return [NSKeyedArchiver archiveRootObject:model toFile:[[ZWUtilsCenter appCacheDirectory] stringByAppendingPathComponent:@"FileModel.archive"]];
+    return [NSKeyedArchiver archiveRootObject:model toFile:[[ZWPathTool appCacheDirectory] stringByAppendingPathComponent:@"FileModel.archive"]];
 }
 
 @end

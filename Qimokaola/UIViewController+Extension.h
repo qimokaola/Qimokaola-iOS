@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UIViewController (Logging)
+@interface UIViewController (Extension)
 
 @end

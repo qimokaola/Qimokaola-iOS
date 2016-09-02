@@ -18,7 +18,7 @@ typedef void(^ADCompleteBlock)(void);
 - (instancetype)initWithWindow:(UIWindow *)window;
 
 //按照广告具体信息显示广告内容以及决定可点击与否
-- (void)showAdWithInfo:(NSDictionary *)info;
+//- (void)showAdWithInfo:(NSDictionary *)info;
 
 - (void)showAdWithADRes:(ZWAdvertisementResource *)res;
 

@@ -8,11 +8,11 @@
 
 #import "ZWFilloutInformationViewController.h"
 #import "ZWSelectSchoolViewController.h"
-#import "ZWUtilsCenter.h"
 #import "Masonry.h"
 #import "ReactiveCocoa.h"
-#import "UIColor+CommonColor.h"
+#import "UIColor+Extension.h"
 #import "ZWBindAccountViewController.h"
+#import "ZWHUDTool.h"
 
 @interface ZWFilloutInformationViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
@@ -43,6 +43,8 @@
 
 @property (nonatomic, assign) BOOL isAvatarSelected;
 @property (nonatomic, assign) BOOL isSchoolSelected;
+@property (nonatomic, copy) NSString *school;
+@property (nonatomic, copy) NSString *academy;
 
 @end
 
@@ -56,6 +58,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    NSLog(@"%@", self.registerParam);
+    
     self.view.backgroundColor = [UIColor whiteColor];
     
     self.isAvatarSelected = self.isSchoolSelected = NO;
@@ -66,8 +70,16 @@
     [[self.selectSchoolBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
         @strongify(self)
         ZWSelectSchoolViewController *selectSchool = [[ZWSelectSchoolViewController alloc] init];
-        selectSchool.block = ^(NSString *school) {
-            [self.selectSchoolBtn setTitle:school forState:UIControlStateNormal];
+        selectSchool.completionBlock = ^(NSDictionary *result) {
+            NSDictionary *school = [result objectForKey:@"school"];
+            NSDictionary *academy = [result objectForKey:@"academy"];
+            
+            self.school = [school objectForKey:@"id"];
+            self.academy = [academy objectForKey:@"id"];
+            
+            self.selectSchoolBtn.titleLabel.font = ZWFont(15);
+            
+            [self.selectSchoolBtn setTitle:[NSString stringWithFormat:@"%@-%@", [school objectForKey:@"name"], [academy objectForKey:@"name"]] forState:UIControlStateNormal];
             [self.selectSchoolBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
             self.isSchoolSelected = YES;
         };
@@ -105,8 +117,21 @@
     }];
     
     [[self.nextBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
-        ZWBindAccountViewController *bindAccount = [[ZWBindAccountViewController alloc] init];
         @strongify(self)
+        
+        ZWBindAccountViewController *bindAccount = [[ZWBindAccountViewController alloc] init];
+        NSMutableDictionary *params = [NSMutableDictionary dictionaryWithDictionary:self.registerParam];
+        NSString *nickname = self.nicknameField.text;
+        NSString *gender = self.maleBtn.enabled ? @"女生" : @"男生";
+        [params addEntriesFromDictionary:@{
+                                           @"nick": nickname,
+                                           @"gender": gender,
+                                           @"schoolId" : self.school,
+                                           @"academyId": self.academy
+                                        }];
+        bindAccount.registerParam = params;
+        bindAccount.registerAvatar = @{@"avatar": UIImagePNGRepresentation(self.avatarImageView.image)};
+        
        [self.navigationController pushViewController:bindAccount animated:YES];
     }];
 }
@@ -128,6 +153,8 @@
     CGFloat avatarSizeRate = .28f;
     
     UIFont *commonFont = ZWFont(17);
+    
+    
     
     //创建视图并添加至父控件
     self.avatarImageView = ({
@@ -166,7 +193,7 @@
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeSystem];
         btn.titleLabel.font = commonFont;
         btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-        [btn setTitle:@"选择学校" forState:UIControlStateNormal];
+        [btn setTitle:@"选择学校，学院" forState:UIControlStateNormal];
         [btn setTitleColor:RGBA(0., 0., 25., 0.22) forState:UIControlStateNormal];
         [self.view addSubview:btn];
         
@@ -239,10 +266,11 @@
         btn;
     });
     
+    //FIXME: 发布时删除
+    // 预先绑定数据 方便调试
+    self.nicknameField.text = @"凌子文";
+    
     //添加视图约束
-    
-    
-    
     
     [self.avatarImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.height.and.width.equalTo(weakSelf.view.mas_width).multipliedBy(avatarSizeRate);
@@ -365,6 +393,7 @@
         popover.sourceView = self.avatarImageView;
         popover.sourceRect = self.avatarImageView.bounds;
         popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
+        
     }
     [self presentViewController:alertController animated:YES completion:nil];
 }
@@ -384,7 +413,7 @@
 - (void)selectedImage:(NSInteger)getImageWay {
     
     if (getImageWay == 0 && ![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        [ZWUtilsCenter showHUDWithTitle:@"出现错误" message:@"未能检测到相机，请重试" duration:2.0];
+        [ZWHUDTool showHUDWithTitle:@"出现错误" message:@"未能检测到相机，请重试" duration:2.0];
         return;
     }
     

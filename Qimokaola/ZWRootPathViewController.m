@@ -9,16 +9,17 @@
 #import "ZWRootPathViewController.h"
 #import "AppDelegate.h"
 #import "ZWBrowserViewController.h"
-#import "UIColor+CommonColor.h"
+#import "UIColor+Extension.h"
 #import "MBProgressHUD.h"
 #import "AFNetworkReachabilityManager.h"
 #import "MJRefresh.h"
 #import "ZWFileFolderViewController.h"
-#import "ZWUtilsCenter.h"
 #import "ZWAppCache.h"
 #import "ZWPopViewController.h"
 #import "ReactiveCocoa.h"
 #import "ZWBrowserViewController.h"
+#import "ZWPathTool.h"
+#import "ZWHUDTool.h"
 
 @interface ZWRootPathViewController () <UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating, UISearchControllerDelegate, UIPopoverPresentationControllerDelegate>
 
@@ -41,7 +42,7 @@
 
 - (NSString *)cacheFile {
     if (_cacheFile == nil) {
-        _cacheFile = [[ZWUtilsCenter appCacheDirectory] stringByAppendingPathComponent:@"FileModel.archive"];
+        _cacheFile = [[ZWPathTool appCacheDirectory] stringByAppendingPathComponent:@"FileModel.archive"];
     }
     return _cacheFile;
 }
@@ -192,7 +193,7 @@
         
     } failure:^(NSURLSessionDataTask *task, id responseObject) {
         
-        [ZWUtilsCenter showHUDWithTitle:@"错误信息" message:@"获取数据失败" duration:2.0];
+        [ZWHUDTool showHUDWithTitle:@"错误信息" message:@"获取数据失败" duration:2.0];
         
         [weakSelf.tableView.mj_header endRefreshing];
         

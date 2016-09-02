@@ -15,31 +15,44 @@ typedef void(^FailureBlock)(NSURLSessionDataTask *task, NSError *error);
 
 @interface ZWNetworkingManager : NSObject
 
+
+
+
 + (NSURLSessionDataTask *)getWithURLString:(NSString *)url
                                    success:(SuccessBlock)success
                                    failure:(FailureBlock)failure;
 
 + (NSURLSessionDataTask *)getWithURLString:(NSString *)url
-                                    params:(NSDictionary *)params
+                                    params:(id)params
                                    success:(SuccessBlock)success
                                    failure:(FailureBlock)failure;
 
 + (NSURLSessionDataTask *)getWithURLString:(NSString *)url
-                                    params:(NSDictionary *)params
+                                    params:(id)params
                                   progress:(ProgressBlock)progress
                                    success:(SuccessBlock)success
                                    failure:(FailureBlock)failure;
 
 + (NSURLSessionDataTask *)postWithURLString:(NSString *)url
-                                     params:(NSDictionary *)params
+                                     params:(id)params
                                     success:(SuccessBlock)success
                                     failure:(FailureBlock)failure;
 
 + (NSURLSessionDataTask *)postWithURLString:(NSString *)url
-                                     params:(NSDictionary *)params
+                                     params:(id)params
                                    progress:(ProgressBlock)preogress
                                     success:(SuccessBlock)success
                                     failure:(FailureBlock)failure;
+
++ (NSURLSessionDataTask *)postWithURLString:(NSString *)url
+                                     params:(id)params
+                  constructingBodyWithBlock:(void (^)(id <AFMultipartFormData> formData))block
+                                   progress:(ProgressBlock)progress
+                                    success:(SuccessBlock)success
+                                    failure:(FailureBlock)failure;
+
+
++ (BOOL)isNetWorkAvailable;
 
 
 @end

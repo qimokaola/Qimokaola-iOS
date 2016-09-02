@@ -10,7 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import <objc/runtime.h>
 
-@interface CALayer (BorderColorFromUIColor)
+@interface CALayer (Extension)
 
 @property (nonatomic, strong)  UIColor *borderColorFromUIColor;
 

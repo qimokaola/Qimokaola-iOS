@@ -6,9 +6,9 @@
 //  Copyright © 2015年 Administrator. All rights reserved.
 //
 
-#import "UIColor+CommonColor.h"
+#import "UIColor+Extension.h"
 
-@implementation UIColor (CommonColor)
+@implementation UIColor (Extension)
 
 + (instancetype)universalColor  {
     //返回自定义通用颜色

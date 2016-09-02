@@ -7,15 +7,22 @@
 //
 
 #import "ZWSelectSchoolViewController.h"
-#import "ZWUtilsCenter.h"
+#import "ZWAPIRequestTool.h"
 
-@interface ZWSelectSchoolViewController ()
+@interface ZWSelectSchoolViewController () {
+    // 记录是否处于学校列表
+    BOOL isInSchoolList;
+}
 
 @property (nonatomic, strong) NSArray *schools;
+@property (nonatomic, strong) NSArray *academies;
+@property (nonatomic, strong) NSDictionary *selectedSchool;
+@property (nonatomic, strong) UIBarButtonItem *chooseSchool;
 
 @end
 
 @implementation ZWSelectSchoolViewController
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -24,14 +31,49 @@
     UIView *v = [[UIView alloc] initWithFrame:CGRectZero];
     [self.tableView setTableFooterView:v];
     
-    self.tableView.tintColor = [UIColor redColor];
+    self.chooseSchool = [[UIBarButtonItem alloc] initWithTitle:@"换个学校" style:UIBarButtonItemStyleDone target:self action:@selector(fetchSchoolList)];
     
-    [ZWUtilsCenter showHUDWithTitle:@"加载学校列表" message:nil duration:1.5];
+    // 开始时加载学校列表
+    [self fetchSchoolList];
+}
+
+
+- (void)fetchSchoolList {
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        self.schools = @[@"福州大学", @"闽江大学", @"福建中医药大学", @"福建医科大学", @"闽江学院爱恩国际学院", @"福建江夏学院"];
-        [self.tableView reloadData];
-    });
+    isInSchoolList = YES;
+    
+     self.title = @"选择学校";
+    
+    [ZWAPIRequestTool requestListSchool:^(id response, BOOL success) {
+        
+        if (success) {
+            
+            self.navigationItem.rightBarButtonItem = nil;
+            
+            self.schools = [response objectForKey:@"res"];
+            [self.tableView reloadData];
+        }
+        
+    }];
+}
+
+- (void)fetchAcademiesList {
+    
+    isInSchoolList = NO;
+    
+    self.title = [self.selectedSchool objectForKey:@"name"];
+    
+    [ZWAPIRequestTool requestListAcademyWithParameter:@{@"college" : [self.selectedSchool objectForKey:@"id"]} result:^(id response, BOOL success) {
+        
+        if (success) {
+            
+            self.navigationItem.rightBarButtonItem = self.chooseSchool;
+            
+            self.academies = [(NSDictionary *)response objectForKey:@"res"];
+            [self.tableView reloadData];
+        }
+    }];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -46,7 +88,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.schools.count;
+    return isInSchoolList ? self.schools.count : self.academies.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -59,37 +101,35 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
     }
-    
-    cell.textLabel.text = self.schools[indexPath.row];
-    
+    NSDictionary *dict = isInSchoolList ? [self.schools objectAtIndex:indexPath.row] : [self.academies objectAtIndex:indexPath.row];
+    cell.textLabel.text = [dict objectForKey:@"name"];
     return cell;
 }
-
-- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    NSIndexPath *oldIndex = [tableView indexPathForSelectedRow];
-    
-    [tableView cellForRowAtIndexPath:oldIndex].accessoryType = UITableViewCellAccessoryNone;
-    
-    [tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryCheckmark;
-    
-    return indexPath;
-}
-
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    NSString *school = self.schools[indexPath.row];
-    if (self.block) {
-        self.block(school);
+    
+    if (isInSchoolList) {
+        self.selectedSchool = [self.schools objectAtIndex:indexPath.row];
+        [self fetchAcademiesList];
+    } else {
+        if (_completionBlock) {
+            
+            NSDictionary *selectedAcademy = [self.academies objectAtIndex:indexPath.row];
+            NSDictionary *result = [NSDictionary dictionaryWithObjects:@[self.selectedSchool, selectedAcademy] forKeys:@[@"school", @"academy"]];
+            NSLog(@"selected school and academy info: %@", result);
+            _completionBlock(result);
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+            
+        }
     }
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.navigationController popViewControllerAnimated:YES];
-    });
 }
 
 /*

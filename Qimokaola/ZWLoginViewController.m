@@ -9,7 +9,7 @@
 #import "ZWLoginViewController.h"
 #import "Masonry.h"
 #import "ReactiveCocoa.h"
-#import "UIColor+CommonColor.h"
+#import "UIColor+Extension.h"
 
 @interface ZWLoginViewController ()
 

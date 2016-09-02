@@ -27,6 +27,17 @@ static ZWNetworkingManager *_manager = nil;
     return self;
 }
 
++ (void)changeRequestSerializer {
+    if ([[ZWNetworkingManager sharedManager].sessionManager.requestSerializer isKindOfClass:[AFHTTPRequestSerializer class]]) {
+        
+        [ZWNetworkingManager sharedManager].sessionManager.requestSerializer = [AFJSONRequestSerializer serializer];
+        [[ZWNetworkingManager sharedManager].sessionManager.requestSerializer setValue:@"application/json;charset=UTF-8" forHTTPHeaderField:@"Content-Type"];
+        
+    } else {
+        [ZWNetworkingManager sharedManager].sessionManager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    }
+}
+
 + (instancetype)sharedManager {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -35,11 +46,13 @@ static ZWNetworkingManager *_manager = nil;
     return _manager;
 }
 
+
 + (NSURLSessionDataTask *)getWithURLString:(NSString *)url
-                                    params:(NSDictionary *)params
+                                    params:(id)params
                                   progress:(ProgressBlock)progress
                                    success:(SuccessBlock)success
                                    failure:(FailureBlock)failure {
+    
     
     return [[ZWNetworkingManager sharedManager].sessionManager GET:url
                                                         parameters:params
@@ -60,7 +73,7 @@ static ZWNetworkingManager *_manager = nil;
 }
 
 + (NSURLSessionDataTask *)getWithURLString:(NSString *)url
-                                    params:(NSDictionary *)params
+                                    params:(id)params
                                    success:(SuccessBlock)success
                                    failure:(FailureBlock)failure {
     
@@ -72,7 +85,7 @@ static ZWNetworkingManager *_manager = nil;
 }
 
 + (NSURLSessionDataTask *)postWithURLString:(NSString *)url
-                                     params:(NSDictionary *)params
+                                     params:(id)params
                                    progress:(ProgressBlock)preogress
                                     success:(SuccessBlock)success
                                     failure:(FailureBlock)failure {
@@ -85,7 +98,7 @@ static ZWNetworkingManager *_manager = nil;
 }
 
 + (NSURLSessionDataTask *)postWithURLString:(NSString *)url
-                                     params:(NSDictionary *)params
+                                     params:(id)params
                                     success:(SuccessBlock)success
                                     failure:(FailureBlock)failure {
     
@@ -95,5 +108,26 @@ static ZWNetworkingManager *_manager = nil;
                                           success:success
                                           failure:failure];
 }
+
++ (NSURLSessionDataTask *)postWithURLString:(NSString *)url
+                                     params:(id)params
+                  constructingBodyWithBlock:(void (^)(id<AFMultipartFormData>))block
+                                   progress:(ProgressBlock)progress
+                                    success:(SuccessBlock)success
+                                    failure:(FailureBlock)failure {
+    
+    return [[ZWNetworkingManager sharedManager].sessionManager POST:url
+                                                         parameters:params
+                                          constructingBodyWithBlock:block
+                                                           progress:progress
+                                                            success:success
+                                                            failure:false];
+    
+}
+
++ (BOOL)isNetWorkAvailable {
+    return [AFNetworkReachabilityManager sharedManager].networkReachabilityStatus != AFNetworkReachabilityStatusNotReachable;
+}
+
 
 @end

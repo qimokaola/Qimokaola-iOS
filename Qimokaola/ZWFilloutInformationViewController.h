@@ -10,4 +10,6 @@
 
 @interface ZWFilloutInformationViewController : UIViewController
 
+@property (nonatomic, strong) NSDictionary *registerParam;
+
 @end

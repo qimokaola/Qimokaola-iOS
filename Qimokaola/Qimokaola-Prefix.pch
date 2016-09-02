@@ -20,6 +20,12 @@
 #define kNavigationBarHeight 64
 #define kTabBarHeight 49
 
+#define kShowHUDShort 1.0
+#define kShowHUDMid 1.5
+#define kShowHUDLong 2.0
+
+#define kRequestWaitingTime 0.5
+
 #define ZWFont(fontSize) [UIFont systemFontOfSize:fontSize]
 
 #define RGB(r, g, b) [UIColor colorWithRed:r / 255.0f green:g / 255.0f blue:b / 255.0f alpha:1.0f]

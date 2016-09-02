@@ -7,7 +7,7 @@
 //
 
 #import "ZWCreateCountDownViewController.h"
-#import "UIColor+CommonColor.h"
+#import "UIColor+Extension.h"
 #import "Masonry.h"
 
 #define labelTextColor RGB(54., 114., 220.)

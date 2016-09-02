@@ -6,10 +6,11 @@
 //  Copyright © 2016年 Administrator. All rights reserved.
 //
 
-#import "UIViewController+Logging.h"
+#import "UIViewController+Extension.h"
 #import <objc/runtime.h>
+#import <UMMobClick/MobClick.h>
 
-@implementation UIViewController (Logging)
+@implementation UIViewController (Extension)
 
 - (void)swizzledViewWillAppear:(BOOL)animated {
     [self swizzledViewWillAppear:animated];

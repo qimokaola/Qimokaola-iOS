@@ -6,9 +6,9 @@
 //  Copyright © 2015年 Administrator. All rights reserved.
 //
 
-#import "NSDate+CommomDate.h"
+#import "NSDate+Extension.h"
 
-@implementation NSDate (CommomDate)
+@implementation NSDate (Extension)
 
 + (NSString *)current  {
     NSString *formatterString = @"yyyy-MM-dd";

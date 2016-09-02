@@ -7,7 +7,7 @@
 //
 
 #import "ZWDownloadInfoCell.h"
-#import "ZWUtilsCenter.h"
+#import "ZWFileTool.h"
 
 @interface ZWDownloadInfoCell ()
 @property (weak, nonatomic) IBOutlet UIImageView *imgViewIcon;
@@ -32,7 +32,7 @@
 
 - (void)setDownloadInfo:(ZWDownloadInfoModel *)downloadInfo  {
     _downloadInfo = downloadInfo;
-    self.imgViewIcon.image = [UIImage imageNamed:[ZWUtilsCenter parseTypeWithString:_downloadInfo.type]];
+    self.imgViewIcon.image = [UIImage imageNamed:[ZWFileTool parseTypeWithString:_downloadInfo.type]];
     self.nameLabel.text = _downloadInfo.name;
     self.sizeLabel.text = [NSString stringWithFormat:@"%@", _downloadInfo.course];
     self.timeLabel.text = [NSString stringWithFormat:@"%@", _downloadInfo.time];

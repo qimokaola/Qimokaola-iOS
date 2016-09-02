@@ -8,7 +8,7 @@
 
 #import "ZWAboutUsViewController.h"
 #import "Masonry.h"
-#import "UIColor+CommonColor.h"
+#import "UIColor+Extension.h"
 #define kAnimationTime 0.3
 
 #define margin 20

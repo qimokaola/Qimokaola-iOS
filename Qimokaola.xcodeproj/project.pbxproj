@@ -9,14 +9,16 @@
 /* Begin PBXBuildFile section */
 		4813320F633E088B03A6C7C5 /* Pods_Qimokaola.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9071DF4B0002B9FFA04BB07 /* Pods_Qimokaola.framework */; };
 		C31608511CEE375D005BA30B /* ZWCreateCountDownViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C31608501CEE375D005BA30B /* ZWCreateCountDownViewController.m */; };
+		C3162C891D79EA9F00153EB9 /* heart_red.png in Resources */ = {isa = PBXBuildFile; fileRef = C3162C881D79EA9F00153EB9 /* heart_red.png */; };
 		C31BB10C1CB7EDC000EE1E37 /* ZWAppCache.m in Sources */ = {isa = PBXBuildFile; fileRef = C31BB10B1CB7EDC000EE1E37 /* ZWAppCache.m */; };
 		C3217B0E1BCAAF830037937F /* ZWDownloadedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3217B0D1BCAAF830037937F /* ZWDownloadedViewController.m */; };
 		C3243E291D547A5A00FF97C3 /* ZWRegisterView.m in Sources */ = {isa = PBXBuildFile; fileRef = C3243E281D547A5A00FF97C3 /* ZWRegisterView.m */; };
 		C3259ED81D351B09004DC58F /* ZWAdvertisementView.m in Sources */ = {isa = PBXBuildFile; fileRef = C3259ED71D351B09004DC58F /* ZWAdvertisementView.m */; };
-		C3274BA81BC814C0005D28B8 /* UIColor+CommonColor.m in Sources */ = {isa = PBXBuildFile; fileRef = C3274BA71BC814C0005D28B8 /* UIColor+CommonColor.m */; };
+		C3274BA81BC814C0005D28B8 /* UIColor+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = C3274BA71BC814C0005D28B8 /* UIColor+Extension.m */; };
 		C33140B81CEE0B6200387667 /* ZWCountDownViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C33140B71CEE0B6200387667 /* ZWCountDownViewController.m */; };
 		C331E6F11C887D39001CDACB /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C331E6F01C887D39001CDACB /* Launch Screen.storyboard */; };
-		C331EB541C9C5B6400C89925 /* NSString+URLEncode.m in Sources */ = {isa = PBXBuildFile; fileRef = C331EB531C9C5B6400C89925 /* NSString+URLEncode.m */; };
+		C331EB541C9C5B6400C89925 /* NSString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = C331EB531C9C5B6400C89925 /* NSString+Extension.m */; };
+		C337B9C51D7334AF0060BDD6 /* ZWAPIRequestTool.m in Sources */ = {isa = PBXBuildFile; fileRef = C337B9C41D7334AF0060BDD6 /* ZWAPIRequestTool.m */; };
 		C33B1D491CC53F0B008FA6E6 /* ZWDocumentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C33B1D471CC53F0B008FA6E6 /* ZWDocumentCell.m */; };
 		C33B1D4A1CC53F0B008FA6E6 /* ZWDocumentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C33B1D481CC53F0B008FA6E6 /* ZWDocumentCell.xib */; };
 		C33D397C1C17264A00A582DF /* ZWBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C33D397B1C17264A00A582DF /* ZWBrowserViewController.m */; };
@@ -43,8 +45,11 @@
 		C3561A261D3774560032C97B /* ZWLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3561A251D3774560032C97B /* ZWLoginViewController.m */; };
 		C3594EFD1BCF6B3900532FA5 /* ZWDocumentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C3594EFC1BCF6B3900532FA5 /* ZWDocumentModel.m */; };
 		C35AA0B81C88500800D17A99 /* ZWAboutUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C35AA0B71C88500800D17A99 /* ZWAboutUsViewController.m */; };
-		C367ADC71CB567F0002184DF /* ZWUtilsCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = C367ADC61CB567F0002184DF /* ZWUtilsCenter.m */; };
-		C367ADCA1CB681DA002184DF /* JSPatch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C367ADC91CB681DA002184DF /* JSPatch.framework */; };
+		C35FD9BB1D707E160066DE68 /* SDWeiXinPhotoContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C35FD9BA1D707E160066DE68 /* SDWeiXinPhotoContainerView.m */; };
+		C35FD9C41D707E640066DE68 /* SDBrowserImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = C35FD9BE1D707E640066DE68 /* SDBrowserImageView.m */; };
+		C35FD9C51D707E640066DE68 /* SDPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = C35FD9C01D707E640066DE68 /* SDPhotoBrowser.m */; };
+		C35FD9C61D707E640066DE68 /* SDWaitingView.m in Sources */ = {isa = PBXBuildFile; fileRef = C35FD9C31D707E640066DE68 /* SDWaitingView.m */; };
+		C35FD9CA1D7177260066DE68 /* ZWPhotoContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C35FD9C91D7177260066DE68 /* ZWPhotoContainerView.m */; };
 		C367ADD41CB6934A002184DF /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C367ADD31CB6934A002184DF /* CFNetwork.framework */; };
 		C367ADD61CB6935E002184DF /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C367ADD51CB6935E002184DF /* CoreFoundation.framework */; };
 		C367ADD81CB69394002184DF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C367ADD71CB69394002184DF /* Foundation.framework */; };
@@ -75,13 +80,9 @@
 		C37067B11D6B465F007B18A8 /* libSocialWechat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C370678F1D6B465F007B18A8 /* libSocialWechat.a */; };
 		C37067B21D6B465F007B18A8 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C37067901D6B465F007B18A8 /* libWeChatSDK.a */; };
 		C37067B31D6B465F007B18A8 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = C37067911D6B465F007B18A8 /* README.txt */; };
-		C37067B61D6B465F007B18A8 /* UMCommunitySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C37067991D6B465F007B18A8 /* UMCommunitySDK.framework */; };
-		C37067B71D6B465F007B18A8 /* UMComNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C370679A1D6B465F007B18A8 /* UMComNetwork.framework */; };
 		C37067B81D6B465F007B18A8 /* libUMessage_Sdk_1.3.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C370679C1D6B465F007B18A8 /* libUMessage_Sdk_1.3.0.a */; };
 		C37067B91D6B465F007B18A8 /* UMMobClick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C370679F1D6B465F007B18A8 /* UMMobClick.framework */; };
-		C37067BA1D6B4685007B18A8 /* UMComDataStorage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C37067971D6B465F007B18A8 /* UMComDataStorage.framework */; };
 		C37067BB1D6B4685007B18A8 /* UMComDataStorage.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C37067971D6B465F007B18A8 /* UMComDataStorage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		C37067BC1D6B4685007B18A8 /* UMComFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C37067981D6B465F007B18A8 /* UMComFoundation.framework */; };
 		C37067BD1D6B4685007B18A8 /* UMComFoundation.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C37067981D6B465F007B18A8 /* UMComFoundation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C37067BF1D6B4685007B18A8 /* UMCommunitySDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C37067991D6B465F007B18A8 /* UMCommunitySDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C37067C11D6B4685007B18A8 /* UMComNetwork.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C370679A1D6B465F007B18A8 /* UMComNetwork.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -89,10 +90,17 @@
 		C37067C81D6B48E5007B18A8 /* UMComFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C37067C41D6B48E5007B18A8 /* UMComFoundation.framework */; };
 		C37067C91D6B48E5007B18A8 /* UMCommunitySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C37067C51D6B48E5007B18A8 /* UMCommunitySDK.framework */; };
 		C37067CA1D6B48E5007B18A8 /* UMComNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C37067C61D6B48E5007B18A8 /* UMComNetwork.framework */; };
+		C3792ABF1D6C824D0079FCF5 /* ZWPathTool.m in Sources */ = {isa = PBXBuildFile; fileRef = C3792ABE1D6C824D0079FCF5 /* ZWPathTool.m */; };
+		C3792AC21D6C82A00079FCF5 /* ZWHUDTool.m in Sources */ = {isa = PBXBuildFile; fileRef = C3792AC11D6C82A00079FCF5 /* ZWHUDTool.m */; };
+		C3792AC51D6C83A70079FCF5 /* ZWFileTool.m in Sources */ = {isa = PBXBuildFile; fileRef = C3792AC41D6C83A70079FCF5 /* ZWFileTool.m */; };
+		C3792AC81D6C887A0079FCF5 /* ZWAPITool.m in Sources */ = {isa = PBXBuildFile; fileRef = C3792AC71D6C887A0079FCF5 /* ZWAPITool.m */; };
+		C3792ACB1D6DE9200079FCF5 /* ZWFeedTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3792ACA1D6DE9200079FCF5 /* ZWFeedTableViewController.m */; };
+		C3792AD01D6F39130079FCF5 /* ZWFeedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C3792ACF1D6F39130079FCF5 /* ZWFeedCell.m */; };
 		C37C038B1D3E2CBB00B22868 /* ZWPopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C37C038A1D3E2CBB00B22868 /* ZWPopViewController.m */; };
 		C37C038F1D3E77FF00B22868 /* ZWDiscoveryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C37C038E1D3E77FF00B22868 /* ZWDiscoveryViewController.m */; };
-		C37C03921D3F716200B22868 /* CALayer+BorderColorFromUIColor.m in Sources */ = {isa = PBXBuildFile; fileRef = C37C03911D3F716200B22868 /* CALayer+BorderColorFromUIColor.m */; };
+		C37C03921D3F716200B22868 /* CALayer+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = C37C03911D3F716200B22868 /* CALayer+Extension.m */; };
 		C37C03961D3F8C6000B22868 /* ZWStudentCircleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C37C03951D3F8C5F00B22868 /* ZWStudentCircleViewController.m */; };
+		C3827B971D72DDBB002F6E5B /* ZWFeedDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3827B961D72DDBB002F6E5B /* ZWFeedDetailViewController.m */; };
 		C38EACA91CB535C600EA6448 /* ZWFolderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C38EACA71CB535C600EA6448 /* ZWFolderCell.m */; };
 		C38EACAA1CB535C600EA6448 /* ZWFolderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C38EACA81CB535C600EA6448 /* ZWFolderCell.xib */; };
 		C39004A41D5B67F90097358E /* ZWAdvertisement.m in Sources */ = {isa = PBXBuildFile; fileRef = C39004A31D5B67F90097358E /* ZWAdvertisement.m */; };
@@ -100,7 +108,7 @@
 		C39004B21D5C61900097358E /* ZWNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C39004B11D5C61900097358E /* ZWNavigationController.m */; };
 		C3A14CA41D37D0FD0088E754 /* ZWSelectSchoolViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3A14CA31D37D0FD0088E754 /* ZWSelectSchoolViewController.m */; };
 		C3A609BF1CBE79A1000CC03C /* ZWFileDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3A609BD1CBE79A1000CC03C /* ZWFileDetailViewController.m */; };
-		C3AF73E31BCBE3C60064C3F5 /* NSDate+CommomDate.m in Sources */ = {isa = PBXBuildFile; fileRef = C3AF73E21BCBE3C60064C3F5 /* NSDate+CommomDate.m */; };
+		C3AF73E31BCBE3C60064C3F5 /* NSDate+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = C3AF73E21BCBE3C60064C3F5 /* NSDate+Extension.m */; };
 		C3BE99EE1BCBE6C8000102A1 /* ZWDownloadInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C3BE99ED1BCBE6C8000102A1 /* ZWDownloadInfoModel.m */; };
 		C3BE99FB1BCBFB45000102A1 /* ZWDownloadInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C3BE99F91BCBFB45000102A1 /* ZWDownloadInfoCell.m */; };
 		C3BE99FC1BCBFB45000102A1 /* ZWDownloadInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3BE99FA1BCBFB45000102A1 /* ZWDownloadInfoCell.xib */; };
@@ -113,7 +121,7 @@
 		C3D1F2701CB3E33F0017723B /* ZWFileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D1F26E1CB3E33F0017723B /* ZWFileCell.m */; };
 		C3D1F2961CB401BE0017723B /* ZWFileCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3D1F2951CB401BE0017723B /* ZWFileCell.xib */; };
 		C3DC4D841D33C3BD0081DB0A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C3DC4D831D33C3BD0081DB0A /* Main.storyboard */; };
-		C3DC4D871D33CC550081DB0A /* UIViewController+Logging.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DC4D861D33CC550081DB0A /* UIViewController+Logging.m */; };
+		C3DC4D871D33CC550081DB0A /* UIViewController+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DC4D861D33CC550081DB0A /* UIViewController+Extension.m */; };
 		C3E58AC81D54DFE600FDB384 /* ZWBindAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3E58AC71D54DFE600FDB384 /* ZWBindAccountViewController.m */; };
 		C3EAA7291D3FBBD1009FCC0E /* pic1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C3EAA7241D3FBBD1009FCC0E /* pic1.jpg */; };
 		C3EAA72A1D3FBBD1009FCC0E /* pic2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C3EAA7251D3FBBD1009FCC0E /* pic2.jpg */; };
@@ -130,6 +138,7 @@
 		C3F7911C1BCD3142003793B1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3F7911B1BCD3142003793B1 /* CoreGraphics.framework */; };
 		C3F791201BCD317B003793B1 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3F7911F1BCD317B003793B1 /* CoreTelephony.framework */; };
 		C3F791301BCD3C37003793B1 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3F7912F1BCD3C37003793B1 /* QuartzCore.framework */; };
+		C3F854241D7709E800E51013 /* ZWBindAccountViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F854231D7709E800E51013 /* ZWBindAccountViewModel.m */; };
 		C3FF26291CA760070081FF58 /* ZWDownloadCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = C3FF26281CA760070081FF58 /* ZWDownloadCenter.m */; };
 /* End PBXBuildFile section */
 
@@ -175,6 +184,7 @@
 		A9071DF4B0002B9FFA04BB07 /* Pods_Qimokaola.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Qimokaola.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C316084F1CEE375D005BA30B /* ZWCreateCountDownViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWCreateCountDownViewController.h; sourceTree = "<group>"; };
 		C31608501CEE375D005BA30B /* ZWCreateCountDownViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWCreateCountDownViewController.m; sourceTree = "<group>"; };
+		C3162C881D79EA9F00153EB9 /* heart_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heart_red.png; sourceTree = "<group>"; };
 		C31BB10A1CB7EDC000EE1E37 /* ZWAppCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWAppCache.h; sourceTree = "<group>"; };
 		C31BB10B1CB7EDC000EE1E37 /* ZWAppCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWAppCache.m; sourceTree = "<group>"; };
 		C3217B0C1BCAAF830037937F /* ZWDownloadedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWDownloadedViewController.h; sourceTree = "<group>"; };
@@ -183,13 +193,15 @@
 		C3243E281D547A5A00FF97C3 /* ZWRegisterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWRegisterView.m; sourceTree = "<group>"; };
 		C3259ED61D351B09004DC58F /* ZWAdvertisementView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWAdvertisementView.h; sourceTree = "<group>"; };
 		C3259ED71D351B09004DC58F /* ZWAdvertisementView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWAdvertisementView.m; sourceTree = "<group>"; };
-		C3274BA61BC814C0005D28B8 /* UIColor+CommonColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+CommonColor.h"; sourceTree = "<group>"; };
-		C3274BA71BC814C0005D28B8 /* UIColor+CommonColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+CommonColor.m"; sourceTree = "<group>"; };
+		C3274BA61BC814C0005D28B8 /* UIColor+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Extension.h"; sourceTree = "<group>"; };
+		C3274BA71BC814C0005D28B8 /* UIColor+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Extension.m"; sourceTree = "<group>"; };
 		C33140B61CEE0B6200387667 /* ZWCountDownViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWCountDownViewController.h; sourceTree = "<group>"; };
 		C33140B71CEE0B6200387667 /* ZWCountDownViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWCountDownViewController.m; sourceTree = "<group>"; };
 		C331E6F01C887D39001CDACB /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
-		C331EB521C9C5B6400C89925 /* NSString+URLEncode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URLEncode.h"; sourceTree = "<group>"; };
-		C331EB531C9C5B6400C89925 /* NSString+URLEncode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+URLEncode.m"; sourceTree = "<group>"; };
+		C331EB521C9C5B6400C89925 /* NSString+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Extension.h"; sourceTree = "<group>"; };
+		C331EB531C9C5B6400C89925 /* NSString+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Extension.m"; sourceTree = "<group>"; };
+		C337B9C31D7334AF0060BDD6 /* ZWAPIRequestTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWAPIRequestTool.h; sourceTree = "<group>"; };
+		C337B9C41D7334AF0060BDD6 /* ZWAPIRequestTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWAPIRequestTool.m; sourceTree = "<group>"; };
 		C33B1D461CC53F0B008FA6E6 /* ZWDocumentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWDocumentCell.h; sourceTree = "<group>"; };
 		C33B1D471CC53F0B008FA6E6 /* ZWDocumentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWDocumentCell.m; sourceTree = "<group>"; };
 		C33B1D481CC53F0B008FA6E6 /* ZWDocumentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZWDocumentCell.xib; sourceTree = "<group>"; };
@@ -230,8 +242,17 @@
 		C35AA0B51C874CAE00D17A99 /* Qimokaola-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Qimokaola-Prefix.pch"; sourceTree = "<group>"; };
 		C35AA0B61C88500800D17A99 /* ZWAboutUsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWAboutUsViewController.h; sourceTree = "<group>"; };
 		C35AA0B71C88500800D17A99 /* ZWAboutUsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWAboutUsViewController.m; sourceTree = "<group>"; };
-		C367ADC51CB567F0002184DF /* ZWUtilsCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWUtilsCenter.h; sourceTree = "<group>"; };
-		C367ADC61CB567F0002184DF /* ZWUtilsCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWUtilsCenter.m; sourceTree = "<group>"; };
+		C35FD9B91D707E160066DE68 /* SDWeiXinPhotoContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWeiXinPhotoContainerView.h; sourceTree = "<group>"; };
+		C35FD9BA1D707E160066DE68 /* SDWeiXinPhotoContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWeiXinPhotoContainerView.m; sourceTree = "<group>"; };
+		C35FD9BD1D707E640066DE68 /* SDBrowserImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDBrowserImageView.h; sourceTree = "<group>"; };
+		C35FD9BE1D707E640066DE68 /* SDBrowserImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDBrowserImageView.m; sourceTree = "<group>"; };
+		C35FD9BF1D707E640066DE68 /* SDPhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDPhotoBrowser.h; sourceTree = "<group>"; };
+		C35FD9C01D707E640066DE68 /* SDPhotoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDPhotoBrowser.m; sourceTree = "<group>"; };
+		C35FD9C11D707E640066DE68 /* SDPhotoBrowserConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDPhotoBrowserConfig.h; sourceTree = "<group>"; };
+		C35FD9C21D707E640066DE68 /* SDWaitingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWaitingView.h; sourceTree = "<group>"; };
+		C35FD9C31D707E640066DE68 /* SDWaitingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWaitingView.m; sourceTree = "<group>"; };
+		C35FD9C81D7177260066DE68 /* ZWPhotoContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWPhotoContainerView.h; sourceTree = "<group>"; };
+		C35FD9C91D7177260066DE68 /* ZWPhotoContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWPhotoContainerView.m; sourceTree = "<group>"; };
 		C367ADC91CB681DA002184DF /* JSPatch.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = JSPatch.framework; sourceTree = "<group>"; };
 		C367ADD31CB6934A002184DF /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		C367ADD51CB6935E002184DF /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
@@ -304,14 +325,28 @@
 		C37067C41D6B48E5007B18A8 /* UMComFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMComFoundation.framework; sourceTree = "<group>"; };
 		C37067C51D6B48E5007B18A8 /* UMCommunitySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMCommunitySDK.framework; sourceTree = "<group>"; };
 		C37067C61D6B48E5007B18A8 /* UMComNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMComNetwork.framework; sourceTree = "<group>"; };
+		C3792ABD1D6C824D0079FCF5 /* ZWPathTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWPathTool.h; sourceTree = "<group>"; };
+		C3792ABE1D6C824D0079FCF5 /* ZWPathTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWPathTool.m; sourceTree = "<group>"; };
+		C3792AC01D6C82A00079FCF5 /* ZWHUDTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWHUDTool.h; sourceTree = "<group>"; };
+		C3792AC11D6C82A00079FCF5 /* ZWHUDTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWHUDTool.m; sourceTree = "<group>"; };
+		C3792AC31D6C83A70079FCF5 /* ZWFileTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWFileTool.h; sourceTree = "<group>"; };
+		C3792AC41D6C83A70079FCF5 /* ZWFileTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWFileTool.m; sourceTree = "<group>"; };
+		C3792AC61D6C887A0079FCF5 /* ZWAPITool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWAPITool.h; sourceTree = "<group>"; };
+		C3792AC71D6C887A0079FCF5 /* ZWAPITool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWAPITool.m; sourceTree = "<group>"; };
+		C3792AC91D6DE9200079FCF5 /* ZWFeedTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWFeedTableViewController.h; sourceTree = "<group>"; };
+		C3792ACA1D6DE9200079FCF5 /* ZWFeedTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWFeedTableViewController.m; sourceTree = "<group>"; };
+		C3792ACE1D6F39130079FCF5 /* ZWFeedCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWFeedCell.h; sourceTree = "<group>"; };
+		C3792ACF1D6F39130079FCF5 /* ZWFeedCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWFeedCell.m; sourceTree = "<group>"; };
 		C37C03891D3E2CBB00B22868 /* ZWPopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWPopViewController.h; sourceTree = "<group>"; };
 		C37C038A1D3E2CBB00B22868 /* ZWPopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWPopViewController.m; sourceTree = "<group>"; };
 		C37C038D1D3E77FF00B22868 /* ZWDiscoveryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWDiscoveryViewController.h; sourceTree = "<group>"; };
 		C37C038E1D3E77FF00B22868 /* ZWDiscoveryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWDiscoveryViewController.m; sourceTree = "<group>"; };
-		C37C03901D3F716200B22868 /* CALayer+BorderColorFromUIColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CALayer+BorderColorFromUIColor.h"; sourceTree = "<group>"; };
-		C37C03911D3F716200B22868 /* CALayer+BorderColorFromUIColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CALayer+BorderColorFromUIColor.m"; sourceTree = "<group>"; };
+		C37C03901D3F716200B22868 /* CALayer+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CALayer+Extension.h"; sourceTree = "<group>"; };
+		C37C03911D3F716200B22868 /* CALayer+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CALayer+Extension.m"; sourceTree = "<group>"; };
 		C37C03941D3F8C5F00B22868 /* ZWStudentCircleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWStudentCircleViewController.h; sourceTree = "<group>"; };
 		C37C03951D3F8C5F00B22868 /* ZWStudentCircleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWStudentCircleViewController.m; sourceTree = "<group>"; };
+		C3827B951D72DDBB002F6E5B /* ZWFeedDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWFeedDetailViewController.h; sourceTree = "<group>"; };
+		C3827B961D72DDBB002F6E5B /* ZWFeedDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWFeedDetailViewController.m; sourceTree = "<group>"; };
 		C38EACA61CB535C600EA6448 /* ZWFolderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWFolderCell.h; sourceTree = "<group>"; };
 		C38EACA71CB535C600EA6448 /* ZWFolderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWFolderCell.m; sourceTree = "<group>"; };
 		C38EACA81CB535C600EA6448 /* ZWFolderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZWFolderCell.xib; sourceTree = "<group>"; };
@@ -325,8 +360,8 @@
 		C3A14CA31D37D0FD0088E754 /* ZWSelectSchoolViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWSelectSchoolViewController.m; sourceTree = "<group>"; };
 		C3A609BC1CBE79A1000CC03C /* ZWFileDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWFileDetailViewController.h; sourceTree = "<group>"; };
 		C3A609BD1CBE79A1000CC03C /* ZWFileDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWFileDetailViewController.m; sourceTree = "<group>"; };
-		C3AF73E11BCBE3C60064C3F5 /* NSDate+CommomDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+CommomDate.h"; sourceTree = "<group>"; };
-		C3AF73E21BCBE3C60064C3F5 /* NSDate+CommomDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+CommomDate.m"; sourceTree = "<group>"; };
+		C3AF73E11BCBE3C60064C3F5 /* NSDate+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Extension.h"; sourceTree = "<group>"; };
+		C3AF73E21BCBE3C60064C3F5 /* NSDate+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Extension.m"; sourceTree = "<group>"; };
 		C3BE99EC1BCBE6C8000102A1 /* ZWDownloadInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWDownloadInfoModel.h; sourceTree = "<group>"; };
 		C3BE99ED1BCBE6C8000102A1 /* ZWDownloadInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWDownloadInfoModel.m; sourceTree = "<group>"; };
 		C3BE99F81BCBFB45000102A1 /* ZWDownloadInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWDownloadInfoCell.h; sourceTree = "<group>"; };
@@ -351,8 +386,8 @@
 		C3D1F26E1CB3E33F0017723B /* ZWFileCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWFileCell.m; sourceTree = "<group>"; };
 		C3D1F2951CB401BE0017723B /* ZWFileCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZWFileCell.xib; sourceTree = "<group>"; };
 		C3DC4D831D33C3BD0081DB0A /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		C3DC4D851D33CC550081DB0A /* UIViewController+Logging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Logging.h"; sourceTree = "<group>"; };
-		C3DC4D861D33CC550081DB0A /* UIViewController+Logging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Logging.m"; sourceTree = "<group>"; };
+		C3DC4D851D33CC550081DB0A /* UIViewController+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Extension.h"; sourceTree = "<group>"; };
+		C3DC4D861D33CC550081DB0A /* UIViewController+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Extension.m"; sourceTree = "<group>"; };
 		C3E58AC61D54DFE600FDB384 /* ZWBindAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWBindAccountViewController.h; sourceTree = "<group>"; };
 		C3E58AC71D54DFE600FDB384 /* ZWBindAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWBindAccountViewController.m; sourceTree = "<group>"; };
 		C3EAA7231D3FB79F009FCC0E /* Qimokaola-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Qimokaola-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -379,6 +414,8 @@
 		C3F7911D1BCD316E003793B1 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		C3F7911F1BCD317B003793B1 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		C3F7912F1BCD3C37003793B1 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		C3F854221D7709E800E51013 /* ZWBindAccountViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWBindAccountViewModel.h; sourceTree = "<group>"; };
+		C3F854231D7709E800E51013 /* ZWBindAccountViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWBindAccountViewModel.m; sourceTree = "<group>"; };
 		C3FF26271CA760070081FF58 /* ZWDownloadCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWDownloadCenter.h; sourceTree = "<group>"; };
 		C3FF26281CA760070081FF58 /* ZWDownloadCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWDownloadCenter.m; sourceTree = "<group>"; };
 		E42867274648E046FAFE969D /* Pods-Qimokaola.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Qimokaola.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Qimokaola/Pods-Qimokaola.debug.xcconfig"; sourceTree = "<group>"; };
@@ -414,7 +451,6 @@
 				C37067B21D6B465F007B18A8 /* libWeChatSDK.a in Frameworks */,
 				C33EECAA1BCD502D00BB4B74 /* libicucore.A.dylib in Frameworks */,
 				C37067C81D6B48E5007B18A8 /* UMComFoundation.framework in Frameworks */,
-				C37067BC1D6B4685007B18A8 /* UMComFoundation.framework in Frameworks */,
 				C3528FC71D4CEA3400105027 /* JSPatch.framework in Frameworks */,
 				C37067B11D6B465F007B18A8 /* libSocialWechat.a in Frameworks */,
 				C37067B81D6B465F007B18A8 /* libUMessage_Sdk_1.3.0.a in Frameworks */,
@@ -422,13 +458,9 @@
 				C33EECA41BCD4FC500BB4B74 /* libiconv.2.dylib in Frameworks */,
 				C33EECA31BCD4F9700BB4B74 /* libsqlite3.dylib in Frameworks */,
 				C3F791301BCD3C37003793B1 /* QuartzCore.framework in Frameworks */,
-				C367ADCA1CB681DA002184DF /* JSPatch.framework in Frameworks */,
 				C37067AF1D6B465F007B18A8 /* TencentOpenAPI.framework in Frameworks */,
-				C37067B71D6B465F007B18A8 /* UMComNetwork.framework in Frameworks */,
 				C37067C71D6B48E5007B18A8 /* UMComDataStorage.framework in Frameworks */,
-				C37067BA1D6B4685007B18A8 /* UMComDataStorage.framework in Frameworks */,
 				C3F791201BCD317B003793B1 /* CoreTelephony.framework in Frameworks */,
-				C37067B61D6B465F007B18A8 /* UMCommunitySDK.framework in Frameworks */,
 				C3F7911A1BCD3134003793B1 /* SystemConfiguration.framework in Frameworks */,
 				C3F7910D1BCD28AF003793B1 /* MessageUI.framework in Frameworks */,
 				4813320F633E088B03A6C7C5 /* Pods_Qimokaola.framework in Frameworks */,
@@ -505,12 +537,20 @@
 			children = (
 				C3FF26271CA760070081FF58 /* ZWDownloadCenter.h */,
 				C3FF26281CA760070081FF58 /* ZWDownloadCenter.m */,
-				C367ADC51CB567F0002184DF /* ZWUtilsCenter.h */,
-				C367ADC61CB567F0002184DF /* ZWUtilsCenter.m */,
 				C31BB10A1CB7EDC000EE1E37 /* ZWAppCache.h */,
 				C31BB10B1CB7EDC000EE1E37 /* ZWAppCache.m */,
 				C341B9AD1D47BA0600CEECFF /* ZWNetworkingManager.h */,
 				C341B9AE1D47BA0600CEECFF /* ZWNetworkingManager.m */,
+				C3792ABD1D6C824D0079FCF5 /* ZWPathTool.h */,
+				C3792ABE1D6C824D0079FCF5 /* ZWPathTool.m */,
+				C3792AC01D6C82A00079FCF5 /* ZWHUDTool.h */,
+				C3792AC11D6C82A00079FCF5 /* ZWHUDTool.m */,
+				C3792AC31D6C83A70079FCF5 /* ZWFileTool.h */,
+				C3792AC41D6C83A70079FCF5 /* ZWFileTool.m */,
+				C3792AC61D6C887A0079FCF5 /* ZWAPITool.h */,
+				C3792AC71D6C887A0079FCF5 /* ZWAPITool.m */,
+				C337B9C31D7334AF0060BDD6 /* ZWAPIRequestTool.h */,
+				C337B9C41D7334AF0060BDD6 /* ZWAPIRequestTool.m */,
 			);
 			name = Tools;
 			sourceTree = "<group>";
@@ -518,16 +558,16 @@
 		C3274B9C1BC810A6005D28B8 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				C3274BA61BC814C0005D28B8 /* UIColor+CommonColor.h */,
-				C3274BA71BC814C0005D28B8 /* UIColor+CommonColor.m */,
-				C3AF73E11BCBE3C60064C3F5 /* NSDate+CommomDate.h */,
-				C3AF73E21BCBE3C60064C3F5 /* NSDate+CommomDate.m */,
-				C331EB521C9C5B6400C89925 /* NSString+URLEncode.h */,
-				C331EB531C9C5B6400C89925 /* NSString+URLEncode.m */,
-				C3DC4D851D33CC550081DB0A /* UIViewController+Logging.h */,
-				C3DC4D861D33CC550081DB0A /* UIViewController+Logging.m */,
-				C37C03901D3F716200B22868 /* CALayer+BorderColorFromUIColor.h */,
-				C37C03911D3F716200B22868 /* CALayer+BorderColorFromUIColor.m */,
+				C3274BA61BC814C0005D28B8 /* UIColor+Extension.h */,
+				C3274BA71BC814C0005D28B8 /* UIColor+Extension.m */,
+				C3AF73E11BCBE3C60064C3F5 /* NSDate+Extension.h */,
+				C3AF73E21BCBE3C60064C3F5 /* NSDate+Extension.m */,
+				C331EB521C9C5B6400C89925 /* NSString+Extension.h */,
+				C331EB531C9C5B6400C89925 /* NSString+Extension.m */,
+				C3DC4D851D33CC550081DB0A /* UIViewController+Extension.h */,
+				C3DC4D861D33CC550081DB0A /* UIViewController+Extension.m */,
+				C37C03901D3F716200B22868 /* CALayer+Extension.h */,
+				C37C03911D3F716200B22868 /* CALayer+Extension.m */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -735,6 +775,38 @@
 			name = ZWFilloutInformationViewController;
 			sourceTree = "<group>";
 		};
+		C35FD9B81D707E0E0066DE68 /* SDWeiXinPhotoContainerView */ = {
+			isa = PBXGroup;
+			children = (
+				C35FD9B91D707E160066DE68 /* SDWeiXinPhotoContainerView.h */,
+				C35FD9BA1D707E160066DE68 /* SDWeiXinPhotoContainerView.m */,
+			);
+			name = SDWeiXinPhotoContainerView;
+			sourceTree = "<group>";
+		};
+		C35FD9BC1D707E270066DE68 /* SDPhotoBrowser */ = {
+			isa = PBXGroup;
+			children = (
+				C35FD9BD1D707E640066DE68 /* SDBrowserImageView.h */,
+				C35FD9BE1D707E640066DE68 /* SDBrowserImageView.m */,
+				C35FD9BF1D707E640066DE68 /* SDPhotoBrowser.h */,
+				C35FD9C01D707E640066DE68 /* SDPhotoBrowser.m */,
+				C35FD9C11D707E640066DE68 /* SDPhotoBrowserConfig.h */,
+				C35FD9C21D707E640066DE68 /* SDWaitingView.h */,
+				C35FD9C31D707E640066DE68 /* SDWaitingView.m */,
+			);
+			name = SDPhotoBrowser;
+			sourceTree = "<group>";
+		};
+		C35FD9C71D7176F40066DE68 /* ZWPhotoContainerView */ = {
+			isa = PBXGroup;
+			children = (
+				C35FD9C81D7177260066DE68 /* ZWPhotoContainerView.h */,
+				C35FD9C91D7177260066DE68 /* ZWPhotoContainerView.m */,
+			);
+			name = ZWPhotoContainerView;
+			sourceTree = "<group>";
+		};
 		C370675C1D6B465F007B18A8 /* UMSocialSDK_5.2.1 */ = {
 			isa = PBXGroup;
 			children = (
@@ -874,6 +946,57 @@
 			path = UMCommunitySDK_2.7;
 			sourceTree = "<group>";
 		};
+		C3792ACC1D6DE9F30079FCF5 /* ZWFeedTableViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C3792AC91D6DE9200079FCF5 /* ZWFeedTableViewController.h */,
+				C3792ACA1D6DE9200079FCF5 /* ZWFeedTableViewController.m */,
+			);
+			name = ZWFeedTableViewController;
+			sourceTree = "<group>";
+		};
+		C3792ACD1D6F38D40079FCF5 /* ZWFeedCell */ = {
+			isa = PBXGroup;
+			children = (
+				C3792ACE1D6F39130079FCF5 /* ZWFeedCell.h */,
+				C3792ACF1D6F39130079FCF5 /* ZWFeedCell.m */,
+			);
+			name = ZWFeedCell;
+			sourceTree = "<group>";
+		};
+		C3792AD11D6F39230079FCF5 /* TableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				C3792ACD1D6F38D40079FCF5 /* ZWFeedCell */,
+				C34EF1901D36531700B6449B /* ZWFolderCell */,
+				C34EF18F1D3652F600B6449B /* ZWFileCell */,
+				C34EF18D1D3652CC00B6449B /* ZWServiceCollectionViewCell */,
+				C34EF18C1D3652BD00B6449B /* ZWDownloadInfoCell */,
+				C34EF18B1D3652A000B6449B /* ZWDocumentCell */,
+			);
+			name = TableViewCell;
+			sourceTree = "<group>";
+		};
+		C3792AD21D6F39470079FCF5 /* TableViewHeader */ = {
+			isa = PBXGroup;
+			children = (
+				C34EF18E1D3652E700B6449B /* ZWMoreCollectionViewHeader */,
+			);
+			name = TableViewHeader;
+			sourceTree = "<group>";
+		};
+		C3792AD31D6F395F0079FCF5 /* Custom */ = {
+			isa = PBXGroup;
+			children = (
+				C3F162A11D4E3635006397B1 /* YYFPSLabel */,
+				C35FD9C71D7176F40066DE68 /* ZWPhotoContainerView */,
+				C35FD9BC1D707E270066DE68 /* SDPhotoBrowser */,
+				C35FD9B81D707E0E0066DE68 /* SDWeiXinPhotoContainerView */,
+				C34EF1911D36533000B6449B /* ZWAdvertisementView */,
+			);
+			name = Custom;
+			sourceTree = "<group>";
+		};
 		C37C03881D3E2C4000B22868 /* ZWPopViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -899,6 +1022,15 @@
 				C37C03951D3F8C5F00B22868 /* ZWStudentCircleViewController.m */,
 			);
 			name = ZWStudentCircleViewController;
+			sourceTree = "<group>";
+		};
+		C3827B941D72DD8A002F6E5B /* ZWFeedDetailViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C3827B951D72DDBB002F6E5B /* ZWFeedDetailViewController.h */,
+				C3827B961D72DDBB002F6E5B /* ZWFeedDetailViewController.m */,
+			);
+			name = ZWFeedDetailViewController;
 			sourceTree = "<group>";
 		};
 		C39004A51D5B69980097358E /* Advertisement */ = {
@@ -982,6 +1114,7 @@
 			isa = PBXGroup;
 			children = (
 				C370675A1D6B45CF007B18A8 /* Qimokaola.entitlements */,
+				C3F854211D7709BF00E51013 /* ViewModel */,
 				C31BB1091CB7ED8D00EE1E37 /* Tools */,
 				C3274B9C1BC810A6005D28B8 /* Extensions */,
 				C3C44E241BC68988004B30BF /* Modules */,
@@ -997,6 +1130,7 @@
 		C3C44DEC1BC687B0004B30BF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C3162C881D79EA9F00153EB9 /* heart_red.png */,
 				C3EAA7241D3FBBD1009FCC0E /* pic1.jpg */,
 				C3EAA7251D3FBBD1009FCC0E /* pic2.jpg */,
 				C3EAA7261D3FBBD1009FCC0E /* pic3.jpg */,
@@ -1032,8 +1166,10 @@
 		C3C44E1F1BC688D9004B30BF /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				C3827B941D72DD8A002F6E5B /* ZWFeedDetailViewController */,
 				C3F78BE71D537EA300E9C2AB /* ZWBasicViewController */,
 				C37C03931D3F8C1900B22868 /* ZWStudentCircleViewController */,
+				C3792ACC1D6DE9F30079FCF5 /* ZWFeedTableViewController */,
 				C37C038C1D3E77A000B22868 /* ZWDiscoveryViewController */,
 				C37C03881D3E2C4000B22868 /* ZWPopViewController */,
 				C3A14C9B1D37CF710088E754 /* ZWSelectSchoolViewController */,
@@ -1060,15 +1196,10 @@
 		C3C44E201BC688E2004B30BF /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				C3F162A11D4E3635006397B1 /* YYFPSLabel */,
+				C3792AD31D6F395F0079FCF5 /* Custom */,
+				C3792AD21D6F39470079FCF5 /* TableViewHeader */,
+				C3792AD11D6F39230079FCF5 /* TableViewCell */,
 				C34EF1921D36533A00B6449B /* Storyboards */,
-				C34EF1911D36533000B6449B /* ZWAdvertisementView */,
-				C34EF1901D36531700B6449B /* ZWFolderCell */,
-				C34EF18F1D3652F600B6449B /* ZWFileCell */,
-				C34EF18E1D3652E700B6449B /* ZWMoreCollectionViewHeader */,
-				C34EF18D1D3652CC00B6449B /* ZWServiceCollectionViewCell */,
-				C34EF18C1D3652BD00B6449B /* ZWDownloadInfoCell */,
-				C34EF18B1D3652A000B6449B /* ZWDocumentCell */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1140,6 +1271,15 @@
 			name = ZWBasicViewController;
 			sourceTree = "<group>";
 		};
+		C3F854211D7709BF00E51013 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C3F854221D7709E800E51013 /* ZWBindAccountViewModel.h */,
+				C3F854231D7709E800E51013 /* ZWBindAccountViewModel.m */,
+			);
+			name = ViewModel;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1208,7 +1348,7 @@
 			attributes = {
 				CLASSPREFIX = ZW;
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = Administrator;
 				TargetAttributes = {
 					C3C44DE81BC687B0004B30BF = {
@@ -1278,6 +1418,7 @@
 				C37067AA1D6B465F007B18A8 /* UMSocialSDKResourcesNew.bundle in Resources */,
 				C3BE99FC1BCBFB45000102A1 /* ZWDownloadInfoCell.xib in Resources */,
 				C33B1D4A1CC53F0B008FA6E6 /* ZWDocumentCell.xib in Resources */,
+				C3162C891D79EA9F00153EB9 /* heart_red.png in Resources */,
 				C34832771CB2D8C1009EA4D7 /* Assets.xcassets in Resources */,
 				C37067A01D6B465F007B18A8 /* UMSocialLocalizable.strings in Resources */,
 				C3EAA72A1D3FBBD1009FCC0E /* pic2.jpg in Resources */,
@@ -1362,7 +1503,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				C38EACA91CB535C600EA6448 /* ZWFolderCell.m in Sources */,
+				C337B9C51D7334AF0060BDD6 /* ZWAPIRequestTool.m in Sources */,
 				C347782D1CB263E700D26FA8 /* ZWFile.m in Sources */,
+				C3827B971D72DDBB002F6E5B /* ZWFeedDetailViewController.m in Sources */,
 				C39004B21D5C61900097358E /* ZWNavigationController.m in Sources */,
 				C3217B0E1BCAAF830037937F /* ZWDownloadedViewController.m in Sources */,
 				C31608511CEE375D005BA30B /* ZWCreateCountDownViewController.m in Sources */,
@@ -1371,16 +1514,20 @@
 				C347782C1CB263E700D26FA8 /* ZWFileModel.m in Sources */,
 				C3561A201D3770530032C97B /* ZWFilloutInformationViewController.m in Sources */,
 				C3D1F2691CB3E18B0017723B /* ZWFileFolderViewController.m in Sources */,
+				C35FD9CA1D7177260066DE68 /* ZWPhotoContainerView.m in Sources */,
+				C35FD9BB1D707E160066DE68 /* SDWeiXinPhotoContainerView.m in Sources */,
 				C3BE99FB1BCBFB45000102A1 /* ZWDownloadInfoCell.m in Sources */,
 				C3259ED81D351B09004DC58F /* ZWAdvertisementView.m in Sources */,
+				C3792AD01D6F39130079FCF5 /* ZWFeedCell.m in Sources */,
 				C39004A41D5B67F90097358E /* ZWAdvertisement.m in Sources */,
+				C35FD9C51D707E640066DE68 /* SDPhotoBrowser.m in Sources */,
 				C3561A231D37743F0032C97B /* ZWRegisterViewCotroller.m in Sources */,
-				C367ADC71CB567F0002184DF /* ZWUtilsCenter.m in Sources */,
 				C3A14CA41D37D0FD0088E754 /* ZWSelectSchoolViewController.m in Sources */,
-				C37C03921D3F716200B22868 /* CALayer+BorderColorFromUIColor.m in Sources */,
-				C3AF73E31BCBE3C60064C3F5 /* NSDate+CommomDate.m in Sources */,
+				C3792AC81D6C887A0079FCF5 /* ZWAPITool.m in Sources */,
+				C37C03921D3F716200B22868 /* CALayer+Extension.m in Sources */,
+				C3AF73E31BCBE3C60064C3F5 /* NSDate+Extension.m in Sources */,
 				C3FF26291CA760070081FF58 /* ZWDownloadCenter.m in Sources */,
-				C3DC4D871D33CC550081DB0A /* UIViewController+Logging.m in Sources */,
+				C3DC4D871D33CC550081DB0A /* UIViewController+Extension.m in Sources */,
 				C3E58AC81D54DFE600FDB384 /* ZWBindAccountViewController.m in Sources */,
 				C3C44DF11BC687B0004B30BF /* AppDelegate.m in Sources */,
 				C3F78BEA1D537EB800E9C2AB /* ZWBasicViewController.m in Sources */,
@@ -1389,20 +1536,27 @@
 				C3C44DEE1BC687B0004B30BF /* main.m in Sources */,
 				C37C038F1D3E77FF00B22868 /* ZWDiscoveryViewController.m in Sources */,
 				C33D397C1C17264A00A582DF /* ZWBrowserViewController.m in Sources */,
-				C331EB541C9C5B6400C89925 /* NSString+URLEncode.m in Sources */,
+				C331EB541C9C5B6400C89925 /* NSString+Extension.m in Sources */,
 				C369BD931C7DB212001A44AB /* ZWServiceCollectionViewCell.m in Sources */,
-				C3274BA81BC814C0005D28B8 /* UIColor+CommonColor.m in Sources */,
+				C3274BA81BC814C0005D28B8 /* UIColor+Extension.m in Sources */,
 				C3243E291D547A5A00FF97C3 /* ZWRegisterView.m in Sources */,
 				C3BE99EE1BCBE6C8000102A1 /* ZWDownloadInfoModel.m in Sources */,
 				C3A609BF1CBE79A1000CC03C /* ZWFileDetailViewController.m in Sources */,
 				C39004AE1D5C5F360097358E /* ZWTabBarController.m in Sources */,
+				C3792ACB1D6DE9200079FCF5 /* ZWFeedTableViewController.m in Sources */,
+				C35FD9C61D707E640066DE68 /* SDWaitingView.m in Sources */,
+				C3792ABF1D6C824D0079FCF5 /* ZWPathTool.m in Sources */,
 				C37C03961D3F8C6000B22868 /* ZWStudentCircleViewController.m in Sources */,
 				C33B1D491CC53F0B008FA6E6 /* ZWDocumentCell.m in Sources */,
 				C35AA0B81C88500800D17A99 /* ZWAboutUsViewController.m in Sources */,
+				C35FD9C41D707E640066DE68 /* SDBrowserImageView.m in Sources */,
 				C33140B81CEE0B6200387667 /* ZWCountDownViewController.m in Sources */,
+				C3792AC51D6C83A70079FCF5 /* ZWFileTool.m in Sources */,
+				C3792AC21D6C82A00079FCF5 /* ZWHUDTool.m in Sources */,
 				C3F162A41D4E3658006397B1 /* YYFPSLabel.m in Sources */,
 				C37C038B1D3E2CBB00B22868 /* ZWPopViewController.m in Sources */,
 				C347782E1CB263E700D26FA8 /* ZWFolder.m in Sources */,
+				C3F854241D7709E800E51013 /* ZWBindAccountViewModel.m in Sources */,
 				C3561A261D3774560032C97B /* ZWLoginViewController.m in Sources */,
 				C3F78BE61D537CC400E9C2AB /* ZWLoginAndRegisterViewController.m in Sources */,
 				C341B9AF1D47BA0600CEECFF /* ZWNetworkingManager.m in Sources */,
@@ -1556,8 +1710,8 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = Qimokaola/Qimokaola.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: ZhangWei Chen (82QA43422G)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: ZhangWei Chen (82QA43422G)";
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = NO;
@@ -1603,8 +1757,8 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = Qimokaola/Qimokaola.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: ZhangWei Chen (WWTKV2BMWP)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: ZhangWei Chen (WWTKV2BMWP)";
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = NO;

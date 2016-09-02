@@ -8,14 +8,17 @@
 
 #import "ZWFileDetailViewController.h"
 #import "Masonry.h"
-#import "UIColor+CommonColor.h"
-#import "UIColor+CommonColor.h"
+#import "UIColor+Extension.h"
+#import "UIColor+Extension.h"
 #import "ZWDownloadCenter.h"
-#import "ZWUtilsCenter.h"
 #import "UMSocial.h"
 #import "FMDB.h"
 #import "AppDelegate.h"
-#import "UIColor+CommonColor.h"
+#import "UIColor+Extension.h"
+#import "ZWNetworkingManager.h"
+#import "ZWPathTool.h"
+#import "ZWHUDTool.h"
+#import "ZWFileTool.h"
 
 static NSString *const querySQL = @"SELECT name FROM download_info WHERE link = '%@'";
 
@@ -140,7 +143,7 @@ static NSString *const querySQL = @"SELECT name FROM download_info WHERE link = 
     
     self.typeImageView = ({
         
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[ZWUtilsCenter parseTypeWithString:self.file.type]]];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[ZWFileTool parseTypeWithString:self.file.type]]];
         imageView.contentMode = UIViewContentModeScaleAspectFit;
         [self.view addSubview:imageView];
         
@@ -349,7 +352,10 @@ static NSString *const querySQL = @"SELECT name FROM download_info WHERE link = 
         //[MobClick event:@"Download_File"];
         
         //判断网络情况，若无网络进行提醒并终止下载
-        if (![ZWUtilsCenter checkNetWorkStateAvailable]) {
+        if (![ZWNetworkingManager isNetWorkAvailable]) {
+            
+            [ZWHUDTool showHUDWithTitle:@"下载失败" message:@"请检查网络连接" duration:2.0];
+            
             return;
         }
  
@@ -366,7 +372,7 @@ static NSString *const querySQL = @"SELECT name FROM download_info WHERE link = 
              
              self.progressView.progress = (double)hasWritten / (double) totalExpected;
              
-             self.progressLabel.text = [NSString stringWithFormat:@"下载中..(%@/%@)", [ZWUtilsCenter sizeWithDouble:(double)hasWritten / 1024],self.file.size];
+             self.progressLabel.text = [NSString stringWithFormat:@"下载中..(%@/%@)", [ZWFileTool sizeWithDouble:(double)hasWritten / 1024],self.file.size];
              
         } afterDownload:^(NSString *fileName){
             
@@ -416,7 +422,7 @@ static NSString *const querySQL = @"SELECT name FROM download_info WHERE link = 
         
         NSLog(@"通过下载完成块获得文件存于设备内的名字");
     
-        NSString *filePath = [[ZWUtilsCenter downloadDirectory] stringByAppendingPathComponent:self.fileName];
+        NSString *filePath = [[ZWPathTool downloadDirectory] stringByAppendingPathComponent:self.fileName];
         NSLog(@"%@", filePath);
         weakSelf.documentController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:filePath]];
         weakSelf.documentController.delegate = weakSelf;
@@ -437,7 +443,7 @@ static NSString *const querySQL = @"SELECT name FROM download_info WHERE link = 
             NSString *fileName = [result stringForColumnIndex:0];
             [result close];
             
-            NSString *filePath = [[ZWUtilsCenter downloadDirectory] stringByAppendingPathComponent:fileName];
+            NSString *filePath = [[ZWPathTool downloadDirectory] stringByAppendingPathComponent:fileName];
             NSLog(@"%@", filePath);
             weakSelf.documentController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:filePath]];
             weakSelf.documentController.delegate = weakSelf;

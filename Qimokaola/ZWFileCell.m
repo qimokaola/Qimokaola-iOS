@@ -8,7 +8,7 @@
 
 #import "ZWFileCell.h"
 #import "Masonry.h"
-#import "ZWUtilsCenter.h"
+#import "ZWFileTool.h"
 
 @interface ZWFileCell ()
 
@@ -34,7 +34,7 @@
 
 - (void)setFile:(ZWFile *)file {
     _file = file;
-    self.typeIcon.image = [UIImage imageNamed:[ZWUtilsCenter parseTypeWithString:_file.type]];
+    self.typeIcon.image = [UIImage imageNamed:[ZWFileTool parseTypeWithString:_file.type]];
     self.nameLabel.text = _file.name;
     self.sizeLabel.text = _file.size;
     self.downloadLabel.hidden = ! _file.download;
