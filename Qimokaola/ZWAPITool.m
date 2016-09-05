@@ -24,6 +24,7 @@
 - (NSString *)listAcademy;
 - (NSString *)register;
 - (NSString *)uploadAvatar;
+- (NSString *)login;
 
 @end
 
@@ -69,6 +70,10 @@
     return [self stringByAppendingPathComponent:@"upload"];
 }
 
+- (NSString *)login {
+    return [self stringByAppendingPathComponent:@"login"];
+}
+
 @end
 
 @implementation ZWAPITool
@@ -100,6 +105,10 @@
 + (NSString *)registerAPI {
     //return [[self base] stringByAppendingString:@"/api/user/register"];
     return [[ZWAPITool user] register];
+}
+
++ (NSString *)loginAPI {
+    return [[ZWAPITool user] login];
 }
 
 + (NSString *)uploadAvatarAPI {

@@ -66,6 +66,12 @@
           }];
 }
 
++ (void)requestLoginWithParameters:(id)params result:(APIRequestResult)result {
+    [ZWAPIRequestTool requestWithAPI:[ZWAPITool loginAPI]
+                          parameters:params
+                              result:result];
+}
+
 + (void)requestUploadAvatarWithParamsters:(id)params
                 constructingBodyWithBlock:(void (^)(id<AFMultipartFormData>))block
                                    result:(APIRequestResult)result {

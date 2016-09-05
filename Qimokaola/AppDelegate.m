@@ -94,7 +94,7 @@
     [UMSocialData setAppKey:@"57b447c6e0f55af52e000e0b"];
     [UMSocialQQHandler setQQWithAppId:@"1104906908" appKey:@"F3gD6ULgbrpPSqqF" url:@"http://www.baidu.com"];
     
-    //0.5秒后开始监听
+    //0.5秒后开始监听网络变化
     [self performSelector:@selector(monitorNetworkStatus) withObject:nil afterDelay:0.5f];
     
     //创建数据库队列
@@ -186,12 +186,18 @@
 - (void)monitorNetworkStatus {
     
     [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
-        
+        NSString *networkCondition;
         if (status == AFNetworkReachabilityStatusNotReachable) {
-            
-            [ZWHUDTool showHUDWithTitle:@"无网络连接" message:nil duration:1.5];
-            
+            networkCondition = @"网络连接已断开";
+        } else if (status == AFNetworkReachabilityStatusReachableViaWWAN) {
+            networkCondition=  @"使用蜂窝数据流量";
+        } else if (status == AFNetworkReachabilityStatusReachableViaWiFi) {
+            networkCondition = @"使用Wi-Fi连接";
+        } else {
+            networkCondition = @"未知的网络连接";
         }
+        
+        [ZWHUDTool showHUDWithTitle:networkCondition message:nil duration:kShowHUDMid];
         
     }];
     

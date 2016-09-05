@@ -11,6 +11,4 @@
 @interface ZWBindAccountViewController : UIViewController
 
 @property (nonatomic, strong) NSDictionary *registerParam;
-@property (nonatomic, strong) NSDictionary *registerAvatar;
-
 @end

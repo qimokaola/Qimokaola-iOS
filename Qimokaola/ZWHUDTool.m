@@ -11,7 +11,7 @@
 @implementation ZWHUDTool
 
 + (void)showHUDWithTitle:(NSString *)title message:(NSString *)message duration:(NSTimeInterval)duration {
-    [self showHUDInView:[[UIApplication sharedApplication].windows lastObject] withTitle:title message:message duration:duration];
+    [self showHUDInView:[UIApplication sharedApplication].keyWindow withTitle:title message:message duration:duration];
 }
 
 + (MBProgressHUD *)successHUDInView:(UIView *)view withMessage:(NSString *)message {

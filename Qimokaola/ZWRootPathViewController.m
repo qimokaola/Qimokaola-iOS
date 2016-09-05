@@ -50,8 +50,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    __weak __typeof(self) weakSelf = self;
+    
     self.appDelegate = [UIApplication sharedApplication].delegate;
     [self initView];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kRequestWaitingTime * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [weakSelf startRefresh];
+    });
     
     @weakify(self)
     [[[NSNotificationCenter defaultCenter] rac_addObserverForName:@"PapersClickAdvertisementNotification" object:nil] subscribeNext:^(NSNotification *notification) {

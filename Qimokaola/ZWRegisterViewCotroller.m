@@ -132,11 +132,8 @@
         [self.nextBtn setTitle:@"下一步" forState:UIControlStateNormal];
         
         if ([[[result objectForKey:@"res"] objectForKey:@"ok"] intValue] == 1) {
-            
             MBProgressHUD *hud = [ZWHUDTool successHUDInView:self.navigationController.view withMessage:@"验证成功"];
-            
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kShowHUDShort * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                
                 [hud hideAnimated:YES];
                 
                 ZWFilloutInformationViewController *fillout = [[ZWFilloutInformationViewController alloc] init];
@@ -144,11 +141,8 @@
                 [self.navigationController pushViewController:fillout animated:YES];
                 
             });
-            
         } else {
-            
             [ZWHUDTool showHUDInView:self.navigationController.view withTitle:@"验证错误" message:@"无效的验证码" duration:kShowHUDMid];
-            
         }
         
     }];

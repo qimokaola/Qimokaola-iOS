@@ -12,41 +12,27 @@
 
 + (NSString *)downloadDirectory {
     NSString *directory = [[self documentDirectory] stringByAppendingPathComponent:@"Download"];
-    if (![[NSFileManager defaultManager] fileExistsAtPath:directory]) {
-        [[NSFileManager defaultManager] createDirectoryAtPath:directory
-                                  withIntermediateDirectories:YES
-                                                   attributes:nil
-                                                        error:NULL];
-    }
-    return directory;
+    return [self checkDirExistence:directory];
+}
+
++ (NSString *)avatarDirectory {
+    NSString *avatarDir = [[self documentDirectory] stringByAppendingPathComponent:@"avatar"];
+    return [self checkDirExistence:avatarDir];
 }
 
 + (NSString *)resumeDataDirectory {
     NSString *resumeDataDirectory = [[self documentDirectory] stringByAppendingPathComponent:@"ResumeData"];
-    if (![[NSFileManager defaultManager] fileExistsAtPath:resumeDataDirectory]) {
-        [[NSFileManager defaultManager] createDirectoryAtPath:resumeDataDirectory withIntermediateDirectories:YES attributes:nil error:NULL];
-    }
-    return resumeDataDirectory;
+    return [self checkDirExistence:resumeDataDirectory];
 }
 
 + (NSString *)adImageDirectory {
     NSString *adImageDirectory = [[self documentDirectory] stringByAppendingPathComponent:@"AdImage"];
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    if(![fileManager fileExistsAtPath:adImageDirectory])  {
-        [[NSFileManager defaultManager] createDirectoryAtPath:adImageDirectory withIntermediateDirectories:YES attributes:nil error:nil];
-    }
-    return adImageDirectory;
+    return [self checkDirExistence:adImageDirectory];
 }
 
 + (NSString *)appCacheDirectory {
     NSString *cachaDirectory = [[self cacheDirectory] stringByAppendingPathComponent:@"AppCache"];
-    if (![[NSFileManager defaultManager] fileExistsAtPath:cachaDirectory]) {
-        [[NSFileManager defaultManager] createDirectoryAtPath:cachaDirectory
-                                  withIntermediateDirectories:YES
-                                                   attributes:nil
-                                                        error:NULL];
-    }
-    return cachaDirectory;
+    return [self checkDirExistence:cachaDirectory];
 }
 
 + (NSString *)cacheDirectory {
@@ -57,6 +43,16 @@
 + (NSString *)documentDirectory {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     return [paths lastObject];
+}
+
++ (NSString *)checkDirExistence:(NSString *)dir {
+    if (![[NSFileManager defaultManager] fileExistsAtPath:dir]) {
+        [[NSFileManager defaultManager] createDirectoryAtPath:dir
+                                  withIntermediateDirectories:YES
+                                                   attributes:nil
+                                                        error:NULL];
+    }
+    return dir;
 }
 
 @end

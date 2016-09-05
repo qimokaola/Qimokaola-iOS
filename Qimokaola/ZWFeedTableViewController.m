@@ -7,6 +7,7 @@
 //
 
 #import "ZWFeedTableViewController.h"
+#import "ZWCreateNewFeedViewController.h"
 #import <UMComDataStorage/UMComTopic.h>
 #import <UMComDataStorage/UMComFeed.h>
 #import <UMComDataStorage/UMComUser.h>
@@ -41,6 +42,8 @@
     
     self.feeds = [NSMutableArray array];
     
+    self.title = self.topic.name;
+    
     [[UMComDataRequestManager defaultManager] fetchFeedsTopicRelatedWithTopicId:self.topic.topicID
                                                                        sortType:UMComTopicFeedSortType_default
                                                                       isReverse:NO
@@ -57,7 +60,15 @@
     [self.tableView registerClass:[ZWFeedCell class] forCellReuseIdentifier:kFeedTableViewCellID];
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone; 
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    UIBarButtonItem *createNewFeedItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(presendNewFeedViewController)];
+    self.navigationItem.rightBarButtonItem = createNewFeedItem;
+}
+
+- (void)presendNewFeedViewController {
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:[[ZWCreateNewFeedViewController alloc] init]];
+    [self presentViewController:nav animated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {

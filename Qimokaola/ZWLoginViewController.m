@@ -10,6 +10,12 @@
 #import "Masonry.h"
 #import "ReactiveCocoa.h"
 #import "UIColor+Extension.h"
+#import "ZWLoginViewModel.h"
+#import "ZWHUDTool.h"
+#import "ZWTabBarController.h"
+#import "ZWAPITool.h"
+#import "ZWAPIRequestTool.h"
+#import "ZWUserManager.h"
 
 @interface ZWLoginViewController ()
 
@@ -20,6 +26,9 @@
 @property (nonatomic, strong) UIView *passwordLine;
 @property (nonatomic, strong) UIButton *nextBtn;
 @property (nonatomic, strong) UIButton *forgetBtn;
+
+@property (nonatomic, strong) ZWLoginViewModel *viewModel;
+@property (nonatomic, strong) MBProgressHUD *hud;
 
 @end
 
@@ -39,33 +48,69 @@
     
     [self createSubViews];
     
-    RACSignal *accountValidSignal = [self.accountField.rac_textSignal map:^id(NSString *value) {
-        return @([self isAccountValid:value]);
-    }];
+    [self bindViewModel];
     
-    RACSignal *passwordValidSignal = [self.passwordField.rac_textSignal map:^id(NSString *value) {
-        return @([self isPasswordValid:value]);
-    }];
+//    NSData *cookieData = [[NSUserDefaults standardUserDefaults] objectForKey:@"cookie"];
+//    if ([cookieData length]) {
+//        NSArray *cookies = [NSKeyedUnarchiver unarchiveObjectWithData:cookieData];
+//        for (NSHTTPCookie *cookie in cookies) {
+//            [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
+//        }
+//        [ZWAPIRequestTool requestLoginWithParameters:@{} result:^(id response, BOOL success) {
+//            NSLog(@"%@", response);
+//        }];
+//    }
+}
+
+- (void)bindViewModel {
+    self.viewModel = [[ZWLoginViewModel alloc] init];
     
-    RAC(self.nextBtn, enabled) = [RACSignal combineLatest:@[accountValidSignal, passwordValidSignal] reduce:^id(NSNumber *accountValid, NSNumber *passwordValid){
-        return @([accountValid boolValue] && [passwordValid boolValue]);
-    }];
+    RAC(self.viewModel, account) = self.accountField.rac_textSignal;
+    RAC(self.viewModel, password) = self.passwordField.rac_textSignal;
     
-    [[self.nextBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
+    self.nextBtn.rac_command = self.viewModel.loginCommand;
+    
+    @weakify(self)
+    [[self.nextBtn.rac_command.executionSignals switchToLatest] subscribeNext:^(NSDictionary *result) {
+        @strongify(self)
+        int resultCode = [[result objectForKey:@"code"] intValue];
+        if (resultCode == 0) {
+//            NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL: [NSURL URLWithString:[ZWAPITool login]]];
+//            NSData *cookieData = [NSKeyedArchiver archivedDataWithRootObject:cookies];
+//            [[NSUserDefaults standardUserDefaults] setObject:cookieData forKey:@"cookie"];
+            
+            ZWUser *user = [[ZWUser alloc] init];
+            user.uid = @"10086";
+            [ZWUserManager sharedInstance].loginUser = user;
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"LoginState"];
+            
+            MBProgressHUD *hud = [ZWHUDTool successHUDInView:self.navigationController.view withMessage:@"登录成功"];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kShowHUDMid * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [hud hideAnimated:YES];
+                ZWTabBarController *tabController = [[ZWTabBarController alloc] init];
+                [UIApplication sharedApplication].keyWindow.rootViewController = tabController;
+            });
+        } else {
+            [ZWHUDTool showHUDWithTitle:[result objectForKey:@"info"] message:nil duration:kShowHUDMid];
+        }
         
     }];
     
-    [[self.forgetBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
-        
+    [self.nextBtn.rac_command.errors subscribeNext:^(id x) {
+        [ZWHUDTool showHUDWithTitle:@"请求错误" message:@"请检查网络连接" duration:kShowHUDMid];
     }];
-}
-
-- (BOOL)isAccountValid:(NSString *)text {
-    return text.length > 0;
-}
-
-- (BOOL)isPasswordValid:(NSString *)text {
-    return text.length > 6;
+    
+    [self.nextBtn.rac_command.executing subscribeNext:^(id x) {
+        @strongify(self)
+        if ([x boolValue]) {
+            if (self.hud == nil) {
+                self.hud = [ZWHUDTool excutingHudInView:self.navigationController.view title:@"正在登陆..."];
+            }
+        } else {
+            [self.hud hideAnimated:YES];
+            self.hud = nil;
+        }
+    }];
 }
 
 - (void)createSubViews {
@@ -118,11 +163,15 @@
     self.passwordLine = [self commonLine];
     [self.view addSubview:self.passwordLine];
     
+    //FIXME: 未调试用设置默认账户 - 发布时删除
+    self.accountField.text = @"13067340323";
+    self.passwordField.text = @"1234567";
+    
     self.nextBtn = ({
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         [btn setBackgroundImage:[RGB(80., 140., 238.) parseToImage] forState:UIControlStateNormal];
         [btn setBackgroundImage:[[UIColor lightGrayColor] parseToImage] forState:UIControlStateDisabled];
-        [btn setTitle:@"下一步" forState:UIControlStateNormal];
+        [btn setTitle:@"登录" forState:UIControlStateNormal];
         [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         btn.layer.cornerRadius = cornerRadius;
         btn.layer.masksToBounds = YES;

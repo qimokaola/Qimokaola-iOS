@@ -13,6 +13,7 @@
 #import "UIColor+Extension.h"
 #import "ZWBindAccountViewController.h"
 #import "ZWHUDTool.h"
+#import "ZWPathTool.h"
 
 @interface ZWFilloutInformationViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
@@ -130,7 +131,6 @@
                                            @"academyId": self.academy
                                         }];
         bindAccount.registerParam = params;
-        bindAccount.registerAvatar = @{@"avatar": UIImagePNGRepresentation(self.avatarImageView.image)};
         
        [self.navigationController pushViewController:bindAccount animated:YES];
     }];
@@ -418,6 +418,7 @@
     }
     
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    picker.allowsEditing = YES;
     picker.sourceType = getImageWay == 0 ? UIImagePickerControllerSourceTypeCamera : UIImagePickerControllerSourceTypePhotoLibrary;
     picker.allowsEditing = YES;
     picker.delegate = self;
@@ -426,16 +427,21 @@
 
 #pragma mark - UIImagePickerControllerDelegate
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
-    NSLog(@"%@", info);
     
-    self.isAvatarSelected = YES;
+    __weak __typeof(self) weakSelf = self;
     
     UIImage *selectedImage = info[UIImagePickerControllerEditedImage];
-    self.avatarImageView.image = selectedImage;
-//    self.avatarImageView.layer.cornerRadius = 10;
-//    self.avatarImageView.layer.masksToBounds = YES;
-
-    [picker dismissViewControllerAnimated:YES completion:nil];
+    
+    // 将所选图片写进文件，以便上传使用
+    NSData *imageData = UIImageJPEGRepresentation(selectedImage, 0.5);
+    NSString *avatarPath = [[ZWPathTool avatarDirectory] stringByAppendingPathComponent:@"avatar.jpeg"];
+    NSURL *avatarFileURL = [NSURL fileURLWithPath:avatarPath];
+    [imageData writeToURL:avatarFileURL atomically:YES];
+    
+    [picker dismissViewControllerAnimated:YES completion:^{
+        weakSelf.isAvatarSelected = YES;
+        weakSelf.avatarImageView.image = selectedImage;
+    }];
 }
 
 @end

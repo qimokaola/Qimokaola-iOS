@@ -22,6 +22,10 @@
 
 + (NSString *)registerAPI;
 
++ (NSString *)loginAPI;
+
 + (NSString *)uploadAvatarAPI;
+
+
 
 @end

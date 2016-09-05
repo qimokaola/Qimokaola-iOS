@@ -12,7 +12,9 @@
 #import "ReactiveCocoa.h"
 #import "ZWAPIRequestTool.h"
 #import "ZWHUDTool.h"
-
+#import "ZWTabBarController.h"
+#import "ZWPathTool.h"
+#import "ZWUserManager.h"
 
 #define AccountValidCondition 6
 #define PasswordValidCondition 2
@@ -112,6 +114,11 @@
             
             NSLog(@"注册成功 上传头像图片");
             
+            ZWUser *user = [[ZWUser alloc] init];
+            user.uid = @"10086";
+            [ZWUserManager sharedInstance].loginUser = user;
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"LoginState"];
+            
             [self handleUploadAvatarImage];
             
         } else {
@@ -139,38 +146,30 @@
  *  注册完后上传用户图像
  */
 - (void)handleUploadAvatarImage {
-    
+    //__weak __typeof(self) weakSelf = self;
+    MBProgressHUD *hud = [ZWHUDTool excutingHudInView:self.navigationController.view title:@"正在准备用户信息"];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kShowHUDMid * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         
-        
-        MBProgressHUD *hud = [ZWHUDTool excutingHudInView:self.navigationController.view title:@"正在准备用户信息"];
-        
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kRequestWaitingTime * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-   
+        [ZWAPIRequestTool requestUploadAvatarWithParamsters:@{} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+            NSString *fileName = @"avatar.jpeg";
+            NSString *avatarPath = [[ZWPathTool avatarDirectory] stringByAppendingPathComponent:fileName];
+            NSURL *avatarFileURL = [NSURL fileURLWithPath:avatarPath];
+            [formData appendPartWithFileURL:avatarFileURL name:@"avatar" fileName:fileName mimeType:@"image/jpeg" error:NULL];
+        } result:^(id response, BOOL success) {
+            NSLog(@"%@", response);
+            hud.mode = MBProgressHUDModeCustomView;
+            hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Checkmark"]];
+            hud.square = YES;
+            hud.label.text = @"注册成功";
             
-            [ZWAPIRequestTool requestUploadAvatarWithParamsters:@{} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-                
-                //[formData appendPartWithFormData:[self.registerAvatar objectForKey:@"avatar"] name:@"avatar"];
-                NSURL *fileURL = [[NSBundle mainBundle] URLForResource:@"heart_red" withExtension:@"png"];
-                
-                [formData appendPartWithFileURL:fileURL name:@"avatar" fileName:@"avatar.png" mimeType:@"image/png" error:NULL];
-                
-            } result:^(id response, BOOL success) {
-                
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kShowHUDShort * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [hud hideAnimated:YES];
                 
-                NSLog(@"%@", response);
-                
-                if (success) {
-                    
-                } else {
-                    
-                }
-                
-            }];
+                ZWTabBarController *tabrBarController = [[ZWTabBarController alloc] init];
+                [UIApplication sharedApplication].keyWindow.rootViewController = tabrBarController;
+            });
             
-        });
-        
+        }];
     });
 }
 
@@ -180,17 +179,13 @@
  *  处理需要更多账号信息的方法，例如需要输入验证码
  */
 - (void)handleNeedMore:(NSDictionary *)res {
-    
     isNeedMore = YES;
-    
-    
     // 构建更多参数
     self.moreInfo = [res objectForKey:@"sendback"];
     NSDictionary *code = [[res objectForKey:@"prompt"] objectForKey:@"code"];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kShowHUDMid * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         
         [self addVerifyView:[code objectForKey:@"data"]];
-        
     });
 }
 
