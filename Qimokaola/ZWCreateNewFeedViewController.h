@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <UMComDataStorage/UMComTopic.h>
 
 @interface ZWCreateNewFeedViewController : UIViewController
 
 @property (nonatomic, copy) void(^CompletionBlock)();
+
+@property (nonatomic, strong) NSString *topicID;
 
 @end

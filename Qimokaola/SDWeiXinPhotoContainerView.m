@@ -105,7 +105,8 @@
         UIImageView *imageView = [_imageViewsArray objectAtIndex:idx];
         imageView.hidden = NO;
         //imageView.image = [UIImage imageNamed:obj];
-        [imageView setImageURL:[NSURL URLWithString:obj]];
+        //[imageView setImageURL:[NSURL URLWithString:obj]];
+        [imageView yy_setImageWithURL:[NSURL URLWithString:obj] options:YYWebImageOptionProgressiveBlur];
         imageView.frame = CGRectMake(columnIndex * (itemW + margin), rowIndex * (itemH + margin), itemW, itemH);
     }];
     

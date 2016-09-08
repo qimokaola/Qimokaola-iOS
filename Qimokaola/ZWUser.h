@@ -8,27 +8,23 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ZWUser : NSObject
+@interface ZWUser : NSObject <NSCoding>
 
 // 用户唯一标识
 @property (nonatomic, strong) NSString *uid;
-// 用户手机号
-@property (nonatomic, strong) NSString *phone;
+// 用户用户名 手机号 或者 管理员身份
+@property (nonatomic, strong) NSString *username;
 // 用户昵称
-@property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSString *nickname;
 // 用户性别
 @property (nonatomic, strong) NSString *gender;
 // 学校ID
-@property (nonatomic, strong) NSString *schollID;
+@property (nonatomic, strong) NSString *collegeId;
 // 学院ID
-@property (nonatomic, strong) NSString *acadenyID;
-// 教务处用户名
-@property (nonatomic, strong) NSString *schoolUn;
-// 教务处密码
-@property (nonatomic, strong) NSString *schoolPw;
+@property (nonatomic, strong) NSString *acadenyId;
 // 头像url
-@property (nonatomic, strong) NSString *icon_url;
-// 入学年份
-@property (nonatomic, strong) NSString *enterYear;
+@property (nonatomic, strong) NSString *avatar_url;
+// 是否是管理员身份
+@property (nonatomic, assign) BOOL isAdmin;
 
 @end

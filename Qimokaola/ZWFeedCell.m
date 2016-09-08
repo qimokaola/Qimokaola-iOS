@@ -8,11 +8,12 @@
 
 #import "ZWFeedCell.h"
 #import "SDAutoLayout.h"
-#import "YYKit.h"
 #import "SDWeiXinPhotoContainerView.h"
 #import "LinqToObjectiveC.h"
 #import "Masonry.h"
 #import "UIColor+Extension.h"
+#import "YYWebImage.h"
+
 
 @interface ZWFeedCell ()
 
@@ -97,21 +98,13 @@
     _avatarView.layer.cornerRadius = avatarHeightOrWidth / 2;
     _avatarView.layer.masksToBounds = YES;
     _avatarView.userInteractionEnabled = YES;
-    [_avatarView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithActionBlock:^(id  _Nonnull sender) {
-        if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didClickUser:user:)]) {
-            [weakSelf.delegate didClickUser:weakSelf user:weakSelf.creator];
-        }
-    }]];
+    [_avatarView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickToUser)]];
     
     _nameLabel = [[UILabel alloc] init];
     _nameLabel.font = [UIFont systemFontOfSize:midFontSize];
     _nameLabel.numberOfLines = 1;
     _nameLabel.userInteractionEnabled = YES;
-    [_nameLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithActionBlock:^(id  _Nonnull sender) {
-        if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didClickUser:user:)]) {
-            [weakSelf.delegate didClickUser:weakSelf user:weakSelf.creator];
-        }
-    }]];
+    [_nameLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickToUser)]];
     
     _genderView = [[UIImageView alloc] init];
     
@@ -262,7 +255,7 @@
     _feed = feed;
     _creator = feed.creator;
     
-    [_avatarView setImageWithURL:[NSURL URLWithString:_creator.icon_url.midle_url_string] placeholder:[UIImage imageNamed:@"avatar"]];
+    [_avatarView yy_setImageWithURL:[NSURL URLWithString:_creator.icon_url.midle_url_string] placeholder:[UIImage imageNamed:@"avatar"]];
     
     _nameLabel.text = _creator.name;
     
@@ -291,6 +284,13 @@
     _picContainerView.sd_layout.topSpaceToView(_contentLabel, picContainerViewTopMargin);
     
     [self setupAutoHeightWithBottomView:_separatorView bottomMargin:0.f];
+}
+
+- (void)clickToUser {
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didClickUser:user:)]) {
+        [self.delegate didClickUser:self user:self.creator];
+    }
 }
 
 - (void)clickMoreButton {

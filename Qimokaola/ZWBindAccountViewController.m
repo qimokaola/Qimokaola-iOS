@@ -107,15 +107,18 @@
         
     }] subscribeNext:^(NSDictionary *result) {
        @strongify(self)
-        
         int resultCode = [[result objectForKey:@"code"] intValue];
-        
         if (resultCode == 0) {
-            
             NSLog(@"注册成功 上传头像图片");
-            
+            // 注册成功 根据注册信息构建用户
             ZWUser *user = [[ZWUser alloc] init];
-            user.uid = @"10086";
+            user.uid = [[result objectForKey:@"res"] objectForKey:@"id"];
+            user.username = [self.registerParam objectForKey:@"phone"];
+            user.nickname = [self.registerParam objectForKey:@"nick"];
+            user.collegeId = [self.registerParam objectForKey:@"schoolId"];
+            user.acadenyId = [self.registerParam objectForKey:@"academyId"];
+            user.gender = [self.registerParam objectForKey:@"gender"];
+            user.isAdmin = NO;
             [ZWUserManager sharedInstance].loginUser = user;
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"LoginState"];
             
@@ -157,16 +160,38 @@
             [formData appendPartWithFileURL:avatarFileURL name:@"avatar" fileName:fileName mimeType:@"image/jpeg" error:NULL];
         } result:^(id response, BOOL success) {
             NSLog(@"%@", response);
-            hud.mode = MBProgressHUDModeCustomView;
-            hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Checkmark"]];
-            hud.square = YES;
-            hud.label.text = @"注册成功";
+            
+            if (success) {
+                hud.mode = MBProgressHUDModeCustomView;
+                hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Checkmark"]];
+                hud.square = YES;
+                hud.label.text = @"注册成功";
+                
+                ZWUser *user = [ZWUserManager sharedInstance].loginUser;
+                user.avatar_url = [[response objectForKey:@"res"] objectForKey:@"avatar"];
+                [ZWUserManager sharedInstance].loginUser = user;
+                
+               
+            } else {
+                
+               hud.label.text = @"上传头像出错, 您可以稍后再次上传";
+                
+            }
             
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kShowHUDShort * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [hud hideAnimated:YES];
                 
-                ZWTabBarController *tabrBarController = [[ZWTabBarController alloc] init];
-                [UIApplication sharedApplication].keyWindow.rootViewController = tabrBarController;
+                 [self dismissViewControllerAnimated:YES completion:^{
+                     
+                     MBProgressHUD *hud = [ZWHUDTool excutingHudInView:[UIApplication sharedApplication].keyWindow title:nil];
+                     
+                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kShowHUDMid * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                         [hud hideAnimated:YES];
+                         
+                         ZWTabBarController *tabrBarController = [[ZWTabBarController alloc] init];
+                         [UIApplication sharedApplication].keyWindow.rootViewController = tabrBarController;
+                     });
+                 }];
             });
             
         }];
@@ -297,18 +322,13 @@
         
         if (isNeedMore && self.verifyField && self.verifyField.text.length != 0) {
             
-            
             NSMutableDictionary *schoolMore = [NSMutableDictionary dictionaryWithDictionary:@{@"code": self.verifyField.text}];
             [schoolMore addEntriesFromDictionary:self.moreInfo];
             
             [params addEntriesFromDictionary:@{@"schoolMore": schoolMore}];
-            
             NSLog(@"需要验证码信息，完整参数: %@", params);
-            
         } else {
-            
             NSLog(@"不需要验证码信息，完整参数: %@", params);
-            
         }
         
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{

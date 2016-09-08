@@ -7,8 +7,6 @@
 //
 
 #import "ZWLoginViewController.h"
-#import "Masonry.h"
-#import "ReactiveCocoa.h"
 #import "UIColor+Extension.h"
 #import "ZWLoginViewModel.h"
 #import "ZWHUDTool.h"
@@ -16,6 +14,10 @@
 #import "ZWAPITool.h"
 #import "ZWAPIRequestTool.h"
 #import "ZWUserManager.h"
+
+#import "Masonry.h"
+#import "ReactiveCocoa.h"
+#import "YYModel.h"
 
 @interface ZWLoginViewController ()
 
@@ -49,17 +51,6 @@
     [self createSubViews];
     
     [self bindViewModel];
-    
-//    NSData *cookieData = [[NSUserDefaults standardUserDefaults] objectForKey:@"cookie"];
-//    if ([cookieData length]) {
-//        NSArray *cookies = [NSKeyedUnarchiver unarchiveObjectWithData:cookieData];
-//        for (NSHTTPCookie *cookie in cookies) {
-//            [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
-//        }
-//        [ZWAPIRequestTool requestLoginWithParameters:@{} result:^(id response, BOOL success) {
-//            NSLog(@"%@", response);
-//        }];
-//    }
 }
 
 - (void)bindViewModel {
@@ -73,22 +64,25 @@
     @weakify(self)
     [[self.nextBtn.rac_command.executionSignals switchToLatest] subscribeNext:^(NSDictionary *result) {
         @strongify(self)
+        
         int resultCode = [[result objectForKey:@"code"] intValue];
         if (resultCode == 0) {
-//            NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL: [NSURL URLWithString:[ZWAPITool login]]];
-//            NSData *cookieData = [NSKeyedArchiver archivedDataWithRootObject:cookies];
-//            [[NSUserDefaults standardUserDefaults] setObject:cookieData forKey:@"cookie"];
             
-            ZWUser *user = [[ZWUser alloc] init];
-            user.uid = @"10086";
+            // 保存用户登录信息
+            ZWUser *user = [ZWUser yy_modelWithJSON:[result objectForKey:@"res"]];
             [ZWUserManager sharedInstance].loginUser = user;
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"LoginState"];
             
             MBProgressHUD *hud = [ZWHUDTool successHUDInView:self.navigationController.view withMessage:@"登录成功"];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kShowHUDMid * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [hud hideAnimated:YES];
-                ZWTabBarController *tabController = [[ZWTabBarController alloc] init];
-                [UIApplication sharedApplication].keyWindow.rootViewController = tabController;
+                
+                [self dismissViewControllerAnimated:YES completion:^{
+                    if (_completionBlock) {
+                        _completionBlock();
+                    }
+                }];
+                
             });
         } else {
             [ZWHUDTool showHUDWithTitle:[result objectForKey:@"info"] message:nil duration:kShowHUDMid];

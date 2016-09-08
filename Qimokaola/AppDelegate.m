@@ -8,24 +8,28 @@
 
 #import "AppDelegate.h"
 #import "ZWPathTool.h"
-#import "UMSocial.h"
-#import "UMSocialQQHandler.h"
-#import "JSPatch/JSPatch.h"
 #import "ZWDownloadCenter.h"
 #import "ZWAdvertisementView.h"
 #import "YYFPSLabel.h"
 #import "ZWLoginAndRegisterViewController.h"
 #import "ZWTabBarController.h"
-#import "ReactiveCocoa.h"
 #import "ZWNetworkingManager.h"
-#import "NSObject+YYModel.h"
 #import "ZWAdvertisement.h"
+#import "ZWHUDTool.h"
+
+#import "UMSocial.h"
+#import "UMSocialQQHandler.h"
+#import "JSPatch/JSPatch.h"
 #import "UMMobClick/MobClick.h"
 #import <UMCommunitySDK/UMCommunitySDK.h>
 #import "UMPushSDK_1.3.0/UMessage.h"
-#import "ZWHUDTool.h"
+#import "ReactiveCocoa.h"
+#import "YYModel.h"
 
-@interface AppDelegate ()
+@interface AppDelegate () {
+    // 记录是否第一次进入，用以决定是否显示网络变化提示 若第一次进入且无网络才显示网络情况
+    BOOL firstEnter;
+}
 
 @end
 
@@ -34,6 +38,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     //__weak __typeof(self) weakSelf = self;
+    
+    firstEnter = YES;
     
     application.applicationIconBadgeNumber = 0;
     
@@ -138,8 +144,7 @@
             
         } error:^(NSError *error) {
             
-            @strongify(self)
-            
+            // @strongify(self)
             NSLog(@"there's one error occured: %@", error);
         }];
         
@@ -167,7 +172,7 @@
         [ZWNetworkingManager getWithURLString:@"http://121.42.177.33:8080/api/sb/getSB"
                                       success:^(NSURLSessionDataTask *task, id responseObject) {
                                           
-                                          ZWAdvertisement *ad = [ZWAdvertisement modelWithJSON:responseObject];
+                                          ZWAdvertisement *ad = [ZWAdvertisement yy_modelWithJSON:responseObject];
                                           [subscriber sendNext:ad];
                                           [subscriber sendCompleted];
                                           
@@ -184,8 +189,15 @@
 
 #pragma mark 检测网络变化,无网络时应用内全局提示
 - (void)monitorNetworkStatus {
-    
+
     [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        
+        // 若是首次进入且网络可用则不显示网络状态 非可用才提示
+        if (firstEnter && status != AFNetworkReachabilityStatusNotReachable) {
+            firstEnter = NO;
+            return;
+        }
+        
         NSString *networkCondition;
         if (status == AFNetworkReachabilityStatusNotReachable) {
             networkCondition = @"网络连接已断开";
@@ -197,7 +209,7 @@
             networkCondition = @"未知的网络连接";
         }
         
-        [ZWHUDTool showHUDWithTitle:networkCondition message:nil duration:kShowHUDMid];
+        [ZWHUDTool showHUDWithTitle:networkCondition message:nil duration:kShowHUDShort];
         
     }];
     
@@ -205,175 +217,7 @@
     
 }
 
-//- (void)displayAd {
-//    
-//    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-//    NSInteger localAdVersion = [userDefaults integerForKey:@"ad_version"];
-//    
-//    NSURL *infoInServer = [NSURL URLWithString:@"http://121.42.177.33/ads/ads.json"];
-//    NSData *infoData = [NSData dataWithContentsOfURL:infoInServer];
-//    
-//    //infoData不为空，即成功获取到服务器信息
-//    if (infoData != nil) {
-//        
-//        NSLog(@"获取广告信息成功");
-//        
-//        NSDictionary *info = [NSJSONSerialization JSONObjectWithData:infoData options:NSJSONReadingAllowFragments error:nil];
-// 
-//        BOOL displayAd = [info[@"display"] boolValue];
-//        
-//        NSString *serverAdVersion = info[@"adversion"];
-//        NSString *serverBuildVersion = info[@"buildversion"];
-//        
-//        NSString *localBuildVersion = [self buildVersion];
-//        
-//        if ([localBuildVersion intValue] < [serverBuildVersion intValue]) {
-//            
-//            NSLog(@"当前应用版本小于最新版本，提示用户");
-//            
-//            [self shwoUpdateView];
-//            
-//        }
-//        
-//        if (displayAd && [localBuildVersion intValue] <= [serverBuildVersion intValue]) {
-//            
-//            NSLog(@"显示广告");
-//            
-//            self.adImageView = [[UIImageView alloc]initWithFrame:self.window.frame];
-//            [self.window addSubview:self.adImageView];
-//            
-//            if (localAdVersion != [serverAdVersion intValue]) {
-//                
-//                NSLog(@"本地广告版本与服务器版本不同，下载新广告图片");
-//                
-//                UIImage *adImage = [self downAdloadImage];
-//        
-//                self.adImageView.image = adImage;
-//                
-//                [userDefaults setInteger:[serverAdVersion integerValue] forKey:@"ad_version"];
-//                
-//            } else {
-//                
-//                NSLog(@"本地广告版本与服务器版本相同，使用本地图片");
-//                
-//                //若图片不存在则下载
-//                if (! [[NSFileManager defaultManager] fileExistsAtPath:self.adImagePath]) {
-//                    
-//                    NSLog(@"广告图片不存在，重新下载");
-//                    
-//                    [self downAdloadImage];
-//                }
-//                
-//                self.adImageView.image = [UIImage imageWithContentsOfFile:self.adImagePath];
-//                
-//            }
-//            
-//            [self removeAdViewWithTimeInterval:3.0];
-//            
-//        }  else {
-//            
-//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//                [self sendShowAdFinishedNotification];
-//            });
-//            
-//            NSLog(@"不显示广告");
-//            [[UIApplication sharedApplication] setStatusBarHidden:NO];
-//        
-//        }
-//        
-//    } else {
-//        
-//        //infoData为空，则无网络或获取失败，则默认加载本地广告图像，若本地无广告图像，则跳过
-//        
-//        NSLog(@"获取广告信息失败，尝试加载本地广告信息");
-//        
-//        if ([[NSFileManager defaultManager] fileExistsAtPath:self.adImagePath]) {
-//            
-//            NSLog(@"本地广告信息存在，加载本地广告信息");
-//            
-//            self.adImageView = [[UIImageView alloc]initWithFrame:self.window.frame];
-//            [self.window addSubview:self.adImageView];
-//            
-//            self.adImageView.image = [UIImage imageWithContentsOfFile:self.adImagePath];
-//            
-//            [self removeAdViewWithTimeInterval:3.0];
-//            
-//        } else {
-//            NSLog(@"本地广告信息不存在，跳过显示广告");
-//            [[UIApplication sharedApplication] setStatusBarHidden:NO];
-//            
-//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//                [self sendShowAdFinishedNotification];
-//            });
-//        }
-//        
-//    }
-//    
-//    
-//}
-//
-//- (void)sendShowAdFinishedNotification {
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"PapersShowAdFinished" object:nil];
-//}
-//
-//- (void)removeAdViewWithTimeInterval:(double)time {
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(time * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//        
-//        [[UIApplication sharedApplication] setStatusBarHidden:NO];
-//        
-//        [UIView animateWithDuration:0.3 animations:^{
-//            
-//            self.adImageView.alpha = 0.0;
-//            
-//        } completion:^(BOOL finished) {
-//            
-//            [self.adImageView removeFromSuperview];
-//            
-//            [self sendShowAdFinishedNotification];
-//            
-//        }];
-//        
-//    });
-//}
-//
-//- (NSString *)buildVersion {
-//    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-//    return [infoDictionary objectForKey:@"CFBundleVersion"];
-//
-//}
-//
-//- (void)shwoUpdateView {
-//    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"检测到新版本，是否前往下载？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-//    [alertView show];
-//}
-//
-//- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-//    if (buttonIndex == 1) {
-//        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/app/id1054613325"]];
-//    }
-//}
-//
-///**
-// *  @author Administrator, 16-03-19 21:03:31
-// *
-// *  下载广告图片并储存
-// *
-// *  @return 广告图片
-// */
-//- (UIImage *)downAdloadImage {
-//    NSLog(@"下载图片中...");
-//    
-//    NSURL *adImageURL = [NSURL URLWithString:@"http://121.42.177.33/ads/ads.png"];
-//    NSData *adImageData = [NSData dataWithContentsOfURL:adImageURL];
-//    UIImage *adImage = [UIImage imageWithData:adImageData];
-//    
-//    
-//    NSLog(@"下载图片完成");
-//    
-//    [adImageData writeToFile:self.adImagePath atomically:YES];
-//    
-//    return adImage;
-//}
+
 
 
 
@@ -388,25 +232,6 @@
     
 }
 
-////iOS 7 Remote Notification
-//- (void)application:(UIApplication *)application didReceiveRemoteNotification:  (NSDictionary *)userInfo fetchCompletionHandler:(void (^)   (UIBackgroundFetchResult))completionHandler {
-//    
-//    NSLog(@"this is iOS7 Remote Notification");
-//    
-//    // 取得 APNs 标准信息内容
-//    NSDictionary *aps = [userInfo valueForKey:@"aps"];
-//    NSString *content = [aps valueForKey:@"alert"]; //推送显示的内容
-//    NSInteger badge = [[aps valueForKey:@"badge"] integerValue]; //badge数量
-//    NSString *sound = [aps valueForKey:@"sound"]; //播放的声音
-//    
-//    // 取得Extras字段内容
-//    NSString *customizeField1 = [userInfo valueForKey:@"customizeExtras"]; //服务端中Extras字段，key是自己定义的
-//    NSLog(@"content =[%@], badge=[%ld], sound=[%@], customize field  =[%@]",content,(long)badge,sound,customizeField1);
-//    
-//    // Required
-//    [JPUSHService handleRemoteNotification:userInfo];
-//    completionHandler(UIBackgroundFetchResultNewData);
-//}
 
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {

@@ -7,33 +7,35 @@
 //
 
 #import "ZWDiscoveryViewController.h"
+#import "ZWAPITool.h"
+#import "ZWUserManager.h"
+
 #import "MJRefresh.h"
 #import "Masonry.h"
-#import "MBProgressHUD.h"
 #import "ReactiveCocoa.h"
 #import <UMCommunitySDK/UMComDataRequestManager.h>
 #import <UMCommunitySDK/UMComSession.h>
+#import "YYWebImage.h"
+
 
 @interface ZWDiscoveryViewController ()
 
-//头像 用户名等父控件
+// 头像 用户名等父控件
 @property (strong, nonatomic) UIView *userInfoView;
 
-//头像
+// 头像
 @property (strong, nonatomic) UIImageView *avatarImageView;
 
-//昵称标签
+// 昵称标签
 @property (nonatomic, strong) UILabel *nicknameLabel;
 
-//下载币显示标签
-@property (nonatomic, strong) UILabel *downloadCoinHintLabel;
+// 性别视图
+@property (nonatomic, strong) UIImageView *genderView;
 
-//下载币数量标签
-@property (nonatomic, strong) UILabel *downloadCoinCountLabel;
+// 学校标签
+@property (nonatomic, strong) UILabel *schoolLabel;
 
 @property (nonatomic, strong) NSArray *channels;
-
-
 
 @end
 
@@ -59,10 +61,81 @@
     
     __weak __typeof(self) weakSelf = self;
     
+    [self createSubViews];
+    
+    [[UMComDataRequestManager defaultManager] userCustomAccountLoginWithName:@"ABC"
+                                                                    sourceId:@"13110691985"
+                                                                    icon_url:nil
+                                                                      gender:1
+                                                                         age:20
+                                                                      custom:@"727489038"
+                                                                       score:0.f
+                                                                  levelTitle:@"102"
+                                                                       level:0
+                                                           contextDictionary:@{}
+                                                                userNameType:userNameNoRestrict
+                                                              userNameLength:userNameLengthNoRestrict
+                                                                  completion:^(NSDictionary *responseObject, NSError *error) {
+                                                                      NSLog(@"登陆成功");
+                                                                      if (error) {
+                                                                          NSLog(@"登录发生错误 ;%@", error);
+                                                                      } else {
+                                                                          if ([responseObject isKindOfClass:[NSDictionary class]]) {
+                                                                              UMComUser *user = responseObject[UMComModelDataKey];
+                                                                              if (user) {
+                                                                                  
+                                                                                  NSLog(@"%@", user.custom);
+                                                                                  
+                                                                                  [UMComSession sharedInstance].loginUser = user;
+                                                                                  [[UMComDataBaseManager shareManager] saveRelatedIDTableWithType:UMComRelatedRegisterUserID withUsers:@[user]];
+                                                                                  
+                                                                                  //[UMComSession sharedInstance].token = responseObject[UMComTokenKey];
+                                                                                  
+//                                                                                  [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoginSucceedNotification object:nil];
+                                                                              }
+                                                                          }
+                                                                      }
+
+                                                                      
+                                                                  }];
+    
+    
+    
+    UIView *backgroundView = [[UIView alloc] initWithFrame:self.tableView.frame];
+    backgroundView.backgroundColor = RGB(239, 239, 244);
+    self.tableView.backgroundView = backgroundView;
+    
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 44)];
+    self.tableView.tableFooterView = view;
+    
+    MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [weakSelf.tableView.mj_header endRefreshing];
+        });
+        
+    }];
+    
+    header.backgroundColor = RGB(239, 239, 244);
+    self.tableView.mj_header = header;
+    
+    ZWUser *loginUser = [ZWUserManager sharedInstance].loginUser;
+    [self.avatarImageView yy_setImageWithURL:[NSURL URLWithString:[[ZWAPITool base] stringByAppendingPathComponent:loginUser.avatar_url]] placeholder:[UIImage imageNamed:@"avatar"]];
+    self.nicknameLabel.text  = loginUser.nickname;
+    //self.schoolLabel.text = loginUser.collegeId;
+    NSString *genderImageName = [loginUser.gender isEqualToString:@"男生"] ? @"icon_male" : @"icon_female";
+    self.genderView.image = [UIImage imageNamed:genderImageName];
+}
+
+- (void)createSubViews {
+    __weak __typeof(self) weakSelf = self;
+    
     CGFloat sizeRate = 0.7;
     CGFloat marginRate = (1. - sizeRate) / 2.;
     CGFloat margin = 10;
-    CGFloat smallMargin = 5;
+    CGFloat smallMargin = 5.f;
+    
+    CGFloat genderViewSize = 20.f;
     
     UIColor *commonBlueColor = RGB(80, 140, 238);
     
@@ -106,12 +179,24 @@
         
     });
     
+    self.genderView = ({
+        UIImageView *imageView = [[UIImageView alloc] init];
+        [self.userInfoView addSubview:imageView];
+        
+        [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.size.mas_equalTo(CGSizeMake(genderViewSize, genderViewSize));
+            make.centerY.equalTo(weakSelf.nicknameLabel);
+            make.left.equalTo(weakSelf.nicknameLabel.mas_right).with.offset(smallMargin);
+        }];
+        
+        imageView;
+    });
+    
     //显示下载币文字标签
-    self.downloadCoinHintLabel = ({
+    self.schoolLabel = ({
         
         UILabel *label = [[UILabel alloc] init];
         label.numberOfLines = 1;
-        label.text = @"下载币:";
         label.font = [UIFont systemFontOfSize:14];
         label.textColor = [UIColor lightGrayColor];
         [label sizeToFit];
@@ -124,87 +209,7 @@
         
         label;
     });
-    
-    //下载币数量标签
-    self.downloadCoinCountLabel = ({
-       
-        UILabel *label = [[UILabel alloc] init];
-        label.numberOfLines = 1;
-        label.textColor = [UIColor lightGrayColor];
-        label.font = [UIFont systemFontOfSize:14];
-        [label sizeToFit];
-        [self.userInfoView addSubview:label];
-        
-        [label mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(weakSelf.downloadCoinHintLabel.mas_right).with.offset(smallMargin);
-            make.top.equalTo(weakSelf.downloadCoinHintLabel);
-        }];
-        
-        label;
-    });
-    
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-    hud.label.text = @"加载用户数据";
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        self.nicknameLabel.text = @"Administrator";
-        self.downloadCoinCountLabel.text = @"50";
-        [hud hideAnimated:YES];
-        
-    });
-    
-    
-    [[UMComDataRequestManager defaultManager] userCustomAccountLoginWithName:@"ABC"
-                                                                    sourceId:@"13110691985"
-                                                                    icon_url:nil
-                                                                      gender:1
-                                                                         age:20
-                                                                      custom:@"727489038"
-                                                                       score:0.f
-                                                                  levelTitle:@"102"
-                                                                       level:0
-                                                           contextDictionary:@{}
-                                                                userNameType:userNameNoRestrict
-                                                              userNameLength:userNameLengthNoRestrict
-                                                                  completion:^(NSDictionary *responseObject, NSError *error) {
-                                                                      NSLog(@"登陆成功");
-                                                                      if (error) {
-                                                                          NSLog(@"登录发生错误 ;%@", error);
-                                                                      } else {
-                                                                          if ([responseObject isKindOfClass:[NSDictionary class]]) {
-                                                                              UMComUser *user = responseObject[UMComModelDataKey];
-                                                                              if (user) {
-                                                                                  
-                                                                                  NSLog(@"%@", user.custom);
-                                                                                  
-                                                                                  [UMComSession sharedInstance].loginUser = user;
-                                                                                  [[UMComDataBaseManager shareManager] saveRelatedIDTableWithType:UMComRelatedRegisterUserID withUsers:@[user]];
-                                                                                  
-                                                                                  //[UMComSession sharedInstance].token = responseObject[UMComTokenKey];
-                                                                                  
-//                                                                                  [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoginSucceedNotification object:nil];
-                                                                              }
-                                                                          }
-                                                                      }
 
-                                                                      
-                                                                  }];
-    
-    MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-       
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [weakSelf.tableView.mj_header endRefreshing];
-        });
-        
-    }];
-    header.backgroundColor = RGB(239, 239, 244);
-    self.tableView.mj_header = header;
-    
-    UIView *backgroundView = [[UIView alloc] initWithFrame:self.tableView.frame];
-    backgroundView.backgroundColor = RGB(239, 239, 244);
-    self.tableView.backgroundView = backgroundView;
-    
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 44)];
-    self.tableView.tableFooterView = view;
 }
 
 - (void)didReceiveMemoryWarning {

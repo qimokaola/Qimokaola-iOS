@@ -10,16 +10,19 @@
 #import "AppDelegate.h"
 #import "ZWBrowserViewController.h"
 #import "UIColor+Extension.h"
-#import "MBProgressHUD.h"
-#import "AFNetworkReachabilityManager.h"
-#import "MJRefresh.h"
 #import "ZWFileFolderViewController.h"
 #import "ZWAppCache.h"
 #import "ZWPopViewController.h"
-#import "ReactiveCocoa.h"
 #import "ZWBrowserViewController.h"
 #import "ZWPathTool.h"
 #import "ZWHUDTool.h"
+#import "ZWAPIRequestTool.h"
+#import "ZWUserManager.h"
+#import "ZWLoginViewController.h"
+
+#import "MJRefresh.h"
+#import "ReactiveCocoa.h"
+#import "YYModel.h"
 
 @interface ZWRootPathViewController () <UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating, UISearchControllerDelegate, UIPopoverPresentationControllerDelegate>
 
@@ -68,6 +71,27 @@
             @strongify(self)
             [self.navigationController pushViewController:browser animated:YES];
         });
+    }];
+    
+    [ZWAPIRequestTool requestUserInfo:^(id response, BOOL success) {
+//        if (success) {
+//            if ([[response objectForKey:@"code"] intValue] == 0) {
+//                ZWUser *user = [ZWUser yy_modelWithDictionary:[response objectForKey:@"res"]];
+//                [ZWUserManager sharedInstance].loginUser = user;
+//            } else {
+//                
+//                [ZWHUDTool showHUDInView:weakSelf.navigationController.view withTitle:@"登录状态过期 请重新登录" message:nil duration:kShowHUDMid];
+//                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kShowHUDMid * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//                    ZWLoginViewController *loginViewController = [[ZWLoginViewController alloc] init];
+//                    loginViewController.completionBlock = ^() {
+//                        [weakSelf startRefresh];
+//                    };
+//                    [weakSelf presentViewController:[[UINavigationController alloc] initWithRootViewController:loginViewController] animated:YES completion:nil];
+//                });
+//                
+//            }
+//        }
+        NSLog(@"%@", response);
     }];
 }
 
@@ -192,19 +216,21 @@
 #pragma mark 加载数据
 - (void)loadData  {
     
-    __weak __typeof(self) weakSelf = self;
-    [ZWNetworkingManager getWithURLString:@"http://121.42.177.33:8082/files.json" success:^(NSURLSessionDataTask *task, id responseObject) {
- 
-        [weakSelf receiveResponse:responseObject];
-        
-    } failure:^(NSURLSessionDataTask *task, id responseObject) {
-        
-        [ZWHUDTool showHUDWithTitle:@"错误信息" message:@"获取数据失败" duration:2.0];
-        
-        [weakSelf.tableView.mj_header endRefreshing];
-        
-        
-    }];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        __weak __typeof(self) weakSelf = self;
+        [ZWNetworkingManager getWithURLString:@"http://121.42.177.33:8082/files.json" success:^(NSURLSessionDataTask *task, id responseObject) {
+            
+            [weakSelf receiveResponse:responseObject];
+            
+        } failure:^(NSURLSessionDataTask *task, id responseObject) {
+            
+            [ZWHUDTool showHUDWithTitle:@"错误信息" message:@"获取数据失败" duration:2.0];
+            
+            [weakSelf.tableView.mj_header endRefreshing];
+            
+            
+        }];
+    });
 }
 
 - (void)receiveResponse:(NSDictionary *)result {

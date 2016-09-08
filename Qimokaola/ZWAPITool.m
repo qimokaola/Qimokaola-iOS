@@ -25,6 +25,7 @@
 - (NSString *)register;
 - (NSString *)uploadAvatar;
 - (NSString *)login;
+- (NSString *)userInfo;
 
 @end
 
@@ -74,6 +75,10 @@
     return [self stringByAppendingPathComponent:@"login"];
 }
 
+- (NSString *)userInfo {
+    return [self stringByAppendingPathComponent:@"info"];
+}
+
 @end
 
 @implementation ZWAPITool
@@ -113,6 +118,10 @@
 
 + (NSString *)uploadAvatarAPI {
     return [[ZWAPITool user] uploadAvatar];
+}
+
++ (NSString *)userInfoAPI {
+    return [[ZWAPITool user] userInfo];
 }
 
 + (NSString *)user {

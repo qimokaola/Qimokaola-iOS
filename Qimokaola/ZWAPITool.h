@@ -26,6 +26,6 @@
 
 + (NSString *)uploadAvatarAPI;
 
-
++ (NSString *)userInfoAPI;
 
 @end

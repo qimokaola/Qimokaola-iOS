@@ -7,10 +7,13 @@
 //
 
 #import "ZWLoginAndRegisterViewController.h"
-#import "Masonry.h"
-#import "ReactiveCocoa.h"
 #import "ZWRegisterViewCotroller.h"
 #import "ZWLoginViewController.h"
+#import "ZWTabBarController.h"
+#import "ZWHUDTool.h"
+
+#import "Masonry.h"
+#import "ReactiveCocoa.h"
 
 @interface ZWLoginAndRegisterViewController ()
 
@@ -33,6 +36,34 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self createSubViews];
+    
+    //监听按钮按下动作
+    @weakify(self)
+    [[self.loginBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
+        @strongify(self)
+        ZWLoginViewController *loginViewController = [[ZWLoginViewController alloc] init];
+        loginViewController.completionBlock = ^() {
+            
+            MBProgressHUD *hud = [ZWHUDTool excutingHudInView:[UIApplication sharedApplication].keyWindow title:nil];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kShowHUDShort * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [hud hideAnimated:YES];
+                ZWTabBarController *tabBarController = [[ZWTabBarController alloc] init];
+                [UIApplication sharedApplication].keyWindow.rootViewController = tabBarController;
+            });
+            
+        };
+        [self presentViewController:[self nextViewController:loginViewController] animated:YES completion:nil];
+    }];
+    
+    [[self.registerBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
+        @strongify(self)
+        ZWRegisterViewCotroller *registerViewController = [[ZWRegisterViewCotroller alloc] init];
+        [self presentViewController:[self nextViewController:registerViewController] animated:YES completion:nil];
+    }];
+}
+
+- (void)createSubViews {
     __weak __typeof(self) weakSelf = self;
     
     self.view.backgroundColor = [UIColor whiteColor];
@@ -94,19 +125,10 @@
         make.centerY.equalTo(weakSelf.btnContainer);
         make.height.equalTo(weakSelf.btnContainer).multipliedBy(0.5);
     }];
-    
-    //监听按钮按下动作
-    [[self.loginBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
-        [weakSelf presentViewController:[self nextViewController:[ZWLoginViewController class]] animated:YES completion:nil];
-    }];
-    
-    [[self.registerBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
-        [weakSelf presentViewController:[self nextViewController:[ZWRegisterViewCotroller class]] animated:YES completion:nil];
-    }];
 }
 
-- (UINavigationController *)nextViewController:(Class)clazz {
-    return [[UINavigationController alloc] initWithRootViewController:[[clazz alloc] init]];
+- (UINavigationController *)nextViewController:(UIViewController *)viewController {
+    return [[UINavigationController alloc] initWithRootViewController:viewController];
 }
 
 - (void)didReceiveMemoryWarning {

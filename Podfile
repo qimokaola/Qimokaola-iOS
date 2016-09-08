@@ -11,8 +11,11 @@ target "Qimokaola" do
     pod 'SDCycleScrollView'
     pod 'SDWebImage'
     pod 'ReactiveCocoa', '~> 2.5'
-    pod 'YYKit'
     pod 'SDAutoLayout'
     pod 'LEETheme'
     pod 'LinqToObjectiveC'
+    pod 'YYText'
+    pod 'YYWebImage'
+    pod 'YYModel'
+    pod 'YYCache'
 end

@@ -28,5 +28,7 @@ typedef void(^APIRequestResult)(id response, BOOL success);
 + (void)requestLoginWithParameters:(id)params result:(APIRequestResult)result;
 // 上传头像
 + (void)requestUploadAvatarWithParamsters:(id)params constructingBodyWithBlock:(void (^)(id <AFMultipartFormData> formData))block result:(APIRequestResult)result;
+// 用户信息
++ (void)requestUserInfo:(APIRequestResult)result;
 
 @end

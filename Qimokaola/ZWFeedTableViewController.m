@@ -7,13 +7,13 @@
 //
 
 #import "ZWFeedTableViewController.h"
+#import "ZWFeedCell.h"
+
 #import "ZWCreateNewFeedViewController.h"
 #import <UMComDataStorage/UMComTopic.h>
 #import <UMComDataStorage/UMComFeed.h>
 #import <UMComDataStorage/UMComUser.h>
 #import <UMComDataStorage/UMComImageUrl.h>
-#import "YYKit.h"
-#import "ZWFeedCell.h"
 #import "SDAutoLayout.h"
 #import <UMCommunitySDK/UMComSession.h>
 
@@ -62,12 +62,15 @@
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    UIBarButtonItem *createNewFeedItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(presendNewFeedViewController)];
+    UIBarButtonItem *createNewFeedItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(presendNewFeedViewController)];
     self.navigationItem.rightBarButtonItem = createNewFeedItem;
 }
 
 - (void)presendNewFeedViewController {
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:[[ZWCreateNewFeedViewController alloc] init]];
+    ZWCreateNewFeedViewController *createNewFeedViewController = [[ZWCreateNewFeedViewController alloc] init];
+    createNewFeedViewController.topicID = self.topic.topicID;
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:createNewFeedViewController];
+    
     [self presentViewController:nav animated:YES completion:nil];
 }
 

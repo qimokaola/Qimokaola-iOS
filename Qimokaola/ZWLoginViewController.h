@@ -10,4 +10,6 @@
 
 @interface ZWLoginViewController : UIViewController
 
+@property (nonatomic, copy) void(^completionBlock)();
+
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "ZWCreateNewFeedViewController.h"
+#import <UMCommunitySDK/UMComDataRequestManager.h>
 
 @interface ZWCreateNewFeedViewController ()
 
@@ -52,12 +53,48 @@
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
+/*
+ @param content Feed的内容
+ @param title 标题
+ @param location 位置
+ @param locationName 地理位置名称
+ @param related_uids @用户
+ @param topic_ids 话题ID数组
+ @param images 图片数组
+ @param type 类型（0表示普通，1表示公告，只有管理员才有权限发表公告）
+ @param custom 自定义字段
+ @param completion 请求回调block，参考 'UMComRequestCompletion'
+ @return 返回空
+ */
 - (void)postNewFeed {
-    
+    [UMComDataRequestManager feedCreateWithContent:_feedField.text
+                                             title:nil
+                                          location:nil
+                                      locationName:nil
+                                      related_uids:nil
+                                         topic_ids:@[self.topicID]
+                                            images:nil
+                                              type:@0
+                                            custom:@"测试一下自带字符"
+                                        completion:^(NSDictionary *responseObject, NSError *error) {
+                                            
+                                            NSLog(@"%@ %@", responseObject, error);
+                                           
+                                            if (responseObject) {
+                                                
+                                                [self dismissViewControllerAnimated:YES completion:nil];
+                                                
+                                            }
+                                            
+                                        }];
 }
 
 - (void)createSubViews {
-    _feedField = [[UITextField alloc] initWithFrame:self.view.bounds];
+    CGRect frame = self.view.frame;
+    frame.origin.y += kNavigationBarHeight;
+    frame.size.height -= kNavigationBarHeight;
+    _feedField = [[UITextField alloc] initWithFrame:frame];
+    _feedField.contentVerticalAlignment = UIControlContentVerticalAlignmentTop;
     [self.view addSubview:_feedField];
 }
 

@@ -8,6 +8,14 @@
 
 #import "ZWUserManager.h"
 
+@interface ZWUserManager ()
+
+@property (nonatomic, strong) YYDiskCache *diskCache;
+
+@end
+
+NSString *const kLoginedUser = @"kLoginedUser";
+
 @implementation ZWUserManager
 
 + (instancetype)sharedInstance {
@@ -19,9 +27,24 @@
     return manager;
 }
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _diskCache = [[YYDiskCache alloc] initWithPath:@"User"];
+        _loginUser = (ZWUser *)[_diskCache objectForKey:kLoginedUser];
+        NSLog(@"%@", _loginUser.nickname);
+    }
+    return self;
+}
+
 - (void)setLoginUser:(ZWUser *)loginUser {
     _loginUser = loginUser;
-    _uid = loginUser.uid;
+    _isLogin = loginUser != nil;
+    
+    NSLog(@"set object");
+    
+    [_diskCache setObject:loginUser forKey:kLoginedUser];
 }
 
 @end

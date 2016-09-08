@@ -143,6 +143,7 @@
 		C3F791301BCD3C37003793B1 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3F7912F1BCD3C37003793B1 /* QuartzCore.framework */; };
 		C3F854241D7709E800E51013 /* ZWBindAccountViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F854231D7709E800E51013 /* ZWBindAccountViewModel.m */; };
 		C3FC44AD1D7DBA8100896CDB /* ZWCreateNewFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3FC44AC1D7DBA8100896CDB /* ZWCreateNewFeedViewController.m */; };
+		C3FC44B11D8154F100896CDB /* ZWBaseSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3FC44B01D8154F100896CDB /* ZWBaseSearchViewController.m */; };
 		C3FF26291CA760070081FF58 /* ZWDownloadCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = C3FF26281CA760070081FF58 /* ZWDownloadCenter.m */; };
 /* End PBXBuildFile section */
 
@@ -428,6 +429,8 @@
 		C3F854231D7709E800E51013 /* ZWBindAccountViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWBindAccountViewModel.m; sourceTree = "<group>"; };
 		C3FC44AB1D7DBA8100896CDB /* ZWCreateNewFeedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWCreateNewFeedViewController.h; sourceTree = "<group>"; };
 		C3FC44AC1D7DBA8100896CDB /* ZWCreateNewFeedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWCreateNewFeedViewController.m; sourceTree = "<group>"; };
+		C3FC44AF1D8154F100896CDB /* ZWBaseSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWBaseSearchViewController.h; sourceTree = "<group>"; };
+		C3FC44B01D8154F100896CDB /* ZWBaseSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWBaseSearchViewController.m; sourceTree = "<group>"; };
 		C3FF26271CA760070081FF58 /* ZWDownloadCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWDownloadCenter.h; sourceTree = "<group>"; };
 		C3FF26281CA760070081FF58 /* ZWDownloadCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWDownloadCenter.m; sourceTree = "<group>"; };
 		E42867274648E046FAFE969D /* Pods-Qimokaola.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Qimokaola.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Qimokaola/Pods-Qimokaola.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1205,7 +1208,8 @@
 		C3C44E1F1BC688D9004B30BF /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				C3FC44AA1D7DBA3C00896CDB /* ZWNewFeedViewController */,
+				C3FC44AE1D81549F00896CDB /* ZWBaseSearchViewController */,
+				C3FC44AA1D7DBA3C00896CDB /* ZWCreateNewFeedViewController */,
 				C3827B941D72DD8A002F6E5B /* ZWFeedDetailViewController */,
 				C3F78BE71D537EA300E9C2AB /* ZWBasicViewController */,
 				C37C03931D3F8C1900B22868 /* ZWStudentCircleViewController */,
@@ -1323,13 +1327,22 @@
 			name = ViewModel;
 			sourceTree = "<group>";
 		};
-		C3FC44AA1D7DBA3C00896CDB /* ZWNewFeedViewController */ = {
+		C3FC44AA1D7DBA3C00896CDB /* ZWCreateNewFeedViewController */ = {
 			isa = PBXGroup;
 			children = (
 				C3FC44AB1D7DBA8100896CDB /* ZWCreateNewFeedViewController.h */,
 				C3FC44AC1D7DBA8100896CDB /* ZWCreateNewFeedViewController.m */,
 			);
-			name = ZWNewFeedViewController;
+			name = ZWCreateNewFeedViewController;
+			sourceTree = "<group>";
+		};
+		C3FC44AE1D81549F00896CDB /* ZWBaseSearchViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C3FC44AF1D8154F100896CDB /* ZWBaseSearchViewController.h */,
+				C3FC44B01D8154F100896CDB /* ZWBaseSearchViewController.m */,
+			);
+			name = ZWBaseSearchViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1606,6 +1619,7 @@
 				C33B1D491CC53F0B008FA6E6 /* ZWDocumentCell.m in Sources */,
 				C35AA0B81C88500800D17A99 /* ZWAboutUsViewController.m in Sources */,
 				C35FD9C41D707E640066DE68 /* SDBrowserImageView.m in Sources */,
+				C3FC44B11D8154F100896CDB /* ZWBaseSearchViewController.m in Sources */,
 				C33140B81CEE0B6200387667 /* ZWCountDownViewController.m in Sources */,
 				C3792AC51D6C83A70079FCF5 /* ZWFileTool.m in Sources */,
 				C3792AC21D6C82A00079FCF5 /* ZWHUDTool.m in Sources */,

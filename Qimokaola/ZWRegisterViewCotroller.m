@@ -444,7 +444,13 @@ int TimeInterval = 60;
     
     [ZWAPIRequestTool requestSendCodeWithParameter:@{@"phone": self.phoneNumberField.text} result:^(id response, BOOL success) {
        
-        [ZWHUDTool showHUDInView:self.navigationController.view withTitle: success ? [response objectForKey:@"info"] : @"获取验证码失败" message:nil duration:1.0];
+        NSString *msg = nil;
+        if (success) {
+            msg = [[response objectForKey:@"code"] intValue] == 113 ? @"该手机号已被注册" : [response objectForKey:@"info"];
+        } else {
+            msg = @"获取验证码失败";
+        }
+        [ZWHUDTool showHUDInView:self.navigationController.view withTitle:msg message:nil duration:1.0];
         
     }];
 }

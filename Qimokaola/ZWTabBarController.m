@@ -12,6 +12,16 @@
 #import "ZWDownloadedViewController.h"
 #import "ZWStudentCircleViewController.h"
 #import "ZWDiscoveryViewController.h"
+#import "ZWAPIRequestTool.h"
+#import "ZWHUDTool.h"
+#import "ZWLoginViewController.h"
+#import "ZWUserManager.h"
+
+
+#import "ReactiveCocoa.h"
+#import "YYModel.h"
+
+
 
 @interface ZWTabBarController ()
 
@@ -46,6 +56,45 @@
     }
     
     self.viewControllers = viewControllers;
+    
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kShowHUDShort * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        // 进入应用后获取用户信息 若登录状态失效 则重新登录
+//        [ZWAPIRequestTool requestUserInfo:^(id response, BOOL success) {
+//            if (success) {
+//                if ([[response objectForKey:@"info"] isEqualToString:kUserNotLogIn]) {
+//                    UINavigationController *nav = (UINavigationController *)self.selectedViewController;
+//                    [ZWHUDTool showHUDInView:nav.view withTitle:@"登录状态失效 请重新登录" message:nil duration:kShowHUDMid];
+//                    [self presentLoginViewController];
+//                } else if ([[response objectForKey:@"code"] intValue] == 0) {
+//                    
+//                    ZWUser *user = [ZWUser yy_modelWithJSON:[response objectForKey:@"res"]];
+//                    if (![[ZWUserManager sharedInstance].loginUser.uid isEqualToString:user.uid]) {
+//                        [ZWUserManager sharedInstance].loginUser = user;
+//                    }
+//                    
+//                }
+//            }
+//        }];
+//        
+//    });
+    
+    @weakify(self)
+    [[[[NSNotificationCenter defaultCenter] rac_addObserverForName:kUserNeedLoginNotification object:nil] deliverOnMainThread] subscribeNext:^(id x) {
+        @strongify(self)
+        [self presentLoginViewController];
+        
+    }];
+}
+
+- (void)presentLoginViewController {
+    [ZWHUDTool showHUDWithTitle:@"登录状态失效 请重新登录" message:nil duration:kShowHUDMid];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kShowHUDMid * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        ZWLoginViewController *loginViewController = [[ZWLoginViewController alloc] init];
+        loginViewController.completionBlock = ^() {
+            NSLog(@"登录成功");
+        };
+        [self presentViewController:[[UINavigationController alloc] initWithRootViewController:loginViewController] animated:YES completion:nil];
+    });
 }
 
 - (void)didReceiveMemoryWarning {
