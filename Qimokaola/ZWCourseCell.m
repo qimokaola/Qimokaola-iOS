@@ -1,62 +1,70 @@
 //
-//  ZWFolderCell.m
+//  ZWAcademyCell.m
 //  Qimokaola
 //
-//  Created by Administrator on 16/9/11.
+//  Created by Administrator on 16/9/10.
 //  Copyright © 2016年 Administrator. All rights reserved.
 //
 
-#import "ZWFolderCell.h"
+#import "ZWCourseCell.h"
 #import "SDAutoLayout.h"
 
-@interface ZWFolderCell ()
+@interface ZWCourseCell ()
 
-@property (nonatomic, strong) UIImageView *iconView;
+// 左边显示文件夹第一个字的视图
+@property (nonatomic, strong) UILabel *circleLabel;
+// 文件名标签
 @property (nonatomic, strong) UILabel *nameLabel;
 
 @end
 
-@implementation ZWFolderCell
+@implementation ZWCourseCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
-        self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        [self zw_addSubViews];
+        [self createSubViews];
     }
     return self;
 }
 
-- (void)zw_addSubViews {
-    _iconView = [[UIImageView alloc] init];
-    _iconView.image = [UIImage imageNamed:@"folder"];
+- (void)createSubViews {
+    _circleLabel = [[UILabel alloc] init];
+    _circleLabel.numberOfLines = 1;
+    _circleLabel.backgroundColor = [UIColor orangeColor];
+    _circleLabel.font = ZWFont(20);
+    _circleLabel.text = @"数";
+    _circleLabel.textColor = [UIColor whiteColor];
+    _circleLabel.textAlignment = NSTextAlignmentCenter;
     
     _nameLabel = [[UILabel alloc] init];
     _nameLabel.numberOfLines = 1;
-    _nameLabel.textColor = [UIColor blackColor];
     _nameLabel.font = ZWFont(18);
+    _nameLabel.textColor = [UIColor blackColor];
     
-    [self.contentView sd_addSubviews:@[_iconView, _nameLabel]];
+    [self.contentView sd_addSubviews:@[_circleLabel, _nameLabel]];
     
-    CGFloat margin = 10;
-    CGFloat iconViewSize = 45.f;
     UIView *contentView = self.contentView;
     
-    _iconView.sd_layout
-    .leftSpaceToView(contentView, margin)
+    CGFloat margin = 10.f;
+    
+    _circleLabel.sd_layout
     .centerYEqualToView(contentView)
-    .heightIs(iconViewSize)
+    .leftSpaceToView(contentView, margin)
+    .heightIs(40)
     .widthEqualToHeight();
+    _circleLabel.sd_cornerRadiusFromHeightRatio = @(0.5);
     
     _nameLabel.sd_layout
-    .leftSpaceToView(_iconView, margin)
+    .leftSpaceToView(_circleLabel, margin)
     .centerYEqualToView(contentView)
-    .autoHeightRatio(0);
+    .heightIs(20);
     [_nameLabel setSingleLineAutoResizeWithMaxWidth:200];
 }
 
 - (void)setFolderName:(NSString *)folderName {
     _folderName = folderName;
     _nameLabel.text = folderName;
+    _circleLabel.text = [folderName substringToIndex:1];
 }
 
 - (void)awakeFromNib {

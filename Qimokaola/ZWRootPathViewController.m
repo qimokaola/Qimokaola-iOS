@@ -20,6 +20,8 @@
 #import "ZWUserManager.h"
 #import "ZWLoginViewController.h"
 
+#import "ZWUserManager.h"
+
 #import "MJRefresh.h"
 #import "ReactiveCocoa.h"
 #import "YYModel.h"
@@ -73,26 +75,7 @@
         });
     }];
     
-    [ZWAPIRequestTool requestUserInfo:^(id response, BOOL success) {
-//        if (success) {
-//            if ([[response objectForKey:@"code"] intValue] == 0) {
-//                ZWUser *user = [ZWUser yy_modelWithDictionary:[response objectForKey:@"res"]];
-//                [ZWUserManager sharedInstance].loginUser = user;
-//            } else {
-//                
-//                [ZWHUDTool showHUDInView:weakSelf.navigationController.view withTitle:@"登录状态过期 请重新登录" message:nil duration:kShowHUDMid];
-//                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kShowHUDMid * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//                    ZWLoginViewController *loginViewController = [[ZWLoginViewController alloc] init];
-//                    loginViewController.completionBlock = ^() {
-//                        [weakSelf startRefresh];
-//                    };
-//                    [weakSelf presentViewController:[[UINavigationController alloc] initWithRootViewController:loginViewController] animated:YES completion:nil];
-//                });
-//                
-//            }
-//        }
-        NSLog(@"%@", response);
-    }];
+ 
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -175,7 +158,7 @@
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
     self.searchController.searchResultsUpdater = self;
     self.searchController.delegate = self;
-    self.searchController.dimsBackgroundDuringPresentation = false;
+    self.searchController.dimsBackgroundDuringPresentation = NO;
     self.searchController.hidesNavigationBarDuringPresentation = YES;
     [self.searchController.searchBar sizeToFit];
     self.searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
@@ -352,7 +335,7 @@
     
     NSInteger row = indexPath.row;
     
-    ZWFolder *folder = [self.searchController.active ? self.folderSearchResults : self.fileModel.folders objectAtIndex:row];
+    ZWOldFolder *folder = [self.searchController.active ? self.folderSearchResults : self.fileModel.folders objectAtIndex:row];
     
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
@@ -370,7 +353,7 @@
     
     NSInteger row = indexPath.row;
     
-    ZWFolder *folder = [self.searchController.active ? self.folderSearchResults : self.fileModel.folders objectAtIndex:row];
+    ZWOldFolder *folder = [self.searchController.active ? self.folderSearchResults : self.fileModel.folders objectAtIndex:row];
     
     [ZWFileFolderViewController setBasePath:self.fileModel.base];
     ZWFileFolderViewController *fileFolderViewController = [[ZWFileFolderViewController alloc] initWithChild:folder.child andName:folder.name];

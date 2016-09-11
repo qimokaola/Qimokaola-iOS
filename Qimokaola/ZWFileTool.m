@@ -34,9 +34,17 @@
     return type;
 }
 
++ (NSString *)fileTypeFromFileName:(NSString *)fileName {
+    return [self parseTypeWithString:[self typeWithName:fileName]];
+}
+
++ (NSString *)sizeWithString:(NSString *)sizeString {
+    return [self sizeWithDouble:[sizeString doubleValue]];
+}
+
 + (NSString *)sizeWithDouble:(double)size {
     NSString *sizeContent = nil;
-    
+    size /= 1024.;
     //最大允许至GB级别
     if (size < 1024) {
         sizeContent = [NSString stringWithFormat:@"%.2fKB", size];

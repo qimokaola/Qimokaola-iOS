@@ -33,7 +33,6 @@ NSString *const kLoginedUser = @"kLoginedUser";
     if (self) {
         _diskCache = [[YYDiskCache alloc] initWithPath:@"User"];
         _loginUser = (ZWUser *)[_diskCache objectForKey:kLoginedUser];
-        NSLog(@"%@", _loginUser.nickname);
     }
     return self;
 }

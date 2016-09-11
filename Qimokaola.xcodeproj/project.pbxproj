@@ -38,14 +38,20 @@
 		C341B9AF1D47BA0600CEECFF /* ZWNetworkingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C341B9AE1D47BA0600CEECFF /* ZWNetworkingManager.m */; };
 		C347782B1CB263E700D26FA8 /* ZWChild.m in Sources */ = {isa = PBXBuildFile; fileRef = C34778241CB263E700D26FA8 /* ZWChild.m */; };
 		C347782C1CB263E700D26FA8 /* ZWFileModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C34778261CB263E700D26FA8 /* ZWFileModel.m */; };
-		C347782D1CB263E700D26FA8 /* ZWFile.m in Sources */ = {isa = PBXBuildFile; fileRef = C34778281CB263E700D26FA8 /* ZWFile.m */; };
-		C347782E1CB263E700D26FA8 /* ZWFolder.m in Sources */ = {isa = PBXBuildFile; fileRef = C347782A1CB263E700D26FA8 /* ZWFolder.m */; };
+		C347782D1CB263E700D26FA8 /* ZWOldFile.m in Sources */ = {isa = PBXBuildFile; fileRef = C34778281CB263E700D26FA8 /* ZWOldFile.m */; };
+		C347782E1CB263E700D26FA8 /* ZWOldFolder.m in Sources */ = {isa = PBXBuildFile; fileRef = C347782A1CB263E700D26FA8 /* ZWOldFolder.m */; };
 		C34832771CB2D8C1009EA4D7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C34832761CB2D8C1009EA4D7 /* Assets.xcassets */; };
 		C34EF18A1D36529400B6449B /* LoginAndRegister.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C34EF1891D36529400B6449B /* LoginAndRegister.storyboard */; };
 		C3528FC71D4CEA3400105027 /* JSPatch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3528FC61D4CEA3400105027 /* JSPatch.framework */; };
 		C3561A201D3770530032C97B /* ZWFilloutInformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3561A1F1D3770530032C97B /* ZWFilloutInformationViewController.m */; };
 		C3561A231D37743F0032C97B /* ZWRegisterViewCotroller.m in Sources */ = {isa = PBXBuildFile; fileRef = C3561A221D37743F0032C97B /* ZWRegisterViewCotroller.m */; };
 		C3561A261D3774560032C97B /* ZWLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3561A251D3774560032C97B /* ZWLoginViewController.m */; };
+		C35771051D842C4600E9B166 /* ZWCourseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C35771041D842C4600E9B166 /* ZWCourseCell.m */; };
+		C35771081D843E5700E9B166 /* ZWCourseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C35771071D843E5700E9B166 /* ZWCourseViewController.m */; };
+		C357710D1D844A0700E9B166 /* ZWFileBaseType.m in Sources */ = {isa = PBXBuildFile; fileRef = C357710C1D844A0700E9B166 /* ZWFileBaseType.m */; };
+		C35771111D8541AF00E9B166 /* ZWFileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C35771101D8541AF00E9B166 /* ZWFileCell.m */; };
+		C35771141D8541C900E9B166 /* ZWFolderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C35771131D8541C900E9B166 /* ZWFolderCell.m */; };
+		C35771191D8576A600E9B166 /* ZWFileDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C35771181D8576A600E9B166 /* ZWFileDetailViewController.m */; };
 		C3594EFD1BCF6B3900532FA5 /* ZWDocumentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C3594EFC1BCF6B3900532FA5 /* ZWDocumentModel.m */; };
 		C35AA0B81C88500800D17A99 /* ZWAboutUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C35AA0B71C88500800D17A99 /* ZWAboutUsViewController.m */; };
 		C35FD9BB1D707E160066DE68 /* SDWeiXinPhotoContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C35FD9BA1D707E160066DE68 /* SDWeiXinPhotoContainerView.m */; };
@@ -104,13 +110,13 @@
 		C37C03921D3F716200B22868 /* CALayer+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = C37C03911D3F716200B22868 /* CALayer+Extension.m */; };
 		C37C03961D3F8C6000B22868 /* ZWStudentCircleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C37C03951D3F8C5F00B22868 /* ZWStudentCircleViewController.m */; };
 		C3827B971D72DDBB002F6E5B /* ZWFeedDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3827B961D72DDBB002F6E5B /* ZWFeedDetailViewController.m */; };
-		C38EACA91CB535C600EA6448 /* ZWFolderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C38EACA71CB535C600EA6448 /* ZWFolderCell.m */; };
-		C38EACAA1CB535C600EA6448 /* ZWFolderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C38EACA81CB535C600EA6448 /* ZWFolderCell.xib */; };
+		C38EACA91CB535C600EA6448 /* ZWOldFolderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C38EACA71CB535C600EA6448 /* ZWOldFolderCell.m */; };
+		C38EACAA1CB535C600EA6448 /* ZWOldFolderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C38EACA81CB535C600EA6448 /* ZWOldFolderCell.xib */; };
 		C39004A41D5B67F90097358E /* ZWAdvertisement.m in Sources */ = {isa = PBXBuildFile; fileRef = C39004A31D5B67F90097358E /* ZWAdvertisement.m */; };
 		C39004AE1D5C5F360097358E /* ZWTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = C39004AD1D5C5F360097358E /* ZWTabBarController.m */; };
 		C39004B21D5C61900097358E /* ZWNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C39004B11D5C61900097358E /* ZWNavigationController.m */; };
 		C3A14CA41D37D0FD0088E754 /* ZWSelectSchoolViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3A14CA31D37D0FD0088E754 /* ZWSelectSchoolViewController.m */; };
-		C3A609BF1CBE79A1000CC03C /* ZWFileDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3A609BD1CBE79A1000CC03C /* ZWFileDetailViewController.m */; };
+		C3A609BF1CBE79A1000CC03C /* ZWOldFileDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3A609BD1CBE79A1000CC03C /* ZWOldFileDetailViewController.m */; };
 		C3AF73E31BCBE3C60064C3F5 /* NSDate+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = C3AF73E21BCBE3C60064C3F5 /* NSDate+Extension.m */; };
 		C3BE99EE1BCBE6C8000102A1 /* ZWDownloadInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C3BE99ED1BCBE6C8000102A1 /* ZWDownloadInfoModel.m */; };
 		C3BE99FB1BCBFB45000102A1 /* ZWDownloadInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C3BE99F91BCBFB45000102A1 /* ZWDownloadInfoCell.m */; };
@@ -121,8 +127,8 @@
 		C3C44E121BC687B0004B30BF /* QimokaolaUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = C3C44E111BC687B0004B30BF /* QimokaolaUITests.m */; };
 		C3C44E461BC6BBEF004B30BF /* ZWRootPathViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3C44E441BC6BBEF004B30BF /* ZWRootPathViewController.m */; };
 		C3D1F2691CB3E18B0017723B /* ZWFileFolderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D1F2681CB3E18B0017723B /* ZWFileFolderViewController.m */; };
-		C3D1F2701CB3E33F0017723B /* ZWFileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D1F26E1CB3E33F0017723B /* ZWFileCell.m */; };
-		C3D1F2961CB401BE0017723B /* ZWFileCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3D1F2951CB401BE0017723B /* ZWFileCell.xib */; };
+		C3D1F2701CB3E33F0017723B /* ZWOldFileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D1F26E1CB3E33F0017723B /* ZWOldFileCell.m */; };
+		C3D1F2961CB401BE0017723B /* ZWOldFileCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3D1F2951CB401BE0017723B /* ZWOldFileCell.xib */; };
 		C3DC4D841D33C3BD0081DB0A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C3DC4D831D33C3BD0081DB0A /* Main.storyboard */; };
 		C3DC4D871D33CC550081DB0A /* UIViewController+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DC4D861D33CC550081DB0A /* UIViewController+Extension.m */; };
 		C3E58AC81D54DFE600FDB384 /* ZWBindAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3E58AC71D54DFE600FDB384 /* ZWBindAccountViewController.m */; };
@@ -131,6 +137,8 @@
 		C3EAA72B1D3FBBD1009FCC0E /* pic3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C3EAA7261D3FBBD1009FCC0E /* pic3.jpg */; };
 		C3EAA72C1D3FBBD1009FCC0E /* pic4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C3EAA7271D3FBBD1009FCC0E /* pic4.jpg */; };
 		C3EAA72D1D3FBBD1009FCC0E /* pic5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C3EAA7281D3FBBD1009FCC0E /* pic5.jpg */; };
+		C3EDA9181D830CA0009FF851 /* ZWFile.m in Sources */ = {isa = PBXBuildFile; fileRef = C3EDA9171D830CA0009FF851 /* ZWFile.m */; };
+		C3EDA91C1D830E79009FF851 /* ZWFolder.m in Sources */ = {isa = PBXBuildFile; fileRef = C3EDA91B1D830E79009FF851 /* ZWFolder.m */; };
 		C3F162A41D4E3658006397B1 /* YYFPSLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F162A31D4E3658006397B1 /* YYFPSLabel.m */; };
 		C3F78BE61D537CC400E9C2AB /* ZWLoginAndRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F78BE51D537CC400E9C2AB /* ZWLoginAndRegisterViewController.m */; };
 		C3F78BEA1D537EB800E9C2AB /* ZWBasicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F78BE91D537EB800E9C2AB /* ZWBasicViewController.m */; };
@@ -144,6 +152,8 @@
 		C3F854241D7709E800E51013 /* ZWBindAccountViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F854231D7709E800E51013 /* ZWBindAccountViewModel.m */; };
 		C3FC44AD1D7DBA8100896CDB /* ZWCreateNewFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3FC44AC1D7DBA8100896CDB /* ZWCreateNewFeedViewController.m */; };
 		C3FC44B11D8154F100896CDB /* ZWBaseSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3FC44B01D8154F100896CDB /* ZWBaseSearchViewController.m */; };
+		C3FC44B51D82EB2500896CDB /* ZWSingleTypeSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3FC44B41D82EB2500896CDB /* ZWSingleTypeSearchViewController.m */; };
+		C3FC44B91D82EECA00896CDB /* ZWFileAndFolderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3FC44B81D82EECA00896CDB /* ZWFileAndFolderViewController.m */; };
 		C3FF26291CA760070081FF58 /* ZWDownloadCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = C3FF26281CA760070081FF58 /* ZWDownloadCenter.m */; };
 /* End PBXBuildFile section */
 
@@ -235,10 +245,10 @@
 		C34778241CB263E700D26FA8 /* ZWChild.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWChild.m; sourceTree = "<group>"; };
 		C34778251CB263E700D26FA8 /* ZWFileModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWFileModel.h; sourceTree = "<group>"; };
 		C34778261CB263E700D26FA8 /* ZWFileModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWFileModel.m; sourceTree = "<group>"; };
-		C34778271CB263E700D26FA8 /* ZWFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWFile.h; sourceTree = "<group>"; };
-		C34778281CB263E700D26FA8 /* ZWFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWFile.m; sourceTree = "<group>"; };
-		C34778291CB263E700D26FA8 /* ZWFolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWFolder.h; sourceTree = "<group>"; };
-		C347782A1CB263E700D26FA8 /* ZWFolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWFolder.m; sourceTree = "<group>"; };
+		C34778271CB263E700D26FA8 /* ZWOldFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWOldFile.h; sourceTree = "<group>"; };
+		C34778281CB263E700D26FA8 /* ZWOldFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWOldFile.m; sourceTree = "<group>"; };
+		C34778291CB263E700D26FA8 /* ZWOldFolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWOldFolder.h; sourceTree = "<group>"; };
+		C347782A1CB263E700D26FA8 /* ZWOldFolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWOldFolder.m; sourceTree = "<group>"; };
 		C34832761CB2D8C1009EA4D7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C34EF1891D36529400B6449B /* LoginAndRegister.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LoginAndRegister.storyboard; sourceTree = "<group>"; };
 		C3528FC61D4CEA3400105027 /* JSPatch.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = JSPatch.framework; sourceTree = "<group>"; };
@@ -248,6 +258,18 @@
 		C3561A221D37743F0032C97B /* ZWRegisterViewCotroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWRegisterViewCotroller.m; sourceTree = "<group>"; };
 		C3561A241D3774560032C97B /* ZWLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWLoginViewController.h; sourceTree = "<group>"; };
 		C3561A251D3774560032C97B /* ZWLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWLoginViewController.m; sourceTree = "<group>"; };
+		C35771031D842C4600E9B166 /* ZWCourseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWCourseCell.h; sourceTree = "<group>"; };
+		C35771041D842C4600E9B166 /* ZWCourseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWCourseCell.m; sourceTree = "<group>"; };
+		C35771061D843E5700E9B166 /* ZWCourseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWCourseViewController.h; sourceTree = "<group>"; };
+		C35771071D843E5700E9B166 /* ZWCourseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWCourseViewController.m; sourceTree = "<group>"; };
+		C357710B1D844A0700E9B166 /* ZWFileBaseType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWFileBaseType.h; sourceTree = "<group>"; };
+		C357710C1D844A0700E9B166 /* ZWFileBaseType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWFileBaseType.m; sourceTree = "<group>"; };
+		C357710F1D8541AF00E9B166 /* ZWFileCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWFileCell.h; sourceTree = "<group>"; };
+		C35771101D8541AF00E9B166 /* ZWFileCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWFileCell.m; sourceTree = "<group>"; };
+		C35771121D8541C900E9B166 /* ZWFolderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWFolderCell.h; sourceTree = "<group>"; };
+		C35771131D8541C900E9B166 /* ZWFolderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWFolderCell.m; sourceTree = "<group>"; };
+		C35771171D8576A600E9B166 /* ZWFileDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWFileDetailViewController.h; sourceTree = "<group>"; };
+		C35771181D8576A600E9B166 /* ZWFileDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWFileDetailViewController.m; sourceTree = "<group>"; };
 		C3594EFB1BCF6B3900532FA5 /* ZWDocumentModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWDocumentModel.h; sourceTree = "<group>"; };
 		C3594EFC1BCF6B3900532FA5 /* ZWDocumentModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWDocumentModel.m; sourceTree = "<group>"; };
 		C35AA0B51C874CAE00D17A99 /* Qimokaola-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Qimokaola-Prefix.pch"; sourceTree = "<group>"; };
@@ -358,9 +380,9 @@
 		C37C03951D3F8C5F00B22868 /* ZWStudentCircleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWStudentCircleViewController.m; sourceTree = "<group>"; };
 		C3827B951D72DDBB002F6E5B /* ZWFeedDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWFeedDetailViewController.h; sourceTree = "<group>"; };
 		C3827B961D72DDBB002F6E5B /* ZWFeedDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWFeedDetailViewController.m; sourceTree = "<group>"; };
-		C38EACA61CB535C600EA6448 /* ZWFolderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWFolderCell.h; sourceTree = "<group>"; };
-		C38EACA71CB535C600EA6448 /* ZWFolderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWFolderCell.m; sourceTree = "<group>"; };
-		C38EACA81CB535C600EA6448 /* ZWFolderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZWFolderCell.xib; sourceTree = "<group>"; };
+		C38EACA61CB535C600EA6448 /* ZWOldFolderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWOldFolderCell.h; sourceTree = "<group>"; };
+		C38EACA71CB535C600EA6448 /* ZWOldFolderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWOldFolderCell.m; sourceTree = "<group>"; };
+		C38EACA81CB535C600EA6448 /* ZWOldFolderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZWOldFolderCell.xib; sourceTree = "<group>"; };
 		C39004A21D5B67F90097358E /* ZWAdvertisement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWAdvertisement.h; sourceTree = "<group>"; };
 		C39004A31D5B67F90097358E /* ZWAdvertisement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWAdvertisement.m; sourceTree = "<group>"; };
 		C39004AC1D5C5F360097358E /* ZWTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWTabBarController.h; sourceTree = "<group>"; };
@@ -369,8 +391,8 @@
 		C39004B11D5C61900097358E /* ZWNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWNavigationController.m; sourceTree = "<group>"; };
 		C3A14CA21D37D0FD0088E754 /* ZWSelectSchoolViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWSelectSchoolViewController.h; sourceTree = "<group>"; };
 		C3A14CA31D37D0FD0088E754 /* ZWSelectSchoolViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWSelectSchoolViewController.m; sourceTree = "<group>"; };
-		C3A609BC1CBE79A1000CC03C /* ZWFileDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWFileDetailViewController.h; sourceTree = "<group>"; };
-		C3A609BD1CBE79A1000CC03C /* ZWFileDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWFileDetailViewController.m; sourceTree = "<group>"; };
+		C3A609BC1CBE79A1000CC03C /* ZWOldFileDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWOldFileDetailViewController.h; sourceTree = "<group>"; };
+		C3A609BD1CBE79A1000CC03C /* ZWOldFileDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWOldFileDetailViewController.m; sourceTree = "<group>"; };
 		C3AF73E11BCBE3C60064C3F5 /* NSDate+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Extension.h"; sourceTree = "<group>"; };
 		C3AF73E21BCBE3C60064C3F5 /* NSDate+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Extension.m"; sourceTree = "<group>"; };
 		C3BE99EC1BCBE6C8000102A1 /* ZWDownloadInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWDownloadInfoModel.h; sourceTree = "<group>"; };
@@ -393,9 +415,9 @@
 		C3C44E441BC6BBEF004B30BF /* ZWRootPathViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWRootPathViewController.m; sourceTree = "<group>"; };
 		C3D1F2671CB3E18B0017723B /* ZWFileFolderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWFileFolderViewController.h; sourceTree = "<group>"; };
 		C3D1F2681CB3E18B0017723B /* ZWFileFolderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWFileFolderViewController.m; sourceTree = "<group>"; };
-		C3D1F26D1CB3E33F0017723B /* ZWFileCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWFileCell.h; sourceTree = "<group>"; };
-		C3D1F26E1CB3E33F0017723B /* ZWFileCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWFileCell.m; sourceTree = "<group>"; };
-		C3D1F2951CB401BE0017723B /* ZWFileCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZWFileCell.xib; sourceTree = "<group>"; };
+		C3D1F26D1CB3E33F0017723B /* ZWOldFileCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWOldFileCell.h; sourceTree = "<group>"; };
+		C3D1F26E1CB3E33F0017723B /* ZWOldFileCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWOldFileCell.m; sourceTree = "<group>"; };
+		C3D1F2951CB401BE0017723B /* ZWOldFileCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZWOldFileCell.xib; sourceTree = "<group>"; };
 		C3DC4D831D33C3BD0081DB0A /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		C3DC4D851D33CC550081DB0A /* UIViewController+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Extension.h"; sourceTree = "<group>"; };
 		C3DC4D861D33CC550081DB0A /* UIViewController+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Extension.m"; sourceTree = "<group>"; };
@@ -407,6 +429,10 @@
 		C3EAA7261D3FBBD1009FCC0E /* pic3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = pic3.jpg; sourceTree = "<group>"; };
 		C3EAA7271D3FBBD1009FCC0E /* pic4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = pic4.jpg; sourceTree = "<group>"; };
 		C3EAA7281D3FBBD1009FCC0E /* pic5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = pic5.jpg; sourceTree = "<group>"; };
+		C3EDA9161D830CA0009FF851 /* ZWFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWFile.h; sourceTree = "<group>"; };
+		C3EDA9171D830CA0009FF851 /* ZWFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWFile.m; sourceTree = "<group>"; };
+		C3EDA91A1D830E79009FF851 /* ZWFolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWFolder.h; sourceTree = "<group>"; };
+		C3EDA91B1D830E79009FF851 /* ZWFolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWFolder.m; sourceTree = "<group>"; };
 		C3F162A21D4E3658006397B1 /* YYFPSLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYFPSLabel.h; sourceTree = "<group>"; };
 		C3F162A31D4E3658006397B1 /* YYFPSLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYFPSLabel.m; sourceTree = "<group>"; };
 		C3F78BE41D537CC400E9C2AB /* ZWLoginAndRegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWLoginAndRegisterViewController.h; sourceTree = "<group>"; };
@@ -431,6 +457,10 @@
 		C3FC44AC1D7DBA8100896CDB /* ZWCreateNewFeedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWCreateNewFeedViewController.m; sourceTree = "<group>"; };
 		C3FC44AF1D8154F100896CDB /* ZWBaseSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWBaseSearchViewController.h; sourceTree = "<group>"; };
 		C3FC44B01D8154F100896CDB /* ZWBaseSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWBaseSearchViewController.m; sourceTree = "<group>"; };
+		C3FC44B31D82EB2500896CDB /* ZWSingleTypeSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWSingleTypeSearchViewController.h; sourceTree = "<group>"; };
+		C3FC44B41D82EB2500896CDB /* ZWSingleTypeSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWSingleTypeSearchViewController.m; sourceTree = "<group>"; };
+		C3FC44B71D82EECA00896CDB /* ZWFileAndFolderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWFileAndFolderViewController.h; sourceTree = "<group>"; };
+		C3FC44B81D82EECA00896CDB /* ZWFileAndFolderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWFileAndFolderViewController.m; sourceTree = "<group>"; };
 		C3FF26271CA760070081FF58 /* ZWDownloadCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWDownloadCenter.h; sourceTree = "<group>"; };
 		C3FF26281CA760070081FF58 /* ZWDownloadCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWDownloadCenter.m; sourceTree = "<group>"; };
 		E42867274648E046FAFE969D /* Pods-Qimokaola.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Qimokaola.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Qimokaola/Pods-Qimokaola.debug.xcconfig"; sourceTree = "<group>"; };
@@ -622,10 +652,10 @@
 				C34778241CB263E700D26FA8 /* ZWChild.m */,
 				C34778251CB263E700D26FA8 /* ZWFileModel.h */,
 				C34778261CB263E700D26FA8 /* ZWFileModel.m */,
-				C34778271CB263E700D26FA8 /* ZWFile.h */,
-				C34778281CB263E700D26FA8 /* ZWFile.m */,
-				C34778291CB263E700D26FA8 /* ZWFolder.h */,
-				C347782A1CB263E700D26FA8 /* ZWFolder.m */,
+				C34778271CB263E700D26FA8 /* ZWOldFile.h */,
+				C34778281CB263E700D26FA8 /* ZWOldFile.m */,
+				C34778291CB263E700D26FA8 /* ZWOldFolder.h */,
+				C347782A1CB263E700D26FA8 /* ZWOldFolder.m */,
 			);
 			path = FileModel;
 			sourceTree = "<group>";
@@ -668,24 +698,24 @@
 			name = ZWMoreCollectionViewHeader;
 			sourceTree = "<group>";
 		};
-		C34EF18F1D3652F600B6449B /* ZWFileCell */ = {
+		C34EF18F1D3652F600B6449B /* ZWOldFileCell */ = {
 			isa = PBXGroup;
 			children = (
-				C3D1F26D1CB3E33F0017723B /* ZWFileCell.h */,
-				C3D1F26E1CB3E33F0017723B /* ZWFileCell.m */,
-				C3D1F2951CB401BE0017723B /* ZWFileCell.xib */,
+				C3D1F26D1CB3E33F0017723B /* ZWOldFileCell.h */,
+				C3D1F26E1CB3E33F0017723B /* ZWOldFileCell.m */,
+				C3D1F2951CB401BE0017723B /* ZWOldFileCell.xib */,
 			);
-			name = ZWFileCell;
+			name = ZWOldFileCell;
 			sourceTree = "<group>";
 		};
-		C34EF1901D36531700B6449B /* ZWFolderCell */ = {
+		C34EF1901D36531700B6449B /* ZWOldFolderCell */ = {
 			isa = PBXGroup;
 			children = (
-				C38EACA61CB535C600EA6448 /* ZWFolderCell.h */,
-				C38EACA71CB535C600EA6448 /* ZWFolderCell.m */,
-				C38EACA81CB535C600EA6448 /* ZWFolderCell.xib */,
+				C38EACA61CB535C600EA6448 /* ZWOldFolderCell.h */,
+				C38EACA71CB535C600EA6448 /* ZWOldFolderCell.m */,
+				C38EACA81CB535C600EA6448 /* ZWOldFolderCell.xib */,
 			);
-			name = ZWFolderCell;
+			name = ZWOldFolderCell;
 			sourceTree = "<group>";
 		};
 		C34EF1911D36533000B6449B /* ZWAdvertisementView */ = {
@@ -725,13 +755,13 @@
 			name = ZWFileFolderViewController;
 			sourceTree = "<group>";
 		};
-		C34EF1A11D3669D700B6449B /* ZWFileDetailViewController */ = {
+		C34EF1A11D3669D700B6449B /* ZWOldFileDetailViewController */ = {
 			isa = PBXGroup;
 			children = (
-				C3A609BC1CBE79A1000CC03C /* ZWFileDetailViewController.h */,
-				C3A609BD1CBE79A1000CC03C /* ZWFileDetailViewController.m */,
+				C3A609BC1CBE79A1000CC03C /* ZWOldFileDetailViewController.h */,
+				C3A609BD1CBE79A1000CC03C /* ZWOldFileDetailViewController.m */,
 			);
-			name = ZWFileDetailViewController;
+			name = ZWOldFileDetailViewController;
 			sourceTree = "<group>";
 		};
 		C34EF1A21D3669F700B6449B /* ZWDownloadedViewController */ = {
@@ -815,6 +845,60 @@
 				C3561A1F1D3770530032C97B /* ZWFilloutInformationViewController.m */,
 			);
 			name = ZWFilloutInformationViewController;
+			sourceTree = "<group>";
+		};
+		C35771021D842C1A00E9B166 /* ZWAcademyCell */ = {
+			isa = PBXGroup;
+			children = (
+				C35771031D842C4600E9B166 /* ZWCourseCell.h */,
+				C35771041D842C4600E9B166 /* ZWCourseCell.m */,
+			);
+			name = ZWAcademyCell;
+			sourceTree = "<group>";
+		};
+		C35771091D843E6300E9B166 /* ZWCourseViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C35771061D843E5700E9B166 /* ZWCourseViewController.h */,
+				C35771071D843E5700E9B166 /* ZWCourseViewController.m */,
+			);
+			name = ZWCourseViewController;
+			sourceTree = "<group>";
+		};
+		C357710A1D8449DC00E9B166 /* ZWFileBaseType */ = {
+			isa = PBXGroup;
+			children = (
+				C357710B1D844A0700E9B166 /* ZWFileBaseType.h */,
+				C357710C1D844A0700E9B166 /* ZWFileBaseType.m */,
+			);
+			name = ZWFileBaseType;
+			sourceTree = "<group>";
+		};
+		C357710E1D85418600E9B166 /* ZWFileCell */ = {
+			isa = PBXGroup;
+			children = (
+				C357710F1D8541AF00E9B166 /* ZWFileCell.h */,
+				C35771101D8541AF00E9B166 /* ZWFileCell.m */,
+			);
+			name = ZWFileCell;
+			sourceTree = "<group>";
+		};
+		C35771151D8541CE00E9B166 /* ZWFolderCell */ = {
+			isa = PBXGroup;
+			children = (
+				C35771121D8541C900E9B166 /* ZWFolderCell.h */,
+				C35771131D8541C900E9B166 /* ZWFolderCell.m */,
+			);
+			name = ZWFolderCell;
+			sourceTree = "<group>";
+		};
+		C35771161D85763D00E9B166 /* ZWFileDetailViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C35771171D8576A600E9B166 /* ZWFileDetailViewController.h */,
+				C35771181D8576A600E9B166 /* ZWFileDetailViewController.m */,
+			);
+			name = ZWFileDetailViewController;
 			sourceTree = "<group>";
 		};
 		C35FD9B81D707E0E0066DE68 /* SDWeiXinPhotoContainerView */ = {
@@ -1009,9 +1093,12 @@
 		C3792AD11D6F39230079FCF5 /* TableViewCell */ = {
 			isa = PBXGroup;
 			children = (
+				C35771151D8541CE00E9B166 /* ZWFolderCell */,
+				C357710E1D85418600E9B166 /* ZWFileCell */,
+				C35771021D842C1A00E9B166 /* ZWAcademyCell */,
 				C3792ACD1D6F38D40079FCF5 /* ZWFeedCell */,
-				C34EF1901D36531700B6449B /* ZWFolderCell */,
-				C34EF18F1D3652F600B6449B /* ZWFileCell */,
+				C34EF1901D36531700B6449B /* ZWOldFolderCell */,
+				C34EF18F1D3652F600B6449B /* ZWOldFileCell */,
 				C34EF18D1D3652CC00B6449B /* ZWServiceCollectionViewCell */,
 				C34EF18C1D3652BD00B6449B /* ZWDownloadInfoCell */,
 				C34EF18B1D3652A000B6449B /* ZWDocumentCell */,
@@ -1208,7 +1295,6 @@
 		C3C44E1F1BC688D9004B30BF /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				C3FC44AE1D81549F00896CDB /* ZWBaseSearchViewController */,
 				C3FC44AA1D7DBA3C00896CDB /* ZWCreateNewFeedViewController */,
 				C3827B941D72DD8A002F6E5B /* ZWFeedDetailViewController */,
 				C3F78BE71D537EA300E9C2AB /* ZWBasicViewController */,
@@ -1228,9 +1314,14 @@
 				C34EF1A41D366A1600B6449B /* ZWBrowserViewController */,
 				C34EF1A31D366A0300B6449B /* ZWServiceViewController */,
 				C34EF1A21D3669F700B6449B /* ZWDownloadedViewController */,
-				C34EF1A11D3669D700B6449B /* ZWFileDetailViewController */,
+				C34EF1A11D3669D700B6449B /* ZWOldFileDetailViewController */,
 				C34EF1A01D3669C100B6449B /* ZWFileFolderViewController */,
 				C34EF19F1D3669B300B6449B /* ZWRootPathViewController */,
+				C35771091D843E6300E9B166 /* ZWCourseViewController */,
+				C35771161D85763D00E9B166 /* ZWFileDetailViewController */,
+				C3FC44B61D82EE5600896CDB /* ZWFileAndFolderViewController */,
+				C3FC44B21D82EB0500896CDB /* ZWSingleTypeSearchViewController */,
+				C3FC44AE1D81549F00896CDB /* ZWBaseSearchViewController */,
 				C39004AF1D5C61710097358E /* ZWNavigationController */,
 				C39004AB1D5C5F1E0097358E /* ZWTabBarController */,
 			);
@@ -1251,6 +1342,9 @@
 		C3C44E211BC688E8004B30BF /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				C357710A1D8449DC00E9B166 /* ZWFileBaseType */,
+				C3EDA9191D830E59009FF851 /* ZWFolder */,
+				C3EDA9121D830B47009FF851 /* ZWFile */,
 				C3162CB61D7C50F600153EB9 /* ZWUser */,
 				C39004A71D5B69CA0097358E /* Document */,
 				C39004A61D5B69B00097358E /* DownloadInfo */,
@@ -1287,6 +1381,24 @@
 				C3E58AC71D54DFE600FDB384 /* ZWBindAccountViewController.m */,
 			);
 			name = ZWBindAccountViewController;
+			sourceTree = "<group>";
+		};
+		C3EDA9121D830B47009FF851 /* ZWFile */ = {
+			isa = PBXGroup;
+			children = (
+				C3EDA9161D830CA0009FF851 /* ZWFile.h */,
+				C3EDA9171D830CA0009FF851 /* ZWFile.m */,
+			);
+			name = ZWFile;
+			sourceTree = "<group>";
+		};
+		C3EDA9191D830E59009FF851 /* ZWFolder */ = {
+			isa = PBXGroup;
+			children = (
+				C3EDA91A1D830E79009FF851 /* ZWFolder.h */,
+				C3EDA91B1D830E79009FF851 /* ZWFolder.m */,
+			);
+			name = ZWFolder;
 			sourceTree = "<group>";
 		};
 		C3F162A11D4E3635006397B1 /* YYFPSLabel */ = {
@@ -1343,6 +1455,24 @@
 				C3FC44B01D8154F100896CDB /* ZWBaseSearchViewController.m */,
 			);
 			name = ZWBaseSearchViewController;
+			sourceTree = "<group>";
+		};
+		C3FC44B21D82EB0500896CDB /* ZWSingleTypeSearchViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C3FC44B31D82EB2500896CDB /* ZWSingleTypeSearchViewController.h */,
+				C3FC44B41D82EB2500896CDB /* ZWSingleTypeSearchViewController.m */,
+			);
+			name = ZWSingleTypeSearchViewController;
+			sourceTree = "<group>";
+		};
+		C3FC44B61D82EE5600896CDB /* ZWFileAndFolderViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C3FC44B71D82EECA00896CDB /* ZWFileAndFolderViewController.h */,
+				C3FC44B81D82EECA00896CDB /* ZWFileAndFolderViewController.m */,
+			);
+			name = ZWFileAndFolderViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1491,9 +1621,9 @@
 				C37067A51D6B465F007B18A8 /* UMShareEditViewController.xib in Resources */,
 				C370675B1D6B45CF007B18A8 /* Qimokaola.entitlements in Resources */,
 				C3EAA7291D3FBBD1009FCC0E /* pic1.jpg in Resources */,
-				C38EACAA1CB535C600EA6448 /* ZWFolderCell.xib in Resources */,
+				C38EACAA1CB535C600EA6448 /* ZWOldFolderCell.xib in Resources */,
 				C369BD8D1C7D9968001A44AB /* ZWServiceCollectionViewCell.xib in Resources */,
-				C3D1F2961CB401BE0017723B /* ZWFileCell.xib in Resources */,
+				C3D1F2961CB401BE0017723B /* ZWOldFileCell.xib in Resources */,
 				C34EF18A1D36529400B6449B /* LoginAndRegister.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1567,10 +1697,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C38EACA91CB535C600EA6448 /* ZWFolderCell.m in Sources */,
+				C38EACA91CB535C600EA6448 /* ZWOldFolderCell.m in Sources */,
 				C337B9C51D7334AF0060BDD6 /* ZWAPIRequestTool.m in Sources */,
 				C3FC44AD1D7DBA8100896CDB /* ZWCreateNewFeedViewController.m in Sources */,
-				C347782D1CB263E700D26FA8 /* ZWFile.m in Sources */,
+				C347782D1CB263E700D26FA8 /* ZWOldFile.m in Sources */,
 				C3827B971D72DDBB002F6E5B /* ZWFeedDetailViewController.m in Sources */,
 				C3162CBE1D7C54D300153EB9 /* ZWUserManager.m in Sources */,
 				C39004B21D5C61900097358E /* ZWNavigationController.m in Sources */,
@@ -1578,6 +1708,7 @@
 				C31608511CEE375D005BA30B /* ZWCreateCountDownViewController.m in Sources */,
 				C3594EFD1BCF6B3900532FA5 /* ZWDocumentModel.m in Sources */,
 				C347782B1CB263E700D26FA8 /* ZWChild.m in Sources */,
+				C3EDA91C1D830E79009FF851 /* ZWFolder.m in Sources */,
 				C347782C1CB263E700D26FA8 /* ZWFileModel.m in Sources */,
 				C3561A201D3770530032C97B /* ZWFilloutInformationViewController.m in Sources */,
 				C3D1F2691CB3E18B0017723B /* ZWFileFolderViewController.m in Sources */,
@@ -1588,6 +1719,7 @@
 				C3792AD01D6F39130079FCF5 /* ZWFeedCell.m in Sources */,
 				C39004A41D5B67F90097358E /* ZWAdvertisement.m in Sources */,
 				C35FD9C51D707E640066DE68 /* SDPhotoBrowser.m in Sources */,
+				C3FC44B51D82EB2500896CDB /* ZWSingleTypeSearchViewController.m in Sources */,
 				C3561A231D37743F0032C97B /* ZWRegisterViewCotroller.m in Sources */,
 				C3A14CA41D37D0FD0088E754 /* ZWSelectSchoolViewController.m in Sources */,
 				C3792AC81D6C887A0079FCF5 /* ZWAPITool.m in Sources */,
@@ -1601,36 +1733,44 @@
 				C3C44E461BC6BBEF004B30BF /* ZWRootPathViewController.m in Sources */,
 				C31BB10C1CB7EDC000EE1E37 /* ZWAppCache.m in Sources */,
 				C3C44DEE1BC687B0004B30BF /* main.m in Sources */,
+				C35771081D843E5700E9B166 /* ZWCourseViewController.m in Sources */,
 				C37C038F1D3E77FF00B22868 /* ZWDiscoveryViewController.m in Sources */,
 				C33D397C1C17264A00A582DF /* ZWBrowserViewController.m in Sources */,
 				C331EB541C9C5B6400C89925 /* NSString+Extension.m in Sources */,
 				C3162CBB1D7C517600153EB9 /* ZWUser.m in Sources */,
+				C357710D1D844A0700E9B166 /* ZWFileBaseType.m in Sources */,
 				C369BD931C7DB212001A44AB /* ZWServiceCollectionViewCell.m in Sources */,
+				C35771111D8541AF00E9B166 /* ZWFileCell.m in Sources */,
 				C3274BA81BC814C0005D28B8 /* UIColor+Extension.m in Sources */,
 				C3243E291D547A5A00FF97C3 /* ZWRegisterView.m in Sources */,
 				C3BE99EE1BCBE6C8000102A1 /* ZWDownloadInfoModel.m in Sources */,
 				C3162C9F1D7B229200153EB9 /* ZWLoginViewModel.m in Sources */,
-				C3A609BF1CBE79A1000CC03C /* ZWFileDetailViewController.m in Sources */,
+				C3EDA9181D830CA0009FF851 /* ZWFile.m in Sources */,
+				C3A609BF1CBE79A1000CC03C /* ZWOldFileDetailViewController.m in Sources */,
 				C39004AE1D5C5F360097358E /* ZWTabBarController.m in Sources */,
 				C3792ACB1D6DE9200079FCF5 /* ZWFeedTableViewController.m in Sources */,
 				C35FD9C61D707E640066DE68 /* SDWaitingView.m in Sources */,
 				C3792ABF1D6C824D0079FCF5 /* ZWPathTool.m in Sources */,
 				C37C03961D3F8C6000B22868 /* ZWStudentCircleViewController.m in Sources */,
 				C33B1D491CC53F0B008FA6E6 /* ZWDocumentCell.m in Sources */,
+				C35771051D842C4600E9B166 /* ZWCourseCell.m in Sources */,
 				C35AA0B81C88500800D17A99 /* ZWAboutUsViewController.m in Sources */,
 				C35FD9C41D707E640066DE68 /* SDBrowserImageView.m in Sources */,
 				C3FC44B11D8154F100896CDB /* ZWBaseSearchViewController.m in Sources */,
+				C3FC44B91D82EECA00896CDB /* ZWFileAndFolderViewController.m in Sources */,
 				C33140B81CEE0B6200387667 /* ZWCountDownViewController.m in Sources */,
+				C35771141D8541C900E9B166 /* ZWFolderCell.m in Sources */,
 				C3792AC51D6C83A70079FCF5 /* ZWFileTool.m in Sources */,
 				C3792AC21D6C82A00079FCF5 /* ZWHUDTool.m in Sources */,
 				C3F162A41D4E3658006397B1 /* YYFPSLabel.m in Sources */,
 				C37C038B1D3E2CBB00B22868 /* ZWPopViewController.m in Sources */,
-				C347782E1CB263E700D26FA8 /* ZWFolder.m in Sources */,
+				C347782E1CB263E700D26FA8 /* ZWOldFolder.m in Sources */,
 				C3F854241D7709E800E51013 /* ZWBindAccountViewModel.m in Sources */,
+				C35771191D8576A600E9B166 /* ZWFileDetailViewController.m in Sources */,
 				C3561A261D3774560032C97B /* ZWLoginViewController.m in Sources */,
 				C3F78BE61D537CC400E9C2AB /* ZWLoginAndRegisterViewController.m in Sources */,
 				C341B9AF1D47BA0600CEECFF /* ZWNetworkingManager.m in Sources */,
-				C3D1F2701CB3E33F0017723B /* ZWFileCell.m in Sources */,
+				C3D1F2701CB3E33F0017723B /* ZWOldFileCell.m in Sources */,
 				C369BD8B1C7D915A001A44AB /* ZWServiceViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

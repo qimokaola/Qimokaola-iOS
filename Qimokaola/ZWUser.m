@@ -7,6 +7,8 @@
 //
 
 #import "ZWUser.h"
+#import "YYModel.h"
+
 
 /*
  
@@ -29,43 +31,50 @@
  
  */
 
-NSString *const ZWUserUid = @"uid";
-NSString *const ZWUserName = @"username";
-NSString *const ZWUserNickname = @"nickname";
-NSString *const ZWUserGender = @"gender";
-NSString *const ZWUserCollegeId = @"collegeId";
-NSString *const ZWUserAcademyId = @"academyId";
-NSString *const ZWUserAvatarUrl = @"avatar_url";
-NSString *const ZWUserIsAdmin = @"isAdmin";
+//NSString *const ZWUserUid = @"uid";
+//NSString *const ZWUserName = @"username";
+//NSString *const ZWUserNickname = @"nickname";
+//NSString *const ZWUserGender = @"gender";
+//NSString *const ZWUserCollegeId = @"collegeId";
+//NSString *const ZWUserAcademyId = @"academyId";
+//NSString *const ZWUserAvatarUrl = @"avatar_url";
+//NSString *const ZWUserIsAdmin = @"isAdmin";
 
 @implementation ZWUser
 
-- (instancetype)initWithCoder:(NSCoder *)coder
-{
-    self = [super init];
-    if (self) {
-        self.uid = [coder decodeObjectForKey:ZWUserUid];
-        self.username = [coder decodeObjectForKey:ZWUserName];
-        self.nickname = [coder decodeObjectForKey:ZWUserNickname];
-        self.gender = [coder decodeObjectForKey:ZWUserGender];
-        self.collegeId = [coder decodeObjectForKey:ZWUserCollegeId];
-        self.acadenyId = [coder decodeObjectForKey:ZWUserAcademyId];
-        self.avatar_url = [coder decodeObjectForKey:ZWUserAvatarUrl];
-        self.isAdmin = [coder decodeBoolForKey:ZWUserIsAdmin];
-    }
-    return self;
-}
+//- (instancetype)initWithCoder:(NSCoder *)coder
+//{
+//    self = [super init];
+//    if (self) {
+//        self.uid = [coder decodeObjectForKey:ZWUserUid];
+//        self.username = [coder decodeObjectForKey:ZWUserName];
+//        self.nickname = [coder decodeObjectForKey:ZWUserNickname];
+//        self.gender = [coder decodeObjectForKey:ZWUserGender];
+//        self.collegeId = [coder decodeObjectForKey:ZWUserCollegeId];
+//        self.acadenyId = [coder decodeObjectForKey:ZWUserAcademyId];
+//        self.avatar_url = [coder decodeObjectForKey:ZWUserAvatarUrl];
+//        self.isAdmin = [coder decodeBoolForKey:ZWUserIsAdmin];
+//    }
+//    return self;
+//}
+//
+//- (void)encodeWithCoder:(NSCoder *)aCoder {
+//    [aCoder encodeObject:_uid forKey:ZWUserUid];
+//    [aCoder encodeObject:_username forKey:ZWUserName];
+//    [aCoder encodeObject:_nickname forKey:ZWUserNickname];
+//    [aCoder encodeObject:_gender forKey:ZWUserGender];
+//    [aCoder encodeObject:_collegeId forKey:ZWUserCollegeId];
+//    [aCoder encodeObject:_acadenyId forKey:ZWUserAcademyId];
+//    [aCoder encodeObject:_avatar_url forKey:ZWUserAvatarUrl];
+//    [aCoder encodeBool:_isAdmin forKey:ZWUserIsAdmin];
+//}
 
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-    [aCoder encodeObject:_uid forKey:ZWUserUid];
-    [aCoder encodeObject:_username forKey:ZWUserName];
-    [aCoder encodeObject:_nickname forKey:ZWUserNickname];
-    [aCoder encodeObject:_gender forKey:ZWUserGender];
-    [aCoder encodeObject:_collegeId forKey:ZWUserCollegeId];
-    [aCoder encodeObject:_acadenyId forKey:ZWUserAcademyId];
-    [aCoder encodeObject:_avatar_url forKey:ZWUserAvatarUrl];
-    [aCoder encodeBool:_isAdmin forKey:ZWUserIsAdmin];
-}
+- (void)encodeWithCoder:(NSCoder *)aCoder { [self yy_modelEncodeWithCoder:aCoder]; }
+- (id)initWithCoder:(NSCoder *)aDecoder { self = [super init]; return [self yy_modelInitWithCoder:aDecoder]; }
+- (id)copyWithZone:(NSZone *)zone { return [self yy_modelCopy]; }
+- (NSUInteger)hash { return [self yy_modelHash]; }
+- (BOOL)isEqual:(id)object { return [self yy_modelIsEqual:object]; }
+- (NSString *)description { return [self yy_modelDescription]; }
 
 + (NSDictionary *)modelCustomPropertyMapper {
     return @{@"uid" : @"id",
@@ -73,10 +82,5 @@ NSString *const ZWUserIsAdmin = @"isAdmin";
              @"collegeId" : @"CollegeId",
              @"avatar_url" : @"avatar"};
 }
-
-- (NSString *)description {
-    return [NSString stringWithFormat:@"%@-%@-%@-%@", _uid, _username, _nickname, _gender];
-}
-
 
 @end

@@ -15,8 +15,8 @@
 #import "UMSocial.h"
 #import "MBProgressHUD.h"
 #import "Masonry.h"
-#import "ZWFileDetailViewController.h"
-#import "ZWFile.h"
+#import "ZWOldFileDetailViewController.h"
+#import "ZWOldFile.h"
 #import "ZWPathTool.h"
 
 @interface ZWDownloadedViewController () <UISearchResultsUpdating, UISearchControllerDelegate>
@@ -278,8 +278,8 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     ZWDownloadInfoModel *model = [self.tableView != tableView ? self.searchResults : self.downloadInfos objectAtIndex:indexPath.row];
-    ZWFile *file = [ZWFile fileWithDownloadInfo:model];
-    ZWFileDetailViewController *detail = [[ZWFileDetailViewController alloc] initWithFile:file];
+    ZWOldFile *file = [ZWOldFile fileWithDownloadInfo:model];
+    ZWOldFileDetailViewController *detail = [[ZWOldFileDetailViewController alloc] initWithFile:file];
     [self.navigationController pushViewController:detail animated:YES];
 }
 

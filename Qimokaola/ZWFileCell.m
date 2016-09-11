@@ -2,45 +2,93 @@
 //  ZWFileCell.m
 //  Qimokaola
 //
-//  Created by Administrator on 16/4/5.
+//  Created by Administrator on 16/9/11.
 //  Copyright © 2016年 Administrator. All rights reserved.
 //
 
 #import "ZWFileCell.h"
-#import "Masonry.h"
 #import "ZWFileTool.h"
+
+#import "SDAutoLayout.h"
 
 @interface ZWFileCell ()
 
-@property (weak, nonatomic) IBOutlet UIImageView *typeIcon;
-@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *sizeLabel;
-@property (weak, nonatomic) IBOutlet UILabel *downloadLabel;
+@property (nonatomic, strong) UIImageView *iconView;
+@property (nonatomic, strong) UILabel *nameLabel;
+@property (nonatomic, strong) UILabel *sizeLabel;
+@property (nonatomic, strong) UILabel *isDownloadLabel;
 
 @end
 
 @implementation ZWFileCell
 
-+(instancetype)fileCellWithTableView:(UITableView *)tableView {
-    static NSString *const FileCellID = @"FileCellID";
-    ZWFileCell *cell = [tableView dequeueReusableCellWithIdentifier:FileCellID];
-    if(cell == nil)  {
-        cell = [[[NSBundle mainBundle] loadNibNamed:@"ZWFileCell" owner:self options:nil] firstObject];
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+    if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+        [self createSubViews];
     }
-    cell.separatorInset = UIEdgeInsetsMake(0, cell.nameLabel.frame.origin.x, 0, 0);
-    return cell;
+    return self;
 }
 
+- (void)createSubViews {
+    _iconView = [[UIImageView alloc] init];
+    
+    _nameLabel = [[UILabel alloc] init];
+    _nameLabel.font = ZWFont(18);
+    _nameLabel.textColor = [UIColor blackColor];
+    _nameLabel.numberOfLines = 1;
+    
+    _sizeLabel = [[UILabel alloc] init];
+    _sizeLabel.font = ZWFont(14);
+    _sizeLabel.numberOfLines = 1;
+    _sizeLabel.textColor = [UIColor lightGrayColor];
+    _sizeLabel.textAlignment = NSTextAlignmentRight;
+    
+    _isDownloadLabel = [[UILabel alloc] init];
+    _isDownloadLabel.font = ZWFont(13);
+    _isDownloadLabel.numberOfLines = 1;
+    _isDownloadLabel.text = @"已下载";
+    _isDownloadLabel.textColor = [UIColor lightGrayColor];
+    _isDownloadLabel.textAlignment = NSTextAlignmentLeft;
+    
+    [self.contentView sd_addSubviews:@[_iconView, _nameLabel, _sizeLabel, _isDownloadLabel]];
+    
+    CGFloat margin = 10;
+    CGFloat iconViewSize = 45.f;
+    UIView *contentView = self.contentView;
+    
+    _iconView.sd_layout
+    .leftSpaceToView(contentView, margin)
+    .centerYEqualToView(contentView)
+    .heightIs(iconViewSize)
+    .widthEqualToHeight();
+    
+    _nameLabel.sd_layout
+    .leftSpaceToView(_iconView, margin)
+    .rightSpaceToView(contentView, margin)
+    .topEqualToView(_iconView)
+    .autoHeightRatio(0);
+    
+    _sizeLabel.sd_layout
+    .rightEqualToView(_nameLabel)
+    .bottomEqualToView(_iconView)
+    .autoHeightRatio(0);
+    [_sizeLabel setSingleLineAutoResizeWithMaxWidth:100];
+    
+    _isDownloadLabel.sd_layout
+    .leftEqualToView(_nameLabel)
+    .bottomEqualToView(_iconView)
+    .autoHeightRatio(0);
+    [_isDownloadLabel setSingleLineAutoResizeWithMaxWidth:100];
+}
 
 - (void)setFile:(ZWFile *)file {
     _file = file;
-    self.typeIcon.image = [UIImage imageNamed:[ZWFileTool parseTypeWithString:_file.type]];
-    self.nameLabel.text = _file.name;
-    self.sizeLabel.text = _file.size;
-    self.downloadLabel.hidden = ! _file.download;
+    
+    _iconView.image = [UIImage imageNamed:[ZWFileTool fileTypeFromFileName:file.name]];
+    _nameLabel.text = file.name;
+    _sizeLabel.text = [ZWFileTool sizeWithString:file.size];
+    _isDownloadLabel.hidden = arc4random_uniform(10) < 5;
 }
-
-
 
 - (void)awakeFromNib {
     [super awakeFromNib];
@@ -50,6 +98,7 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 
+    // Configure the view for the selected state
 }
 
 @end

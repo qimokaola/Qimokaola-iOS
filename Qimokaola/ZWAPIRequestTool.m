@@ -102,6 +102,17 @@
                               result:result];
 }
 
++ (void)requstFileAndFolderListInSchool:(NSString *)collegeId
+                             path:(NSString *)path
+                       needDetail:(BOOL)needDetail
+                           result:(APIRequestResult)result {
+    NSDictionary *params = @{@"path": path, @"detail": @(needDetail)};
+    NSString *listAPI = [NSString stringWithFormat:[ZWAPITool listFileAndFolderAPI], collegeId];
+    [ZWAPIRequestTool requestWithAPI:listAPI
+                          parameters:params
+                              result:result];
+}
+
 // 通用请求接口，针对接收字典参数的接口
 + (void)requestWithAPI:(NSString *)API parameters:(id)params result:(APIRequestResult)result {
     

@@ -9,7 +9,7 @@
 #import "ZWDownloadInfoModel.h"
 
 
-@interface ZWFile : NSObject <NSCoding, NSCopying>
+@interface ZWOldFile : NSObject <NSCoding, NSCopying>
 
 //文件名
 @property (nonatomic, copy) NSString *name;

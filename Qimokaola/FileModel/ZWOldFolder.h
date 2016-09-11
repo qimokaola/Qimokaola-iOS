@@ -9,7 +9,7 @@
 
 @class ZWChild;
 
-@interface ZWFolder : NSObject <NSCoding, NSCopying>
+@interface ZWOldFolder : NSObject <NSCoding, NSCopying>
 
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, strong) ZWChild *child;

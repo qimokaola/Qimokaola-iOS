@@ -1,20 +1,24 @@
 //
-//  ZWFileDetailController.h
+//  ZWFileDetailViewController.h
 //  Qimokaola
 //
-//  Created by Administrator on 16/4/13.
+//  Created by Administrator on 16/9/11.
 //  Copyright © 2016年 Administrator. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import "ZWFile.h"
 
-typedef void(^DownloadCompltionHandler)(void);
+/**
+ *  @author Administrator, 16-09-11 19:09:29
+ *
+ *  显示文件详情
+ */
 
 @interface ZWFileDetailViewController : UIViewController
 
-- (instancetype)initWithFile:(ZWFile *)file;
+// 记录文件属于哪个课程
+@property (nonatomic, strong) NSString *rootPath;
+//@property (nonatomic, strong) ZWFile *file;
 
-@property (nonatomic, copy) DownloadCompltionHandler downloadCompletionHandler;
-
-@end 
+@end

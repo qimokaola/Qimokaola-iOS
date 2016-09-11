@@ -22,11 +22,11 @@ typedef void(^Progress)(int64_t hasWritten, int64_t totalExpected);
 //获取单例
 + (ZWDownloadCenter *)sharedDownloadCenter;
 
-//- (void)startDownloadWithFile:(ZWFile *)file progress:(Progress)progress completion:(Completion)completion;
+//- (void)startDownloadWithFile:(ZWOldFile *)file progress:(Progress)progress completion:(Completion)completion;
 
 
 //添加任务
-- (void)addDownloadTaskWithFile:(ZWFile *)file beforeDownload:(BeforeBlock)before whileDonwloading:(DownloadingBlock)downloading afterDownload:(CompleteBlock)completion;
+- (void)addDownloadTaskWithFile:(ZWOldFile *)file beforeDownload:(BeforeBlock)before whileDonwloading:(DownloadingBlock)downloading afterDownload:(CompleteBlock)completion;
 
 ////停止下载队列中位于index的任务
 //- (void)stopDownloadTaskAtIndex:(NSInteger)index;

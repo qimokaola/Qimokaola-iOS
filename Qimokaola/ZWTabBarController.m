@@ -16,7 +16,7 @@
 #import "ZWHUDTool.h"
 #import "ZWLoginViewController.h"
 #import "ZWUserManager.h"
-
+#import "ZWCourseViewController.h"
 
 #import "ReactiveCocoa.h"
 #import "YYModel.h"
@@ -34,6 +34,7 @@
 - (NSArray *)viewControllersInfo {
     if (_viewControllersInfo == nil) {
         _viewControllersInfo = @[
+                                 @{@"class" : [ZWCourseViewController class], @"title" : @"资源", @"image" : @"resource"},
                                  @{@"class" : [ZWRootPathViewController class], @"title" : @"资源", @"image" : @"resource"},
                                  @{@"class" : [ZWDownloadedViewController class], @"title" : @"已下载", @"image" : @"user"},
                                  @{@"class" : [ZWStudentCircleViewController class], @"title" : @"学生圈", @"image" : @"extra"},
@@ -46,7 +47,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.tabBar.backgroundColor = [UIColor whiteColor];
+    self.tabBar.barTintColor = [UIColor whiteColor];
     
     NSMutableArray<UIViewController *> *viewControllers = [NSMutableArray array];
     for (NSDictionary *dict in self.viewControllersInfo) {
@@ -56,27 +57,6 @@
     }
     
     self.viewControllers = viewControllers;
-    
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kShowHUDShort * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//        // 进入应用后获取用户信息 若登录状态失效 则重新登录
-//        [ZWAPIRequestTool requestUserInfo:^(id response, BOOL success) {
-//            if (success) {
-//                if ([[response objectForKey:@"info"] isEqualToString:kUserNotLogIn]) {
-//                    UINavigationController *nav = (UINavigationController *)self.selectedViewController;
-//                    [ZWHUDTool showHUDInView:nav.view withTitle:@"登录状态失效 请重新登录" message:nil duration:kShowHUDMid];
-//                    [self presentLoginViewController];
-//                } else if ([[response objectForKey:@"code"] intValue] == 0) {
-//                    
-//                    ZWUser *user = [ZWUser yy_modelWithJSON:[response objectForKey:@"res"]];
-//                    if (![[ZWUserManager sharedInstance].loginUser.uid isEqualToString:user.uid]) {
-//                        [ZWUserManager sharedInstance].loginUser = user;
-//                    }
-//                    
-//                }
-//            }
-//        }];
-//        
-//    });
     
     @weakify(self)
     [[[[NSNotificationCenter defaultCenter] rac_addObserverForName:kUserNeedLoginNotification object:nil] deliverOnMainThread] subscribeNext:^(id x) {

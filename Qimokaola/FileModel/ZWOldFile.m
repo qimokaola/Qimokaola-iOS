@@ -5,7 +5,7 @@
 //  Copyright (c) 2016 __MyCompanyName__. All rights reserved.
 //
 
-#import "ZWFile.h"
+#import "ZWOldFile.h"
 #import "FMDB.h"
 #import "AppDelegate.h"
 #import "ZWFileTool.h"
@@ -21,13 +21,13 @@ NSString *const kZWFilesDownload = @"download";
 static FMDatabaseQueue *DBQueue;
 static NSString *const querySQL = @"SELECT * FROM download_info WHERE link = '%@'";
 
-@interface ZWFile ()
+@interface ZWOldFile ()
 
 - (id)objectOrNilForKey:(id)aKey fromDictionary:(NSDictionary *)dict;
 
 @end
 
-@implementation ZWFile
+@implementation ZWOldFile
 
 @synthesize name = _name;
 @synthesize type = _type;
@@ -37,7 +37,7 @@ static NSString *const querySQL = @"SELECT * FROM download_info WHERE link = '%@
 @synthesize download = _download;
 
 + (instancetype)fileWithDownloadInfo:(ZWDownloadInfoModel *)model {
-    ZWFile *file = [[self alloc] init];
+    ZWOldFile *file = [[self alloc] init];
     file.name = model.name;
     file.type = model.type;
     file.path = model.course;
@@ -144,7 +144,7 @@ static NSString *const querySQL = @"SELECT * FROM download_info WHERE link = '%@
 
 - (id)copyWithZone:(NSZone *)zone
 {
-    ZWFile *copy = [[ZWFile alloc] init];
+    ZWOldFile *copy = [[ZWOldFile alloc] init];
     
     if (copy) {
 

@@ -6,7 +6,7 @@
 //
 
 #import "ZWFileModel.h"
-#import "ZWFolder.h"
+#import "ZWOldFolder.h"
 
 
 NSString *const kZWFileModelPath = @"path";
@@ -49,11 +49,11 @@ NSString *const kZWFileModelFolders = @"folders";
     if ([receivedZWFolders isKindOfClass:[NSArray class]]) {
         for (NSDictionary *item in (NSArray *)receivedZWFolders) {
             if ([item isKindOfClass:[NSDictionary class]]) {
-                [parsedZWFolders addObject:[ZWFolder modelObjectWithDictionary:item]];
+                [parsedZWFolders addObject:[ZWOldFolder modelObjectWithDictionary:item]];
             }
        }
     } else if ([receivedZWFolders isKindOfClass:[NSDictionary class]]) {
-       [parsedZWFolders addObject:[ZWFolder modelObjectWithDictionary:(NSDictionary *)receivedZWFolders]];
+       [parsedZWFolders addObject:[ZWOldFolder modelObjectWithDictionary:(NSDictionary *)receivedZWFolders]];
     }
 
     self.folders = [NSArray arrayWithArray:parsedZWFolders];

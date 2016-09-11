@@ -5,7 +5,7 @@
 //  Copyright (c) 2016 __MyCompanyName__. All rights reserved.
 //
 
-#import "ZWFolder.h"
+#import "ZWOldFolder.h"
 #import "ZWChild.h"
 
 
@@ -13,13 +13,13 @@ NSString *const kZWFoldersName = @"name";
 NSString *const kZWFoldersChild = @"child";
 
 
-@interface ZWFolder ()
+@interface ZWOldFolder ()
 
 - (id)objectOrNilForKey:(id)aKey fromDictionary:(NSDictionary *)dict;
 
 @end
 
-@implementation ZWFolder
+@implementation ZWOldFolder
 
 @synthesize name = _name;
 @synthesize child = _child;
@@ -88,7 +88,7 @@ NSString *const kZWFoldersChild = @"child";
 
 - (id)copyWithZone:(NSZone *)zone
 {
-    ZWFolder *copy = [[ZWFolder alloc] init];
+    ZWOldFolder *copy = [[ZWOldFolder alloc] init];
     
     if (copy) {
 

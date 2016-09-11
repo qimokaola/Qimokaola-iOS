@@ -113,7 +113,7 @@ static ZWDownloadCenter *downloadCenter = nil;
     return self;
 }
 
-- (void)addDownloadTaskWithFile:(ZWFile *)file beforeDownload:(BeforeBlock)before whileDonwloading:(DownloadingBlock)downloading afterDownload:(CompleteBlock)completion{
+- (void)addDownloadTaskWithFile:(ZWOldFile *)file beforeDownload:(BeforeBlock)before whileDonwloading:(DownloadingBlock)downloading afterDownload:(CompleteBlock)completion{
     
     if (self.session == nil) {
         NSLog(@"session is nil");
@@ -283,7 +283,7 @@ static ZWDownloadCenter *downloadCenter = nil;
     
     NSInteger index = [self.downloadTasks indexOfObject:downloadTask];
     
-    ZWFile *file = [self.files objectAtIndex:index];
+    ZWOldFile *file = [self.files objectAtIndex:index];
     
     NSString *fileName = file.name;
     

@@ -28,4 +28,6 @@
 
 + (NSString *)userInfoAPI;
 
++ (NSString *)listFileAndFolderAPI;
+
 @end

@@ -116,7 +116,7 @@
             user.username = [self.registerParam objectForKey:@"phone"];
             user.nickname = [self.registerParam objectForKey:@"nick"];
             user.collegeId = [self.registerParam objectForKey:@"schoolId"];
-            user.acadenyId = [self.registerParam objectForKey:@"academyId"];
+            user.academyId = [self.registerParam objectForKey:@"academyId"];
             user.gender = [self.registerParam objectForKey:@"gender"];
             user.isAdmin = NO;
             [ZWUserManager sharedInstance].loginUser = user;

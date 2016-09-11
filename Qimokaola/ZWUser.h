@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ZWUser : NSObject <NSCoding>
+@interface ZWUser : NSObject <NSCoding, NSCopying>
 
 // 用户唯一标识
 @property (nonatomic, strong) NSString *uid;
@@ -20,8 +20,12 @@
 @property (nonatomic, strong) NSString *gender;
 // 学校ID
 @property (nonatomic, strong) NSString *collegeId;
+// 学校名
+@property (nonatomic, strong) NSString *collegeName;
 // 学院ID
-@property (nonatomic, strong) NSString *acadenyId;
+@property (nonatomic, strong) NSString *academyId;
+// 学院名
+@property (nonatomic, strong) NSString *academyName;
 // 头像url
 @property (nonatomic, strong) NSString *avatar_url;
 // 是否是管理员身份

@@ -15,6 +15,10 @@ static NSArray *array;
 + (NSString *)typeWithName:(NSString *)name;
 + (NSString *)sizeWithDouble:(double)size;
 
++ (NSString *)sizeWithString:(NSString *)sizeString;
+
 + (NSString *)parseTypeWithString:(NSString *)type;
+
++ (NSString *)fileTypeFromFileName:(NSString *)fileName;
 
 @end

@@ -2,7 +2,7 @@
 //  ZWFolderCell.h
 //  Qimokaola
 //
-//  Created by Administrator on 16/4/6.
+//  Created by Administrator on 16/9/11.
 //  Copyright © 2016年 Administrator. All rights reserved.
 //
 
@@ -10,8 +10,6 @@
 
 @interface ZWFolderCell : UITableViewCell
 
-+ (instancetype)folderCellWithTableView:(UITableView *)tableView;
-
-@property (nonatomic, copy) NSString *name;
+@property (nonatomic, strong) NSString *folderName;
 
 @end

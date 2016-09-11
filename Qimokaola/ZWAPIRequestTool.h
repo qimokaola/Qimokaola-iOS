@@ -31,4 +31,6 @@ typedef void(^APIRequestResult)(id response, BOOL success);
 // 用户信息
 + (void)requestUserInfo:(APIRequestResult)result;
 
++ (void)requstFileAndFolderListInSchool:(NSString *)collegeId path:(NSString *)path needDetail:(BOOL)needDetail result:(APIRequestResult)result;
+
 @end

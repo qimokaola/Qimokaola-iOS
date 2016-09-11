@@ -7,12 +7,12 @@
 //
 
 #import "ZWFileFolderViewController.h"
-#import "ZWFileCell.h"
-#import "ZWFolderCell.h"
+#import "ZWOldFileCell.h"
+#import "ZWOldFolderCell.h"
 #import "MJRefresh.h"
 #import "UIColor+Extension.h"
 #import "ZWBrowserViewController.h"
-#import "ZWFileDetailViewController.h"
+#import "ZWOldFileDetailViewController.h"
 #import "AppDelegate.h"
 #import "NSDate+Extension.h"
 
@@ -86,7 +86,7 @@ static NSString *BasePath;
             _files = [NSMutableArray array];
             [child.files enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 
-                [_files addObject:[ZWFile modelObjectWithDictionary:(NSDictionary *)obj URLString:[NSString stringWithFormat:@"%@%@", BasePath, _path] filePath:_name]];
+                [_files addObject:[ZWOldFile modelObjectWithDictionary:(NSDictionary *)obj URLString:[NSString stringWithFormat:@"%@%@", BasePath, _path] filePath:_name]];
                 
             }];
             _fileCount = child.files.count;
@@ -94,7 +94,7 @@ static NSString *BasePath;
             _folders = [NSMutableArray array];
             [child.folders enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 
-                [_folders addObject:[ZWFolder modelObjectWithDictionary:(NSDictionary *)obj]];
+                [_folders addObject:[ZWOldFolder modelObjectWithDictionary:(NSDictionary *)obj]];
                 
             }];
             _folderCount = child.folders.count;
@@ -233,20 +233,20 @@ static NSString *BasePath;
     if ([self isRowInFolders:row]) {
         
         //当前索引小于文件夹数量，故为文件夹
-        ZWFolderCell *cell = [ZWFolderCell folderCellWithTableView:tableView];
+        ZWOldFolderCell *cell = [ZWOldFolderCell folderCellWithTableView:tableView];
         
         //根据搜索标记变量从总数据或者搜索结果数据取模型
-        ZWFolder *folder = [self.searchController.active ? self.folderSearchResults : self.folders objectAtIndex:row];
+        ZWOldFolder *folder = [self.searchController.active ? self.folderSearchResults : self.folders objectAtIndex:row];
         cell.name = folder.name;
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         return cell;
         
     } else {
         
-        ZWFileCell *cell = [ZWFileCell fileCellWithTableView:tableView];
+        ZWOldFileCell *cell = [ZWOldFileCell fileCellWithTableView:tableView];
         
         //根据搜索标记变量从总数据或者搜索结果数据取模型
-        ZWFile *file = self.searchController.active ? [self.fileSearchResults objectAtIndex:row - self.folderSearchResultsCount] : [self.files objectAtIndex:row - self.folderCount];
+        ZWOldFile *file = self.searchController.active ? [self.fileSearchResults objectAtIndex:row - self.folderSearchResultsCount] : [self.files objectAtIndex:row - self.folderCount];
         cell.file = file;
         return cell;
         
@@ -269,7 +269,7 @@ static NSString *BasePath;
         
         //当前索引小于文件夹数量，故为文件夹
         //根据搜索标记变量从总数据或者搜索结果数据取模型
-        ZWFolder *folder = [self.searchController.active ? self.folderSearchResults : self.folders objectAtIndex:row];
+        ZWOldFolder *folder = [self.searchController.active ? self.folderSearchResults : self.folders objectAtIndex:row];
         
         NSLog(@"Folder: %@", folder.name);
         
@@ -280,9 +280,9 @@ static NSString *BasePath;
         
         __weak typeof(self) weakSelf = self;
         
-        ZWFile *file = self.searchController.active ? [self.fileSearchResults objectAtIndex:row - self.folderSearchResultsCount] : [self.files objectAtIndex:row - self.folderCount];
+        ZWOldFile *file = self.searchController.active ? [self.fileSearchResults objectAtIndex:row - self.folderSearchResultsCount] : [self.files objectAtIndex:row - self.folderCount];
         
-        ZWFileDetailViewController *detail = [[ZWFileDetailViewController alloc] initWithFile:file];
+        ZWOldFileDetailViewController *detail = [[ZWOldFileDetailViewController alloc] initWithFile:file];
         detail.downloadCompletionHandler = ^{
             
             file.download = YES;

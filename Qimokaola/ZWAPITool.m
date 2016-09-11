@@ -15,7 +15,7 @@
 - (NSString *)user;
 - (NSString *)school;
 - (NSString *)sb;
-
+- (NSString *)dbfs;
 
 // 详细接口
 - (NSString *)sendCode;
@@ -79,6 +79,10 @@
     return [self stringByAppendingPathComponent:@"info"];
 }
 
+- (NSString *)dbfs {
+    return [self stringByAppendingPathComponent:@"dbfs"];
+}
+
 @end
 
 @implementation ZWAPITool
@@ -124,12 +128,24 @@
     return [[ZWAPITool user] userInfo];
 }
 
++ (NSString *)listFileAndFolderAPI {
+    return [[[ZWAPITool dbfs] stringByAppendingPathComponent:@"%@"] stringByAppendingPathComponent:@"list"];
+}
+
++ (NSString *)api {
+    return [[ZWAPITool base] api];
+}
+
 + (NSString *)user {
-    return [[[ZWAPITool base] api] user];
+    return [[ZWAPITool api] user];
 }
 
 + (NSString *)school {
-    return [[[ZWAPITool base] api] school];
+    return [[ZWAPITool api] school];
+}
+
++ (NSString *)dbfs {
+    return [[ZWAPITool api] dbfs];
 }
 
 @end

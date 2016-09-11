@@ -41,12 +41,12 @@
 @property (nonatomic, strong) UIButton *shareButton;
 // 分隔视图
 @property (nonatomic, strong) UIView *separatorView;
-// 水平分隔线
-@property (nonatomic, strong) UIView *horizontalLine;
+// 水平分隔线1 三个按钮之上
+@property (nonatomic, strong) UIView *horizontalLine1;
 // 竖直分隔线 点赞 与 分享按钮 之间
 @property (nonatomic, strong) UIView *verticalLine1;
 // 竖直分隔线 评论 与 分享按钮 之间
-@property (nonatomic, strong) UIView *vertical2;
+@property (nonatomic, strong) UIView *verticalLine2;
 // Feed 作者
 @property (nonatomic, strong) UMComUser *creator;
 
@@ -86,13 +86,11 @@
     
     CGFloat buttonHeight = 35.f;
     
-    CGFloat separatorViewHeight = 20.f;
+    CGFloat separatorViewHeight = 10.f;
     
-    CGFloat separatorLineSize = .8f;
+    CGFloat separatorLineSize = .5f;
     
-    UIColor *separatorColor = RGB(240., 240., 240.);
-    
-    __weak __typeof(self) weakSelf = self;
+    UIColor *separatorColor = universalGrayColor;
     
     _avatarView = [[UIImageView alloc] init];
     _avatarView.layer.cornerRadius = avatarHeightOrWidth / 2;
@@ -147,16 +145,16 @@
     _separatorView = [[UIView alloc] init];
     _separatorView.backgroundColor = separatorColor;
     
-    _horizontalLine = [[UIView alloc] init];
-    _horizontalLine.backgroundColor = separatorColor;
+    _horizontalLine1 = [[UIView alloc] init];
+    _horizontalLine1.backgroundColor = separatorColor;
     
     _verticalLine1 = [[UIView alloc] init];
     _verticalLine1.backgroundColor = separatorColor;
     
-    _vertical2 = [[UIView alloc] init];
-    _vertical2.backgroundColor = separatorColor;
+    _verticalLine2 = [[UIView alloc] init];
+    _verticalLine2.backgroundColor = separatorColor;
     
-    NSArray *views = @[_avatarView, _nameLabel, _genderView, _timeLabel, _schoolLabel, _contentLabel, _picContainerView, _moreButton, _likeButton, _commentButton, _shareButton, _separatorView, _horizontalLine, _verticalLine1, _vertical2];
+    NSArray *views = @[_avatarView, _nameLabel, _genderView, _timeLabel, _schoolLabel, _contentLabel, _picContainerView, _moreButton, _likeButton, _commentButton, _shareButton, _separatorView, _horizontalLine1, _verticalLine1, _verticalLine2];
     
     [self.contentView sd_addSubviews:views];
     
@@ -207,14 +205,14 @@
     .widthIs(20)
     .heightIs(20);
     
-    _horizontalLine.sd_layout
+    _horizontalLine1.sd_layout
     .leftEqualToView(contentView)
     .rightEqualToView(contentView)
     .heightIs(separatorLineSize);
     
     _likeButton.sd_layout
     .leftEqualToView(contentView)
-    .topSpaceToView(_horizontalLine, 0)
+    .topSpaceToView(_horizontalLine1, 0)
     .heightIs(buttonHeight)
     .widthRatioToView(contentView, 1.0 / 3.0);
     
@@ -230,7 +228,7 @@
     .heightIs(buttonHeight)
     .widthRatioToView(_likeButton, 1.0);
     
-    _vertical2.sd_layout
+    _verticalLine2.sd_layout
     .leftSpaceToView(_shareButton, 0)
     .centerYEqualToView(_likeButton)
     .widthIs(separatorLineSize)
@@ -276,9 +274,9 @@
     CGFloat picContainerViewTopMargin = 0.f;
     if (feed.image_urls && feed.image_urls.count > 0) {
         picContainerViewTopMargin = 10;
-        _horizontalLine.sd_layout.topSpaceToView(_picContainerView, 10);
+        _horizontalLine1.sd_layout.topSpaceToView(_picContainerView, 10);
     } else {
-        _horizontalLine.sd_layout.topSpaceToView(_contentLabel, 10);
+        _horizontalLine1.sd_layout.topSpaceToView(_contentLabel, 10);
     }
     
     _picContainerView.sd_layout.topSpaceToView(_contentLabel, picContainerViewTopMargin);
