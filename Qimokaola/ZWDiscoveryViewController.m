@@ -133,7 +133,8 @@
 
 - (void)updateUserInfo {
     ZWUser *loginUser = [ZWUserManager sharedInstance].loginUser;
-    [self.avatarImageView setImageWithURL:[NSURL URLWithString:[[ZWAPITool base] stringByAppendingPathComponent:loginUser.avatar_url]] placeholder:[UIImage imageNamed:@"avatar"]];
+//    [self.avatarImageView setImageWithURL:[NSURL URLWithString:[[ZWAPITool base] stringByAppendingPathComponent:loginUser.avatar_url]] placeholder:[UIImage imageNamed:@"avatar"]];
+    [self.avatarImageView setImageWithURL:[NSURL URLWithString:[[ZWAPITool base] stringByAppendingPathComponent:loginUser.avatar_url]] placeholder:_avatarImageView.image];
     self.nicknameLabel.text  = loginUser.nickname;
     //self.schoolLabel.text = loginUser.collegeName;
     self.schoolLabel.text  = @"福州大学";

@@ -74,6 +74,10 @@
                     height = maxHeight;
                     width = height / ratio;
                 }
+            } else {
+                CGFloat ratio = height / width;
+                width = maxWidth;
+                height = width * ratio;
             }
             self.avatarView.frame = CGRectMake((maxWidth-width) / 2, (maxHeight-height) /2, width, height);
         }
