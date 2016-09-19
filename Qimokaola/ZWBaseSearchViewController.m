@@ -7,7 +7,9 @@
 //
 
 #import "ZWBaseSearchViewController.h"
+
 #import "MJRefresh.h"
+#import <YYKit/YYKit.h>
 
 @interface ZWBaseSearchViewController ()
 
@@ -23,7 +25,7 @@
         _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, kNavigationBarHeight, kScreenWidth, kScreenHeight - kTabBarHeight - kNavigationBarHeight)];
         _tableView.dataSource = self;
         _tableView.delegate = self;
-        _tableView.backgroundColor = [UIColor whiteColor];
+        _tableView.backgroundColor = [UIColor clearColor];
 //        _tableView.scrollIndicatorInsets = UIEdgeInsetsMake(kNavigationBarHeight, 0, 0, 0);
 //        _tableView.contentInset = UIEdgeInsetsMake(kNavigationBarHeight, 0, 0, 0);
         
@@ -61,7 +63,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = UIColorHex(f2f2f2);
     
     //设置下级页面的返回键
     UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:nil action:nil];
@@ -76,7 +78,7 @@
     self.tableView.tableHeaderView = self.searchController.searchBar;
     [self.view addSubview:self.tableView];
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self.tableView.mj_header beginRefreshing];
     });
 }
@@ -95,8 +97,6 @@
 - (void)freshHeaderStartFreshing {
     
 }
-
-
 
 #pragma mark - UITabelViewDataSource
 

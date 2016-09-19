@@ -69,11 +69,11 @@ static NSString *const FolderCellIdentifier = @"FolderCellIdentifier";
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         self.files = [[[data objectForKey:@"files"] linq_select:^id(NSDictionary *item) {
-            return [ZWFile yy_modelWithDictionary:item];
+            return [ZWFile modelWithDictionary:item];
         }] mutableCopy];
         
         self.folders = [[[data objectForKey:@"folders"] linq_select:^id(NSDictionary *item) {
-            return [ZWFolder yy_modelWithDictionary:item];
+            return [ZWFolder modelWithDictionary:item];
         }] mutableCopy];
         
         dispatch_async(dispatch_get_main_queue(), ^{

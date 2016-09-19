@@ -17,10 +17,9 @@
 #import "ZWLoginViewController.h"
 #import "ZWUserManager.h"
 #import "ZWCourseViewController.h"
+#import "ZWFeedComposeViewController.h"
 
 #import "ReactiveCocoa.h"
-#import "YYModel.h"
-
 
 
 @interface ZWTabBarController ()

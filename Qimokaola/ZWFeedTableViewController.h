@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <UMCommunitySDK/UMComDataRequestManager.h>
 
-@interface ZWFeedTableViewController : UITableViewController
+@interface ZWFeedTableViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) UMComTopic *topic;
 

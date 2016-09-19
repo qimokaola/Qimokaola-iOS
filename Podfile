@@ -14,8 +14,6 @@ target "Qimokaola" do
     pod 'SDAutoLayout'
     pod 'LEETheme'
     pod 'LinqToObjectiveC'
-    pod 'YYText'
-    pod 'YYWebImage'
-    pod 'YYModel'
-    pod 'YYCache'
+    pod 'YYKit'
+    pod 'YangMingShan'
 end

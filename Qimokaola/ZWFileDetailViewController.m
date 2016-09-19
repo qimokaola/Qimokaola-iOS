@@ -185,8 +185,8 @@
         make.height.mas_equalTo(weakSelf.bottomBar).with.offset(- margin * 0.2);
         make.left.mas_equalTo(weakSelf.bottomBar.mas_left).with.offset(margin);
         
-        make.right.mas_equalTo(weakSelf.sendButton.mas_left).with.offset(- margin);
-        make.width.mas_equalTo(weakSelf.sendButton);
+        make.right.mas_equalTo(weakSelf.shareButton.mas_left).with.offset(- margin);
+        make.width.mas_equalTo(weakSelf.shareButton);
     }];
     
     [self.shareButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -290,7 +290,7 @@
 
 - (void)setMainButtonHidden:(BOOL)hidder {
     self.downloadOrOpenButton.hidden = hidder;
-    self.sendButton.hidden = hidder;
+    self.shareButton.hidden = hidder;
 }
 
 - (void)setDownloadComponmentHidden:(BOOL)hidden {

@@ -27,7 +27,7 @@ static NSString *const CourseCellIdentifier = @"CourseCellIdentifier";
 #pragma mark - Life Cycle
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
+    [super viewDidLoad]; 
     
     [self.tableView registerClass:[ZWCourseCell class] forCellReuseIdentifier:CourseCellIdentifier];    
     self.tableView.rowHeight = 50;
@@ -53,9 +53,8 @@ static NSString *const CourseCellIdentifier = @"CourseCellIdentifier";
                                                  path:ROOT
                                            needDetail:YES
                                                result:^(id response, BOOL success) {
-                                                   
+                                                   NSLog(@"%@", response);
                                                    [weakSelf.tableView.mj_header endRefreshing];
-                                                   
                                                    if (success) {
                                                        [weakSelf loadRemoteData:[response objectForKey:@"res"]];
                                                    }
@@ -66,7 +65,7 @@ static NSString *const CourseCellIdentifier = @"CourseCellIdentifier";
 #pragma mark 处理接收到数据
 - (void)loadRemoteData:(NSDictionary *)data {
     self.dataArray = [[[data objectForKey:@"folders"] linq_select:^id(NSDictionary *item) {
-        return [ZWFolder yy_modelWithDictionary:item];
+        return [ZWFolder modelWithDictionary:item];
     }] mutableCopy];
     
     [self.tableView reloadData];

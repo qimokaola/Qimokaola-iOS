@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "YYModel.h"
+#import <YYKit/YYKit.h>
 
 /**
  *  @author Administrator, 16-09-10 22:09:29

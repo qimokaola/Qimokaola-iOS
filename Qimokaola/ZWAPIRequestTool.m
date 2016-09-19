@@ -39,32 +39,6 @@
                               result:result];
 }
 
-+ (void)requestRegisterWithParameter:(id)params result:(APIRequestResult)result {
-//    [ZWAPIRequestTool requestWithAPI:[ZWAPITool registerAPI]
-//                          parameters:params
-//                              result:result];
-    
-    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [manager POST:[ZWAPITool registerAPI]
-       parameters:[self buildParameters:params]
-         progress:nil
-          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-              
-              if (result) {
-                  result(responseObject, YES);
-              }
-              
-          }
-          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-              
-              if (result) {
-                  result(error, NO);
-              }
-              
-          }];
-}
 
 + (void)requestLoginWithParameters:(id)params result:(APIRequestResult)result {
     [ZWAPIRequestTool requestWithAPI:[ZWAPITool loginAPI]
@@ -102,13 +76,19 @@
                               result:result];
 }
 
-+ (void)requstFileAndFolderListInSchool:(NSString *)collegeId
++ (void)requstFileAndFolderListInSchool:(NSNumber *)collegeId
                              path:(NSString *)path
                        needDetail:(BOOL)needDetail
                            result:(APIRequestResult)result {
     NSDictionary *params = @{@"path": path, @"detail": @(needDetail)};
-    NSString *listAPI = [NSString stringWithFormat:[ZWAPITool listFileAndFolderAPI], collegeId];
+    NSString *listAPI = [NSString stringWithFormat:[ZWAPITool listFileAndFolderAPI], [collegeId intValue]];
     [ZWAPIRequestTool requestWithAPI:listAPI
+                          parameters:params
+                              result:result];
+}
+
++ (void)requestModifyUserInfoWithParameters:(id)params result:(APIRequestResult)result {
+    [ZWAPIRequestTool requestWithAPI:[ZWAPITool modifyUserInfoAPI]
                           parameters:params
                               result:result];
 }
@@ -116,14 +96,13 @@
 // 通用请求接口，针对接收字典参数的接口
 + (void)requestWithAPI:(NSString *)API parameters:(id)params result:(APIRequestResult)result {
     
-    id parameters = [ZWAPIRequestTool buildParameters:params ? params : @{}];
-    
     [ZWNetworkingManager postWithURLString:API
-                                    params:parameters
+                                    params:[ZWAPIRequestTool buildParameters:params ? params : @{}]
                                    success:^(NSURLSessionDataTask *task, id responseObject) {
                                        
                                        if ([[responseObject objectForKey:@"info"] isEqualToString:kUserNotLoginInfo]) {
                                            [[NSNotificationCenter defaultCenter] postNotificationName:kUserNeedLoginNotification object:nil];
+                                           return;
                                        }
                                        
                                        if (result) {
@@ -141,34 +120,11 @@
     
 }
 
-// 特殊请求接口，针对接收JSON字符串的接口 部分接口需要 "application/json" 的 Content-Type 
-+ (void)requestWithJSONContentType:(id)params result:(APIRequestResult)result {
-    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [manager POST:[ZWAPITool registerAPI]
-       parameters:[self buildParameters:params]
-         progress:nil
-          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-              
-              if (result) {
-                  result(responseObject, YES);
-              }
-              
-          }
-          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-              
-              if (result) {
-                  result(error, NO);
-              }
-              
-          }];
-}
 
 + (id)buildParameters:(id)param {
     
     if ([param isKindOfClass:[NSDictionary class]]) {
-        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObject:@"version" forKey:@1];
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObject:@1 forKey:@"version"];
         [dict addEntriesFromDictionary:param];
         return dict;
     } else if ([param isKindOfClass:[NSString class]]) {

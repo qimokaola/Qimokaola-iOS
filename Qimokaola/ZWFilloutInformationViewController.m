@@ -123,7 +123,7 @@
         ZWBindAccountViewController *bindAccount = [[ZWBindAccountViewController alloc] init];
         NSMutableDictionary *params = [NSMutableDictionary dictionaryWithDictionary:self.registerParam];
         NSString *nickname = self.nicknameField.text;
-        NSString *gender = self.maleBtn.enabled ? @"女生" : @"男生";
+        NSString *gender = self.maleBtn.enabled ? @"女" : @"男";
         [params addEntriesFromDictionary:@{
                                            @"nick": nickname,
                                            @"gender": gender,

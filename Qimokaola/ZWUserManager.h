@@ -8,7 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "ZWUser.h"
-#import "YYDiskCache.h"
+#import "ZWAPIRequestTool.h"
+
+#import <YYKit/YYKit.h>
 
 @interface ZWUserManager : NSObject
 
@@ -18,5 +20,18 @@
 @property (nonatomic, assign) BOOL isLogin;
 
 + (instancetype)sharedInstance;
+
+// 修改昵称
+- (void)modifyUserNickname:(NSString *)nickname result:(APIRequestResult)result;
+- (void)updateNickname:(NSString *)nickname;
+
+// 修改性别
+- (void)modifyUserGender:(NSString *)gender result:(APIRequestResult)result;
+- (void)updateGender:(NSString *)gender;
+
+- (void)modifyUserAcademyId:(NSNumber *)academyId result:(APIRequestResult)result;
+- (void)updateAcademyId:(NSNumber *)academyId academyName:(NSString *)academyName;
+
+- (void)updateAvatarUrl:(NSString *)avatarUrl;
 
 @end

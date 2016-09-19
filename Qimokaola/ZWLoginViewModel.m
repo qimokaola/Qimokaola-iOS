@@ -44,11 +44,9 @@
 
 - (RACSignal *)loginSignal {
     
-    return [[RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-        
+    return [[[RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
         [ZWAPIRequestTool requestLoginWithParameters:@{@"un": self.account, @"pw": self.password} result:^(id response, BOOL success) {
             if (success) {
-                
                 [subscriber sendNext:response];
                 [subscriber sendCompleted];
                 
@@ -59,7 +57,7 @@
         }];
         
         return nil;
-    }] delay:kRequestWaitingTime];
+    }] delay:kRequestWaitingTime] timeout:5.0 onScheduler:[RACScheduler mainThreadScheduler]];
 }
 
 - (BOOL)isAccountValid:(NSString *)value {

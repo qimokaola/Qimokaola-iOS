@@ -30,14 +30,15 @@
 
 #define RGB(r, g, b) [UIColor colorWithRed:r / 255.0f green:g / 255.0f blue:b / 255.0f alpha:1.0f]
 #define RGBA(r, g, b, a) [UIColor colorWithRed:r / 255.0f green:g / 255.0f blue:b / 255.0f alpha:a]
-#define defaultBackgroundColor RGB(249, 249, 249)
+
+#define defaultBackgroundColor RGB(239, 239, 244)
 
 #define kUserNotLoginInfo @"尚未登录"
 
 #define kUserLoginNotification @"kUserLoginNotification"
 #define kUserNeedLoginNotification @"kUserNeedLoginNotification"
 
-#define universalGrayColor RGB(239., 239, 244)
+#define universalGrayColor RGB(242, 242, 242)
 
 // Include any system framework and library headers here that should be included in all compilation units.
 // You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.

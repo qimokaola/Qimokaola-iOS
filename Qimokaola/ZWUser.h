@@ -19,16 +19,18 @@
 // 用户性别
 @property (nonatomic, strong) NSString *gender;
 // 学校ID
-@property (nonatomic, strong) NSString *collegeId;
+@property (nonatomic, strong) NSNumber *collegeId;
 // 学校名
 @property (nonatomic, strong) NSString *collegeName;
 // 学院ID
-@property (nonatomic, strong) NSString *academyId;
+@property (nonatomic, strong) NSNumber *academyId;
 // 学院名
 @property (nonatomic, strong) NSString *academyName;
 // 头像url
 @property (nonatomic, strong) NSString *avatar_url;
 // 是否是管理员身份
 @property (nonatomic, assign) BOOL isAdmin;
+// 入学年份
+@property (nonatomic, strong) NSString *enterYear;
 
 @end

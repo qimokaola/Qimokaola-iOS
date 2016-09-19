@@ -115,8 +115,8 @@
             user.uid = [[result objectForKey:@"res"] objectForKey:@"id"];
             user.username = [self.registerParam objectForKey:@"phone"];
             user.nickname = [self.registerParam objectForKey:@"nick"];
-            user.collegeId = [self.registerParam objectForKey:@"schoolId"];
-            user.academyId = [self.registerParam objectForKey:@"academyId"];
+            user.collegeId = [NSNumber numberWithInt:[[self.registerParam objectForKey:@"schoolId"] intValue]];
+            user.academyId = [NSNumber numberWithInt:[[self.registerParam objectForKey:@"academyId"] intValue]];
             user.gender = [self.registerParam objectForKey:@"gender"];
             user.isAdmin = NO;
             [ZWUserManager sharedInstance].loginUser = user;

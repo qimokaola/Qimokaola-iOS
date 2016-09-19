@@ -8,25 +8,30 @@
 
 #import "ZWFeedTableViewController.h"
 #import "ZWFeedCell.h"
+#import "UIColor+Extension.h"
 
-#import "ZWCreateNewFeedViewController.h"
+#import "ZWFeedComposeViewController.h"
 #import <UMComDataStorage/UMComTopic.h>
 #import <UMComDataStorage/UMComFeed.h>
 #import <UMComDataStorage/UMComUser.h>
 #import <UMComDataStorage/UMComImageUrl.h>
-#import "SDAutoLayout.h"
 #import <UMCommunitySDK/UMComSession.h>
-
+#import "MJRefresh.h"
+#import "SDAutoLayout.h"
+#import <YYKit/YYKit.h>
 
 #define kFeedTableViewCellID @"kFeedTableViewCellID"
 
 @interface ZWFeedTableViewController () <ZWFeedCellDelegate>
 
+@property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray<UMComFeed *> *feeds;
 
 @end
 
 @implementation ZWFeedTableViewController
+
+#pragma mark - Initialization Methods
 
 - (instancetype)init
 {
@@ -37,46 +42,70 @@
     return self;
 }
 
+#pragma mark - Life Cycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.feeds = [NSMutableArray array];
+    if ([self respondsToSelector:@selector(automaticallyAdjustsScrollViewInsets)]) {
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
     
+    self.feeds = [NSMutableArray array];
     self.title = self.topic.name;
     
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"toolbar_compose_highlighted"] style:UIBarButtonItemStylePlain target:self action:@selector(presendNewFeedViewController)];
+    rightItem.tintColor = UIColorHex(fd8224);
+    self.navigationItem.rightBarButtonItem = rightItem;
+    
+    _tableView = [[UITableView alloc] init];
+    _tableView.frame = self.view.bounds;
+    _tableView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
+    _tableView.scrollIndicatorInsets = _tableView.contentInset;
+    _tableView.backgroundColor = [UIColor clearColor];
+    _tableView.backgroundView.backgroundColor = [UIColor clearColor];
+    [_tableView registerClass:[ZWFeedCell class] forCellReuseIdentifier:kFeedTableViewCellID];
+    _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    [self.view addSubview:_tableView];
+    self.view.backgroundColor = UIColorHex(f2f2f2);
+    
+    _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(fetchFeedsData)];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [_tableView.mj_header beginRefreshing];
+    });
+}
+
+
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Normal Methods
+
+- (void)fetchFeedsData {
+    __weak __typeof(self) weakSelf = self;
     [[UMComDataRequestManager defaultManager] fetchFeedsTopicRelatedWithTopicId:self.topic.topicID
                                                                        sortType:UMComTopicFeedSortType_default
                                                                       isReverse:NO
                                                                           count:20
                                                                      completion:^(NSDictionary *responseObject, NSError *error) {
-                                                                         
-                                                                         
+                                                                         [weakSelf.tableView.mj_header endRefreshing];
                                                                          [self.feeds addObjectsFromArray:[responseObject objectForKey:@"data"]];
                                                                          [self.tableView reloadData];
-                                                                         
-                                                                         
                                                                      }];
-    
-    [self.tableView registerClass:[ZWFeedCell class] forCellReuseIdentifier:kFeedTableViewCellID];
-    
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
-    UIBarButtonItem *createNewFeedItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(presendNewFeedViewController)];
-    self.navigationItem.rightBarButtonItem = createNewFeedItem;
 }
 
 - (void)presendNewFeedViewController {
-    ZWCreateNewFeedViewController *createNewFeedViewController = [[ZWCreateNewFeedViewController alloc] init];
+    ZWFeedComposeViewController *createNewFeedViewController = [[ZWFeedComposeViewController alloc] init];
     createNewFeedViewController.topicID = self.topic.topicID;
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:createNewFeedViewController];
     
     [self presentViewController:nav animated:YES completion:nil];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Table view data source

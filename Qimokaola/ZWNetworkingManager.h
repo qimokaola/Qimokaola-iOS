@@ -15,9 +15,6 @@ typedef void(^FailureBlock)(NSURLSessionDataTask *task, NSError *error);
 
 @interface ZWNetworkingManager : NSObject
 
-
-
-
 + (NSURLSessionDataTask *)getWithURLString:(NSString *)url
                                    success:(SuccessBlock)success
                                    failure:(FailureBlock)failure;

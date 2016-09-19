@@ -7,13 +7,13 @@
 //
 
 #import "ZWFeedCell.h"
+#import "UIColor+Extension.h"
+
 #import "SDAutoLayout.h"
 #import "SDWeiXinPhotoContainerView.h"
 #import "LinqToObjectiveC.h"
 #import "Masonry.h"
-#import "UIColor+Extension.h"
-#import "YYWebImage.h"
-
+#import <YYKit/YYKit.h>
 
 @interface ZWFeedCell ()
 
@@ -86,7 +86,7 @@
     
     CGFloat buttonHeight = 35.f;
     
-    CGFloat separatorViewHeight = 10.f;
+    CGFloat separatorViewHeight = 8.f;
     
     CGFloat separatorLineSize = .5f;
     
@@ -253,7 +253,7 @@
     _feed = feed;
     _creator = feed.creator;
     
-    [_avatarView yy_setImageWithURL:[NSURL URLWithString:_creator.icon_url.midle_url_string] placeholder:[UIImage imageNamed:@"avatar"]];
+    [_avatarView setImageWithURL:[NSURL URLWithString:_creator.icon_url.midle_url_string] placeholder:[UIImage imageNamed:@"avatar"]];
     
     _nameLabel.text = _creator.name;
     
@@ -298,6 +298,7 @@
 }
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
     // Initialization code
 }
 

@@ -26,6 +26,7 @@
 - (NSString *)uploadAvatar;
 - (NSString *)login;
 - (NSString *)userInfo;
+- (NSString *)modifyUserInfo;
 
 @end
 
@@ -83,6 +84,10 @@
     return [self stringByAppendingPathComponent:@"dbfs"];
 }
 
+- (NSString *)modifyUserInfo {
+    return [self stringByAppendingPathComponent:@"modify"];
+}
+
 @end
 
 @implementation ZWAPITool
@@ -129,7 +134,11 @@
 }
 
 + (NSString *)listFileAndFolderAPI {
-    return [[[ZWAPITool dbfs] stringByAppendingPathComponent:@"%@"] stringByAppendingPathComponent:@"list"];
+    return [[[ZWAPITool dbfs] stringByAppendingPathComponent:@"%d"] stringByAppendingPathComponent:@"list"];
+}
+
++ (NSString *)modifyUserInfoAPI {
+    return [[ZWAPITool user] modifyUserInfo];
 }
 
 + (NSString *)api {

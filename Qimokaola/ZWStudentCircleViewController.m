@@ -16,7 +16,7 @@
 #import <UMCommunitySDK/UMComDataRequestManager.h>
 #import <UMComDataStorage/UMComTopic.h>
 #import "LinqToObjectiveC.h"
-#import "YYWebImage.h"
+#import <YYKit/YYKit.h>
 
 typedef NS_ENUM(NSInteger, ZWFetchedDataSource) {
     ZWFetchedDataSourceFromHeader,
@@ -59,7 +59,7 @@ typedef NS_ENUM(NSInteger, ZWFetchedDataSource) {
     
     self.title = @"学生圈";
     
-    self.placeholderImage = [[UIImage imageNamed:@"avatar"] yy_imageByResizeToSize:CGSizeMake(40, 40)];
+    self.placeholderImage = [[UIImage imageNamed:@"avatar"] imageByResizeToSize:CGSizeMake(40, 40)];
     
     self.topics = [NSMutableArray array];
     
@@ -200,7 +200,7 @@ typedef NS_ENUM(NSInteger, ZWFetchedDataSource) {
     
     cell.textLabel.text = topic.name;
     cell.detailTextLabel.text = topic.descriptor;
-    [cell.imageView yy_setImageWithURL:[NSURL URLWithString:topic.icon_url] placeholder:self.placeholderImage];
+    [cell.imageView setImageWithURL:[NSURL URLWithString:topic.icon_url] placeholder:self.placeholderImage];
     
     return cell;
 }

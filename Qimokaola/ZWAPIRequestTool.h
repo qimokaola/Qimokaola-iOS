@@ -22,15 +22,17 @@ typedef void(^APIRequestResult)(id response, BOOL success);
 + (void)requestListSchool:(APIRequestResult)result;
 // 获得学院列表
 + (void)requestListAcademyWithParameter:(id)param result:(APIRequestResult)result;
-// 注册
-+ (void)requestRegisterWithParameter:(id)params result:(APIRequestResult)result;
+// 放到具体控制器实现
+//// 注册
+//+ (void)requestRegisterWithParameter:(id)params result:(APIRequestResult)result;
 // 登录
 + (void)requestLoginWithParameters:(id)params result:(APIRequestResult)result;
 // 上传头像
 + (void)requestUploadAvatarWithParamsters:(id)params constructingBodyWithBlock:(void (^)(id <AFMultipartFormData> formData))block result:(APIRequestResult)result;
 // 用户信息
 + (void)requestUserInfo:(APIRequestResult)result;
-
-+ (void)requstFileAndFolderListInSchool:(NSString *)collegeId path:(NSString *)path needDetail:(BOOL)needDetail result:(APIRequestResult)result;
-
+// 请求文件夹与文件
++ (void)requstFileAndFolderListInSchool:(NSNumber *)collegeId path:(NSString *)path needDetail:(BOOL)needDetail result:(APIRequestResult)result;
+// 修改用户信息
++ (void)requestModifyUserInfoWithParameters:(id)params result:(APIRequestResult)result;
 @end

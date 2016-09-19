@@ -23,6 +23,7 @@ static ZWNetworkingManager *_manager = nil;
     self = [super init];
     if (self) {
         self.sessionManager = [AFHTTPSessionManager manager];
+        self.sessionManager.requestSerializer.timeoutInterval = 5.0;
     }
     return self;
 }

@@ -24,8 +24,7 @@
 #import <UMCommunitySDK/UMCommunitySDK.h>
 #import "UMPushSDK_1.3.0/UMessage.h"
 #import "ReactiveCocoa.h"
-#import "YYModel.h"
-
+#import <YYKit/YYKit.h>
 @interface AppDelegate () {
     // 记录是否第一次进入，用以决定是否显示网络变化提示 若第一次进入且无网络才显示网络情况
     BOOL firstEnter;
@@ -172,7 +171,7 @@
         [ZWNetworkingManager getWithURLString:@"http://121.42.177.33:8080/api/sb/getSB"
                                       success:^(NSURLSessionDataTask *task, id responseObject) {
                                           
-                                          ZWAdvertisement *ad = [ZWAdvertisement yy_modelWithJSON:responseObject];
+                                          ZWAdvertisement *ad = [ZWAdvertisement modelWithJSON:responseObject];
                                           [subscriber sendNext:ad];
                                           [subscriber sendCompleted];
                                           

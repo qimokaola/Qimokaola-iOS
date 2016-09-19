@@ -10,12 +10,12 @@
 
 @implementation ZWFileBaseType
 
-- (void)encodeWithCoder:(NSCoder *)aCoder { [self yy_modelEncodeWithCoder:aCoder]; }
-- (id)initWithCoder:(NSCoder *)aDecoder { self = [super init]; return [self yy_modelInitWithCoder:aDecoder]; }
-- (id)copyWithZone:(NSZone *)zone { return [self yy_modelCopy]; }
-- (NSUInteger)hash { return [self yy_modelHash]; }
-- (BOOL)isEqual:(id)object { return [self yy_modelIsEqual:object]; }
-- (NSString *)description { return [self yy_modelDescription]; }
+- (void)encodeWithCoder:(NSCoder *)aCoder { [self modelEncodeWithCoder:aCoder]; }
+- (id)initWithCoder:(NSCoder *)aDecoder { self = [super init]; return [self modelInitWithCoder:aDecoder]; }
+- (id)copyWithZone:(NSZone *)zone { return [self modelCopy]; }
+- (NSUInteger)hash { return [self modelHash]; }
+- (BOOL)isEqual:(id)object { return [self modelIsEqual:object]; }
+- (NSString *)description { return [self modelDescription]; }
 
 + (NSDictionary *)modelCustomPropertyMapper {
     return @{@"creator" : @"nick"};

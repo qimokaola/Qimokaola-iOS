@@ -30,4 +30,6 @@
 
 + (NSString *)listFileAndFolderAPI;
 
++ (NSString *)modifyUserInfoAPI;
+
 @end

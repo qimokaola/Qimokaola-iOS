@@ -20,7 +20,7 @@ PODS:
   - IQKeyboardManager (4.0.5)
   - LEETheme (1.0.7)
   - LinqToObjectiveC (2.1.0)
-  - Masonry (1.0.1)
+  - Masonry (1.0.2)
   - MBProgressHUD (1.0.0)
   - MJRefresh (3.1.12)
   - ReactiveCocoa (2.5):
@@ -33,18 +33,15 @@ PODS:
   - SDAutoLayout (2.1.7)
   - SDCycleScrollView (1.65):
     - SDWebImage (~> 3.7)
-  - SDWebImage (3.8.1):
-    - SDWebImage/Core (= 3.8.1)
-  - SDWebImage/Core (3.8.1)
-  - YYCache (1.0.3)
-  - YYImage (1.0.3):
-    - YYImage/Core (= 1.0.3)
-  - YYImage/Core (1.0.3)
-  - YYModel (1.0.4)
-  - YYText (1.0.5)
-  - YYWebImage (1.0.4):
-    - YYCache
-    - YYImage
+  - SDWebImage (3.8.2):
+    - SDWebImage/Core (= 3.8.2)
+  - SDWebImage/Core (3.8.2)
+  - YangMingShan (1.2.2):
+    - YangMingShan/YMSPhotoPicker (= 1.2.2)
+  - YangMingShan/YMSPhotoPicker (1.2.2)
+  - YYKit (1.0.9):
+    - YYKit/no-arc (= 1.0.9)
+  - YYKit/no-arc (1.0.9)
 
 DEPENDENCIES:
   - AFNetworking
@@ -59,10 +56,8 @@ DEPENDENCIES:
   - SDAutoLayout
   - SDCycleScrollView
   - SDWebImage
-  - YYCache
-  - YYModel
-  - YYText
-  - YYWebImage
+  - YangMingShan
+  - YYKit
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
@@ -70,19 +65,16 @@ SPEC CHECKSUMS:
   IQKeyboardManager: 50b62c0603308968256f8208886e206c1dcce607
   LEETheme: 3bdf9a87ce21cb7d856c188f5dbc0a413af99434
   LinqToObjectiveC: f0e40c137a458b6b9725c4c7b6a575c0c72e3aec
-  Masonry: a1a931a0d08870ed8ae415a2ea5ea68ebcac77df
+  Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
   ReactiveCocoa: e2db045570aa97c695e7aa97c2bcab222ae51f4a
   SDAutoLayout: e9b36d04b8c0b504762a04d76fbbe5108944297a
   SDCycleScrollView: f72904c77698a7f93a41bcbbc2d78b073bf7326c
-  SDWebImage: 35f9627a3e44b4f292a8a8ce6a531fa488239b91
-  YYCache: 282f35b5b0990833d0b7a06d864a87141a021da2
-  YYImage: 362f44ffba1fc498f2152060f3bb54ed84600981
-  YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
-  YYText: ac09660c9ccd9b817f409a20caa6f5587444d2ae
-  YYWebImage: 0431ed108e104527669b86f75efd58958425cca2
+  SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
+  YangMingShan: aecb8b3099624da18f1d416839a2769d3394a140
+  YYKit: 7cda43304a8dc3696c449041e2cb3107b4e236e7
 
-PODFILE CHECKSUM: 6228638c9633af3f71fe867bf410f2a6b05a1512
+PODFILE CHECKSUM: 7ad209655a92a35d0f543cf3d84df7c94b9d1e95
 
 COCOAPODS: 1.0.1

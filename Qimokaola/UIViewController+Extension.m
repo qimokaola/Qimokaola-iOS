@@ -16,7 +16,7 @@
     [self swizzledViewWillAppear:animated];
     
     #ifndef DEBUG
-    if (self.title != nil) {
+    if (self.title) {
         [MobClick beginLogPageView:self.title];
     }
     #endif
@@ -29,7 +29,7 @@
     [self.view endEditing:YES];
     
     #ifndef DEBUG
-        if (self.title != nil) {
+        if (self.title) {
             [MobClick endLogPageView:self.title];
         }
     #endif

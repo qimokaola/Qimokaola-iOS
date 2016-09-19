@@ -24,7 +24,7 @@
 
 #import "MJRefresh.h"
 #import "ReactiveCocoa.h"
-#import "YYModel.h"
+#import <YYKit/YYKit.h>
 
 @interface ZWRootPathViewController () <UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating, UISearchControllerDelegate, UIPopoverPresentationControllerDelegate>
 

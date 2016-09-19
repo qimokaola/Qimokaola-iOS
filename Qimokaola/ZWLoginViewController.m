@@ -17,7 +17,7 @@
 
 #import "Masonry.h"
 #import "ReactiveCocoa.h"
-#import "YYModel.h"
+#import <YYKit/YYKit.h>
 
 @interface ZWLoginViewController ()
 
@@ -64,12 +64,12 @@
     @weakify(self)
     [[self.nextBtn.rac_command.executionSignals switchToLatest] subscribeNext:^(NSDictionary *result) {
         @strongify(self)
-        
+        NSLog(@"%@", result);
         int resultCode = [[result objectForKey:@"code"] intValue];
         if (resultCode == 0) {
-            
+            NSLog(@"%@", [result objectForKey:@"res"]);
             // 保存用户登录信息
-            ZWUser *user = [ZWUser yy_modelWithJSON:[result objectForKey:@"res"]];
+            ZWUser *user = [ZWUser modelWithDictionary:[result objectForKey:@"res"]];
             [ZWUserManager sharedInstance].loginUser = user;
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"LoginState"];
             
@@ -91,6 +91,7 @@
     }];
     
     [self.nextBtn.rac_command.errors subscribeNext:^(id x) {
+        NSLog(@"%@", x);
         [ZWHUDTool showHUDWithTitle:@"请求错误" message:@"请检查网络连接" duration:kShowHUDMid];
     }];
     
