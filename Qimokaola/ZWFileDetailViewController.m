@@ -83,7 +83,7 @@
     [formatter setDateStyle:NSDateFormatterMediumStyle];
     [formatter setTimeStyle:NSDateFormatterShortStyle];
     [formatter setDateFormat:@"yyyy-MM-dd HH:MM:ss"];
-    NSDate *datea = [NSDate dateWithTimeIntervalSince1970:[_file.ctime doubleValue]];
+    NSDate *datea = [NSDate dateWithTimeIntervalSince1970:[_file.ctime doubleValue] / 1000];
     NSString *dateString = [formatter stringFromDate:datea];
     _uploaderDesclabel.text = [NSString stringWithFormat:@"由用户 %@ 于 %@ 上传", _file.creator, dateString];
 }
