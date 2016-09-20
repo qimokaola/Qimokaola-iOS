@@ -28,7 +28,6 @@
 }
 
 + (NSString *)typeWithName:(NSString *)name {
-    
     NSRange range = [name rangeOfString:@"." options:NSBackwardsSearch];
     NSString *type = [name substringWithRange:NSMakeRange(range.location + 1, [name length] - range.location - 1)];
     return type;

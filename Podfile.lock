@@ -18,6 +18,8 @@ PODS:
     - FMDB/standard (= 2.6.2)
   - FMDB/standard (2.6.2)
   - IQKeyboardManager (4.0.5)
+  - JCDownloader (0.1.2):
+    - AFNetworking (~> 3.1.0)
   - LEETheme (1.0.7)
   - LinqToObjectiveC (2.1.0)
   - Masonry (1.0.2)
@@ -47,6 +49,7 @@ DEPENDENCIES:
   - AFNetworking
   - FMDB
   - IQKeyboardManager
+  - JCDownloader
   - LEETheme
   - LinqToObjectiveC
   - Masonry
@@ -63,6 +66,7 @@ SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
   IQKeyboardManager: 50b62c0603308968256f8208886e206c1dcce607
+  JCDownloader: 534db19478ce4e3585ea43a17617a0c3c31a2b28
   LEETheme: 3bdf9a87ce21cb7d856c188f5dbc0a413af99434
   LinqToObjectiveC: f0e40c137a458b6b9725c4c7b6a575c0c72e3aec
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
@@ -75,6 +79,6 @@ SPEC CHECKSUMS:
   YangMingShan: aecb8b3099624da18f1d416839a2769d3394a140
   YYKit: 7cda43304a8dc3696c449041e2cb3107b4e236e7
 
-PODFILE CHECKSUM: 7ad209655a92a35d0f543cf3d84df7c94b9d1e95
+PODFILE CHECKSUM: 263bc56519b7f43b68c30b256b47390d2fab0a70
 
 COCOAPODS: 1.0.1

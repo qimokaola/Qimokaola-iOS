@@ -147,6 +147,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
     cell.textLabel.text = [[self.userInfoArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    cell.detailTextLabel.font =ZWFont(15);
     ZWUser *user =[ZWUserManager sharedInstance].loginUser;
     if (indexPath.section == 0) {
         switch (indexPath.row) {

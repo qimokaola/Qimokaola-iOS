@@ -124,6 +124,8 @@
 		C39004AE1D5C5F360097358E /* ZWTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = C39004AD1D5C5F360097358E /* ZWTabBarController.m */; };
 		C39004B21D5C61900097358E /* ZWNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C39004B11D5C61900097358E /* ZWNavigationController.m */; };
 		C39803FE1D903C45006D1471 /* ZWModifyAvatarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C39803FD1D903C45006D1471 /* ZWModifyAvatarViewController.m */; };
+		C39804091D9177C2006D1471 /* ZWDataBaseTool.m in Sources */ = {isa = PBXBuildFile; fileRef = C39804081D9177C2006D1471 /* ZWDataBaseTool.m */; };
+		C398040E1D9181C8006D1471 /* ZWDownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C398040D1D9181C8006D1471 /* ZWDownloadManager.m */; };
 		C3A14CA41D37D0FD0088E754 /* ZWSelectSchoolViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3A14CA31D37D0FD0088E754 /* ZWSelectSchoolViewController.m */; };
 		C3A609BF1CBE79A1000CC03C /* ZWOldFileDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3A609BD1CBE79A1000CC03C /* ZWOldFileDetailViewController.m */; };
 		C3AF73E31BCBE3C60064C3F5 /* NSDate+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = C3AF73E21BCBE3C60064C3F5 /* NSDate+Extension.m */; };
@@ -420,6 +422,10 @@
 		C39004B11D5C61900097358E /* ZWNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWNavigationController.m; sourceTree = "<group>"; };
 		C39803FC1D903C45006D1471 /* ZWModifyAvatarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWModifyAvatarViewController.h; sourceTree = "<group>"; };
 		C39803FD1D903C45006D1471 /* ZWModifyAvatarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWModifyAvatarViewController.m; sourceTree = "<group>"; };
+		C39804071D9177C2006D1471 /* ZWDataBaseTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWDataBaseTool.h; sourceTree = "<group>"; };
+		C39804081D9177C2006D1471 /* ZWDataBaseTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWDataBaseTool.m; sourceTree = "<group>"; };
+		C398040C1D9181C8006D1471 /* ZWDownloadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWDownloadManager.h; sourceTree = "<group>"; };
+		C398040D1D9181C8006D1471 /* ZWDownloadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWDownloadManager.m; sourceTree = "<group>"; };
 		C3A14CA21D37D0FD0088E754 /* ZWSelectSchoolViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWSelectSchoolViewController.h; sourceTree = "<group>"; };
 		C3A14CA31D37D0FD0088E754 /* ZWSelectSchoolViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWSelectSchoolViewController.m; sourceTree = "<group>"; };
 		C3A609BC1CBE79A1000CC03C /* ZWOldFileDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWOldFileDetailViewController.h; sourceTree = "<group>"; };
@@ -638,25 +644,20 @@
 		C31BB1091CB7ED8D00EE1E37 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				C398040A1D9181A0006D1471 /* ZWDownloadManager */,
+				C39804061D91779E006D1471 /* ZWDataBaseTool */,
+				C39804051D917790006D1471 /* ZWAPIRequestTool */,
+				C39804041D917785006D1471 /* ZWAPITool */,
+				C39804031D917777006D1471 /* ZWFileTool */,
+				C39804021D91776C006D1471 /* ZWHUDTool */,
+				C39804011D91775F006D1471 /* ZWPathTool */,
+				C39804001D917757006D1471 /* ZWNetworkingManager */,
+				C39803FF1D917745006D1471 /* ZWAppCache */,
 				C31FE3D51D8A83BA00732B02 /* WBTextLinePositionModifier */,
 				C31FE3CD1D8A824F00732B02 /* WBStatusHelper */,
 				C31FE3C91D8A81C900732B02 /* ZWFeedComposeTextParser */,
 				C3162CB81D7C512C00153EB9 /* ZWDownloadCenter */,
 				C3162CB71D7C511900153EB9 /* ZWUserManager */,
-				C31BB10A1CB7EDC000EE1E37 /* ZWAppCache.h */,
-				C31BB10B1CB7EDC000EE1E37 /* ZWAppCache.m */,
-				C341B9AD1D47BA0600CEECFF /* ZWNetworkingManager.h */,
-				C341B9AE1D47BA0600CEECFF /* ZWNetworkingManager.m */,
-				C3792ABD1D6C824D0079FCF5 /* ZWPathTool.h */,
-				C3792ABE1D6C824D0079FCF5 /* ZWPathTool.m */,
-				C3792AC01D6C82A00079FCF5 /* ZWHUDTool.h */,
-				C3792AC11D6C82A00079FCF5 /* ZWHUDTool.m */,
-				C3792AC31D6C83A70079FCF5 /* ZWFileTool.h */,
-				C3792AC41D6C83A70079FCF5 /* ZWFileTool.m */,
-				C3792AC61D6C887A0079FCF5 /* ZWAPITool.h */,
-				C3792AC71D6C887A0079FCF5 /* ZWAPITool.m */,
-				C337B9C31D7334AF0060BDD6 /* ZWAPIRequestTool.h */,
-				C337B9C41D7334AF0060BDD6 /* ZWAPIRequestTool.m */,
 			);
 			name = Tools;
 			sourceTree = "<group>";
@@ -679,13 +680,13 @@
 			name = WBStatusHelper;
 			sourceTree = "<group>";
 		};
-		C31FE3D11D8A830A00732B02 /* New Group */ = {
+		C31FE3D11D8A830A00732B02 /* WBModel */ = {
 			isa = PBXGroup;
 			children = (
 				C31FE3D21D8A832000732B02 /* WBModel.h */,
 				C31FE3D31D8A832000732B02 /* WBModel.m */,
 			);
-			name = "New Group";
+			name = WBModel;
 			sourceTree = "<group>";
 		};
 		C31FE3D51D8A83BA00732B02 /* WBTextLinePositionModifier */ = {
@@ -1325,13 +1326,94 @@
 			name = ZWNavigationController;
 			sourceTree = "<group>";
 		};
-		C39803FB1D903C33006D1471 /* New Group */ = {
+		C39803FB1D903C33006D1471 /* ZWModifyAvatarViewController */ = {
 			isa = PBXGroup;
 			children = (
 				C39803FC1D903C45006D1471 /* ZWModifyAvatarViewController.h */,
 				C39803FD1D903C45006D1471 /* ZWModifyAvatarViewController.m */,
 			);
-			name = "New Group";
+			name = ZWModifyAvatarViewController;
+			sourceTree = "<group>";
+		};
+		C39803FF1D917745006D1471 /* ZWAppCache */ = {
+			isa = PBXGroup;
+			children = (
+				C31BB10A1CB7EDC000EE1E37 /* ZWAppCache.h */,
+				C31BB10B1CB7EDC000EE1E37 /* ZWAppCache.m */,
+			);
+			name = ZWAppCache;
+			sourceTree = "<group>";
+		};
+		C39804001D917757006D1471 /* ZWNetworkingManager */ = {
+			isa = PBXGroup;
+			children = (
+				C341B9AD1D47BA0600CEECFF /* ZWNetworkingManager.h */,
+				C341B9AE1D47BA0600CEECFF /* ZWNetworkingManager.m */,
+			);
+			name = ZWNetworkingManager;
+			sourceTree = "<group>";
+		};
+		C39804011D91775F006D1471 /* ZWPathTool */ = {
+			isa = PBXGroup;
+			children = (
+				C3792ABD1D6C824D0079FCF5 /* ZWPathTool.h */,
+				C3792ABE1D6C824D0079FCF5 /* ZWPathTool.m */,
+			);
+			name = ZWPathTool;
+			sourceTree = "<group>";
+		};
+		C39804021D91776C006D1471 /* ZWHUDTool */ = {
+			isa = PBXGroup;
+			children = (
+				C3792AC01D6C82A00079FCF5 /* ZWHUDTool.h */,
+				C3792AC11D6C82A00079FCF5 /* ZWHUDTool.m */,
+			);
+			name = ZWHUDTool;
+			sourceTree = "<group>";
+		};
+		C39804031D917777006D1471 /* ZWFileTool */ = {
+			isa = PBXGroup;
+			children = (
+				C3792AC31D6C83A70079FCF5 /* ZWFileTool.h */,
+				C3792AC41D6C83A70079FCF5 /* ZWFileTool.m */,
+			);
+			name = ZWFileTool;
+			sourceTree = "<group>";
+		};
+		C39804041D917785006D1471 /* ZWAPITool */ = {
+			isa = PBXGroup;
+			children = (
+				C3792AC61D6C887A0079FCF5 /* ZWAPITool.h */,
+				C3792AC71D6C887A0079FCF5 /* ZWAPITool.m */,
+			);
+			name = ZWAPITool;
+			sourceTree = "<group>";
+		};
+		C39804051D917790006D1471 /* ZWAPIRequestTool */ = {
+			isa = PBXGroup;
+			children = (
+				C337B9C31D7334AF0060BDD6 /* ZWAPIRequestTool.h */,
+				C337B9C41D7334AF0060BDD6 /* ZWAPIRequestTool.m */,
+			);
+			name = ZWAPIRequestTool;
+			sourceTree = "<group>";
+		};
+		C39804061D91779E006D1471 /* ZWDataBaseTool */ = {
+			isa = PBXGroup;
+			children = (
+				C39804071D9177C2006D1471 /* ZWDataBaseTool.h */,
+				C39804081D9177C2006D1471 /* ZWDataBaseTool.m */,
+			);
+			name = ZWDataBaseTool;
+			sourceTree = "<group>";
+		};
+		C398040A1D9181A0006D1471 /* ZWDownloadManager */ = {
+			isa = PBXGroup;
+			children = (
+				C398040C1D9181C8006D1471 /* ZWDownloadManager.h */,
+				C398040D1D9181C8006D1471 /* ZWDownloadManager.m */,
+			);
+			name = ZWDownloadManager;
 			sourceTree = "<group>";
 		};
 		C3A14C9B1D37CF710088E754 /* ZWSelectSchoolViewController */ = {
@@ -1422,7 +1504,7 @@
 		C3C44E1F1BC688D9004B30BF /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				C39803FB1D903C33006D1471 /* New Group */,
+				C39803FB1D903C33006D1471 /* ZWModifyAvatarViewController */,
 				C3493C181D8D8E5E007C7144 /* ZWModifiAcademyViewController */,
 				C3493C0F1D8D8034007C7144 /* ZWModifyGenderViewController */,
 				C32EC9331D8D2510007FF94B /* ZWModifyNicknameViewController */,
@@ -1474,7 +1556,7 @@
 		C3C44E211BC688E8004B30BF /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				C31FE3D11D8A830A00732B02 /* New Group */,
+				C31FE3D11D8A830A00732B02 /* WBModel */,
 				C357710A1D8449DC00E9B166 /* ZWFileBaseType */,
 				C3EDA9191D830E59009FF851 /* ZWFolder */,
 				C3EDA9121D830B47009FF851 /* ZWFile */,
@@ -1866,6 +1948,7 @@
 				C3DC4D871D33CC550081DB0A /* UIViewController+Extension.m in Sources */,
 				C3E58AC81D54DFE600FDB384 /* ZWBindAccountViewController.m in Sources */,
 				C3C44DF11BC687B0004B30BF /* AppDelegate.m in Sources */,
+				C39804091D9177C2006D1471 /* ZWDataBaseTool.m in Sources */,
 				C3F78BEA1D537EB800E9C2AB /* ZWBasicViewController.m in Sources */,
 				C3C44E461BC6BBEF004B30BF /* ZWRootPathViewController.m in Sources */,
 				C31BB10C1CB7EDC000EE1E37 /* ZWAppCache.m in Sources */,
@@ -1909,6 +1992,7 @@
 				C3F854241D7709E800E51013 /* ZWBindAccountViewModel.m in Sources */,
 				C35771191D8576A600E9B166 /* ZWFileDetailViewController.m in Sources */,
 				C3561A261D3774560032C97B /* ZWLoginViewController.m in Sources */,
+				C398040E1D9181C8006D1471 /* ZWDownloadManager.m in Sources */,
 				C3F78BE61D537CC400E9C2AB /* ZWLoginAndRegisterViewController.m in Sources */,
 				C341B9AF1D47BA0600CEECFF /* ZWNetworkingManager.m in Sources */,
 				C3D1F2701CB3E33F0017723B /* ZWOldFileCell.m in Sources */,

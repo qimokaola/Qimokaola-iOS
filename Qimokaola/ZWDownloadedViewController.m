@@ -65,7 +65,7 @@
 
 - (FMDatabaseQueue *)DBQueue {
     if (_DBQueue == nil) {
-        _DBQueue = [(AppDelegate *)[UIApplication sharedApplication].delegate DBQueue];
+        //_DBQueue = [(AppDelegate *)[UIApplication sharedApplication].delegate DBQueue];
     }
     return _DBQueue;
 }

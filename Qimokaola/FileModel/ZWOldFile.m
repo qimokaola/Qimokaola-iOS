@@ -61,7 +61,7 @@ static NSString *const querySQL = @"SELECT * FROM download_info WHERE link = '%@
     
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        DBQueue = [(AppDelegate *)[UIApplication sharedApplication].delegate DBQueue];
+        //DBQueue = [(AppDelegate *)[UIApplication sharedApplication].delegate DBQueue];
     });
     
     // This check serves to make sure that a non-NSDictionary object

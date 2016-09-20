@@ -13,8 +13,8 @@
 #import "UIColor+Extension.h"
 #import "ZWBrowserViewController.h"
 #import "ZWOldFileDetailViewController.h"
-#import "AppDelegate.h"
 #import "NSDate+Extension.h"
+#import <FMDB/FMDB.h>
 
 //下载链接基址
 static NSString *BasePath;
@@ -68,7 +68,7 @@ static NSString *BasePath;
 - (FMDatabaseQueue *)DBQueue {
     if (_DBQueue == nil) {
         
-        _DBQueue = [(AppDelegate *)[UIApplication sharedApplication].delegate DBQueue];
+       // _DBQueue = [(AppDelegate *)[UIApplication sharedApplication].delegate DBQueue];
         
     }
     return _DBQueue;

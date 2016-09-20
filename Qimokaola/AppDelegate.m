@@ -102,19 +102,19 @@
     //0.5秒后开始监听网络变化
     [self performSelector:@selector(monitorNetworkStatus) withObject:nil afterDelay:0.5f];
     
-    //创建数据库队列
-    self.DBQueue = [FMDatabaseQueue databaseQueueWithPath:[[ZWPathTool documentDirectory] stringByAppendingPathComponent:@"Download_Info.db"]];
-    [self.DBQueue inDatabase:^(FMDatabase *db) {
-        if ([db open]) {
-            NSString *sqlCreateTable = @"CREATE TABLE IF NOT EXISTS download_info (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, course TEXT, link TEXT, type TEXT, size TEXT, time TEXT)";
-            BOOL res = [db executeUpdate:sqlCreateTable];
-            if (!res) {
-                NSLog(@"建立download_info表失败");
-            } else {
-                NSLog(@"建立download_info表成功或表已存在");
-            }
-        }
-    }];
+//    //创建数据库队列
+//    self.DBQueue = [FMDatabaseQueue databaseQueueWithPath:[[ZWPathTool documentDirectory] stringByAppendingPathComponent:@"Download_Info.db"]];
+//    [self.DBQueue inDatabase:^(FMDatabase *db) {
+//        if ([db open]) {
+//            NSString *sqlCreateTable = @"CREATE TABLE IF NOT EXISTS download_info (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, course TEXT, link TEXT, type TEXT, size TEXT, time TEXT)";
+//            BOOL res = [db executeUpdate:sqlCreateTable];
+//            if (!res) {
+//                NSLog(@"建立download_info表失败");
+//            } else {
+//                NSLog(@"建立download_info表成功或表已存在");
+//            }
+//        }
+//    }];
     
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
     
@@ -280,7 +280,7 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     NSLog(@"App Terminate");
     
-    [self.DBQueue close];
+//    [self.DBQueue close];
     
     //退出应用前保存所有未完成的任务
     //[[ZWDownloadCenter sharedDownloadCenter] saveAllDownloadTasksWhenAppTerminate];

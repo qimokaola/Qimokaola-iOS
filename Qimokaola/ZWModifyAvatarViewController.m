@@ -80,6 +80,7 @@
                 height = width * ratio;
             }
             self.avatarView.frame = CGRectMake((maxWidth-width) / 2, (maxHeight-height) /2, width, height);
+            self.scrollView.contentOffset = CGPointZero;
         }
     }];
 }
@@ -181,7 +182,7 @@
     CGSize contentSize=_scrollView.contentSize;
     CGFloat offsetX=originalSize.width>contentSize.width?(originalSize.width-contentSize.width)/2:0;
     CGFloat offsetY=originalSize.height>contentSize.height?(originalSize.height-contentSize.height)/2:0;
-    self.avatarView.center=CGPointMake(contentSize.width/2+offsetX, contentSize.height/2+offsetY);
+    self.avatarView.center = CGPointMake(contentSize.width/2+offsetX, contentSize.height/2+offsetY);
 }
 
 #pragma mark - UIImagePickerControllerDelegate

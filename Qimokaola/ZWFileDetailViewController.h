@@ -18,7 +18,7 @@
 @interface ZWFileDetailViewController : UIViewController
 
 // 记录文件属于哪个课程
-@property (nonatomic, strong) NSString *rootPath;
-//@property (nonatomic, strong) ZWFile *file;
+@property (nonatomic, strong) NSString *course;
+@property (nonatomic, strong) ZWFile *file;
 
 @end

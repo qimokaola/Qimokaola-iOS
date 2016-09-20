@@ -16,13 +16,18 @@
 }
 
 + (NSString *)avatarDirectory {
-    NSString *avatarDir = [[self documentDirectory] stringByAppendingPathComponent:@"avatar"];
+    NSString *avatarDir = [[self cacheDirectory] stringByAppendingPathComponent:@"avatar"];
     return [self checkDirExistence:avatarDir];
 }
 
 + (NSString *)resumeDataDirectory {
     NSString *resumeDataDirectory = [[self documentDirectory] stringByAppendingPathComponent:@"ResumeData"];
     return [self checkDirExistence:resumeDataDirectory];
+}
+
++ (NSString *)dbDirectory {
+    NSString *dbDirectory = [[self documentDirectory] stringByAppendingPathComponent:@"db"];
+    return [self checkDirExistence:dbDirectory];
 }
 
 + (NSString *)adImageDirectory {

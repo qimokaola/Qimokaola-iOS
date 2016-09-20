@@ -9,6 +9,7 @@
 #import "ZWFileAndFolderViewController.h"
 #import "ZWFileCell.h"
 #import "ZWFolderCell.h"
+#import "ZWFileDetailViewController.h"
 
 #import "LinqToObjectiveC.h"
 
@@ -151,7 +152,9 @@ static NSString *const FolderCellIdentifier = @"FolderCellIdentifier";
         } else {
             file = [self.files objectAtIndex:indexPath.row];
         }
-        NSLog(@"click to the file: %@", file.name);
+        ZWFileDetailViewController *fileDetail = [[ZWFileDetailViewController alloc] init];
+        fileDetail.file = file;
+        [self.navigationController pushViewController:fileDetail animated:YES];
     } else {
         ZWFolder *folder = nil;
         if (self.searchController.active) {

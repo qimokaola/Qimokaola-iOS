@@ -16,4 +16,5 @@ target "Qimokaola" do
     pod 'LinqToObjectiveC'
     pod 'YYKit'
     pod 'YangMingShan'
+    pod 'JCDownloader'
 end

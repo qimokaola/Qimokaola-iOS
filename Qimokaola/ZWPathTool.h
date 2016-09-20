@@ -16,7 +16,10 @@
 //保存下载的resumeData
 + (NSString *)resumeDataDirectory;
 
+// 头像路径
 + (NSString *)avatarDirectory;
+
++ (NSString *)dbDirectory;
 
 //广告路径
 + (NSString *)adImageDirectory;
