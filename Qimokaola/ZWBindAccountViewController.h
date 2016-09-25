@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface ZWBindAccountViewController : UIViewController
-
+@property (nonatomic, strong) NSDictionary *collegeInfo;
 @property (nonatomic, strong) NSDictionary *registerParam;
 @end

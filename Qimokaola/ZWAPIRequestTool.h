@@ -35,4 +35,7 @@ typedef void(^APIRequestResult)(id response, BOOL success);
 + (void)requstFileAndFolderListInSchool:(NSNumber *)collegeId path:(NSString *)path needDetail:(BOOL)needDetail result:(APIRequestResult)result;
 // 修改用户信息
 + (void)requestModifyUserInfoWithParameters:(id)params result:(APIRequestResult)result;
+
++ (void)requestLogout:(APIRequestResult)result;
+
 @end

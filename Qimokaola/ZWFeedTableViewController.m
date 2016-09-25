@@ -9,16 +9,21 @@
 #import "ZWFeedTableViewController.h"
 #import "ZWFeedCell.h"
 #import "UIColor+Extension.h"
+#import "ZWFeedComposeViewController.h"
+#import "ZWHUDTool.h"
 
+#import "ZWFeedDetailViewController.h"
 #import "ZWFeedComposeViewController.h"
 #import <UMComDataStorage/UMComTopic.h>
 #import <UMComDataStorage/UMComFeed.h>
 #import <UMComDataStorage/UMComUser.h>
 #import <UMComDataStorage/UMComImageUrl.h>
+#import <UMComDataStorage/UMComLike.h>
 #import <UMCommunitySDK/UMComSession.h>
 #import "MJRefresh.h"
 #import "SDAutoLayout.h"
 #import <YYKit/YYKit.h>
+#import <LinqToObjectiveC/LinqToObjectiveC.h>
 
 #define kFeedTableViewCellID @"kFeedTableViewCellID"
 
@@ -26,6 +31,7 @@
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray<UMComFeed *> *feeds;
+@property (nonatomic, strong) NSMutableArray *userLikes;
 
 @end
 
@@ -52,15 +58,20 @@
     }
     
     self.feeds = [NSMutableArray array];
-    self.title = self.topic.name;
+    self.userLikes = [NSMutableArray array];
     
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"toolbar_compose_highlighted"] style:UIBarButtonItemStylePlain target:self action:@selector(presendNewFeedViewController)];
-    rightItem.tintColor = UIColorHex(fd8224);
-    self.navigationItem.rightBarButtonItem = rightItem;
-    
+    if (_feedType == ZWFeedTableViewTypeAboutTopic) {
+        self.title = self.topic.name;
+        UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"toolbar_compose_highlighted"] style:UIBarButtonItemStylePlain target:self action:@selector(presendNewFeedViewController)];
+        rightItem.tintColor = UIColorHex(fd8224);
+        self.navigationItem.rightBarButtonItem = rightItem;
+    } else {
+        self.title = self.user.name;
+    }
+
     _tableView = [[UITableView alloc] init];
     _tableView.frame = self.view.bounds;
-    _tableView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
+    _tableView.contentInset = UIEdgeInsetsMake(64, 0, 10, 0);
     _tableView.scrollIndicatorInsets = _tableView.contentInset;
     _tableView.backgroundColor = [UIColor clearColor];
     _tableView.backgroundView.backgroundColor = [UIColor clearColor];
@@ -71,7 +82,7 @@
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
     self.view.backgroundColor = UIColorHex(f2f2f2);
-    
+   // self.view.backgroundColor = universalGrayColor;
     _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(fetchFeedsData)];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [_tableView.mj_header beginRefreshing];
@@ -89,22 +100,57 @@
 
 - (void)fetchFeedsData {
     __weak __typeof(self) weakSelf = self;
-    [[UMComDataRequestManager defaultManager] fetchFeedsTopicRelatedWithTopicId:self.topic.topicID
-                                                                       sortType:UMComTopicFeedSortType_default
-                                                                      isReverse:NO
-                                                                          count:20
+    [[UMComDataRequestManager defaultManager] fetchLikesUserSendsWithCount:9999999 completion:^(NSDictionary *responseObject, NSError *error) {
+        // 重新获取用户点赞列表
+        if (responseObject) {
+            [weakSelf.userLikes removeAllObjects];
+            [weakSelf.userLikes addObjectsFromArray:[responseObject[@"data"] linq_select:^id(UMComLike *item) {
+                return item.feed.feedID;
+            }]];
+        }
+        if (weakSelf.feedType == ZWFeedTableViewTypeAboutTopic) {
+            //获取feed数据
+            [[UMComDataRequestManager defaultManager] fetchFeedsTopicRelatedWithTopicId:self.topic.topicID
+                                                                               sortType:UMComTopicFeedSortType_default
+                                                                              isReverse:NO
+                                                                                  count:99999
+                                                                             completion:^(NSDictionary *responseObject, NSError *error) {
+                                                                                 
+                                                                                 [weakSelf dealWithFetchFeedResult:responseObject error:error];
+                                                                             }];
+        } else {
+            // 获取有关于用户的feed流
+            [[UMComDataRequestManager defaultManager] fetchFeedsTimelineWithUid:weakSelf.user.uid
+                                                                       sortType:UMComUserTimeLineFeedType_Default
+                                                                          count:999999
                                                                      completion:^(NSDictionary *responseObject, NSError *error) {
-                                                                         [weakSelf.tableView.mj_header endRefreshing];
-                                                                         [self.feeds addObjectsFromArray:[responseObject objectForKey:@"data"]];
-                                                                         [self.tableView reloadData];
+                                                                         [weakSelf dealWithFetchFeedResult:responseObject error:error];
                                                                      }];
+        }
+    }];
+}
+
+- (void)dealWithFetchFeedResult:(NSDictionary *)responseObject error:(NSError *)error {
+    [self.tableView.mj_header endRefreshing];
+    if (responseObject) {
+        [self.feeds removeAllObjects];
+        [self.feeds addObjectsFromArray:[responseObject objectForKey:@"data"]];
+        [self.tableView reloadData];
+    } else {
+        [ZWHUDTool showHUDInView:self.navigationController.view withTitle:@"出错了，获取失败" message:nil duration:kShowHUDMid];
+    }
 }
 
 - (void)presendNewFeedViewController {
+    __weak __typeof(self) weakSelf = self;
     ZWFeedComposeViewController *createNewFeedViewController = [[ZWFeedComposeViewController alloc] init];
     createNewFeedViewController.topicID = self.topic.topicID;
+    createNewFeedViewController.composeType = ZWFeedComposeTypeNewFeed;
+    createNewFeedViewController.completion = ^(UMComFeed *newFeed) {
+        [weakSelf.feeds insertObject:newFeed atIndex:0];
+        [weakSelf.tableView insertRow:0 inSection:0 withRowAnimation:UITableViewRowAnimationTop];
+    };
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:createNewFeedViewController];
-    
     [self presentViewController:nav animated:YES completion:nil];
 }
 
@@ -119,12 +165,11 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-
-    
     ZWFeedCell *cell = [tableView dequeueReusableCellWithIdentifier:kFeedTableViewCellID];
-    
-    cell.feed = [self.feeds objectAtIndex:indexPath.row];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    UMComFeed *feed = [self.feeds objectAtIndex:indexPath.row];
+    cell.feed = feed;
+    cell.indexPath = indexPath;
+    cell.isLiked = [self.userLikes containsObject:feed.feedID];
     cell.delegate = self;
     
     return cell;
@@ -142,57 +187,154 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     });
-    
+    __weak __typeof(self) weakSelf = self;
+    UMComFeed *feed = [self.feeds objectAtIndex:indexPath.row];
+    ZWFeedDetailViewController *detailViewController = [[ZWFeedDetailViewController alloc] init];
+    detailViewController.feed = feed;
+    detailViewController.isLiked = [self.userLikes containsObject:feed.feedID];
+    detailViewController.deleteCompletion = ^() {
+        [weakSelf removeFeed:feed];
+    };
+    // isLike 为最新点赞情况
+    detailViewController.isLikedChangedCompletion = ^(BOOL isLiked, NSNumber *likeCount) {
+        if (isLiked != [weakSelf.userLikes containsObject:feed.feedID]) {
+            // 处理前后点赞情况不一致的情况
+            if (!isLiked) {
+                // 取消点赞了
+                [weakSelf.userLikes removeObject:feed.feedID];
+            } else {
+                // 点赞了
+                [weakSelf.userLikes addObject:feed.feedID];
+            }
+            [weakSelf.feeds objectAtIndex:indexPath.row].likes_count = likeCount;
+            [weakSelf.tableView reloadRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationNone];
+        }
+    };
+    detailViewController.commentCountChangedCompletion = ^(NSNumber *commentCount) {
+        [weakSelf.feeds objectAtIndex:indexPath.row].comments_count = commentCount;
+        [weakSelf.tableView reloadRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationNone];
+    };
+    [self.navigationController pushViewController:detailViewController animated:YES];
 }
 
 #pragma mark - ZWFeedCellDelegate
 
-- (void)didClickLikeButton:(ZWFeedCell *)cell {
+// 点赞
+- (void)cell:(ZWFeedCell *)cell didClickLikeButtonInLikeState:(BOOL)isLiked atIndexPath:(NSIndexPath *)indexPath {
+    __weak __typeof(self) weakSelf = self;
+    [[UMComDataRequestManager defaultManager] feedLikeWithFeedID:cell.feed.feedID
+                                                          isLike:!isLiked
+                                                      completion:^(NSDictionary *responseObject, NSError *error) {
+                                                          if (responseObject) {
+                                                              NSLog(@"%@", responseObject);
+                                                              if (isLiked) {
+                                                                  NSLog(@"unlike success");
+                                                              } else {
+                                                                  NSLog(@"like success");
+                                                              }
+                                                              NSInteger index = [weakSelf.feeds indexOfObject:cell.feed];
+                                                              [weakSelf.feeds objectAtIndex:index].likes_count = [responseObject objectForKey:@"feedLiked"];
+                                                              // 原本点赞现在取消，故要去除用户已点赞数组中相应的元素
+                                                              if (isLiked) {
+                                                                  [weakSelf.userLikes removeObject:cell.feed.feedID];
+                                                              } else {
+                                                                  [weakSelf.userLikes addObject:cell.feed.feedID];
+                                                              }
+                                                              [weakSelf.tableView reloadRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0] withRowAnimation:UITableViewRowAnimationNone];
+                                                          } else {
+                                                              [ZWHUDTool showHUDInView:weakSelf.navigationController.view withTitle:@"呀,出错了！" message:nil duration:kShowHUDMid];
+                                                          }
+                                                      }];
     
 }
 
-- (void)didClickShareButton:(ZWFeedCell *)cell {
-    
+// 分享
+- (void)cell:(ZWFeedCell *)cell didClickCollectButtonAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"collect the feed: %@", cell.feed.text);
 }
 
-- (void)didClickCommentButton:(ZWFeedCell *)cell {
-    
+// 评论
+- (void)cell:(ZWFeedCell *)cell didClickCommentButtonAtIndexPath:(NSIndexPath *)indexPath {
+    __weak __typeof(self) weakSelf = self;
+    ZWFeedComposeViewController *composeViewController = [[ZWFeedComposeViewController alloc] init];
+    composeViewController.composeType = ZWFeedComposeTypeReplyFeed;
+    composeViewController.feedID = cell.feed.feedID;
+    composeViewController.completion = ^(id result) {
+        NSNumber *formerCommentCount = cell.commentCount;
+        NSNumber *nowCommentCount = @(formerCommentCount.intValue + 1);
+        NSInteger index = [weakSelf.feeds indexOfObject:cell.feed];
+        [weakSelf.feeds objectAtIndex:index].comments_count = nowCommentCount;
+        [weakSelf.tableView reloadRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0] withRowAnimation:UITableViewRowAnimationNone];
+    };
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:composeViewController];
+    [self presentViewController:nav animated:YES completion:nil];
 }
 
-- (void)didClickMoreButton:(ZWFeedCell *)cell {
-    
+// 点击用户
+- (void)cell:(ZWFeedCell *)cell didClickUser:(UMComUser *)user atIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"click the user: %@", user.name);
+}
+
+// 点击右上更多按钮
+- (void)cell:(ZWFeedCell *)cell didClickMoreButtonAtIndexPath:(NSIndexPath *)indexPath {
+    __weak __typeof(self) weakSelf = self;
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
-    UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:@"删除" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
-    }];
-    UIAlertAction *collectAction = [UIAlertAction actionWithTitle:@"收藏" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
-    }];
-    
-    if ([[UMComSession sharedInstance].loginUser.uid isEqualToString:cell.feed.creator.uid]) {
-        
+    if ([cell.feed.creator.uid isEqualToString:[UMComSession sharedInstance].loginUser.uid]) {
+        UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:@"删除" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [[UMComDataRequestManager defaultManager] feedDeleteWithFeedID:cell.feed.feedID
+                                                                completion:^(NSDictionary *responseObject, NSError *error) {
+                                                                    if (responseObject) {
+                                                                        [weakSelf removeFeed:cell.feed];
+                                                                    } else {
+                                                                        [ZWHUDTool showHUDInView:weakSelf.navigationController.view withTitle:@"出错了，删除失败"  message:nil duration:kShowHUDMid];
+                                                                    }
+                                                                }];
+        }];
+        [alertController addAction:deleteAction];
     } else {
-        
+        UIAlertAction *reportUserAction = [UIAlertAction actionWithTitle:@"举报用户" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [[UMComDataRequestManager defaultManager] userSpamWitUID:cell.feed.creator.uid
+                                                          completion:^(NSDictionary *responseObject, NSError *error) {
+                                                              [weakSelf dealWiteSpamResult:responseObject error:error];
+                                                          }];
+        }];
+        UIAlertAction *reportConentAction = [UIAlertAction actionWithTitle:@"举报内容" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [[UMComDataRequestManager defaultManager] feedSpamWithFeedID:cell.feed.feedID
+                                                              completion:^(NSDictionary *responseObject, NSError *error) {
+                                                                  [weakSelf dealWiteSpamResult:responseObject error:error];
+                                                              }];
+        }];
+        [alertController addAction:reportUserAction];
+        [alertController addAction:reportConentAction];
     }
-    
-    [alertController addAction:cancelAction];
-    [alertController addAction:deleteAction];
-    [alertController addAction:collectAction];
-    
+    UIAlertAction *copyAction = [UIAlertAction actionWithTitle:@"复制" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UIPasteboard *pasteBoard = [UIPasteboard generalPasteboard];
+        [pasteBoard setString:cell.feed.text];
+        [ZWHUDTool showHUDInView:weakSelf.navigationController.view withTitle:@"已复制内容至剪贴板" message:nil duration:kShowHUDMid];
+    }];
+    UIAlertAction *cancleAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    [alertController addAction:cancleAction];
+    [alertController addAction:copyAction];
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
-- (void)didClickUser:(ZWFeedCell *)cell user:(UMComUser *)user {
-    NSLog(@"%@", user.name);
+- (void)removeFeed:(UMComFeed *)feed {
+    NSInteger index = [self.feeds indexOfObject:feed];
+    [self.feeds removeObjectAtIndex:index];
+    [self.tableView deleteRow:index inSection:0 withRowAnimation:UITableViewRowAnimationFade];
 }
 
-- (void)didClickUserName:(ZWFeedCell *)cell userName:(NSString *)userName {
-    
-}
-
-- (void)didClickWebLink:(ZWFeedCell *)cell link:(NSString *)link {
-    
+- (void)dealWiteSpamResult:(NSDictionary *)responseObject error:(NSError *)error {
+    NSString *content = nil;
+    if (responseObject) {
+        content = @"举报成功";
+    } else {
+        content = @"出错了，举报失败";
+    }
+    [ZWHUDTool showHUDInView:self.navigationController.view
+                   withTitle:content
+                     message:nil
+                    duration:kShowHUDMid];
 }
 
 

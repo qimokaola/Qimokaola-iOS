@@ -44,8 +44,10 @@
 
 @property (nonatomic, assign) BOOL isAvatarSelected;
 @property (nonatomic, assign) BOOL isSchoolSelected;
-@property (nonatomic, copy) NSString *school;
-@property (nonatomic, copy) NSString *academy;
+@property (nonatomic, copy) NSString *collegeID;
+@property (nonatomic, strong) NSString *collegeName;
+@property (nonatomic, copy) NSString *academyID;
+@property (nonatomic, strong) NSString *academyName;
 
 @end
 
@@ -75,8 +77,10 @@
             NSDictionary *school = [result objectForKey:@"school"];
             NSDictionary *academy = [result objectForKey:@"academy"];
             
-            self.school = [school objectForKey:@"id"];
-            self.academy = [academy objectForKey:@"id"];
+            self.collegeID = [school objectForKey:@"id"];
+            self.collegeName = [school objectForKey:@"name"];
+            self.academyID = [academy objectForKey:@"id"];
+            self.academyName = [academy objectForKey:@"name"];
             
             self.selectSchoolBtn.titleLabel.font = ZWFont(15);
             
@@ -127,10 +131,12 @@
         [params addEntriesFromDictionary:@{
                                            @"nick": nickname,
                                            @"gender": gender,
-                                           @"schoolId" : self.school,
-                                           @"academyId": self.academy
+                                           @"schoolId" : self.collegeID,
+                                           @"academyId": self.academyID,
+                                           @"enterYear": @"2014"
                                         }];
         bindAccount.registerParam = params;
+        bindAccount.collegeInfo = @{@"collegeName": self.collegeName, @"academyName": self.academyName};
         
        [self.navigationController pushViewController:bindAccount animated:YES];
     }];

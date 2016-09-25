@@ -9,7 +9,12 @@
 #import "ZWFileDetailViewController.h"
 #import "UIColor+Extension.h"
 #import "ZWFileTool.h"
+#import "ZWAPITool.h"
+#import "ZWNetworkingManager.h"
+#import "ZWUserManager.h"
+#import "ZWPathTool.h"
 
+#import <AFNetworking/AFNetworking.h>
 #import "Masonry.h"
 #import "UMSocial.h"
 
@@ -40,6 +45,8 @@
 // 取消下载按钮
 @property (nonatomic, strong) UIButton *cancelButton;
 
+@property (nonatomic, strong) AFHTTPSessionManager *downloadManager;
+
 @end
 
 @implementation ZWFileDetailViewController
@@ -62,6 +69,10 @@
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
     
+    self.title = @"文件详情";
+    
+    NSLog(@"%@", _path);
+    
     [self zw_addSubViews];
     // 根据ZWFile设置相关视图
     [self setFileInfo];
@@ -70,6 +81,17 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Lazy Loading
+
+- (AFHTTPSessionManager *)downloadManager {
+    if (_downloadManager == nil) {
+        _downloadManager = [AFHTTPSessionManager manager];
+        _downloadManager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        _downloadManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/plain", @"text/html", @"application/json", @"audio/wav", @"application/octet-stream", nil];
+    }
+    return _downloadManager;
 }
 
 #pragma mark - Common Methods
@@ -82,10 +104,10 @@
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
     [formatter setDateStyle:NSDateFormatterMediumStyle];
     [formatter setTimeStyle:NSDateFormatterShortStyle];
-    [formatter setDateFormat:@"yyyy-MM-dd HH:MM:ss"];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
     NSDate *datea = [NSDate dateWithTimeIntervalSince1970:[_file.ctime doubleValue] / 1000];
     NSString *dateString = [formatter stringFromDate:datea];
-    _uploaderDesclabel.text = [NSString stringWithFormat:@"由用户 %@ 于 %@ 上传", _file.creator, dateString];
+    _uploaderDesclabel.text = [NSString stringWithFormat:@"由用户 %@\n 于 %@ 上传", _file.creator, dateString];
 }
 
 - (void)zw_addSubViews {
@@ -175,7 +197,7 @@
     [self.view addSubview:_uploaderDesclabel];
     [_uploaderDesclabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(weakSelf.view);
-        make.top.equalTo(weakSelf.sizeLabel.mas_bottom).offset(20);
+        make.top.equalTo(weakSelf.sizeLabel.mas_bottom).offset(40);
     }];
     
     int margin =20;
@@ -293,6 +315,58 @@
 }
 
 - (void)downloadOrOpenButtonClicked:(UIButton *)sender {
+//    [ZWNetworkingManager postWithURLString:[[ZWAPITool base] stringByAppendingString:[NSString stringWithFormat:@"/api/dbfs/%d/download", [[ZWUserManager sharedInstance].loginUser.collegeId intValue]]]
+//                                    params:@{@"path" : [_path stringByAppendingString:_file.name]}
+//                                  progress:^(NSProgress *progress) {
+//                                      NSLog(@"%@", progress);
+//                                  }
+//                                   success:^(NSURLSessionDataTask *task, id responseObject) {
+//                                       NSLog(@"success: %@", responseObject);
+//                                   }
+//                                   failure:^(NSURLSessionDataTask *task, NSError *error) {
+//                                       NSLog(@"failure: %@", error);
+//                                   }];
+    
+    
+    
+//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[[ZWAPITool base] stringByAppendingPathComponent:[NSString stringWithFormat:@"/api/dbfs/%d/download", [[ZWUserManager sharedInstance].loginUser.collegeId intValue]]]]];
+//    [request setHTTPMethod:@"POST"];
+//    NSDictionary *paramsDict = @{@"path" : _file.name};
+//    NSData *paramsData = [NSJSONSerialization dataWithJSONObject:paramsDict options:NSJSONWritingPrettyPrinted error:NULL];
+//    [request setHTTPBody:paramsData];
+//    NSURLSessionDownloadTask *downloadTask = [self.downloadManager downloadTaskWithRequest:request
+//                                                                                  progress:^(NSProgress * _Nonnull downloadProgress) {
+//                                                                                      //NSLog(@"%@", downloadProgress);
+//                                                                                  }
+//                                                                               destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
+//                                                                                   // NSLog(@"%@ %@", targetPath, response);
+//                                                                                   return [NSURL fileURLWithPath:[[ZWPathTool downloadDirectory] stringByAppendingPathComponent:_file.name]];
+//                                                                                }
+//                                                                         completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
+//                                                                             NSLog(@"%@\n%@\n%@", response, filePath, error);
+//                                                                         }];
+
+    NSURLSessionDataTask * dataTask = [self.downloadManager POST:[[ZWAPITool base] stringByAppendingString:[NSString stringWithFormat:@"/api/dbfs/%d/download", [[ZWUserManager sharedInstance].loginUser.collegeId intValue]]]
+                    parameters:@{@"path" : [_path stringByAppendingString:_file.name]}
+                      progress:^(NSProgress * _Nonnull uploadProgress) {
+                          NSLog(@"uploadProgress: %@", uploadProgress);
+                      }
+                       success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                           NSLog(@"responseObject: %@", responseObject);
+                       }
+                       failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                           NSLog(@"error: %@", error);
+                       }];
+    [self.downloadManager setTaskWillPerformHTTPRedirectionBlock:^NSURLRequest * _Nonnull(NSURLSession * _Nonnull session, NSURLSessionTask * _Nonnull task, NSURLResponse * _Nonnull response, NSURLRequest * _Nonnull request) {
+        NSLog(@"session: %@", session);
+        NSLog(@"task: %@", task);
+        NSLog(@"response: %@", response);
+        NSLog(@"request: %@", request);
+        if (request) {
+            return request;
+        }
+        return nil;
+    }];
     
     
 }
@@ -323,9 +397,9 @@
     [self setDownloadComponmentHidden:!isDownload];
 }
 
-- (void)setMainButtonHidden:(BOOL)hidder {
-    self.downloadOrOpenButton.hidden = hidder;
-    self.shareButton.hidden = hidder;
+- (void)setMainButtonHidden:(BOOL)hidden {
+    self.downloadOrOpenButton.hidden = hidden;
+    self.shareButton.hidden = hidden;
 }
 
 - (void)setDownloadComponmentHidden:(BOOL)hidden {

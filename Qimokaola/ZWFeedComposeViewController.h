@@ -18,19 +18,22 @@
  */
 
 typedef NS_ENUM(NSUInteger, ZWFeedComposeType) {
-    ZWFeedComposeTypeNewFeed, // 新Feed
-    ZWFeedComposeTypeReply  // 回复Feed
+    ZWFeedComposeTypeNewFeed = 0, // 新Feed
+    ZWFeedComposeTypeReplyFeed,  // 回复Feed
+    ZWFeedComposeTypeReplyComment // 回复评论
 };
 
 @interface ZWFeedComposeViewController : UIViewController
 
 // 执行完相关操作后执行的代码
-@property (nonatomic, copy) void(^CompletionBlock)();
+@property (nonatomic, copy) void(^completion)(id result);
 // Feed类型
 @property (nonatomic, assign) ZWFeedComposeType composeType;
 // 若创建新Feed，则topicID应该有值
 @property (nonatomic, strong) NSString *topicID;
-// 若回复Feed，则fedd应该有值
-@property (nonatomic, strong) UMComFeed *feed;
+// 若回复Feed，则feddID应该有值
+@property (nonatomic, strong) NSString *feedID;
+// 若回复评论 则commentID应该有值
+@property (nonatomic, strong) NSString *commentID;
 
 @end

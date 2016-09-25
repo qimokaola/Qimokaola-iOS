@@ -107,6 +107,7 @@
         //imageView.image = [UIImage imageNamed:obj];
         //[imageView setImageURL:[NSURL URLWithString:obj]];
         [imageView setImageWithURL:[NSURL URLWithString:obj] options:YYWebImageOptionProgressiveBlur];
+        
         imageView.frame = CGRectMake(columnIndex * (itemW + margin), rowIndex * (itemH + margin), itemW, itemH);
     }];
     

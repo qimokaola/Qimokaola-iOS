@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		4813320F633E088B03A6C7C5 /* Pods_Qimokaola.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9071DF4B0002B9FFA04BB07 /* Pods_Qimokaola.framework */; };
+		C3019E7F1D965B2800CC2F55 /* ZWCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C3019E7E1D965B2800CC2F55 /* ZWCommentCell.m */; };
+		C3019E811D96DF9600CC2F55 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C3019E801D96DF9600CC2F55 /* Settings.storyboard */; };
+		C3019E871D96E0C700CC2F55 /* ZWSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3019E861D96E0C700CC2F55 /* ZWSettingsViewController.m */; };
 		C31608511CEE375D005BA30B /* ZWCreateCountDownViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C31608501CEE375D005BA30B /* ZWCreateCountDownViewController.m */; };
 		C3162C891D79EA9F00153EB9 /* heart_red.png in Resources */ = {isa = PBXBuildFile; fileRef = C3162C881D79EA9F00153EB9 /* heart_red.png */; };
 		C3162C9F1D7B229200153EB9 /* ZWLoginViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C3162C9E1D7B229100153EB9 /* ZWLoginViewModel.m */; };
@@ -23,6 +26,23 @@
 		C3217B0E1BCAAF830037937F /* ZWDownloadedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3217B0D1BCAAF830037937F /* ZWDownloadedViewController.m */; };
 		C3243E291D547A5A00FF97C3 /* ZWRegisterView.m in Sources */ = {isa = PBXBuildFile; fileRef = C3243E281D547A5A00FF97C3 /* ZWRegisterView.m */; };
 		C3259ED81D351B09004DC58F /* ZWAdvertisementView.m in Sources */ = {isa = PBXBuildFile; fileRef = C3259ED71D351B09004DC58F /* ZWAdvertisementView.m */; };
+		C32666521D953125008C6B24 /* UMAssetsCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C32666431D953125008C6B24 /* UMAssetsCollectionCell.m */; };
+		C32666531D953125008C6B24 /* UMAssetsCollectionCheckMarkView.m in Sources */ = {isa = PBXBuildFile; fileRef = C32666451D953125008C6B24 /* UMAssetsCollectionCheckMarkView.m */; };
+		C32666541D953125008C6B24 /* UMAssetsCollectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = C32666471D953125008C6B24 /* UMAssetsCollectionController.m */; };
+		C32666551D953125008C6B24 /* UMAssetsCollectionGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = C32666491D953125008C6B24 /* UMAssetsCollectionGrid.m */; };
+		C32666561D953125008C6B24 /* UMAssetsCollectionOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = C326664B1D953125008C6B24 /* UMAssetsCollectionOverlayView.m */; };
+		C32666571D953125008C6B24 /* UMImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = C326664D1D953125008C6B24 /* UMImagePickerController.m */; };
+		C32666581D953125008C6B24 /* UMImagePickerGroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C326664F1D953125008C6B24 /* UMImagePickerGroupCell.m */; };
+		C32666591D953125008C6B24 /* UMImagePickerThumbnailView.m in Sources */ = {isa = PBXBuildFile; fileRef = C32666511D953125008C6B24 /* UMImagePickerThumbnailView.m */; };
+		C326665F1D9533C4008C6B24 /* UMComResouceDefines.m in Sources */ = {isa = PBXBuildFile; fileRef = C326665C1D9533C4008C6B24 /* UMComResouceDefines.m */; };
+		C32666601D9533C4008C6B24 /* UMComResourceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C326665E1D9533C4008C6B24 /* UMComResourceManager.m */; };
+		C32666661D953486008C6B24 /* UIViewController+UMComAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = C32666651D953486008C6B24 /* UIViewController+UMComAddition.m */; };
+		C32666691D9534CB008C6B24 /* UMComBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C32666681D9534CB008C6B24 /* UMComBarButtonItem.m */; };
+		C326666C1D9534DE008C6B24 /* UMComButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C326666B1D9534DE008C6B24 /* UMComButton.m */; };
+		C32666B81D9560C1008C6B24 /* UMComActionDeleteView.m in Sources */ = {isa = PBXBuildFile; fileRef = C32666B11D9560C1008C6B24 /* UMComActionDeleteView.m */; };
+		C32666B91D9560C1008C6B24 /* UMComActionPickerAddView.m in Sources */ = {isa = PBXBuildFile; fileRef = C32666B31D9560C1008C6B24 /* UMComActionPickerAddView.m */; };
+		C32666BA1D9560C1008C6B24 /* UMComAddedImageCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = C32666B51D9560C1008C6B24 /* UMComAddedImageCellView.m */; };
+		C32666BB1D9560C1008C6B24 /* UMComAddedImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = C32666B71D9560C1008C6B24 /* UMComAddedImageView.m */; };
 		C3274BA81BC814C0005D28B8 /* UIColor+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = C3274BA71BC814C0005D28B8 /* UIColor+Extension.m */; };
 		C32EC9231D8C3801007FF94B /* ZWUserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C32EC9221D8C3801007FF94B /* ZWUserInfoViewController.m */; };
 		C32EC93C1D8D2A34007FF94B /* ZWModifyNicknameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C32EC93A1D8D2A34007FF94B /* ZWModifyNicknameViewController.m */; };
@@ -208,6 +228,11 @@
 		57AA4DCF741E336E7D9257DC /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5EA54918FDA07ADBE411B8E1 /* Pods_Paper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Paper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9071DF4B0002B9FFA04BB07 /* Pods_Qimokaola.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Qimokaola.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C3019E7D1D965B2800CC2F55 /* ZWCommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWCommentCell.h; sourceTree = "<group>"; };
+		C3019E7E1D965B2800CC2F55 /* ZWCommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWCommentCell.m; sourceTree = "<group>"; };
+		C3019E801D96DF9600CC2F55 /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
+		C3019E851D96E0C700CC2F55 /* ZWSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWSettingsViewController.h; sourceTree = "<group>"; };
+		C3019E861D96E0C700CC2F55 /* ZWSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWSettingsViewController.m; sourceTree = "<group>"; };
 		C316084F1CEE375D005BA30B /* ZWCreateCountDownViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWCreateCountDownViewController.h; sourceTree = "<group>"; };
 		C31608501CEE375D005BA30B /* ZWCreateCountDownViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWCreateCountDownViewController.m; sourceTree = "<group>"; };
 		C3162C881D79EA9F00153EB9 /* heart_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heart_red.png; sourceTree = "<group>"; };
@@ -237,6 +262,40 @@
 		C3243E281D547A5A00FF97C3 /* ZWRegisterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWRegisterView.m; sourceTree = "<group>"; };
 		C3259ED61D351B09004DC58F /* ZWAdvertisementView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWAdvertisementView.h; sourceTree = "<group>"; };
 		C3259ED71D351B09004DC58F /* ZWAdvertisementView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWAdvertisementView.m; sourceTree = "<group>"; };
+		C32666421D953125008C6B24 /* UMAssetsCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMAssetsCollectionCell.h; sourceTree = "<group>"; };
+		C32666431D953125008C6B24 /* UMAssetsCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMAssetsCollectionCell.m; sourceTree = "<group>"; };
+		C32666441D953125008C6B24 /* UMAssetsCollectionCheckMarkView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMAssetsCollectionCheckMarkView.h; sourceTree = "<group>"; };
+		C32666451D953125008C6B24 /* UMAssetsCollectionCheckMarkView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMAssetsCollectionCheckMarkView.m; sourceTree = "<group>"; };
+		C32666461D953125008C6B24 /* UMAssetsCollectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMAssetsCollectionController.h; sourceTree = "<group>"; };
+		C32666471D953125008C6B24 /* UMAssetsCollectionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMAssetsCollectionController.m; sourceTree = "<group>"; };
+		C32666481D953125008C6B24 /* UMAssetsCollectionGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMAssetsCollectionGrid.h; sourceTree = "<group>"; };
+		C32666491D953125008C6B24 /* UMAssetsCollectionGrid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMAssetsCollectionGrid.m; sourceTree = "<group>"; };
+		C326664A1D953125008C6B24 /* UMAssetsCollectionOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMAssetsCollectionOverlayView.h; sourceTree = "<group>"; };
+		C326664B1D953125008C6B24 /* UMAssetsCollectionOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMAssetsCollectionOverlayView.m; sourceTree = "<group>"; };
+		C326664C1D953125008C6B24 /* UMImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMImagePickerController.h; sourceTree = "<group>"; };
+		C326664D1D953125008C6B24 /* UMImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMImagePickerController.m; sourceTree = "<group>"; };
+		C326664E1D953125008C6B24 /* UMImagePickerGroupCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMImagePickerGroupCell.h; sourceTree = "<group>"; };
+		C326664F1D953125008C6B24 /* UMImagePickerGroupCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMImagePickerGroupCell.m; sourceTree = "<group>"; };
+		C32666501D953125008C6B24 /* UMImagePickerThumbnailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMImagePickerThumbnailView.h; sourceTree = "<group>"; };
+		C32666511D953125008C6B24 /* UMImagePickerThumbnailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMImagePickerThumbnailView.m; sourceTree = "<group>"; };
+		C326665B1D9533C4008C6B24 /* UMComResouceDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMComResouceDefines.h; sourceTree = "<group>"; };
+		C326665C1D9533C4008C6B24 /* UMComResouceDefines.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMComResouceDefines.m; sourceTree = "<group>"; };
+		C326665D1D9533C4008C6B24 /* UMComResourceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMComResourceManager.h; sourceTree = "<group>"; };
+		C326665E1D9533C4008C6B24 /* UMComResourceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMComResourceManager.m; sourceTree = "<group>"; };
+		C32666641D953486008C6B24 /* UIViewController+UMComAddition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+UMComAddition.h"; sourceTree = "<group>"; };
+		C32666651D953486008C6B24 /* UIViewController+UMComAddition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+UMComAddition.m"; sourceTree = "<group>"; };
+		C32666671D9534CB008C6B24 /* UMComBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMComBarButtonItem.h; sourceTree = "<group>"; };
+		C32666681D9534CB008C6B24 /* UMComBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMComBarButtonItem.m; sourceTree = "<group>"; };
+		C326666A1D9534DE008C6B24 /* UMComButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMComButton.h; sourceTree = "<group>"; };
+		C326666B1D9534DE008C6B24 /* UMComButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMComButton.m; sourceTree = "<group>"; };
+		C32666B01D9560C1008C6B24 /* UMComActionDeleteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMComActionDeleteView.h; sourceTree = "<group>"; };
+		C32666B11D9560C1008C6B24 /* UMComActionDeleteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMComActionDeleteView.m; sourceTree = "<group>"; };
+		C32666B21D9560C1008C6B24 /* UMComActionPickerAddView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMComActionPickerAddView.h; sourceTree = "<group>"; };
+		C32666B31D9560C1008C6B24 /* UMComActionPickerAddView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMComActionPickerAddView.m; sourceTree = "<group>"; };
+		C32666B41D9560C1008C6B24 /* UMComAddedImageCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMComAddedImageCellView.h; sourceTree = "<group>"; };
+		C32666B51D9560C1008C6B24 /* UMComAddedImageCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMComAddedImageCellView.m; sourceTree = "<group>"; };
+		C32666B61D9560C1008C6B24 /* UMComAddedImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMComAddedImageView.h; sourceTree = "<group>"; };
+		C32666B71D9560C1008C6B24 /* UMComAddedImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMComAddedImageView.m; sourceTree = "<group>"; };
 		C3274BA61BC814C0005D28B8 /* UIColor+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Extension.h"; sourceTree = "<group>"; };
 		C3274BA71BC814C0005D28B8 /* UIColor+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Extension.m"; sourceTree = "<group>"; };
 		C32EC9211D8C3801007FF94B /* ZWUserInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWUserInfoViewController.h; sourceTree = "<group>"; };
@@ -509,6 +568,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C33EECE61BCD5C0F00BB4B74 /* AssetsLibrary.framework in Frameworks */,
 				C37067B91D6B465F007B18A8 /* UMMobClick.framework in Frameworks */,
 				C33EECDE1BCD5BBE00BB4B74 /* ImageIO.framework in Frameworks */,
 				C37067AE1D6B465F007B18A8 /* libSocialQQ.a in Frameworks */,
@@ -524,7 +584,6 @@
 				C367ADD41CB6934A002184DF /* CFNetwork.framework in Frameworks */,
 				C3F7910F1BCD28B7003793B1 /* JavaScriptCore.framework in Frameworks */,
 				C33EECE81BCD5C1C00BB4B74 /* AddressBook.framework in Frameworks */,
-				C33EECE61BCD5C0F00BB4B74 /* AssetsLibrary.framework in Frameworks */,
 				C33EECE41BCD5C0000BB4B74 /* MediaPlayer.framework in Frameworks */,
 				C37067CA1D6B48E5007B18A8 /* UMComNetwork.framework in Frameworks */,
 				C37067A11D6B465F007B18A8 /* libUMSocial_Sdk_5.2.1.a in Frameworks */,
@@ -612,6 +671,39 @@
 				A9071DF4B0002B9FFA04BB07 /* Pods_Qimokaola.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C3019E7C1D965B0500CC2F55 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+				C3019E7D1D965B2800CC2F55 /* ZWCommentCell.h */,
+				C3019E7E1D965B2800CC2F55 /* ZWCommentCell.m */,
+			);
+			name = "New Group";
+			sourceTree = "<group>";
+		};
+		C3019E831D96E09C00CC2F55 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				C3019E841D96E0A700CC2F55 /* New Group */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
+		C3019E841D96E0A700CC2F55 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+				C3019E851D96E0C700CC2F55 /* ZWSettingsViewController.h */,
+				C3019E861D96E0C700CC2F55 /* ZWSettingsViewController.m */,
+			);
+			name = "New Group";
+			sourceTree = "<group>";
+		};
+		C3019E881D97FB5E00CC2F55 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "New Group";
 			sourceTree = "<group>";
 		};
 		C3162CB61D7C50F600153EB9 /* ZWUser */ = {
@@ -705,6 +797,583 @@
 				C31FE3DB1D8A85FA00732B02 /* WBEmoticonInputView.m */,
 			);
 			name = WBEmoticonInputView;
+			sourceTree = "<group>";
+		};
+		C32666411D953115008C6B24 /* PhotoSelector */ = {
+			isa = PBXGroup;
+			children = (
+				C326666D1D9560C1008C6B24 /* AddImageView */,
+				C326666A1D9534DE008C6B24 /* UMComButton.h */,
+				C326666B1D9534DE008C6B24 /* UMComButton.m */,
+				C32666671D9534CB008C6B24 /* UMComBarButtonItem.h */,
+				C32666681D9534CB008C6B24 /* UMComBarButtonItem.m */,
+				C32666641D953486008C6B24 /* UIViewController+UMComAddition.h */,
+				C32666651D953486008C6B24 /* UIViewController+UMComAddition.m */,
+				C326665B1D9533C4008C6B24 /* UMComResouceDefines.h */,
+				C326665C1D9533C4008C6B24 /* UMComResouceDefines.m */,
+				C326665D1D9533C4008C6B24 /* UMComResourceManager.h */,
+				C326665E1D9533C4008C6B24 /* UMComResourceManager.m */,
+				C32666421D953125008C6B24 /* UMAssetsCollectionCell.h */,
+				C32666431D953125008C6B24 /* UMAssetsCollectionCell.m */,
+				C32666441D953125008C6B24 /* UMAssetsCollectionCheckMarkView.h */,
+				C32666451D953125008C6B24 /* UMAssetsCollectionCheckMarkView.m */,
+				C32666461D953125008C6B24 /* UMAssetsCollectionController.h */,
+				C32666471D953125008C6B24 /* UMAssetsCollectionController.m */,
+				C32666481D953125008C6B24 /* UMAssetsCollectionGrid.h */,
+				C32666491D953125008C6B24 /* UMAssetsCollectionGrid.m */,
+				C326664A1D953125008C6B24 /* UMAssetsCollectionOverlayView.h */,
+				C326664B1D953125008C6B24 /* UMAssetsCollectionOverlayView.m */,
+				C326664C1D953125008C6B24 /* UMImagePickerController.h */,
+				C326664D1D953125008C6B24 /* UMImagePickerController.m */,
+				C326664E1D953125008C6B24 /* UMImagePickerGroupCell.h */,
+				C326664F1D953125008C6B24 /* UMImagePickerGroupCell.m */,
+				C32666501D953125008C6B24 /* UMImagePickerThumbnailView.h */,
+				C32666511D953125008C6B24 /* UMImagePickerThumbnailView.m */,
+			);
+			name = PhotoSelector;
+			sourceTree = "<group>";
+		};
+		C326666D1D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C326666E1D9560C1008C6B24 /* AddImageView */,
+				C32666B01D9560C1008C6B24 /* UMComActionDeleteView.h */,
+				C32666B11D9560C1008C6B24 /* UMComActionDeleteView.m */,
+				C32666B21D9560C1008C6B24 /* UMComActionPickerAddView.h */,
+				C32666B31D9560C1008C6B24 /* UMComActionPickerAddView.m */,
+				C32666B41D9560C1008C6B24 /* UMComAddedImageCellView.h */,
+				C32666B51D9560C1008C6B24 /* UMComAddedImageCellView.m */,
+				C32666B61D9560C1008C6B24 /* UMComAddedImageView.h */,
+				C32666B71D9560C1008C6B24 /* UMComAddedImageView.m */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C326666E1D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C326666F1D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C326666F1D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C32666701D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C32666701D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C32666711D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C32666711D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C32666721D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C32666721D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C32666731D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C32666731D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C32666741D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C32666741D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C32666751D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C32666751D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C32666761D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C32666761D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C32666771D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C32666771D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C32666781D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C32666781D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C32666791D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C32666791D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C326667A1D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C326667A1D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C326667B1D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C326667B1D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C326667C1D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C326667C1D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C326667D1D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C326667D1D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C326667E1D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C326667E1D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C326667F1D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C326667F1D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C32666801D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C32666801D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C32666811D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C32666811D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C32666821D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C32666821D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C32666831D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C32666831D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C32666841D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C32666841D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C32666851D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C32666851D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C32666861D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C32666861D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C32666871D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C32666871D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C32666881D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C32666881D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C32666891D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C32666891D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C326668A1D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C326668A1D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C326668B1D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C326668B1D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C326668C1D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C326668C1D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C326668D1D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C326668D1D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C326668E1D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C326668E1D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C326668F1D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C326668F1D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C32666901D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C32666901D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C32666911D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C32666911D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C32666921D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C32666921D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C32666931D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C32666931D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C32666941D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C32666941D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C32666951D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C32666951D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C32666961D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C32666961D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C32666971D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C32666971D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C32666981D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C32666981D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C32666991D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C32666991D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C326669A1D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C326669A1D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C326669B1D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C326669B1D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C326669C1D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C326669C1D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C326669D1D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C326669D1D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C326669E1D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C326669E1D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C326669F1D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C326669F1D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C32666A01D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C32666A01D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C32666A11D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C32666A11D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C32666A21D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C32666A21D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C32666A31D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C32666A31D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C32666A41D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C32666A41D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C32666A51D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C32666A51D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C32666A61D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C32666A61D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C32666A71D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C32666A71D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C32666A81D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C32666A81D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C32666A91D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C32666A91D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C32666AA1D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C32666AA1D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C32666AB1D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C32666AB1D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C32666AC1D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C32666AC1D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C32666AD1D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C32666AD1D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C32666AE1D9560C1008C6B24 /* AddImageView */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C32666AE1D9560C1008C6B24 /* AddImageView */ = {
+			isa = PBXGroup;
+			children = (
+				C32666AF1D9560C1008C6B24 /* AddImageVi */,
+			);
+			path = AddImageView;
+			sourceTree = "<group>";
+		};
+		C32666AF1D9560C1008C6B24 /* AddImageVi */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = AddImageVi;
 			sourceTree = "<group>";
 		};
 		C3274B9C1BC810A6005D28B8 /* Categories */ = {
@@ -851,6 +1520,7 @@
 				C331E6F01C887D39001CDACB /* Launch Screen.storyboard */,
 				C3DC4D831D33C3BD0081DB0A /* Main.storyboard */,
 				C34EF1891D36529400B6449B /* LoginAndRegister.storyboard */,
+				C3019E801D96DF9600CC2F55 /* Settings.storyboard */,
 			);
 			name = Storyboards;
 			sourceTree = "<group>";
@@ -1211,6 +1881,7 @@
 		C3792AD11D6F39230079FCF5 /* TableViewCell */ = {
 			isa = PBXGroup;
 			children = (
+				C3019E7C1D965B0500CC2F55 /* New Group */,
 				C35771151D8541CE00E9B166 /* ZWFolderCell */,
 				C357710E1D85418600E9B166 /* ZWFileCell */,
 				C35771021D842C1A00E9B166 /* ZWAcademyCell */,
@@ -1235,6 +1906,7 @@
 		C3792AD31D6F395F0079FCF5 /* Custom */ = {
 			isa = PBXGroup;
 			children = (
+				C32666411D953115008C6B24 /* PhotoSelector */,
 				C31FE3D91D8A85F200732B02 /* WBEmoticonInputView */,
 				C3F162A11D4E3635006397B1 /* YYFPSLabel */,
 				C35FD9C71D7176F40066DE68 /* ZWPhotoContainerView */,
@@ -1504,40 +2176,15 @@
 		C3C44E1F1BC688D9004B30BF /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				C39803FB1D903C33006D1471 /* ZWModifyAvatarViewController */,
-				C3493C181D8D8E5E007C7144 /* ZWModifiAcademyViewController */,
-				C3493C0F1D8D8034007C7144 /* ZWModifyGenderViewController */,
-				C32EC9331D8D2510007FF94B /* ZWModifyNicknameViewController */,
-				C32EC91C1D8C36C2007FF94B /* ZWUserInfoViewController */,
-				C3FC44AA1D7DBA3C00896CDB /* ZWFeedComposeViewController */,
-				C3827B941D72DD8A002F6E5B /* ZWFeedDetailViewController */,
-				C3F78BE71D537EA300E9C2AB /* ZWBasicViewController */,
-				C37C03931D3F8C1900B22868 /* ZWStudentCircleViewController */,
-				C3792ACC1D6DE9F30079FCF5 /* ZWFeedTableViewController */,
-				C37C038C1D3E77A000B22868 /* ZWDiscoveryViewController */,
-				C37C03881D3E2C4000B22868 /* ZWPopViewController */,
-				C3A14C9B1D37CF710088E754 /* ZWSelectSchoolViewController */,
-				C3E58AC51D54DFD300FDB384 /* ZWBindAccountViewController */,
-				C3561A1B1D36B0F80032C97B /* ZWFilloutInformationViewController */,
-				C34EF1AB1D36750200B6449B /* ZWRegisterViewCotroller */,
-				C34EF1A81D366A5800B6449B /* ZWLoginViewController */,
-				C3F78BE31D537C9900E9C2AB /* ZWLoginAndRegisterViewController */,
-				C34EF1A71D366A4900B6449B /* ZWCreateCountDownViewController */,
-				C34EF1A61D366A3900B6449B /* ZWCountDownViewController */,
-				C34EF1A51D366A2800B6449B /* ZWAboutUsViewController */,
-				C34EF1A41D366A1600B6449B /* ZWBrowserViewController */,
-				C34EF1A31D366A0300B6449B /* ZWServiceViewController */,
-				C34EF1A21D3669F700B6449B /* ZWDownloadedViewController */,
-				C34EF1A11D3669D700B6449B /* ZWOldFileDetailViewController */,
-				C34EF1A01D3669C100B6449B /* ZWFileFolderViewController */,
-				C34EF19F1D3669B300B6449B /* ZWRootPathViewController */,
-				C35771091D843E6300E9B166 /* ZWCourseViewController */,
-				C35771161D85763D00E9B166 /* ZWFileDetailViewController */,
-				C3FC44B61D82EE5600896CDB /* ZWFileAndFolderViewController */,
-				C3FC44B21D82EB0500896CDB /* ZWSingleTypeSearchViewController */,
-				C3FC44AE1D81549F00896CDB /* ZWBaseSearchViewController */,
-				C39004AF1D5C61710097358E /* ZWNavigationController */,
-				C39004AB1D5C5F1E0097358E /* ZWTabBarController */,
+				C3019E831D96E09C00CC2F55 /* Settings */,
+				C3C8C13A1D92CDCD00771C61 /* Common */,
+				C3C8C1391D92CD8100771C61 /* AboutFeed */,
+				C3C8C1381D92CD6B00771C61 /* User */,
+				C3C8C1371D92CD4200771C61 /* FileAndFolder */,
+				C3C8C1361D92CD3400771C61 /* CountDown */,
+				C3C8C1351D92CD1200771C61 /* OldProject */,
+				C3C8C1331D92CCDD00771C61 /* BaseStructure */,
+				C3C8C1321D92CCB300771C61 /* RegisterAndLogin */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1587,6 +2234,105 @@
 				C370679E1D6B465F007B18A8 /* UMAnalyicsSDK_4.1.1 */,
 			);
 			name = Modules;
+			sourceTree = "<group>";
+		};
+		C3C8C1301D92CC6E00771C61 /* Modifier */ = {
+			isa = PBXGroup;
+			children = (
+				C39803FB1D903C33006D1471 /* ZWModifyAvatarViewController */,
+				C3493C181D8D8E5E007C7144 /* ZWModifiAcademyViewController */,
+				C3493C0F1D8D8034007C7144 /* ZWModifyGenderViewController */,
+				C32EC9331D8D2510007FF94B /* ZWModifyNicknameViewController */,
+			);
+			name = Modifier;
+			sourceTree = "<group>";
+		};
+		C3C8C1321D92CCB300771C61 /* RegisterAndLogin */ = {
+			isa = PBXGroup;
+			children = (
+				C3A14C9B1D37CF710088E754 /* ZWSelectSchoolViewController */,
+				C3E58AC51D54DFD300FDB384 /* ZWBindAccountViewController */,
+				C3561A1B1D36B0F80032C97B /* ZWFilloutInformationViewController */,
+				C34EF1AB1D36750200B6449B /* ZWRegisterViewCotroller */,
+				C34EF1A81D366A5800B6449B /* ZWLoginViewController */,
+				C3F78BE31D537C9900E9C2AB /* ZWLoginAndRegisterViewController */,
+			);
+			name = RegisterAndLogin;
+			sourceTree = "<group>";
+		};
+		C3C8C1331D92CCDD00771C61 /* BaseStructure */ = {
+			isa = PBXGroup;
+			children = (
+				C3FC44B21D82EB0500896CDB /* ZWSingleTypeSearchViewController */,
+				C3FC44AE1D81549F00896CDB /* ZWBaseSearchViewController */,
+				C3F78BE71D537EA300E9C2AB /* ZWBasicViewController */,
+				C39004AF1D5C61710097358E /* ZWNavigationController */,
+				C39004AB1D5C5F1E0097358E /* ZWTabBarController */,
+			);
+			name = BaseStructure;
+			sourceTree = "<group>";
+		};
+		C3C8C1351D92CD1200771C61 /* OldProject */ = {
+			isa = PBXGroup;
+			children = (
+				C34EF1A21D3669F700B6449B /* ZWDownloadedViewController */,
+				C34EF1A01D3669C100B6449B /* ZWFileFolderViewController */,
+				C34EF19F1D3669B300B6449B /* ZWRootPathViewController */,
+				C34EF1A51D366A2800B6449B /* ZWAboutUsViewController */,
+				C34EF1A41D366A1600B6449B /* ZWBrowserViewController */,
+				C34EF1A31D366A0300B6449B /* ZWServiceViewController */,
+				C34EF1A11D3669D700B6449B /* ZWOldFileDetailViewController */,
+			);
+			name = OldProject;
+			sourceTree = "<group>";
+		};
+		C3C8C1361D92CD3400771C61 /* CountDown */ = {
+			isa = PBXGroup;
+			children = (
+				C34EF1A71D366A4900B6449B /* ZWCreateCountDownViewController */,
+				C34EF1A61D366A3900B6449B /* ZWCountDownViewController */,
+			);
+			name = CountDown;
+			sourceTree = "<group>";
+		};
+		C3C8C1371D92CD4200771C61 /* FileAndFolder */ = {
+			isa = PBXGroup;
+			children = (
+				C35771161D85763D00E9B166 /* ZWFileDetailViewController */,
+				C35771091D843E6300E9B166 /* ZWCourseViewController */,
+				C3FC44B61D82EE5600896CDB /* ZWFileAndFolderViewController */,
+			);
+			name = FileAndFolder;
+			sourceTree = "<group>";
+		};
+		C3C8C1381D92CD6B00771C61 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				C3C8C1301D92CC6E00771C61 /* Modifier */,
+				C32EC91C1D8C36C2007FF94B /* ZWUserInfoViewController */,
+				C37C038C1D3E77A000B22868 /* ZWDiscoveryViewController */,
+			);
+			name = User;
+			sourceTree = "<group>";
+		};
+		C3C8C1391D92CD8100771C61 /* AboutFeed */ = {
+			isa = PBXGroup;
+			children = (
+				C3019E881D97FB5E00CC2F55 /* New Group */,
+				C3FC44AA1D7DBA3C00896CDB /* ZWFeedComposeViewController */,
+				C3827B941D72DD8A002F6E5B /* ZWFeedDetailViewController */,
+				C37C03931D3F8C1900B22868 /* ZWStudentCircleViewController */,
+				C3792ACC1D6DE9F30079FCF5 /* ZWFeedTableViewController */,
+			);
+			name = AboutFeed;
+			sourceTree = "<group>";
+		};
+		C3C8C13A1D92CDCD00771C61 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				C37C03881D3E2C4000B22868 /* ZWPopViewController */,
+			);
+			name = Common;
 			sourceTree = "<group>";
 		};
 		C3E58AC51D54DFD300FDB384 /* ZWBindAccountViewController */ = {
@@ -1814,6 +2560,7 @@
 				C37067A21D6B465F007B18A8 /* UMSCommentDetailController.xib in Resources */,
 				C37067A81D6B465F007B18A8 /* UMSnsAccountViewController.xib in Resources */,
 				C37067A71D6B465F007B18A8 /* UMSLoginViewController.xib in Resources */,
+				C3019E811D96DF9600CC2F55 /* Settings.storyboard in Resources */,
 				C37067B01D6B465F007B18A8 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				C3EAA72B1D3FBBD1009FCC0E /* pic3.jpg in Resources */,
 				C37067AD1D6B465F007B18A8 /* WeiboSDK.bundle in Resources */,
@@ -1910,18 +2657,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C32666581D953125008C6B24 /* UMImagePickerGroupCell.m in Sources */,
+				C32666561D953125008C6B24 /* UMAssetsCollectionOverlayView.m in Sources */,
 				C38EACA91CB535C600EA6448 /* ZWOldFolderCell.m in Sources */,
+				C326666C1D9534DE008C6B24 /* UMComButton.m in Sources */,
 				C337B9C51D7334AF0060BDD6 /* ZWAPIRequestTool.m in Sources */,
 				C32EC93C1D8D2A34007FF94B /* ZWModifyNicknameViewController.m in Sources */,
 				C3FC44AD1D7DBA8100896CDB /* ZWFeedComposeViewController.m in Sources */,
 				C347782D1CB263E700D26FA8 /* ZWOldFile.m in Sources */,
 				C3827B971D72DDBB002F6E5B /* ZWFeedDetailViewController.m in Sources */,
+				C32666B81D9560C1008C6B24 /* UMComActionDeleteView.m in Sources */,
 				C3493C1B1D8D8E6E007C7144 /* ZWModifiAcademyViewController.m in Sources */,
 				C3162CBE1D7C54D300153EB9 /* ZWUserManager.m in Sources */,
 				C31FE3C81D8A712200732B02 /* UIView+Extension.m in Sources */,
 				C39004B21D5C61900097358E /* ZWNavigationController.m in Sources */,
 				C3217B0E1BCAAF830037937F /* ZWDownloadedViewController.m in Sources */,
+				C32666541D953125008C6B24 /* UMAssetsCollectionController.m in Sources */,
+				C32666571D953125008C6B24 /* UMImagePickerController.m in Sources */,
 				C31608511CEE375D005BA30B /* ZWCreateCountDownViewController.m in Sources */,
+				C32666BB1D9560C1008C6B24 /* UMComAddedImageView.m in Sources */,
 				C3594EFD1BCF6B3900532FA5 /* ZWDocumentModel.m in Sources */,
 				C347782B1CB263E700D26FA8 /* ZWChild.m in Sources */,
 				C31FE3CC1D8A81DF00732B02 /* ZWFeedComposeTextParser.m in Sources */,
@@ -1931,11 +2685,14 @@
 				C3D1F2691CB3E18B0017723B /* ZWFileFolderViewController.m in Sources */,
 				C35FD9CA1D7177260066DE68 /* ZWPhotoContainerView.m in Sources */,
 				C35FD9BB1D707E160066DE68 /* SDWeiXinPhotoContainerView.m in Sources */,
+				C32666591D953125008C6B24 /* UMImagePickerThumbnailView.m in Sources */,
 				C3BE99FB1BCBFB45000102A1 /* ZWDownloadInfoCell.m in Sources */,
 				C3259ED81D351B09004DC58F /* ZWAdvertisementView.m in Sources */,
+				C32666661D953486008C6B24 /* UIViewController+UMComAddition.m in Sources */,
 				C3493C171D8D8108007C7144 /* ZWModifyGenderViewController.m in Sources */,
 				C3792AD01D6F39130079FCF5 /* ZWFeedCell.m in Sources */,
 				C39004A41D5B67F90097358E /* ZWAdvertisement.m in Sources */,
+				C3019E871D96E0C700CC2F55 /* ZWSettingsViewController.m in Sources */,
 				C35FD9C51D707E640066DE68 /* SDPhotoBrowser.m in Sources */,
 				C3FC44B51D82EB2500896CDB /* ZWSingleTypeSearchViewController.m in Sources */,
 				C3561A231D37743F0032C97B /* ZWRegisterViewCotroller.m in Sources */,
@@ -1957,12 +2714,15 @@
 				C37C038F1D3E77FF00B22868 /* ZWDiscoveryViewController.m in Sources */,
 				C33D397C1C17264A00A582DF /* ZWBrowserViewController.m in Sources */,
 				C331EB541C9C5B6400C89925 /* NSString+Extension.m in Sources */,
+				C326665F1D9533C4008C6B24 /* UMComResouceDefines.m in Sources */,
 				C3162CBB1D7C517600153EB9 /* ZWUser.m in Sources */,
 				C357710D1D844A0700E9B166 /* ZWFileBaseType.m in Sources */,
+				C32666691D9534CB008C6B24 /* UMComBarButtonItem.m in Sources */,
 				C369BD931C7DB212001A44AB /* ZWServiceCollectionViewCell.m in Sources */,
 				C32EC9231D8C3801007FF94B /* ZWUserInfoViewController.m in Sources */,
 				C35771111D8541AF00E9B166 /* ZWFileCell.m in Sources */,
 				C3274BA81BC814C0005D28B8 /* UIColor+Extension.m in Sources */,
+				C32666B91D9560C1008C6B24 /* UMComActionPickerAddView.m in Sources */,
 				C3243E291D547A5A00FF97C3 /* ZWRegisterView.m in Sources */,
 				C31FE3D81D8A83CD00732B02 /* WBTextLinePositionModifier.m in Sources */,
 				C3BE99EE1BCBE6C8000102A1 /* ZWDownloadInfoModel.m in Sources */,
@@ -1981,22 +2741,28 @@
 				C35AA0B81C88500800D17A99 /* ZWAboutUsViewController.m in Sources */,
 				C35FD9C41D707E640066DE68 /* SDBrowserImageView.m in Sources */,
 				C3FC44B11D8154F100896CDB /* ZWBaseSearchViewController.m in Sources */,
+				C32666531D953125008C6B24 /* UMAssetsCollectionCheckMarkView.m in Sources */,
 				C3FC44B91D82EECA00896CDB /* ZWFileAndFolderViewController.m in Sources */,
 				C33140B81CEE0B6200387667 /* ZWCountDownViewController.m in Sources */,
 				C35771141D8541C900E9B166 /* ZWFolderCell.m in Sources */,
 				C3792AC51D6C83A70079FCF5 /* ZWFileTool.m in Sources */,
+				C32666521D953125008C6B24 /* UMAssetsCollectionCell.m in Sources */,
 				C3792AC21D6C82A00079FCF5 /* ZWHUDTool.m in Sources */,
 				C3F162A41D4E3658006397B1 /* YYFPSLabel.m in Sources */,
 				C37C038B1D3E2CBB00B22868 /* ZWPopViewController.m in Sources */,
 				C347782E1CB263E700D26FA8 /* ZWOldFolder.m in Sources */,
 				C3F854241D7709E800E51013 /* ZWBindAccountViewModel.m in Sources */,
+				C32666BA1D9560C1008C6B24 /* UMComAddedImageCellView.m in Sources */,
 				C35771191D8576A600E9B166 /* ZWFileDetailViewController.m in Sources */,
+				C3019E7F1D965B2800CC2F55 /* ZWCommentCell.m in Sources */,
 				C3561A261D3774560032C97B /* ZWLoginViewController.m in Sources */,
 				C398040E1D9181C8006D1471 /* ZWDownloadManager.m in Sources */,
+				C32666601D9533C4008C6B24 /* UMComResourceManager.m in Sources */,
 				C3F78BE61D537CC400E9C2AB /* ZWLoginAndRegisterViewController.m in Sources */,
 				C341B9AF1D47BA0600CEECFF /* ZWNetworkingManager.m in Sources */,
 				C3D1F2701CB3E33F0017723B /* ZWOldFileCell.m in Sources */,
 				C39803FE1D903C45006D1471 /* ZWModifyAvatarViewController.m in Sources */,
+				C32666551D953125008C6B24 /* UMAssetsCollectionGrid.m in Sources */,
 				C369BD8B1C7D915A001A44AB /* ZWServiceViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

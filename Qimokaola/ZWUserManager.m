@@ -7,6 +7,7 @@
 //
 
 #import "ZWUserManager.h"
+#import "ZWAPITool.h"
 
 @interface ZWUserManager ()
 
@@ -31,9 +32,11 @@ NSString *const kLoginedUser = @"kLoginedUser";
 {
     self = [super init];
     if (self) {
-        _cache = [[YYCache alloc] initWithName:@"UserInfo"];
-        _loginUser = (ZWUser *)[_cache objectForKey:kLoginedUser];
-        NSLog(@"get object: %@", _loginUser);
+        self.cache = [[YYCache alloc] initWithName:@"UserInfo"];
+        self.loginUser = (ZWUser *)[_cache objectForKey:kLoginedUser];
+        if (self.loginUser) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kLocalUserLoginStateGuranteedNotification object:nil];
+        }
     }
     return self;
 }
@@ -41,6 +44,7 @@ NSString *const kLoginedUser = @"kLoginedUser";
 - (void)setLoginUser:(ZWUser *)loginUser {
     _loginUser = loginUser;
     _isLogin = loginUser != nil;
+    [[NSUserDefaults standardUserDefaults] setBool:_isLogin forKey:@"LoginState"];
     [_cache setObject:loginUser forKey:kLoginedUser];
 }
 
@@ -91,6 +95,10 @@ NSString *const kLoginedUser = @"kLoginedUser";
 
 - (void)modifyUserInfo:(id)params result:(APIRequestResult)result {
     [ZWAPIRequestTool requestModifyUserInfoWithParameters:params result:result];
+}
+
+- (void)userLogout:(APIRequestResult)result {
+    [ZWAPIRequestTool requestLogout:result];
 }
 
 @end

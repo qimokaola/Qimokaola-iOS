@@ -16,6 +16,9 @@
 #import "ZWNetworkingManager.h"
 #import "ZWAdvertisement.h"
 #import "ZWHUDTool.h"
+#import "ZWLoginViewController.h"
+#import "ZWAPITool.h"
+#import "ZWUserManager.h"
 
 #import "UMSocial.h"
 #import "UMSocialQQHandler.h"
@@ -25,6 +28,9 @@
 #import "UMPushSDK_1.3.0/UMessage.h"
 #import "ReactiveCocoa.h"
 #import <YYKit/YYKit.h>
+#import <UMCommunitySDK/UMComDataRequestManager.h>
+#import <UMCommunitySDK/UMComSession.h>
+
 @interface AppDelegate () {
     // 记录是否第一次进入，用以决定是否显示网络变化提示 若第一次进入且无网络才显示网络情况
     BOOL firstEnter;
@@ -36,7 +42,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    //__weak __typeof(self) weakSelf = self;
+    __weak __typeof(self) weakSelf = self;
     
     firstEnter = YES;
     
@@ -55,36 +61,6 @@
     [UMessage startWithAppkey:@"57b447c6e0f55af52e000e0b" launchOptions:launchOptions];
     //1.3.0版本开始简化初始化过程。如不需要交互式的通知，下面用下面一句话注册通知即可。
     [UMessage registerForRemoteNotifications];
-    
-    /**  如果你期望使用交互式(只有iOS 8.0及以上有)的通知，请参考下面注释部分的初始化代码
-     //register remoteNotification types （iOS 8.0及其以上版本）
-     UIMutableUserNotificationAction *action1 = [[UIMutableUserNotificationAction alloc] init];
-     action1.identifier = @"action1_identifier";
-     action1.title=@"Accept";
-     action1.activationMode = UIUserNotificationActivationModeForeground;//当点击的时候启动程序
-     
-     UIMutableUserNotificationAction *action2 = [[UIMutableUserNotificationAction alloc] init];  //第二按钮
-     action2.identifier = @"action2_identifier";
-     action2.title=@"Reject";
-     action2.activationMode = UIUserNotificationActivationModeBackground;//当点击的时候不启动程序，在后台处理
-     action2.authenticationRequired = YES;//需要解锁才能处理，如果action.activationMode = UIUserNotificationActivationModeForeground;则这个属性被忽略；
-     action2.destructive = YES;
-     
-     UIMutableUserNotificationCategory *actionCategory = [[UIMutableUserNotificationCategory alloc] init];
-     actionCategory.identifier = @"category1";//这组动作的唯一标示
-     [actionCategory setActions:@[action1,action2] forContext:(UIUserNotificationActionContextDefault)];
-     
-     NSSet *categories = [NSSet setWithObject:actionCategory];
-     
-     //如果默认使用角标，文字和声音全部打开，请用下面的方法
-     [UMessage registerForRemoteNotifications:categories];
-     
-     //如果对角标，文字和声音的取舍，请用下面的方法
-     //UIRemoteNotificationType types7 = UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeSound;
-     //UIUserNotificationType types8 = UIUserNotificationTypeAlert|UIUserNotificationTypeSound|UIUserNotificationTypeBadge;
-     //[UMessage registerForRemoteNotifications:categories withTypesForIos7:types7 withTypesForIos8:types8];
-     */
-    //for log
     [UMessage setLogEnabled:YES];
     
     // 初始化友盟微社区SDK
@@ -102,55 +78,55 @@
     //0.5秒后开始监听网络变化
     [self performSelector:@selector(monitorNetworkStatus) withObject:nil afterDelay:0.5f];
     
-//    //创建数据库队列
-//    self.DBQueue = [FMDatabaseQueue databaseQueueWithPath:[[ZWPathTool documentDirectory] stringByAppendingPathComponent:@"Download_Info.db"]];
-//    [self.DBQueue inDatabase:^(FMDatabase *db) {
-//        if ([db open]) {
-//            NSString *sqlCreateTable = @"CREATE TABLE IF NOT EXISTS download_info (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, course TEXT, link TEXT, type TEXT, size TEXT, time TEXT)";
-//            BOOL res = [db executeUpdate:sqlCreateTable];
-//            if (!res) {
-//                NSLog(@"建立download_info表失败");
-//            } else {
-//                NSLog(@"建立download_info表成功或表已存在");
-//            }
-//        }
-//    }];
-    
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
     
     BOOL isLogin = [[NSUserDefaults standardUserDefaults] boolForKey:@"LoginState"];
     //检测是否已经登录
     if (isLogin) {
-        
         [self setWindowRootControllerWithClass:[ZWTabBarController class]];
-        
-        @weakify(self)
         [[[[self fetchADSignal] timeout:2.0 onScheduler:[RACScheduler mainThreadScheduler]] deliverOnMainThread] subscribeNext:^(ZWAdvertisement *ad) {
-            
-            @strongify(self)
-            
             if (ad.res.enabled) {
-                
-                ZWAdvertisementView *adView = [[ZWAdvertisementView alloc] initWithWindow:self.window];
+                ZWAdvertisementView *adView = [[ZWAdvertisementView alloc] initWithWindow:weakSelf.window];
                 adView.completion = ^{
                     NSLog(@"ad completion");
                 };
                 [adView showAdWithADRes:ad.res];
                 
-            } else {
-                NSLog(@"do not need to show the ad");
             }
-            
         } error:^(NSError *error) {
-            
-            // @strongify(self)
-            NSLog(@"there's one error occured: %@", error);
         }];
-        
     } else {
         //显示登录，注册视图
         [self setWindowRootControllerWithClass:[ZWLoginAndRegisterViewController class]];
     }
+
+    [[[[NSNotificationCenter defaultCenter] rac_addObserverForName:kUserNeedLoginNotification object:nil] deliverOnMainThread] subscribeNext:^(id x) {
+        // 如果学生圈已经登录 则登出
+        if ([UMComSession sharedInstance].isLogin) {
+            [[UMComSession sharedInstance] userLogout];
+        }
+        [weakSelf presentLoginViewController];
+    }];
+    
+    // 在确认存在本地用户与用户登录成功之后执行登录学生圈
+    [[[[NSNotificationCenter defaultCenter] rac_addObserverForName:kLocalUserLoginStateGuranteedNotification object:nil] deliverOnMainThread] subscribeNext:^(id x) {
+        NSLog(@"本地用户存在，执行学生圈登录流程");
+        [weakSelf loginTheStudentCircle];
+    }];
+    
+    [[[[NSNotificationCenter defaultCenter] rac_addObserverForName:kUserLoginSuccessNotification object:nil] deliverOnMainThread] subscribeNext:^(id x) {
+        NSLog(@"用户登录成功，执行学生圈登录流程");
+        [weakSelf loginTheStudentCircle];
+    }];
+    
+    [[[NSNotificationCenter defaultCenter] rac_addObserverForName:kUserLogoutSuccessNotification object:nil] subscribeNext:^(id x) {
+        // 如果学生圈已经登录 则登出
+        if ([UMComSession sharedInstance].isLogin) {
+            [[UMComSession sharedInstance] userLogout];
+        }
+    }];
+    
+    [[UINavigationBar appearance] setBarTintColor:[UIColor whiteColor]];
     
     YYFPSLabel *fpsLabel = [[YYFPSLabel alloc] initWithFrame:CGRectMake(0, kScreenHeight - 100, 0, 0)];
     [fpsLabel sizeToFit];
@@ -163,6 +139,67 @@
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     [self.window makeKeyAndVisible];
     self.window.rootViewController = [[clazz alloc] init];
+}
+
+/**
+ 执行登录学生圈流程
+ */
+- (void)loginTheStudentCircle {
+    // 登录学生圈
+    dispatch_async(dispatch_get_main_queue(), ^{
+        ZWUser *user = [ZWUserManager sharedInstance].loginUser;
+        [[UMComDataRequestManager defaultManager] userCustomAccountLoginWithName:user.nickname
+                                                                        sourceId:user.uid
+                                                                        icon_url:[[ZWAPITool base] stringByAppendingPathComponent:user.avatar_url]
+                                                                          gender:[user.gender isEqualToString:@"男"] ? 1 : 0
+                                                                             age:0
+                                                                          custom:user.collegeName
+                                                                           score:0
+                                                                      levelTitle:nil
+                                                                           level:0
+                                                               contextDictionary:nil
+                                                                    userNameType:userNameNoRestrict
+                                                                  userNameLength:userNameLengthNoRestrict
+                                                                      completion:^(NSDictionary *responseObject, NSError *error) {
+                                                                          if (error) {
+                                                                              NSLog(@"登录发生错误 ;%@", error);
+                                                                          } else {
+                                                                              if ([responseObject isKindOfClass:[NSDictionary class]]) {
+                                                                                  UMComUser *user = responseObject[UMComModelDataKey];
+                                                                                  if (user) {
+                                                                                      NSLog(@"登录学生圈成功，登录用户: %@, 自定义字段: %@", user.name, user.custom);
+                                                                                      [UMComSession sharedInstance].loginUser = user;
+                                                                                      [[UMComDataBaseManager shareManager] saveRelatedIDTableWithType:UMComRelatedRegisterUserID withUsers:@[user]];
+                                                                                      // 若自定义字段为null，则更新用户信息确保自定义字段存在
+                                                                                      if (!user.custom) {
+                                                                                          [[UMComDataRequestManager defaultManager]
+                                                                                           updateProfileWithName:user.name
+                                                                                           age:user.age
+                                                                                           gender:user.gender
+                                                                                           custom:[ZWUserManager sharedInstance].loginUser.collegeName
+                                                                                           userNameType:userNameNoRestrict
+                                                                                           userNameLength:userNameLengthNoRestrict
+                                                                                           completion:^(NSDictionary *responseObject, NSError *error) {
+                                                                                               // 由于友盟SDK bug原因 此处修改信息必定错误 但修改生效 故不考虑结果
+                                                                                          }];
+                                                                                      }
+                                                                                      //[UMComSession sharedInstance].token = responseObject[UMComTokenKey];
+                                                                                      
+                                                                                      //                                                                                  [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoginSucceedNotification object:nil];
+                                                                                  }
+                                                                              }
+                                                                          }
+                                                                      }];
+    });
+    
+}
+
+- (void)presentLoginViewController {
+    [ZWHUDTool showHUDWithTitle:@"登录状态失效 请重新登录" message:nil duration:kShowHUDMid];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kShowHUDMid * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        ZWLoginViewController *loginViewController = [[ZWLoginViewController alloc] init];
+        [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:[[UINavigationController alloc] initWithRootViewController:loginViewController] animated:YES completion:nil];
+    });
 }
 
 - (RACSignal *)fetchADSignal {

@@ -154,6 +154,7 @@ static NSString *const FolderCellIdentifier = @"FolderCellIdentifier";
         }
         ZWFileDetailViewController *fileDetail = [[ZWFileDetailViewController alloc] init];
         fileDetail.file = file;
+        fileDetail.path = self.path;
         [self.navigationController pushViewController:fileDetail animated:YES];
     } else {
         ZWFolder *folder = nil;

@@ -27,6 +27,7 @@
 - (NSString *)login;
 - (NSString *)userInfo;
 - (NSString *)modifyUserInfo;
+- (NSString *)logout;
 
 @end
 
@@ -88,12 +89,16 @@
     return [self stringByAppendingPathComponent:@"modify"];
 }
 
+- (NSString *)logout {
+    return [self stringByAppendingPathComponent:@"logout"];
+}
+
 @end
 
 @implementation ZWAPITool
 
 + (NSString *)base {
-    return @"http://115.28.164.84";
+    return @"http://www.finalexam.cn";
 }
 
 + (NSString *)sendCodeAPI {
@@ -139,6 +144,10 @@
 
 + (NSString *)modifyUserInfoAPI {
     return [[ZWAPITool user] modifyUserInfo];
+}
+
++ (NSString *)logoutAPI {
+    return [[ZWAPITool user] logout];
 }
 
 + (NSString *)api {

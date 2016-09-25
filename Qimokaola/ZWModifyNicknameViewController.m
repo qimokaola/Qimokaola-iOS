@@ -10,6 +10,8 @@
 #import "ZWHUDTool.h"
 #import "ZWUserManager.h"
 
+#import <UMCommunitySDK/UMComDataRequestManager.h>
+
 #import <ReactiveCocoa/ReactiveCocoa.h>
 #import <IQKeyboardManager/IQKeyboardManager.h>
 
@@ -101,9 +103,17 @@
             if ([[response objectForKey:@"code"] intValue] == 0) {
                 [hud hideAnimated:YES];
                 // 重新设置用户昵称
+                [[ZWUserManager sharedInstance] updateNickname:weakSelf.nicknameField.text];
                 ZWUser *user = [ZWUserManager sharedInstance].loginUser;
-                user.nickname = weakSelf.nicknameField.text;
-                [ZWUserManager sharedInstance].loginUser = user;
+                [[UMComDataRequestManager defaultManager] updateProfileWithName:user.nickname
+                                                                            age:0
+                                                                         gender:[user.gender isEqualToString:@"男"] ? @1 : @0
+                                                                         custom:user.collegeName
+                                                                   userNameType:userNameNoRestrict
+                                                                 userNameLength:userNameLengthNoRestrict
+                                                                     completion:^(NSDictionary *responseObject, NSError *error) {
+                                                                         
+                                                                     }];
                 if (_completion) {
                     _completion();
                 }

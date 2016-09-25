@@ -10,6 +10,8 @@
 #import "ZWUserManager.h"
 #import "ZWHUDTool.h"
 
+#import <UMCommunitySDK/UMComDataRequestManager.h>
+
 @interface ZWModifyGenderViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -98,6 +100,16 @@
             if (success && [[response objectForKey:@"code"] intValue] == 0) {
                 [hud hideAnimated:YES];
                 [[ZWUserManager sharedInstance] updateGender:_presentGender];
+                ZWUser *user = [ZWUserManager sharedInstance].loginUser;
+                [[UMComDataRequestManager defaultManager] updateProfileWithName:user.nickname
+                                                                            age:0
+                                                                         gender:[user.gender isEqualToString:@"男"] ? @1 : @0
+                                                                         custom:user.collegeName
+                                                                   userNameType:userNameNoRestrict
+                                                                 userNameLength:userNameLengthNoRestrict
+                                                                     completion:^(NSDictionary *responseObject, NSError *error) {
+                                                                         
+                                                                     }];
                 if (self.comletion) {
                     self.comletion();
                 }

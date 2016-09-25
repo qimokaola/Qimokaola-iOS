@@ -32,4 +32,6 @@
 
 + (NSString *)modifyUserInfoAPI;
 
++ (NSString *)logoutAPI;
+
 @end

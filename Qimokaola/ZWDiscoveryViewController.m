@@ -12,11 +12,15 @@
 #import "ZWUserInfoViewController.h"
 #import "ZWHUDTool.h"
 
+#import "ZWFeedTableViewController.h"
+
+#import "ZWSettingsViewController.h"
+
+#import <UMCommunitySDK/UMComSession.h>
+
 #import "MJRefresh.h"
 #import "Masonry.h"
 #import "ReactiveCocoa.h"
-#import <UMCommunitySDK/UMComDataRequestManager.h>
-#import <UMCommunitySDK/UMComSession.h>
 #import <YYKit/YYKit.h>
 
 
@@ -53,6 +57,19 @@
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
     self.view.backgroundColor = universalGrayColor;
+    __weak __typeof(self) weakSelf = self;
+    UIButton *settingsButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    settingsButton.frame = CGRectMake(0, 0, 40, 40);
+    [settingsButton setImage:[UIImage imageNamed:@"icon_setting"] forState:UIControlStateNormal];
+    [settingsButton setImage:[UIImage imageNamed:@"icon_setting_hightlight"] forState:UIControlStateHighlighted];
+    [[settingsButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Settings" bundle:[NSBundle mainBundle]];
+        ZWSettingsViewController *settingsViewController = [storyboard instantiateViewControllerWithIdentifier:@"ZWSettingsViewController"];
+        [weakSelf.navigationController pushViewController:settingsViewController animated:YES];
+    }];
+    UIBarButtonItem *settingsItem = [[UIBarButtonItem alloc] initWithCustomView:settingsButton];
+    self.navigationItem.rightBarButtonItem = settingsItem;
+    
     [self createSubViews];
     
     // 设置下拉刷新
@@ -60,6 +77,10 @@
     self.tableView.mj_header = refreshHeader;
     // 进入视图时刷新用户信息
     [self.tableView.mj_header beginRefreshing];
+    
+    [[[NSNotificationCenter defaultCenter] rac_addObserverForName:kUserLogoutSuccessNotification object:nil] subscribeNext:^(id x) {
+        [weakSelf updateUserInfo];
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -132,14 +153,16 @@
 }
 
 - (void)updateUserInfo {
-    ZWUser *loginUser = [ZWUserManager sharedInstance].loginUser;
-//    [self.avatarImageView setImageWithURL:[NSURL URLWithString:[[ZWAPITool base] stringByAppendingPathComponent:loginUser.avatar_url]] placeholder:[UIImage imageNamed:@"avatar"]];
-    [self.avatarImageView setImageWithURL:[NSURL URLWithString:[[ZWAPITool base] stringByAppendingPathComponent:loginUser.avatar_url]] placeholder:_avatarImageView.image];
-    self.nicknameLabel.text  = loginUser.nickname;
-    //self.schoolLabel.text = loginUser.collegeName;
-    self.schoolLabel.text  = @"福州大学";
-    NSString *genderImageName = [loginUser.gender isEqualToString:@"男"] ? @"icon_male" : @"icon_female";
-    self.genderView.image = [UIImage imageNamed:genderImageName];
+    if ([ZWUserManager sharedInstance].isLogin) {
+        ZWUser *loginUser = [ZWUserManager sharedInstance].loginUser;
+        [self.avatarImageView setImageWithURL:[NSURL URLWithString:[[ZWAPITool base] stringByAppendingPathComponent:loginUser.avatar_url]] placeholder:_avatarImageView.image];
+        self.nicknameLabel.text  = loginUser.nickname;
+        self.schoolLabel.text = loginUser.collegeName;
+        NSString *genderImageName = [loginUser.gender isEqualToString:@"男"] ? @"icon_male" : @"icon_female";
+        self.genderView.image = [UIImage imageNamed:genderImageName];
+    } else {
+        
+    }
 }
 
 - (void)createSubViews {
@@ -262,6 +285,13 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     });
+    
+    if (indexPath.section == 0 && indexPath.row == 0) {
+        ZWFeedTableViewController *feedTabelViewController = [[ZWFeedTableViewController alloc] init];
+        feedTabelViewController.feedType = ZWFeedTableViewTypeAboutUser;
+        feedTabelViewController.user = [UMComSession sharedInstance].loginUser;
+        [self.navigationController pushViewController:feedTabelViewController animated:YES];
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {

@@ -14,6 +14,7 @@
 #import "ZWCourseCell.h"
 
 #import "LinqToObjectiveC.h"
+#import <ReactiveCocoa/ReactiveCocoa.h>
 
 @interface ZWCourseViewController ()
 
@@ -29,8 +30,16 @@ static NSString *const CourseCellIdentifier = @"CourseCellIdentifier";
 - (void)viewDidLoad {
     [super viewDidLoad]; 
     
+    __weak __typeof(self) weakSelf = self;
+    
     [self.tableView registerClass:[ZWCourseCell class] forCellReuseIdentifier:CourseCellIdentifier];    
     self.tableView.rowHeight = 50;
+    
+    [[[NSNotificationCenter defaultCenter] rac_addObserverForName:kUserLoginSuccessNotification object:nil] subscribeNext:^(id x) {
+        if (!weakSelf.tableView.mj_header.isRefreshing) {
+            [weakSelf.tableView.mj_header beginRefreshing];
+        }
+    }];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -48,15 +57,16 @@ static NSString *const CourseCellIdentifier = @"CourseCellIdentifier";
 - (void)freshHeaderStartFreshing {
     
     __weak __typeof(self) weakSelf = self;
-    
-    [ZWAPIRequestTool requstFileAndFolderListInSchool:[ZWUserManager sharedInstance].loginUser.collegeId
+    ZWUser *user = [ZWUserManager sharedInstance].loginUser;
+    [ZWAPIRequestTool requstFileAndFolderListInSchool:user.collegeId
                                                  path:ROOT
                                            needDetail:YES
                                                result:^(id response, BOOL success) {
-                                                   NSLog(@"%@", response);
                                                    [weakSelf.tableView.mj_header endRefreshing];
-                                                   if (success) {
+                                                   if (success && [[response objectForKey:@"code"] intValue] == 0) {
                                                        [weakSelf loadRemoteData:[response objectForKey:@"res"]];
+                                                   } else {
+                                                       NSLog(@"%@", response);
                                                    }
                                                    
                                                }];

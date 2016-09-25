@@ -168,11 +168,11 @@
     } else {
         switch (indexPath.row) {
             case 0:
-                cell.detailTextLabel.text = user.collegeName ? user.collegeName : @"福州大学";
+                cell.detailTextLabel.text = user.collegeName;
                 cell.accessoryType = UITableViewCellAccessoryNone;
                 break;
             case 1:
-                cell.detailTextLabel.text = user.academyName ? user.academyName : @"数学与计算机科学学院";
+                cell.detailTextLabel.text = user.academyName;
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 break;
             case 2:

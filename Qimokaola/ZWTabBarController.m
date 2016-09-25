@@ -7,19 +7,14 @@
 //
 
 #import "ZWTabBarController.h"
-#import "ZWNavigationController.h"
+#import "ZWCourseViewController.h"
 #import "ZWRootPathViewController.h"
 #import "ZWDownloadedViewController.h"
 #import "ZWStudentCircleViewController.h"
 #import "ZWDiscoveryViewController.h"
-#import "ZWAPIRequestTool.h"
-#import "ZWHUDTool.h"
-#import "ZWLoginViewController.h"
-#import "ZWUserManager.h"
-#import "ZWCourseViewController.h"
-#import "ZWFeedComposeViewController.h"
+#import "ZWNavigationController.h"
 
-#import "ReactiveCocoa.h"
+#import <ReactiveCocoa/ReactiveCocoa.h>
 
 
 @interface ZWTabBarController ()
@@ -56,24 +51,6 @@
     }
     
     self.viewControllers = viewControllers;
-    
-    @weakify(self)
-    [[[[NSNotificationCenter defaultCenter] rac_addObserverForName:kUserNeedLoginNotification object:nil] deliverOnMainThread] subscribeNext:^(id x) {
-        @strongify(self)
-        [self presentLoginViewController];
-        
-    }];
-}
-
-- (void)presentLoginViewController {
-    [ZWHUDTool showHUDWithTitle:@"登录状态失效 请重新登录" message:nil duration:kShowHUDMid];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kShowHUDMid * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        ZWLoginViewController *loginViewController = [[ZWLoginViewController alloc] init];
-        loginViewController.completionBlock = ^() {
-            NSLog(@"登录成功");
-        };
-        [self presentViewController:[[UINavigationController alloc] initWithRootViewController:loginViewController] animated:YES completion:nil];
-    });
 }
 
 - (void)didReceiveMemoryWarning {

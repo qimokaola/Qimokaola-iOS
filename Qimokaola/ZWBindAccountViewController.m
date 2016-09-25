@@ -110,19 +110,11 @@
         int resultCode = [[result objectForKey:@"code"] intValue];
         if (resultCode == 0) {
             NSLog(@"注册成功 上传头像图片");
-            // 注册成功 根据注册信息构建用户
-            ZWUser *user = [[ZWUser alloc] init];
-            user.uid = [[result objectForKey:@"res"] objectForKey:@"id"];
-            user.username = [self.registerParam objectForKey:@"phone"];
-            user.nickname = [self.registerParam objectForKey:@"nick"];
-            user.collegeId = [NSNumber numberWithInt:[[self.registerParam objectForKey:@"schoolId"] intValue]];
-            user.academyId = [NSNumber numberWithInt:[[self.registerParam objectForKey:@"academyId"] intValue]];
-            user.gender = [self.registerParam objectForKey:@"gender"];
-            user.isAdmin = NO;
+            NSLog(@"%@", result);
+            ZWUser *user = [ZWUser modelWithDictionary:[result objectForKey:@"res"]];
             [ZWUserManager sharedInstance].loginUser = user;
-            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"LoginState"];
-            
             [self handleUploadAvatarImage];
+
             
         } else {
             
@@ -169,6 +161,7 @@
                 
                 ZWUser *user = [ZWUserManager sharedInstance].loginUser;
                 user.avatar_url = [[response objectForKey:@"res"] objectForKey:@"avatar"];
+                NSLog(@"%@", user.avatar_url);
                 [ZWUserManager sharedInstance].loginUser = user;
                 
                
@@ -178,20 +171,21 @@
                 
             }
             
+            // 发送用户登录成功通知
+            [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoginSuccessNotification object:nil];
+            
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kShowHUDShort * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [hud hideAnimated:YES];
                 
-                 [self dismissViewControllerAnimated:YES completion:^{
-                     
-                     MBProgressHUD *hud = [ZWHUDTool excutingHudInView:[UIApplication sharedApplication].keyWindow title:nil];
-                     
-                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kShowHUDMid * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                         [hud hideAnimated:YES];
-                         
-                         ZWTabBarController *tabrBarController = [[ZWTabBarController alloc] init];
-                         [UIApplication sharedApplication].keyWindow.rootViewController = tabrBarController;
-                     });
-                 }];
+                // 根据根视图类型决定跳转类型
+                if (![[UIApplication sharedApplication].keyWindow.rootViewController isKindOfClass:[ZWTabBarController class]]) {
+                    // 若根视图的类型不为 ZWTabBarController ，表明当前位于登录注册视图，则需切换根视图至 ZWTabBarController 显示业务界面
+                    ZWTabBarController *tabrBarController = [[ZWTabBarController alloc] init];
+                    [UIApplication sharedApplication].keyWindow.rootViewController = tabrBarController;
+                } else {
+                    // 根视图的类型为 ZWTabBarController, 则只需 dismiss 此 Controller
+                    [self dismissViewControllerAnimated:YES completion:nil];
+                }
             });
             
         }];
@@ -304,19 +298,15 @@
     return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
         
         @strongify(self)
-        
-        
+
         [self.nextBtn setTitle:@"正在注册" forState:UIControlStateDisabled];
         [self.indicator startAnimating];
-        
-        //FIXME: 需要删除version字段
         
         NSMutableDictionary *params = [NSMutableDictionary dictionaryWithDictionary:self.registerParam];
         [params addEntriesFromDictionary:@{
                                            
                                            @"schoolUn": self.accountField.text,
                                            @"schoolPw": self.passwordField.text,
-                                           @"enterYear": @"2014",
                                            @"version": @1
                                            }];
         

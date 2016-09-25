@@ -26,49 +26,33 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     //设置tableView分割线只在数据条目显示
     UIView *v = [[UIView alloc] initWithFrame:CGRectZero];
     [self.tableView setTableFooterView:v];
-    
     self.chooseSchool = [[UIBarButtonItem alloc] initWithTitle:@"换个学校" style:UIBarButtonItemStyleDone target:self action:@selector(fetchSchoolList)];
-    
     // 开始时加载学校列表
     [self fetchSchoolList];
 }
 
 
 - (void)fetchSchoolList {
-    
     isInSchoolList = YES;
-    
-     self.title = @"选择学校";
-    
+    self.title = @"选择学校";
     [ZWAPIRequestTool requestListSchool:^(id response, BOOL success) {
-        
         if (success) {
-            
             self.navigationItem.rightBarButtonItem = nil;
-            
             self.schools = [response objectForKey:@"res"];
             [self.tableView reloadData];
         }
-        
     }];
 }
 
 - (void)fetchAcademiesList {
-    
     isInSchoolList = NO;
-    
     self.title = [self.selectedSchool objectForKey:@"name"];
-    
     [ZWAPIRequestTool requestListAcademyWithParameter:@{@"college" : [self.selectedSchool objectForKey:@"id"]} result:^(id response, BOOL success) {
-        
         if (success) {
-            
             self.navigationItem.rightBarButtonItem = self.chooseSchool;
-            
             self.academies = [(NSDictionary *)response objectForKey:@"res"];
             [self.tableView reloadData];
         }

@@ -64,25 +64,28 @@
     @weakify(self)
     [[self.nextBtn.rac_command.executionSignals switchToLatest] subscribeNext:^(NSDictionary *result) {
         @strongify(self)
-        NSLog(@"%@", result);
         int resultCode = [[result objectForKey:@"code"] intValue];
         if (resultCode == 0) {
-            NSLog(@"%@", [result objectForKey:@"res"]);
             // 保存用户登录信息
             ZWUser *user = [ZWUser modelWithDictionary:[result objectForKey:@"res"]];
             [ZWUserManager sharedInstance].loginUser = user;
-            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"LoginState"];
             
+            // 发送用户登录成功通知
+            [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoginSuccessNotification object:nil];
+
             MBProgressHUD *hud = [ZWHUDTool successHUDInView:self.navigationController.view withMessage:@"登录成功"];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kShowHUDMid * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [hud hideAnimated:YES];
                 
-                [self dismissViewControllerAnimated:YES completion:^{
-                    if (_completionBlock) {
-                        _completionBlock();
-                    }
-                }];
-                
+                // 根据根视图类型决定跳转类型
+                if (![[UIApplication sharedApplication].keyWindow.rootViewController isKindOfClass:[ZWTabBarController class]]) {
+                    // 若根视图的类型不为 ZWTabBarController ，表明当前位于登录注册视图，则需切换根视图
+                    ZWTabBarController *tabrBarController = [[ZWTabBarController alloc] init];
+                    [UIApplication sharedApplication].keyWindow.rootViewController = tabrBarController;
+                } else {
+                    // 根视图的类型为 ZWTabBarController, 则只需 dismiss 此 Controller
+                    [self dismissViewControllerAnimated:YES completion:nil];
+                }
             });
         } else {
             [ZWHUDTool showHUDWithTitle:[result objectForKey:@"info"] message:nil duration:kShowHUDMid];

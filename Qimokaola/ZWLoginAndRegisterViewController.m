@@ -43,16 +43,6 @@
     [[self.loginBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
         @strongify(self)
         ZWLoginViewController *loginViewController = [[ZWLoginViewController alloc] init];
-        loginViewController.completionBlock = ^() {
-            
-            MBProgressHUD *hud = [ZWHUDTool excutingHudInView:[UIApplication sharedApplication].keyWindow title:nil];
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kShowHUDShort * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [hud hideAnimated:YES];
-                ZWTabBarController *tabBarController = [[ZWTabBarController alloc] init];
-                [UIApplication sharedApplication].keyWindow.rootViewController = tabBarController;
-            });
-            
-        };
         [self presentViewController:[self nextViewController:loginViewController] animated:YES completion:nil];
     }];
     

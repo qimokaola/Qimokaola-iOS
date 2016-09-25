@@ -34,4 +34,6 @@
 
 - (void)updateAvatarUrl:(NSString *)avatarUrl;
 
+- (void)userLogout:(APIRequestResult)result;
+
 @end

@@ -11,6 +11,7 @@
 #import "ZWUserManager.h"
 #import "ZWHUDTool.h"
 #import "ZWPathTool.h"
+#import <UMCommunitySDK/UMComDataRequestManager.h>
 
 #import <ReactiveCocoa/ReactiveCocoa.h>
 #import <YYKit/YYKit.h>
@@ -204,6 +205,10 @@
             [formData appendPartWithFileURL:avatarFileURL name:@"avatar" fileName:avatarFileName mimeType:@"image/jpeg" error:NULL];
         } result:^(id response, BOOL success) {
             if (success && [[response objectForKey:@"code"] intValue] == 0) {
+                // 同步学生圈社区头像
+                [[UMComDataRequestManager defaultManager] userUpdateAvatarWithImage:selectedImage completion:^(NSDictionary *responseObject, NSError *error) {
+                    
+                }];
                 weakSelf.avatarView.image = selectedImage;
                 [[ZWUserManager sharedInstance] updateAvatarUrl:[[response objectForKey:@"res"] objectForKey:@"avatar"]];
                 if (weakSelf.completion) {

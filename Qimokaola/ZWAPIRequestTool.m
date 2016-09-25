@@ -93,6 +93,12 @@
                               result:result];
 }
 
++ (void)requestLogout:(APIRequestResult)result {
+    [ZWAPIRequestTool requestWithAPI:[ZWAPITool logoutAPI]
+                          parameters:nil
+                              result:result];
+}
+
 // 通用请求接口，针对接收字典参数的接口
 + (void)requestWithAPI:(NSString *)API parameters:(id)params result:(APIRequestResult)result {
     
@@ -102,7 +108,6 @@
                                        
                                        if ([[responseObject objectForKey:@"info"] isEqualToString:kUserNotLoginInfo]) {
                                            [[NSNotificationCenter defaultCenter] postNotificationName:kUserNeedLoginNotification object:nil];
-                                           return;
                                        }
                                        
                                        if (result) {

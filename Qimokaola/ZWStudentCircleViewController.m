@@ -213,6 +213,7 @@ typedef NS_ENUM(NSInteger, ZWFetchedDataSource) {
     });
     
     ZWFeedTableViewController *feedListViewController = [[ZWFeedTableViewController alloc] init];
+    feedListViewController.feedType = ZWFeedTableViewTypeAboutTopic;
     feedListViewController.topic = self.topics[indexPath.row];
     [self.navigationController pushViewController:feedListViewController animated:YES];
 }

@@ -150,7 +150,7 @@ static NSString *const querySQL = @"SELECT name FROM download_info WHERE link = 
         [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
             
             make.centerX.mas_equalTo(weakSelf.view);
-            make.top.mas_equalTo(weakSelf.view).offset(kScreenHeight * 0.10);
+            make.top.mas_equalTo(weakSelf.view).offset(kScreenW * 0.10);
             make.height.width.mas_equalTo(100);
             
         }];
@@ -174,7 +174,7 @@ static NSString *const querySQL = @"SELECT name FROM download_info WHERE link = 
             
             make.left.right.mas_equalTo(weakSelf.view);
             make.height.mas_equalTo(50);
-            make.top.mas_equalTo(weakSelf.typeImageView.mas_bottom).with.offset(kScreenHeight * 0.04);
+            make.top.mas_equalTo(weakSelf.typeImageView.mas_bottom).with.offset(kScreenH * 0.04);
             
         }];
         

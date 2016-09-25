@@ -105,7 +105,7 @@ static NSString *kCollectionViewHeaderID = @"collectionViewHeaderID";
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
 
-    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight) collectionViewLayout:flowLayout];
+    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, kScreenW, kScreenH) collectionViewLayout:flowLayout];
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
     self.collectionView.backgroundColor = [UIColor colorWithRed:240 / 255.0f green:240 / 255.0f blue:240 / 255.0f alpha:1];
@@ -202,7 +202,7 @@ static NSString *kCollectionViewHeaderID = @"collectionViewHeaderID";
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake((kScreenWidth - 2) / 3, (kScreenWidth - 2) / 3 - 15);
+    return CGSizeMake((kScreenW - 2) / 3, (kScreenW - 2) / 3 - 15);
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
@@ -219,7 +219,7 @@ static NSString *kCollectionViewHeaderID = @"collectionViewHeaderID";
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
-    return CGSizeMake(kScreenWidth, section == 0 ? 0 : 30);
+    return CGSizeMake(kScreenW, section == 0 ? 0 : 30);
 }
 
 
