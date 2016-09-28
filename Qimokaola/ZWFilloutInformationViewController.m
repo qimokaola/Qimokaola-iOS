@@ -137,7 +137,6 @@
                                         }];
         bindAccount.registerParam = params;
         bindAccount.collegeInfo = @{@"collegeName": self.collegeName, @"academyName": self.academyName};
-        
        [self.navigationController pushViewController:bindAccount animated:YES];
     }];
 }

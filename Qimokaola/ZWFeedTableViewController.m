@@ -11,6 +11,7 @@
 #import "UIColor+Extension.h"
 #import "ZWFeedComposeViewController.h"
 #import "ZWHUDTool.h"
+#import "ZWUserDetailViewController.h"
 
 #import "ZWFeedDetailViewController.h"
 #import "ZWFeedComposeViewController.h"
@@ -56,6 +57,9 @@
     if ([self respondsToSelector:@selector(automaticallyAdjustsScrollViewInsets)]) {
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
+    //设置下级页面的返回键
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:nil action:nil];
+    self.navigationItem.backBarButtonItem = backButtonItem;
     
     self.feeds = [NSMutableArray array];
     self.userLikes = [NSMutableArray array];
@@ -97,6 +101,42 @@
 }
 
 #pragma mark - Normal Methods
+
+- (void)goToFeedDetail:(UMComFeed *)feed atIndexPath:(NSIndexPath *)indexPath isFromCommentButton:(BOOL)fromCommentButton {
+    
+    __weak __typeof(self) weakSelf = self;
+    ZWFeedDetailViewController *detailViewController = [[ZWFeedDetailViewController alloc] init];
+    detailViewController.feed = feed;
+    detailViewController.isLiked = [self.userLikes containsObject:feed.feedID];
+    detailViewController.isCollected = feed.has_collected.boolValue;
+    detailViewController.isCommentTextViewNeedFocusWhenInit = fromCommentButton ? feed.comments_count.intValue == 0 : NO;
+    detailViewController.deleteCompletion = ^() {
+        [weakSelf removeFeed:feed];
+    };
+    // isLike 为最新点赞情况
+    detailViewController.isLikedChangedCompletion = ^(BOOL isLiked) {
+        if (isLiked != [weakSelf.userLikes containsObject:feed.feedID]) {
+            // 处理前后点赞情况不一致的情况
+            int likeCount = [weakSelf.feeds objectAtIndex:indexPath.row].likes_count.intValue;
+            if (!isLiked) {
+                // 取消点赞了
+                likeCount --;
+                [weakSelf.userLikes removeObject:feed.feedID];
+            } else {
+                // 点赞了
+                likeCount ++;
+                [weakSelf.userLikes addObject:feed.feedID];
+            }
+            [weakSelf.feeds objectAtIndex:indexPath.row].likes_count = [NSNumber numberWithInt:likeCount];
+            [weakSelf.tableView reloadRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationNone];
+        }
+    };
+    detailViewController.commentCountChangedCompletion = ^(NSNumber *commentCount) {
+        [weakSelf.feeds objectAtIndex:indexPath.row].comments_count = commentCount;
+        [weakSelf.tableView reloadRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationNone];
+    };
+    [self.navigationController pushViewController:detailViewController animated:YES];
+}
 
 - (void)fetchFeedsData {
     __weak __typeof(self) weakSelf = self;
@@ -154,6 +194,32 @@
     [self presentViewController:nav animated:YES completion:nil];
 }
 
+- (void)removeFeed:(UMComFeed *)feed {
+    NSInteger index = [self.feeds indexOfObject:feed];
+    [self.feeds removeObjectAtIndex:index];
+    [self.tableView deleteRow:index inSection:0 withRowAnimation:UITableViewRowAnimationFade];
+}
+
+- (void)dealWiteSpamResult:(NSDictionary *)responseObject error:(NSError *)error {
+    NSString *content = nil;
+    if (responseObject) {
+        content = @"举报成功";
+    } else {
+        NSLog(@"%@", error);
+        if (error.code == 40002) {
+            content = @"该用户或内容已被举报";
+        } else {
+            content = @"出错了，举报失败";
+        }
+    }
+    [ZWHUDTool showHUDInView:self.navigationController.view
+                   withTitle:content
+                     message:nil
+                    duration:kShowHUDMid];
+}
+
+
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -187,34 +253,8 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     });
-    __weak __typeof(self) weakSelf = self;
-    UMComFeed *feed = [self.feeds objectAtIndex:indexPath.row];
-    ZWFeedDetailViewController *detailViewController = [[ZWFeedDetailViewController alloc] init];
-    detailViewController.feed = feed;
-    detailViewController.isLiked = [self.userLikes containsObject:feed.feedID];
-    detailViewController.deleteCompletion = ^() {
-        [weakSelf removeFeed:feed];
-    };
-    // isLike 为最新点赞情况
-    detailViewController.isLikedChangedCompletion = ^(BOOL isLiked, NSNumber *likeCount) {
-        if (isLiked != [weakSelf.userLikes containsObject:feed.feedID]) {
-            // 处理前后点赞情况不一致的情况
-            if (!isLiked) {
-                // 取消点赞了
-                [weakSelf.userLikes removeObject:feed.feedID];
-            } else {
-                // 点赞了
-                [weakSelf.userLikes addObject:feed.feedID];
-            }
-            [weakSelf.feeds objectAtIndex:indexPath.row].likes_count = likeCount;
-            [weakSelf.tableView reloadRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationNone];
-        }
-    };
-    detailViewController.commentCountChangedCompletion = ^(NSNumber *commentCount) {
-        [weakSelf.feeds objectAtIndex:indexPath.row].comments_count = commentCount;
-        [weakSelf.tableView reloadRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationNone];
-    };
-    [self.navigationController pushViewController:detailViewController animated:YES];
+   
+    [self goToFeedDetail:[self.feeds objectAtIndex:indexPath.row] atIndexPath:indexPath isFromCommentButton:NO];
 }
 
 #pragma mark - ZWFeedCellDelegate
@@ -226,20 +266,17 @@
                                                           isLike:!isLiked
                                                       completion:^(NSDictionary *responseObject, NSError *error) {
                                                           if (responseObject) {
-                                                              NSLog(@"%@", responseObject);
-                                                              if (isLiked) {
-                                                                  NSLog(@"unlike success");
-                                                              } else {
-                                                                  NSLog(@"like success");
-                                                              }
                                                               NSInteger index = [weakSelf.feeds indexOfObject:cell.feed];
-                                                              [weakSelf.feeds objectAtIndex:index].likes_count = [responseObject objectForKey:@"feedLiked"];
-                                                              // 原本点赞现在取消，故要去除用户已点赞数组中相应的元素
+                                                              int likeCount = [weakSelf.feeds objectAtIndex:index].likes_count.intValue;
                                                               if (isLiked) {
+                                                                  // 原本点赞现在取消，故要去除用户已点赞数组中相应的元素
+                                                                  likeCount --;
                                                                   [weakSelf.userLikes removeObject:cell.feed.feedID];
                                                               } else {
+                                                                  likeCount ++;
                                                                   [weakSelf.userLikes addObject:cell.feed.feedID];
                                                               }
+                                                              [weakSelf.feeds objectAtIndex:index].likes_count = [NSNumber numberWithInt:likeCount];
                                                               [weakSelf.tableView reloadRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0] withRowAnimation:UITableViewRowAnimationNone];
                                                           } else {
                                                               [ZWHUDTool showHUDInView:weakSelf.navigationController.view withTitle:@"呀,出错了！" message:nil duration:kShowHUDMid];
@@ -255,24 +292,14 @@
 
 // 评论
 - (void)cell:(ZWFeedCell *)cell didClickCommentButtonAtIndexPath:(NSIndexPath *)indexPath {
-    __weak __typeof(self) weakSelf = self;
-    ZWFeedComposeViewController *composeViewController = [[ZWFeedComposeViewController alloc] init];
-    composeViewController.composeType = ZWFeedComposeTypeReplyFeed;
-    composeViewController.feedID = cell.feed.feedID;
-    composeViewController.completion = ^(id result) {
-        NSNumber *formerCommentCount = cell.commentCount;
-        NSNumber *nowCommentCount = @(formerCommentCount.intValue + 1);
-        NSInteger index = [weakSelf.feeds indexOfObject:cell.feed];
-        [weakSelf.feeds objectAtIndex:index].comments_count = nowCommentCount;
-        [weakSelf.tableView reloadRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0] withRowAnimation:UITableViewRowAnimationNone];
-    };
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:composeViewController];
-    [self presentViewController:nav animated:YES completion:nil];
+    [self goToFeedDetail:cell.feed atIndexPath:[NSIndexPath indexPathForRow:[self.feeds indexOfObject:cell.feed] inSection:0] isFromCommentButton:YES];
 }
 
 // 点击用户
 - (void)cell:(ZWFeedCell *)cell didClickUser:(UMComUser *)user atIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"click the user: %@", user.name);
+    ZWUserDetailViewController *userDetailViewController = [[ZWUserDetailViewController alloc] init];
+    userDetailViewController.user = user;
+    [self.navigationController pushViewController:userDetailViewController animated:YES];
 }
 
 // 点击右上更多按钮
@@ -316,25 +343,6 @@
     [alertController addAction:cancleAction];
     [alertController addAction:copyAction];
     [self presentViewController:alertController animated:YES completion:nil];
-}
-
-- (void)removeFeed:(UMComFeed *)feed {
-    NSInteger index = [self.feeds indexOfObject:feed];
-    [self.feeds removeObjectAtIndex:index];
-    [self.tableView deleteRow:index inSection:0 withRowAnimation:UITableViewRowAnimationFade];
-}
-
-- (void)dealWiteSpamResult:(NSDictionary *)responseObject error:(NSError *)error {
-    NSString *content = nil;
-    if (responseObject) {
-        content = @"举报成功";
-    } else {
-        content = @"出错了，举报失败";
-    }
-    [ZWHUDTool showHUDInView:self.navigationController.view
-                   withTitle:content
-                     message:nil
-                    duration:kShowHUDMid];
 }
 
 

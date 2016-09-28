@@ -84,6 +84,7 @@
 		C35771191D8576A600E9B166 /* ZWFileDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C35771181D8576A600E9B166 /* ZWFileDetailViewController.m */; };
 		C3594EFD1BCF6B3900532FA5 /* ZWDocumentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C3594EFC1BCF6B3900532FA5 /* ZWDocumentModel.m */; };
 		C35AA0B81C88500800D17A99 /* ZWAboutUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C35AA0B71C88500800D17A99 /* ZWAboutUsViewController.m */; };
+		C35B674C1D995F5800303D62 /* ZWUserDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C35B674B1D995F5800303D62 /* ZWUserDetailViewController.m */; };
 		C35FD9BB1D707E160066DE68 /* SDWeiXinPhotoContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C35FD9BA1D707E160066DE68 /* SDWeiXinPhotoContainerView.m */; };
 		C35FD9C41D707E640066DE68 /* SDBrowserImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = C35FD9BE1D707E640066DE68 /* SDBrowserImageView.m */; };
 		C35FD9C51D707E640066DE68 /* SDPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = C35FD9C01D707E640066DE68 /* SDPhotoBrowser.m */; };
@@ -365,6 +366,8 @@
 		C35AA0B51C874CAE00D17A99 /* Qimokaola-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Qimokaola-Prefix.pch"; sourceTree = "<group>"; };
 		C35AA0B61C88500800D17A99 /* ZWAboutUsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWAboutUsViewController.h; sourceTree = "<group>"; };
 		C35AA0B71C88500800D17A99 /* ZWAboutUsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWAboutUsViewController.m; sourceTree = "<group>"; };
+		C35B674A1D995F5800303D62 /* ZWUserDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWUserDetailViewController.h; sourceTree = "<group>"; };
+		C35B674B1D995F5800303D62 /* ZWUserDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWUserDetailViewController.m; sourceTree = "<group>"; };
 		C35FD9B91D707E160066DE68 /* SDWeiXinPhotoContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWeiXinPhotoContainerView.h; sourceTree = "<group>"; };
 		C35FD9BA1D707E160066DE68 /* SDWeiXinPhotoContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWeiXinPhotoContainerView.m; sourceTree = "<group>"; };
 		C35FD9BD1D707E640066DE68 /* SDBrowserImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDBrowserImageView.h; sourceTree = "<group>"; };
@@ -1689,6 +1692,15 @@
 			name = ZWFileDetailViewController;
 			sourceTree = "<group>";
 		};
+		C35B67481D995E8300303D62 /* ZWUserDetailViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C35B674A1D995F5800303D62 /* ZWUserDetailViewController.h */,
+				C35B674B1D995F5800303D62 /* ZWUserDetailViewController.m */,
+			);
+			name = ZWUserDetailViewController;
+			sourceTree = "<group>";
+		};
 		C35FD9B81D707E0E0066DE68 /* SDWeiXinPhotoContainerView */ = {
 			isa = PBXGroup;
 			children = (
@@ -2308,6 +2320,7 @@
 		C3C8C1381D92CD6B00771C61 /* User */ = {
 			isa = PBXGroup;
 			children = (
+				C35B67481D995E8300303D62 /* ZWUserDetailViewController */,
 				C3C8C1301D92CC6E00771C61 /* Modifier */,
 				C32EC91C1D8C36C2007FF94B /* ZWUserInfoViewController */,
 				C37C038C1D3E77A000B22868 /* ZWDiscoveryViewController */,
@@ -2722,6 +2735,7 @@
 				C32EC9231D8C3801007FF94B /* ZWUserInfoViewController.m in Sources */,
 				C35771111D8541AF00E9B166 /* ZWFileCell.m in Sources */,
 				C3274BA81BC814C0005D28B8 /* UIColor+Extension.m in Sources */,
+				C35B674C1D995F5800303D62 /* ZWUserDetailViewController.m in Sources */,
 				C32666B91D9560C1008C6B24 /* UMComActionPickerAddView.m in Sources */,
 				C3243E291D547A5A00FF97C3 /* ZWRegisterView.m in Sources */,
 				C31FE3D81D8A83CD00732B02 /* WBTextLinePositionModifier.m in Sources */,

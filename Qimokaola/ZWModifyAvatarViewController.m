@@ -193,7 +193,7 @@
     UIImage *selectedImage = info[UIImagePickerControllerEditedImage];
     // 将所选图片写进文件，以便上传使用
     NSString *avatarFileName = @"avatar.jpeg";
-    NSData *imageData = UIImageJPEGRepresentation(selectedImage, 0.5);
+    NSData *imageData = UIImageJPEGRepresentation(selectedImage, 0.3);
     NSString *avatarPath = [[ZWPathTool avatarDirectory] stringByAppendingPathComponent:avatarFileName];
     NSURL *avatarFileURL = [NSURL fileURLWithPath:avatarPath];
     [imageData writeToURL:avatarFileURL atomically:YES];

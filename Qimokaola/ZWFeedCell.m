@@ -696,17 +696,17 @@
     _creator = feed.creator;
     
     // 自定义字段 0为不匿名 1为匿名
-    if ([feed.custom intValue] == 0) {
+    if ([[[feed.custom jsonValueDecoded] objectForKey:@"a"] intValue] == 0) {
         [_avatarView setImageWithURL:[NSURL URLWithString:_creator.icon_url.small_url_string] placeholder:[UIImage imageNamed:@"avatar"]];
         _nameLabel.text = _creator.name;
-        _genderView.image = _creator.gender.intValue == 0 ? [UIImage imageNamed:@"icon_female"] : [UIImage imageNamed:@"icon_male"];
         _schoolLabel.text = createSchoolName(_creator.custom);
     } else {
         _avatarView.image = [UIImage imageNamed:@"avatar"];
         _nameLabel.text = kStudentCircleAnonyousName;
-        _genderView.image = [UIImage imageNamed:@"icon_female"];
         _schoolLabel.text = nearBySchoolName;
     }
+    
+    _genderView.image = _creator.gender.intValue == 0 ? [UIImage imageNamed:@"icon_female"] : [UIImage imageNamed:@"icon_male"];
     
     _timeLabel.text = createTimeString(feed.create_time);
     
@@ -780,6 +780,9 @@
 }
 
 - (void)clickToUser {
+    if ([[[_feed.custom jsonValueDecoded] objectForKey:@"a"] intValue] == 1) {
+        return;
+    }
     if ([self.delegate respondsToSelector:@selector(cell:didClickUser:atIndexPath:)]) {
         [self.delegate cell:self didClickUser:_feed.creator atIndexPath:_indexPath];
     }

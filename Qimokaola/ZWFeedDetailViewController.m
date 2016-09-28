@@ -14,45 +14,125 @@
 #import "ZWFeedComposeViewController.h"
 #import "ZWHUDTool.h"
 
+#import "ZWUserDetailViewController.h"
+
 #import "UIColor+Extension.h"
 
 #import "UMComResouceDefines.h"
 
+#import <ReactiveCocoa/ReactiveCocoa.h>
 #import <SDAutoLayout/SDAutoLayout.h>
 #import <YYKit/YYKit.h>
 #import <LinqToObjectiveC/LinqToObjectiveC.h>
 
+#define kCommentTextViewInitilzedHeight 35
+#define kCommentTextViewMaxHeight 85
+#define kCommentTextLimit 140
+
 #define kCommentCellIdentifier @"kCommentCellIdentifier"
 
-@interface ZWFeedDetailViewController () <UITableViewDataSource, UITableViewDelegate, ZWCommentCellDelegate>
-// 评论
+@interface ZWFeedDetailViewController () <UITableViewDataSource, UITableViewDelegate, ZWCommentCellDelegate, YYTextViewDelegate>
+
+/**
+ 评论数组
+ */
 @property (nonatomic, strong) NSMutableArray *comments;
-// 评论视图
+
+/**
+ 评论视图
+ */
 @property (nonatomic, strong) UITableView *tableView;
-// feed详情
+
+/**
+ feed详情
+ */
 @property (nonatomic, strong) UIView *headerView;
-// 分隔视图
+
+/**
+ 分隔视图
+ */
 @property (nonatomic, strong) UIView *separatorView;
-// 用户头像
+
+/**
+ 用户头像
+ */
 @property (nonatomic, strong) UIImageView *avatarView;
-// 用户名
+
+/**
+ 用户名
+ */
 @property (nonatomic, strong) UILabel *nameLabel;
-// 用户性别图片
+
+/**
+ 用户性别图片
+ */
 @property (nonatomic, strong) UIImageView *genderView;
-// 时间标签
+
+/**
+ 时间标签
+ */
 @property (nonatomic, strong) UILabel *timeLabel;
-// 学校标签
+
+/**
+ 学校标签
+ */
 @property (nonatomic, strong) UILabel *schoolLabel;
-// 内容
+
+/**
+ 内容
+ */
 @property (nonatomic, strong) UILabel *contentLabel;
-// 图片容器
+
+/**
+ 图片容器
+ */
 @property (nonatomic, strong) SDWeiXinPhotoContainerView *picContainerView;
-// 喜欢按钮
+
+/**
+ 喜欢按钮
+ */
 @property (nonatomic, strong) UIButton *likeButton;
-// 评论按钮
-@property (nonatomic, strong) UIButton *commentButton;
-// 操作按钮
+
+/**
+ 评论按钮
+ */
+@property (nonatomic, strong) UIButton *collectButton;
+
+/**
+ 操作按钮
+ */
 @property (nonatomic, strong) UIButton *moreButton;
+
+/**
+ 评论View
+ */
+@property (nonatomic, strong) UIView *commentView;
+
+/**
+ 评论框
+ */
+@property (nonatomic, strong) YYTextView *commentTextView;
+
+/**
+ 匿名按钮
+ */
+@property (nonatomic, strong) UIButton *anonymousButton;
+
+/**
+ 匿名标签
+ */
+@property (nonatomic, strong) UILabel *anonymousLabel;
+
+/**
+ 字数限制标签
+ */
+@property (nonatomic, strong) UILabel *commentLimitLabel;
+
+/**
+ 将要评论的评论
+ */
+@property (nonatomic, strong) UMComComment *commentToCommentWith;
+
 
 @end
 
@@ -60,25 +140,51 @@
 
 #pragma mark - Life Cycle
 
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-        [self zw_addSubViews];
-    }
-    return self;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     if ([self respondsToSelector:@selector(automaticallyAdjustsScrollViewInsets)]) {
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
+
     self.title = @"详情";
     self.view.backgroundColor = defaultBackgroundColor;
     _comments = [NSMutableArray array];
     
     UIBarButtonItem *moreBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"更多" style:UIBarButtonItemStyleDone target:self action:@selector(feedMoreButtonClicked)];
     self.navigationItem.rightBarButtonItem = moreBarButtonItem;
+    
+    __weak __typeof(self) weakSelf = self;
+    // 监听要评论的评论 来设置评论框的placeholder
+    [RACObserve(self, commentToCommentWith) subscribeNext:^(UMComComment *comment) {
+        NSString *placeholderPlainText = nil;
+        if (comment) {
+            if ([[[comment.custom jsonValueDecoded] objectForKey:@"a"] intValue] == 0) {
+                placeholderPlainText = [NSString stringWithFormat:@"回复 %@", comment.creator.name];
+            } else {
+                placeholderPlainText = @"回复 某同学";
+            }
+        } else {
+            placeholderPlainText = @"点此输入你的评论";
+        }
+        NSMutableAttributedString *atr = [[NSMutableAttributedString alloc] initWithString:placeholderPlainText];
+        atr.color = UIColorHex(b4b4b4);
+        atr.font = [UIFont systemFontOfSize:17];
+        weakSelf.commentTextView.placeholderAttributedText = atr;
+    }];
+    
+    // 添加子视图
+    [self zw_addSubViews];
+    // 根据feed加载数据
+    [self loadDetailData];
+    // 获取feed的评论并加载
+    [self fetchCommentsData];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if (_isCommentTextViewNeedFocusWhenInit) {
+        [self.commentTextView becomeFirstResponder];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -90,11 +196,141 @@
 - (void)zw_addSubViews {
     [self initTableView];
     [self initHeaderView];
+    [self initCommentView];
+}
+
+- (void)initCommentView {
+    _commentView = [[UIView alloc] init];
+    _commentView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:_commentView];
+    
+    _commentTextView = [[YYTextView alloc] init];
+    _commentTextView.backgroundColor = RGB(210., 219., 226.);
+    _commentTextView.showsVerticalScrollIndicator = NO;
+    _commentTextView.alwaysBounceVertical = YES;
+    _commentTextView.allowsCopyAttributedString = NO;
+    _commentTextView.font = ZWFont(17);
+    _commentTextView.delegate = self;
+    _commentTextView.returnKeyType = UIReturnKeySend;
+    _commentTextView.scrollsToTop = NO;
+    NSMutableAttributedString *atr = [[NSMutableAttributedString alloc] initWithString:@"点此输入你的评论"];
+    atr.color = UIColorHex(b4b4b4);
+    atr.font = [UIFont systemFontOfSize:17];
+    _commentTextView.placeholderAttributedText = atr;
+
+    _anonymousButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_anonymousButton setImage:[UIImage imageNamed:@"icon_detail_checkbox"] forState:UIControlStateNormal];
+    [_anonymousButton setImage:[UIImage imageNamed:@"icon_detail_checkbox_selected"] forState:UIControlStateSelected];
+    [[_anonymousButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(UIButton *button) {
+        button.selected = !button.selected;
+    }];
+    _anonymousButton.selected = YES;
+    
+    _anonymousLabel = [[UILabel alloc] init];
+    _anonymousLabel.text = @"匿名";
+    _anonymousLabel.textColor = [UIColor blackColor];
+    _anonymousLabel.font = ZWFont(15);
+    
+    _commentLimitLabel = [[UILabel alloc] init];
+    _commentLimitLabel.text = @"140";
+    _commentLimitLabel.textColor = [UIColor lightGrayColor];
+    _commentLimitLabel.font = ZWFont(14);
+    
+    UIView *topLine = [[UIView alloc] init];
+    topLine.backgroundColor = [UIColor lightGrayColor];
+    
+    NSArray *subViews = @[topLine, _commentTextView, _anonymousButton, _anonymousLabel, _commentLimitLabel];
+    [_commentView sd_addSubviews:subViews];
+    
+    CGFloat larginMargin = 15.f;
+    CGFloat margin = 10.f;
+    CGFloat smallMargin = 7.f;
+    CGFloat buttonHeight = 20.f;
+    CGFloat bottomMargin = - (margin + buttonHeight + (larginMargin - smallMargin));
+    
+    _commentView.sd_layout
+    .leftEqualToView(self.view)
+    .rightEqualToView(self.view);
+    
+    topLine.sd_layout
+    .leftEqualToView(_commentView)
+    .rightEqualToView(_commentView)
+    .topEqualToView(_commentView)
+    .heightIs(0.5);
+    
+    _commentTextView.sd_layout
+    .leftSpaceToView(_commentView, larginMargin)
+    .rightSpaceToView(_commentView, larginMargin)
+    .topSpaceToView(_commentView, smallMargin)
+    .heightIs(kCommentTextViewInitilzedHeight)
+    .minHeightIs(kCommentTextViewInitilzedHeight)
+    .maxHeightIs(kCommentTextViewMaxHeight);
+    _commentTextView.sd_cornerRadius = @10;
+    
+    
+    _anonymousButton.sd_layout
+    .leftEqualToView(_commentTextView)
+    .topSpaceToView(_commentTextView, larginMargin)
+    .heightIs(buttonHeight)
+    .widthEqualToHeight();
+    
+    _anonymousLabel.sd_layout
+    .centerYEqualToView(_anonymousButton)
+    .leftSpaceToView(_anonymousButton, margin)
+    .heightIs(buttonHeight)
+    .widthIs(50);
+    
+    _commentLimitLabel.sd_layout
+    .centerYEqualToView(_anonymousButton)
+    .rightEqualToView(_commentTextView)
+    .heightIs(buttonHeight);
+    [_commentLimitLabel setSingleLineAutoResizeWithMaxWidth:200];
+    
+    [_commentView setupAutoHeightWithBottomView:_anonymousButton bottomMargin:margin];
+    
+    _commentView.sd_layout.bottomSpaceToView(self.view, bottomMargin);
+    
+    @weakify(self)
+    [[[[NSNotificationCenter defaultCenter] rac_addObserverForName:UIKeyboardWillShowNotification object:nil] takeUntil:[self rac_willDeallocSignal]] subscribeNext:^(NSNotification *notification) {
+        @strongify(self)
+        // 获取键盘的位置和大小
+        CGRect keyboardBounds = [[notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+        NSNumber *duration = [notification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+        NSNumber *curve = [notification.userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey];
+        
+        // Need to translate the bounds to account for rotation.
+        keyboardBounds = [self.view convertRect:keyboardBounds toView:nil];
+        // 动画改变位置
+        [UIView animateWithDuration:[duration doubleValue] animations:^{
+            [UIView setAnimationBeginsFromCurrentState:YES];
+            [UIView setAnimationDuration:[duration doubleValue]];
+            [UIView setAnimationCurve:[curve intValue]];
+            // 更改输入框的位置
+            self.commentView.sd_layout.bottomSpaceToView(self.view, keyboardBounds.size.height);
+            [self.commentView updateLayout];
+        }];
+    }];
+    
+    [[[[NSNotificationCenter defaultCenter] rac_addObserverForName:UIKeyboardWillHideNotification object:nil] takeUntil:[self rac_willDeallocSignal]] subscribeNext:^(NSNotification *notification) {
+        @strongify(self)
+        NSNumber *duration = [notification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+        NSNumber *curve = [notification.userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey];
+        
+        // 动画改变位置
+        [UIView animateWithDuration:[duration doubleValue] animations:^{
+            [UIView setAnimationBeginsFromCurrentState:YES];
+            [UIView setAnimationDuration:[duration doubleValue]];
+            [UIView setAnimationCurve:[curve intValue]];
+            // 更改输入框的位置
+            self.commentView.sd_layout.bottomSpaceToView(self.view, bottomMargin);
+            [self.commentView updateLayout];
+        }];
+    }];
 }
 
 - (void)initTableView {
     _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-    _tableView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
+    _tableView.contentInset = UIEdgeInsetsMake(64, 0, 64, 0);
     _tableView.scrollIndicatorInsets = _tableView.contentInset;
     _tableView.backgroundColor = [UIColor clearColor];
     _tableView.backgroundView.backgroundColor = [UIColor clearColor];
@@ -104,12 +340,20 @@
     [self.view addSubview:_tableView];
     
     [_tableView registerClass:[ZWCommentCell class] forCellReuseIdentifier:kCommentCellIdentifier];
+    
+    __weak __typeof(self) weakSelf = self;
+    [_tableView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithActionBlock:^(UIGestureRecognizer *recognizer) {
+        [weakSelf.commentTextView endEditing:YES];
+        if (weakSelf.commentToCommentWith) {
+            weakSelf.commentToCommentWith = nil;
+        }
+    }]];
 }
 
 - (void)initHeaderView {
     _headerView = [[UIView alloc] init];
     _headerView.backgroundColor = [UIColor whiteColor];
-    _headerView.width = [UIScreen mainScreen].bounds.size.width;
+    _headerView.width = kScreenW;
     
     // 内容字体大小
     CGFloat contentLabelFontSize = 16;
@@ -125,6 +369,8 @@
     CGFloat genderViewSize = 15;
     CGFloat separatorViewHeight = 10.f;
     UIColor *separatorViewColor = defaultBackgroundColor;
+    
+    CGFloat buttonHieght = 45.f;
     
     _separatorView = [[UIView alloc] init];
     _separatorView.backgroundColor = separatorViewColor;
@@ -158,7 +404,17 @@
     
     _picContainerView = [[SDWeiXinPhotoContainerView alloc] init];
     
-    NSArray *views = @[_avatarView, _nameLabel, _genderView, _timeLabel, _schoolLabel, _contentLabel, _picContainerView, _separatorView];
+    _likeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_likeButton setBackgroundColor:RGBA(244.f, 107.f, 107.f, 0.9f)];
+    [_likeButton setImage:[UIImage imageNamed:@"icon_detail_loved"] forState:UIControlStateNormal];
+    [_likeButton addTarget:self action:@selector(likeButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    
+    _collectButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_collectButton setBackgroundColor:RGBA(128.f, 213.f, 72.f, 0.9f)];
+    [_collectButton setImage:[UIImage imageNamed:@"icon_detail_collect"] forState:UIControlStateNormal];
+    [_collectButton addTarget:self action:@selector(collectButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    
+    NSArray *views = @[_avatarView, _nameLabel, _genderView, _timeLabel, _schoolLabel, _contentLabel, _picContainerView, _separatorView, _likeButton, _collectButton];
     
     [_headerView sd_addSubviews:views];
     
@@ -206,11 +462,119 @@
     
     _picContainerView.sd_layout
     .leftEqualToView(_contentLabel);
+    
+    _likeButton.sd_layout
+    .heightIs(buttonHieght)
+    .widthEqualToHeight()
+    .centerXIs(_headerView.centerX_sd - margin * 4);
+    _likeButton.sd_cornerRadiusFromHeightRatio = @0.5;
+    
+    _collectButton.sd_layout
+    .topEqualToView(_likeButton)
+    .heightRatioToView(_likeButton, 1.0)
+    .widthEqualToHeight()
+    .centerXIs(_headerView.centerX_sd + margin * 4);
+    _collectButton.sd_cornerRadiusFromHeightRatio = @0.5;
+    
 }
 
 
+#pragma mark - Setters and Getters
+
+- (void)setIsLiked:(BOOL)isLiked {
+    _isLiked = isLiked;
+    _likeButton.selected = isLiked;
+}
+
 #pragma mark - Common Methods
 
+- (void)loadDetailData {
+    if ([[[_feed.custom jsonValueDecoded] objectForKey:@"a"] intValue] == 0) {
+        [_avatarView setImageWithURL:[NSURL URLWithString:_feed.creator.icon_url.small_url_string] placeholder:[UIImage imageNamed:@"avatar"]];
+        _nameLabel.text = _feed.creator.name;
+        _genderView.image = _feed.creator.gender.intValue == 0 ? [UIImage imageNamed:@"icon_female"] : [UIImage imageNamed:@"icon_male"];
+        _schoolLabel.text = createSchoolName(_feed.creator.custom);
+    } else {
+        _avatarView.image = [UIImage imageNamed:@"avatar"];
+        _nameLabel.text = kStudentCircleAnonyousName;
+        _genderView.image = [UIImage imageNamed:@"icon_female"];
+        _schoolLabel.text = nearBySchoolName;
+    }
+    
+    _timeLabel.text = createTimeString(_feed.create_time);
+    
+    _contentLabel.text = _feed.text;
+    
+    _picContainerView.picPathStringsArray = [_feed.image_urls linq_select:^id(UMComImageUrl *item) {
+        return item.small_url_string;
+    }];
+    
+    _picContainerView.highQuantityPicArray = [_feed.image_urls linq_select:^id(UMComImageUrl *item) {
+        return item.large_url_string;
+    }];
+    
+    CGFloat margin = 20.f;
+    CGFloat picContainerViewTopMargin = 0.f;
+    if (_feed.image_urls && _feed.image_urls.count > 0) {
+        picContainerViewTopMargin = 10;
+        _likeButton.sd_layout.topSpaceToView(_picContainerView, margin);
+    } else {
+        _likeButton.sd_layout.topSpaceToView(_contentLabel, margin);
+    }
+    
+    _picContainerView.sd_layout.topSpaceToView(_contentLabel, picContainerViewTopMargin);
+    
+    [_headerView setupAutoHeightWithBottomView:_likeButton bottomMargin:margin];
+    [_headerView layoutSubviews];
+    
+    _tableView.tableHeaderView = _headerView;
+}
+
+- (void)sendComment {
+    if (self.commentTextView.text.length == 0 || self.commentTextView.text.length > 140) {
+        [ZWHUDTool showHUDInView:self.navigationController.view withTitle:@"内容长度要在1-140以内" message:nil duration:kShowHUDMid];
+        return;
+    }
+    __weak __typeof(self) weakSelf = self;
+    NSString *anonyousString = [NSString stringWithFormat:@"{\"a\" : %d}", _anonymousButton.selected ? 1 : 0];
+    MBProgressHUD * hud = [ZWHUDTool excutingHudInView:self.navigationController.view title:@"正在发送"];
+    [[UMComDataRequestManager defaultManager] commentFeedWithFeedID:_feed.feedID
+                                                     commentContent:_commentTextView.text
+                                                     replyCommentID:_commentToCommentWith.commentID
+                                                        replyUserID:nil
+                                               commentCustomContent:anonyousString
+                                                             images:nil
+                                                         completion:^(NSDictionary *responseObject, NSError *error) {
+                                                             hud.mode = MBProgressHUDModeText;
+                                                             NSString *resultContent = nil;
+                                                             if (responseObject) {
+                                                                 [weakSelf insertCommentToTop:responseObject[@"data"]];
+                                                                 resultContent =  @"发送成功";
+                                                                 weakSelf.commentTextView.text = nil;
+                                                                 if (weakSelf.commentToCommentWith) {
+                                                                     weakSelf.commentToCommentWith = nil;
+                                                                 }
+                                                                 // 重置匿名按钮状态
+                                                                 weakSelf.anonymousButton.selected = YES;
+                                                             } else {
+                                                                 if (error.code == 20024) {
+                                                                     resultContent = @"短时间内不可多次发送同样内容";
+                                                                 } else {
+                                                                     resultContent = @"出错了，发送失败";
+                                                                 }
+                                                             }
+                                                             hud.label.text = resultContent;
+                                                             [hud hideAnimated:YES afterDelay:kShowHUDShort];
+                                                         }];
+}
+
+- (void)insertCommentToTop:(UMComComment *)comment {
+    [self.comments insertObject:comment atIndex:0];
+    [self.tableView insertRow:0 inSection:0 withRowAnimation:UITableViewRowAnimationNone];
+    if (self.commentCountChangedCompletion) {
+        self.commentCountChangedCompletion(@(self.comments.count));
+    }
+}
 
 - (void)feedMoreButtonClicked {
     [self showAlertControllerForDealWithFeed:YES orForComment:nil andIndex:0];
@@ -299,7 +663,12 @@
     if (responseObject) {
         content = @"举报成功";
     } else {
-        content = @"出错了，举报失败";
+        NSLog(@"%@", error);
+        if (error.code == 40002) {
+           content = @"该用户或内容已被举报";
+        } else {
+            content = @"出错了，举报失败";
+        }
     }
     [ZWHUDTool showHUDInView:self.navigationController.view
                    withTitle:content
@@ -308,7 +677,6 @@
 }
 
 - (void)fetchCommentsData {
-    NSLog(@"%@", _feed.feedID);
     __weak __typeof(self) weakSelf = self;
     [[UMComDataRequestManager defaultManager] fetchCommentsWithFeedId:_feed.feedID
                                                         commentUserId:nil
@@ -316,12 +684,18 @@
                                                                 count:9999
                                                            completion:^(NSDictionary *responseObject, NSError *error) {
                                                                if (responseObject) {
-                                                                   [_comments addObjectsFromArray:responseObject[@"data"]];
+                                                                   [weakSelf.comments addObjectsFromArray:responseObject[@"data"]];
                                                                    [weakSelf.tableView reloadData];
                                                                } else {
                                                                    NSLog(@"%@", error);
                                                                }
                                                            }];
+}
+
+- (void)gotoUserDetailViewController:(UMComUser *)user {
+    ZWUserDetailViewController *userDetailViewController = [[ZWUserDetailViewController alloc] init];
+    userDetailViewController.user = user;
+    [self.navigationController pushViewController:userDetailViewController animated:YES];
 }
 
 #pragma mark - Actions
@@ -332,15 +706,10 @@
                                                           isLike:!_isLiked
                                                       completion:^(NSDictionary *responseObject, NSError *error) {
                                                           if (responseObject) {
-                                                              if (_isLiked) {
-                                                                  NSLog(@"unlike success");
-                                                              } else {
-                                                                  NSLog(@"like success");
-                                                              }
                                                               weakSelf.isLiked = !_isLiked;
                                                               // 执行回调更新feed流页面数据
                                                               if (weakSelf.isLikedChangedCompletion) {
-                                                                  weakSelf.isLikedChangedCompletion(weakSelf.isLiked, [responseObject objectForKey:@"feedLiked"]);
+                                                                  weakSelf.isLikedChangedCompletion(weakSelf.isLiked);
                                                               }
                                                           } else {
                                                               [ZWHUDTool showHUDInView:weakSelf.navigationController.view withTitle:@"呀,出错了！" message:nil duration:kShowHUDMid];
@@ -349,77 +718,31 @@
 }
 
 
-- (void)commentButtonClicked {
-    __weak __typeof(self) weakSelf = self;
-    ZWFeedComposeViewController *composeViewController = [[ZWFeedComposeViewController alloc] init];
-    composeViewController.composeType = ZWFeedComposeTypeReplyFeed;
-    composeViewController.feedID = _feed.feedID;
-    composeViewController.completion = ^(UMComComment *newComment) {
-        [weakSelf.comments insertObject:newComment atIndex:0];
-        [weakSelf.tableView insertRow:0 inSection:0 withRowAnimation:UITableViewRowAnimationTop];
-        // 执行回调更新feed流页面数据
-        if (weakSelf.commentCountChangedCompletion) {
-            weakSelf.commentCountChangedCompletion(@(weakSelf.comments.count));
-        }
-    };
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:composeViewController];
-    [self presentViewController:nav animated:YES completion:nil];
+- (void)collectButtonClicked {
+//    __weak __typeof(self) weakSelf = self;
+//    ZWFeedComposeViewController *composeViewController = [[ZWFeedComposeViewController alloc] init];
+//    composeViewController.composeType = ZWFeedComposeTypeReplyFeed;
+//    composeViewController.feedID = _feed.feedID;
+//    composeViewController.completion = ^(UMComComment *newComment) {
+//        [weakSelf.comments insertObject:newComment atIndex:0];
+//        [weakSelf.tableView insertRow:0 inSection:0 withRowAnimation:UITableViewRowAnimationTop];
+//        // 执行回调更新feed流页面数据
+//        if (weakSelf.commentCountChangedCompletion) {
+//            weakSelf.commentCountChangedCompletion(@(weakSelf.comments.count));
+//        }
+//    };
+//    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:composeViewController];
+//    [self presentViewController:nav animated:YES completion:nil];
+    
 }
 
-#pragma mark - Setters and Getters
 
-- (void)setIsLiked:(BOOL)isLiked {
-    _isLiked = isLiked;
-    _likeButton.selected = isLiked;
-}
-
-- (void)setFeed:(UMComFeed *)feed {
-    _feed = feed;
-    _creator = feed.creator;
-    
-    if ([feed.custom intValue] == 0) {
-        [_avatarView setImageWithURL:[NSURL URLWithString:_creator.icon_url.small_url_string] placeholder:[UIImage imageNamed:@"avatar"]];
-        _nameLabel.text = _creator.name;
-        _genderView.image = _creator.gender.intValue == 0 ? [UIImage imageNamed:@"icon_female"] : [UIImage imageNamed:@"icon_male"];
-        _schoolLabel.text = createSchoolName(_creator.custom);
-    } else {
-        _avatarView.image = [UIImage imageNamed:@"avatar"];
-        _nameLabel.text = kStudentCircleAnonyousName;
-        _genderView.image = [UIImage imageNamed:@"icon_female"];
-        _schoolLabel.text = nearBySchoolName;
-    }
-    
-    _timeLabel.text = createTimeString(feed.create_time);
-    
-    _contentLabel.text = feed.text;
-    
-    _picContainerView.picPathStringsArray = [feed.image_urls linq_select:^id(UMComImageUrl *item) {
-        return item.small_url_string;
-    }];
-    
-    _picContainerView.highQuantityPicArray = [feed.image_urls linq_select:^id(UMComImageUrl *item) {
-        return item.large_url_string;
-    }];
-    
-    CGFloat picContainerViewTopMargin = 0.f;
-    if (feed.image_urls && feed.image_urls.count > 0) {
-        picContainerViewTopMargin = 10;
-    }
-    
-    _picContainerView.sd_layout.topSpaceToView(_contentLabel, picContainerViewTopMargin);
-    [_picContainerView layoutIfNeeded];
-    
-    [_headerView setupAutoHeightWithBottomView:_picContainerView bottomMargin:10.f];
-    [_headerView layoutSubviews];
-    
-    _tableView.tableHeaderView = _headerView;
-    
-    
-    [self fetchCommentsData];
-}
 
 - (void)clickToUser {
-    
+    if ([[[_feed.custom jsonValueDecoded] objectForKey:@"a"] intValue] == 1) {
+        return;
+    }
+    [self gotoUserDetailViewController:_feed.creator];
 }
 
 #pragma mark - UITableViewDataSource
@@ -441,19 +764,15 @@
 
 #pragma mark - UITableViewDelegate
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 20;
-}
-
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     id model = [self.comments objectAtIndex:indexPath.row];
-    return [tableView cellHeightForIndexPath:indexPath model:model keyPath:@"comment" cellClass:[ZWCommentCell class] contentViewWidth:kScreenWidth];
+    return [self.tableView cellHeightForIndexPath:indexPath model:model keyPath:@"comment" cellClass:[ZWCommentCell class] contentViewWidth:kScreenWidth];
 }
 
 #pragma mark - ZWCommentCellDelegate
 
 - (void)cell:(ZWCommentCell *)cell didClickUser:(UMComUser *)user {
-    
+    [self gotoUserDetailViewController:user];
 }
 
 - (void)didClickMoreButtonInInCell:(ZWCommentCell *)cell {
@@ -461,18 +780,66 @@
 }
 
 - (void)didClickCommentButtonInCell:(ZWCommentCell *)cell {
-    __weak __typeof(self) weakSelf = self;
-    ZWFeedComposeViewController *composeViewController = [[ZWFeedComposeViewController alloc] init];
-    composeViewController.composeType = ZWFeedComposeTypeReplyComment;
-    composeViewController.feedID = _feed.feedID;
-    composeViewController.commentID = cell.comment.commentID;
-    composeViewController.completion = ^(UMComComment *newComment) {
-        [weakSelf.comments insertObject:newComment atIndex:0];
-        [weakSelf.tableView insertRow:0 inSection:0 withRowAnimation:UITableViewRowAnimationTop];
-    };
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:composeViewController];
-    [self presentViewController:nav animated:YES completion:nil];
+//    __weak __typeof(self) weakSelf = self;
+//    ZWFeedComposeViewController *composeViewController = [[ZWFeedComposeViewController alloc] init];
+//    composeViewController.composeType = ZWFeedComposeTypeReplyComment;
+//    composeViewController.feedID = _feed.feedID;
+//    composeViewController.commentID = cell.comment.commentID;
+//    composeViewController.completion = ^(UMComComment *newComment) {
+//        [weakSelf.comments insertObject:newComment atIndex:0];
+//        [weakSelf.tableView insertRow:0 inSection:0 withRowAnimation:UITableViewRowAnimationTop];
+//    };
+//    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:composeViewController];
+//    [self presentViewController:nav animated:YES completion:nil];
+    [self.commentTextView becomeFirstResponder];
+    [self.tableView scrollToRow:[self.comments indexOfObject:cell.comment] inSection:0 atScrollPosition:UITableViewScrollPositionNone animated:YES];
+    self.commentToCommentWith = cell.comment;
 }
+
+#pragma mark - YYTextViewDelegate
+
+- (void)textViewDidChange:(YYTextView *)textView {
+    self.commentLimitLabel.text = @(kCommentTextLimit - (int)textView.text.length).stringValue;
+    CGFloat fixedWidth = textView.width_sd;
+    CGSize newSize = [textView sizeThatFits:CGSizeMake(fixedWidth, MAXFLOAT)];
+    // 使得高度永远不大于最大高度，防止出现滑动现象
+    textView.sd_layout
+    .heightIs(newSize.height > kCommentTextViewMaxHeight ? kCommentTextViewMaxHeight : newSize.height);
+}
+
+
+/**
+ 处理按下 发送 的逻辑
+
+ @param textView textView
+ @param range    range
+ @param text     text
+
+ @return should change text
+ */
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    NSRange resultRange = [text rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet] options:NSBackwardsSearch];
+    if ([text length] == 1 && resultRange.location != NSNotFound) {
+        [textView resignFirstResponder];
+        // 按下 发送键之后发送评论
+        [self sendComment];
+        return NO;
+    }
+    return YES;
+}
+
+#pragma mark - UISCrollViewDelegate
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    if ([scrollView isEqual:self.tableView]) {
+        [self.commentTextView endEditing:YES];
+        // 清除要回复的comment
+        if (self.commentToCommentWith) {
+            self.commentToCommentWith = nil;
+        }
+    }
+}
+
 
 /*
  #pragma mark - Navigation

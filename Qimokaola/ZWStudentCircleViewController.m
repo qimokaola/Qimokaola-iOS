@@ -58,6 +58,9 @@ typedef NS_ENUM(NSInteger, ZWFetchedDataSource) {
     //__weak __typeof(self) weakSelf = self;
     
     self.title = @"学生圈";
+    //设置下级页面的返回键
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:nil action:nil];
+    self.navigationItem.backBarButtonItem = backButtonItem;
     
     self.placeholderImage = [[UIImage imageNamed:@"avatar"] imageByResizeToSize:CGSizeMake(40, 40)];
     
@@ -158,7 +161,6 @@ typedef NS_ENUM(NSInteger, ZWFetchedDataSource) {
         [self.tableView.mj_footer endRefreshing];
         
     }
-    
     
     self.nextPageURL = [data objectForKey:@"next_page_url"];
     

@@ -22,6 +22,8 @@
 @property (nonatomic, strong) UIButton *commentButton;
 @property (nonatomic, strong) UIButton *moreButton;
 @property (nonatomic, strong) UILabel *contentLabel;
+@property (nonatomic, strong) UIView *replyView;
+@property (nonatomic, strong) UILabel *replyLabel;
 
 @end
 
@@ -32,7 +34,7 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
-        self.separatorInset = UIEdgeInsetsMake(0, 15, 0, 15);
+        self.separatorInset = UIEdgeInsetsMake(0, 10, 0, 10);
         [self zw_addSubViews];
     }
     return self;
@@ -53,7 +55,7 @@
     CGFloat contentLabelFontSize = 16;
     
     // 中等文字字体大小
-    CGFloat midFontSize = 15;
+    CGFloat midFontSize = 14;
     
     // 较小文本的字体大小
     CGFloat smallFontSize = 12;
@@ -86,7 +88,14 @@
     
     _contentLabel = [[UILabel alloc] init];
     _contentLabel.font = [UIFont systemFontOfSize:contentLabelFontSize];
-    _contentLabel.numberOfLines = 0;
+    
+    _replyView = [[UIView alloc] init];
+    _replyView.backgroundColor = RGB(220., 243., 248.);
+    
+    _replyLabel = [[UILabel alloc] init];
+    _replyLabel.font = ZWFont(midFontSize);
+    _replyLabel.textColor = [UIColor blackColor];
+    [_replyView addSubview:_replyLabel];
     
     _moreButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_moreButton setImage:[UIImage imageNamed:@"more_arrow"] forState:UIControlStateNormal];
@@ -96,7 +105,7 @@
     [_commentButton setImage:[UIImage imageNamed:@"icon_comment"] forState:UIControlStateNormal];
     [_commentButton addTarget:self action:@selector(clickCommentButton) forControlEvents:UIControlEventTouchUpInside];
 
-    NSArray *subViews = @[_avatarView, _nameLabel, _timeLabel, _schoolLabel, _contentLabel, _commentButton, _moreButton];
+    NSArray *subViews = @[_avatarView, _nameLabel, _timeLabel, _schoolLabel, _contentLabel, _commentButton, _moreButton, _replyView];
     [self.contentView sd_addSubviews:subViews];
     
     UIView *contentView = self.contentView;
@@ -126,10 +135,23 @@
     [_schoolLabel setSingleLineAutoResizeWithMaxWidth:singleLineLabelMaxWidth];
     
     _contentLabel.sd_layout
-    .leftSpaceToView(contentView, margin)
+    .leftEqualToView(_nameLabel)
     .rightSpaceToView(contentView, margin)
     .topSpaceToView(_avatarView, margin)
     .autoHeightRatio(0);
+    
+    _replyLabel.sd_layout
+    .leftSpaceToView(_replyView, margin)
+    .rightSpaceToView(_replyView, margin)
+    .topSpaceToView(_replyView, margin)
+    .autoHeightRatio(0);
+    
+    _replyView.sd_layout
+    .leftEqualToView(_contentLabel)
+    .rightEqualToView(_contentLabel)
+    .topSpaceToView(_contentLabel, margin);
+    _replyView.sd_cornerRadius = @5;
+    [_replyView setupAutoHeightWithBottomView:_replyLabel bottomMargin:10.f];
     
     _moreButton.sd_layout
     .topSpaceToView(contentView, margin)
@@ -142,14 +164,12 @@
     .rightSpaceToView(_moreButton, margin)
     .heightIs(25)
     .widthEqualToHeight();
-    
-    [self setupAutoHeightWithBottomView:_contentLabel bottomMargin:margin];
 }
 
 - (void)setComment:(UMComComment *)comment {
     _comment = comment;
     // 自定义字段 0为不匿名 1为匿名
-    if (comment.custom.intValue == 0) {
+    if ([[[_comment.custom jsonValueDecoded] objectForKey:@"a"] intValue] == 0) {
         [_avatarView setImageWithURL:[NSURL URLWithString:_comment.creator.icon_url.small_url_string] placeholder:[UIImage imageNamed:@"avatar"]];
         _nameLabel.text = _comment.creator.name;
         _schoolLabel.text = createSchoolName(_comment.creator.custom);
@@ -160,18 +180,32 @@
     }
     
     _timeLabel.text = createTimeString(_comment.create_time);
+    _contentLabel.text = _comment.content;
     
-    NSString *content = nil;
-    
+    UIView *bottomView = nil;
     if (_comment.reply_comment) {
-        content = [NSString stringWithFormat:@"回复 @%@: %@", _comment.reply_comment.custom.intValue == 0 ? _comment.reply_comment.creator.name : kStudentCircleAnonyousName, _comment.content];
+        _replyView.hidden = NO;
+        NSString *replyContent = nil;
+        if (_comment.reply_comment.content.length > 0) {
+            NSString *creator = [[[_comment.reply_comment.custom jsonValueDecoded] objectForKey:@"a"] intValue] == 0 ? _comment.reply_comment.creator.name : kStudentCircleAnonyousName;
+            replyContent = [NSString stringWithFormat:@"回复@%@的评论：%@", creator, _comment.reply_comment.content];
+        } else {
+            replyContent = @"该评论已被删除";
+        }
+        _replyLabel.text = replyContent;
+        bottomView = _replyView;
     } else {
-        content = _comment.content;
+        _replyView.hidden = YES;
+        _replyLabel.text = nil;
+        bottomView = _contentLabel;
     }
-    _contentLabel.text = content;
+    [self setupAutoHeightWithBottomView:bottomView bottomMargin:10.f];
 }
 
 - (void)clickToUser {
+    if ([[[_comment.custom jsonValueDecoded] objectForKey:@"a"] intValue] == 1) {
+        return;
+    }
     if ([self.delegate respondsToSelector:@selector(cell:didClickUser:)]) {
         [self.delegate cell:self didClickUser:_comment.creator];
     }

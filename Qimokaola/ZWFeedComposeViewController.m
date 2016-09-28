@@ -416,7 +416,7 @@
         return;
     }
     __weak __typeof(self) weakSelf = self;
-    NSString *anonyousString = [NSString stringWithFormat:@"%d", _anonyousSwitch.on ? 1 : 0];
+    NSString *anonyousString = [NSString stringWithFormat:@"{\"a\" : %d}", _anonyousSwitch.on ? 1 : 0];
     MBProgressHUD *hud = [ZWHUDTool excutingHudInView:self.navigationController.view title:@"正在发送"];
     if (_composeType == ZWFeedComposeTypeNewFeed) {
         [UMComDataRequestManager feedCreateWithContent:_textView.text
@@ -455,7 +455,7 @@
         hud.square = YES;
         hud.label.text = @"发送成功";
         hud.detailsLabel.text = nil;
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kShowHUDMid * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kShowHUDShort * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [hud hideAnimated:YES];
             [weakSelf dismissViewControllerAnimated:YES completion:^{
                 if (weakSelf.completion) {
@@ -467,12 +467,12 @@
         NSLog(@"%@", error);
         hud.mode = MBProgressHUDModeText;
         if (error.code == 20024) {
-            hud.label.text = @"段时间内不可多次发送同样内容";
+            hud.label.text = @"短时间内不可多次发送同样内容";
         } else {
             hud.label.text = @"发送失败,请重试";
         }
         hud.detailsLabel.text = nil;
-        [hud hideAnimated:YES afterDelay:kShowHUDMid];
+        [hud hideAnimated:YES afterDelay:kShowHUDShort];
     }
 }
 
