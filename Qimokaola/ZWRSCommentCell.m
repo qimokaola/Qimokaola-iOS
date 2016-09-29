@@ -1,35 +1,28 @@
 //
-//  ZWCommentCell.m
+//  ZWRSCommentCell.m
 //  Qimokaola
 //
-//  Created by Administrator on 2016/9/24.
+//  Created by Administrator on 2016/9/29.
 //  Copyright © 2016年 Administrator. All rights reserved.
 //
 
-#import "ZWCommentCell.h"
-#import "ZWReplytPaddingLabel.h"
+#import "ZWRSCommentCell.h"
 
 #import "UMComResouceDefines.h"
 
-#import <SDAutoLayout/SDAutoLayout.h>
-#import <YYKit/YYKit.h>
-
-@interface ZWCommentCell ()
+@interface ZWRSCommentCell ()
 
 @property (nonatomic, strong) UIImageView *avatarView;
 @property (nonatomic, strong) UILabel *nameLabel;
 @property (nonatomic, strong) UILabel *timeLabel;
 @property (nonatomic, strong) UILabel *schoolLabel;
-@property (nonatomic, strong) UIButton *commentButton;
-@property (nonatomic, strong) UIButton *moreButton;
 @property (nonatomic, strong) UILabel *contentLabel;
 @property (nonatomic, strong) ZWReplytPaddingLabel *replyLabel;
+@property (nonatomic, strong) UIButton *commentButton;
 
 @end
 
-@implementation ZWCommentCell
-
-#pragma mark - Life Cycle
+@implementation ZWRSCommentCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
@@ -40,26 +33,13 @@
     return self;
 }
 
-- (void)awakeFromNib {
-    [super awakeFromNib];
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-}
-
-#pragma mark - Common Methods
-
 - (void)zw_addSubViews {
     // 内容字体大小
     CGFloat contentLabelFontSize = 16;
-    
     // 中等文字字体大小
     CGFloat midFontSize = 14;
-    
     // 较小文本的字体大小
     CGFloat smallFontSize = 12;
-    
     CGFloat margin = 10.f;
     CGFloat smallMargin = 5.0f;
     CGFloat avatarHeightOrWidth = 35;
@@ -90,18 +70,15 @@
     
     _replyLabel = [[ZWReplytPaddingLabel alloc] init];
     
-    _moreButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_moreButton setImage:[UIImage imageNamed:@"more_arrow"] forState:UIControlStateNormal];
-    [_moreButton addTarget:self action:@selector(clickMoreButton) forControlEvents:UIControlEventTouchUpInside];
-    
     _commentButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_commentButton setImage:[UIImage imageNamed:@"icon_comment"] forState:UIControlStateNormal];
     [_commentButton addTarget:self action:@selector(clickCommentButton) forControlEvents:UIControlEventTouchUpInside];
-
-    NSArray *subViews = @[_avatarView, _nameLabel, _timeLabel, _schoolLabel, _contentLabel, _commentButton, _moreButton, _replyLabel];
+    
+    NSArray *subViews = @[_avatarView, _nameLabel, _timeLabel, _schoolLabel, _contentLabel, _commentButton, _replyLabel];
     [self.contentView sd_addSubviews:subViews];
     
     UIView *contentView = self.contentView;
+    
     _avatarView.sd_layout
     .leftSpaceToView(contentView, margin)
     .topSpaceToView(contentView, margin)
@@ -137,21 +114,18 @@
     .rightEqualToView(_contentLabel)
     .topSpaceToView(_contentLabel, margin);
     
-    _moreButton.sd_layout
+    _commentButton.sd_layout
     .topSpaceToView(contentView, margin)
     .rightSpaceToView(contentView, margin)
     .heightIs(25)
     .widthEqualToHeight();
     
-    _commentButton.sd_layout
-    .topEqualToView(_moreButton)
-    .rightSpaceToView(_moreButton, margin)
-    .heightIs(25)
-    .widthEqualToHeight();
+    [self setupAutoHeightWithBottomView:_replyLabel bottomMargin:margin];
 }
 
 - (void)setComment:(UMComComment *)comment {
     _comment = comment;
+    
     // 自定义字段 0为不匿名 1为匿名
     if ([[[_comment.custom jsonValueDecoded] objectForKey:@"a"] intValue] == 0) {
         [_avatarView setImageWithURL:[NSURL URLWithString:_comment.creator.icon_url.small_url_string] placeholder:[UIImage imageNamed:@"avatar"]];
@@ -165,37 +139,32 @@
     
     _timeLabel.text = createTimeString(_comment.create_time);
     _contentLabel.text = _comment.content;
-    
-    _replyLabel.replyComment = _comment.reply_comment;
-    
-    UIView *bottomView = nil;
+
     if (_comment.reply_comment) {
-        bottomView = _replyLabel;
-    } else {
-        bottomView = _contentLabel;
-    }
-    [self setupAutoHeightWithBottomView:bottomView bottomMargin:10.f];
-}
-
-- (void)clickToUser {
-    if ([[[_comment.custom jsonValueDecoded] objectForKey:@"a"] intValue] == 1) {
-        return;
-    }
-    if ([self.delegate respondsToSelector:@selector(cell:didClickUser:)]) {
-        [self.delegate cell:self didClickUser:_comment.creator];
-    }
-}
-
-- (void)clickMoreButton {
-    if ([self.delegate respondsToSelector:@selector(didClickMoreButtonInInCell:)]) {
-        [self.delegate didClickMoreButtonInInCell:self];
+        _replyLabel.replyComment = _comment.reply_comment;
+    } else if (_comment.feed) {
+        _replyLabel.replyFeed = _comment.feed;
     }
 }
 
 - (void)clickCommentButton {
-    if ([self.delegate respondsToSelector:@selector(didClickCommentButtonInCell:)]) {
-        [self.delegate didClickCommentButtonInCell:self];
-    }
+    
+}
+
+- (void)clickToUser {
+    
+}
+
+
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    // Initialization code
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    [super setSelected:selected animated:animated];
+
+    // Configure the view for the selected state
 }
 
 @end

@@ -385,7 +385,6 @@
     _nameLabel.font = [UIFont systemFontOfSize:midFontSize];
     _nameLabel.numberOfLines = 1;
     _nameLabel.userInteractionEnabled = YES;
-    [_nameLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickToUser)]];
     
     _genderView = [[UIImageView alloc] init];
     

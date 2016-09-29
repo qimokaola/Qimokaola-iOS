@@ -13,7 +13,7 @@
 #import "ZWHUDTool.h"
 
 #import "ZWFeedTableViewController.h"
-
+#import "ZWUserCommentsViewController.h"
 #import "ZWSettingsViewController.h"
 
 #import <UMCommunitySDK/UMComSession.h>
@@ -291,6 +291,9 @@
         feedTabelViewController.feedType = ZWFeedTableViewTypeAboutUser;
         feedTabelViewController.user = [UMComSession sharedInstance].loginUser;
         [self.navigationController pushViewController:feedTabelViewController animated:YES];
+    } else if (indexPath.section == 0 && indexPath.row == 2) {
+        ZWUserCommentsViewController *commentsViewController = [[ZWUserCommentsViewController alloc] init];
+        [self.navigationController pushViewController:commentsViewController animated:YES];
     }
 }
 

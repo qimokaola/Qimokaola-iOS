@@ -52,6 +52,7 @@
 		C337B9C51D7334AF0060BDD6 /* ZWAPIRequestTool.m in Sources */ = {isa = PBXBuildFile; fileRef = C337B9C41D7334AF0060BDD6 /* ZWAPIRequestTool.m */; };
 		C33B1D491CC53F0B008FA6E6 /* ZWDocumentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C33B1D471CC53F0B008FA6E6 /* ZWDocumentCell.m */; };
 		C33B1D4A1CC53F0B008FA6E6 /* ZWDocumentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C33B1D481CC53F0B008FA6E6 /* ZWDocumentCell.xib */; };
+		C33B6D3E1D9D68DC00710D75 /* ZWReplytPaddingLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = C33B6D3D1D9D68DC00710D75 /* ZWReplytPaddingLabel.m */; };
 		C33D397C1C17264A00A582DF /* ZWBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C33D397B1C17264A00A582DF /* ZWBrowserViewController.m */; };
 		C33EECA31BCD4F9700BB4B74 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C33EECA21BCD4F9700BB4B74 /* libsqlite3.dylib */; };
 		C33EECA41BCD4FC500BB4B74 /* libiconv.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C3F791161BCD30F2003793B1 /* libiconv.2.dylib */; };
@@ -161,6 +162,18 @@
 		C3D1F2691CB3E18B0017723B /* ZWFileFolderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D1F2681CB3E18B0017723B /* ZWFileFolderViewController.m */; };
 		C3D1F2701CB3E33F0017723B /* ZWOldFileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D1F26E1CB3E33F0017723B /* ZWOldFileCell.m */; };
 		C3D1F2961CB401BE0017723B /* ZWOldFileCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3D1F2951CB401BE0017723B /* ZWOldFileCell.xib */; };
+		C3DA12111D9D45C700758BAC /* DLLRUCache.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DA12021D9D45C700758BAC /* DLLRUCache.m */; };
+		C3DA12121D9D45C700758BAC /* DLCustomSlideView.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DA12041D9D45C700758BAC /* DLCustomSlideView.m */; };
+		C3DA12131D9D45C700758BAC /* DLSlideView.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DA12061D9D45C700758BAC /* DLSlideView.m */; };
+		C3DA12141D9D45C700758BAC /* DLFixedTabbarView.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DA12091D9D45C700758BAC /* DLFixedTabbarView.m */; };
+		C3DA12151D9D45C700758BAC /* DLScrollTabbarView.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DA120B1D9D45C700758BAC /* DLScrollTabbarView.m */; };
+		C3DA12161D9D45C700758BAC /* DLTabedSlideView.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DA120E1D9D45C700758BAC /* DLTabedSlideView.m */; };
+		C3DA12171D9D45C700758BAC /* DLUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DA12101D9D45C700758BAC /* DLUtility.m */; };
+		C3DA121C1D9D488900758BAC /* ZWUserCommentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DA121B1D9D488900758BAC /* ZWUserCommentsViewController.m */; };
+		C3DA12261D9D5DA400758BAC /* ZWReceivedCommentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DA12251D9D5DA400758BAC /* ZWReceivedCommentsViewController.m */; };
+		C3DA12291D9D5DCE00758BAC /* ZWSendedCommentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DA12281D9D5DCE00758BAC /* ZWSendedCommentsViewController.m */; };
+		C3DA122E1D9D5F1E00758BAC /* ZWBaseCommentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DA122D1D9D5F1E00758BAC /* ZWBaseCommentsViewController.m */; };
+		C3DA12321D9D667B00758BAC /* ZWRSCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DA12311D9D667B00758BAC /* ZWRSCommentCell.m */; };
 		C3DC4D841D33C3BD0081DB0A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C3DC4D831D33C3BD0081DB0A /* Main.storyboard */; };
 		C3DC4D871D33CC550081DB0A /* UIViewController+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DC4D861D33CC550081DB0A /* UIViewController+Extension.m */; };
 		C3E58AC81D54DFE600FDB384 /* ZWBindAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3E58AC71D54DFE600FDB384 /* ZWBindAccountViewController.m */; };
@@ -313,6 +326,8 @@
 		C33B1D461CC53F0B008FA6E6 /* ZWDocumentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWDocumentCell.h; sourceTree = "<group>"; };
 		C33B1D471CC53F0B008FA6E6 /* ZWDocumentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWDocumentCell.m; sourceTree = "<group>"; };
 		C33B1D481CC53F0B008FA6E6 /* ZWDocumentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZWDocumentCell.xib; sourceTree = "<group>"; };
+		C33B6D3C1D9D68DC00710D75 /* ZWReplytPaddingLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWReplytPaddingLabel.h; sourceTree = "<group>"; };
+		C33B6D3D1D9D68DC00710D75 /* ZWReplytPaddingLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWReplytPaddingLabel.m; sourceTree = "<group>"; };
 		C33D397A1C17264A00A582DF /* ZWBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWBrowserViewController.h; sourceTree = "<group>"; };
 		C33D397B1C17264A00A582DF /* ZWBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWBrowserViewController.m; sourceTree = "<group>"; };
 		C33EECA21BCD4F9700BB4B74 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = ../../../../../../usr/lib/libsqlite3.dylib; sourceTree = "<group>"; };
@@ -517,6 +532,32 @@
 		C3D1F26D1CB3E33F0017723B /* ZWOldFileCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWOldFileCell.h; sourceTree = "<group>"; };
 		C3D1F26E1CB3E33F0017723B /* ZWOldFileCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWOldFileCell.m; sourceTree = "<group>"; };
 		C3D1F2951CB401BE0017723B /* ZWOldFileCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZWOldFileCell.xib; sourceTree = "<group>"; };
+		C3DA12001D9D45C700758BAC /* DLCacheProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLCacheProtocol.h; sourceTree = "<group>"; };
+		C3DA12011D9D45C700758BAC /* DLLRUCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLLRUCache.h; sourceTree = "<group>"; };
+		C3DA12021D9D45C700758BAC /* DLLRUCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLLRUCache.m; sourceTree = "<group>"; };
+		C3DA12031D9D45C700758BAC /* DLCustomSlideView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLCustomSlideView.h; sourceTree = "<group>"; };
+		C3DA12041D9D45C700758BAC /* DLCustomSlideView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLCustomSlideView.m; sourceTree = "<group>"; };
+		C3DA12051D9D45C700758BAC /* DLSlideView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLSlideView.h; sourceTree = "<group>"; };
+		C3DA12061D9D45C700758BAC /* DLSlideView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLSlideView.m; sourceTree = "<group>"; };
+		C3DA12081D9D45C700758BAC /* DLFixedTabbarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLFixedTabbarView.h; sourceTree = "<group>"; };
+		C3DA12091D9D45C700758BAC /* DLFixedTabbarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLFixedTabbarView.m; sourceTree = "<group>"; };
+		C3DA120A1D9D45C700758BAC /* DLScrollTabbarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLScrollTabbarView.h; sourceTree = "<group>"; };
+		C3DA120B1D9D45C700758BAC /* DLScrollTabbarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLScrollTabbarView.m; sourceTree = "<group>"; };
+		C3DA120C1D9D45C700758BAC /* DLSlideTabbarProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLSlideTabbarProtocol.h; sourceTree = "<group>"; };
+		C3DA120D1D9D45C700758BAC /* DLTabedSlideView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLTabedSlideView.h; sourceTree = "<group>"; };
+		C3DA120E1D9D45C700758BAC /* DLTabedSlideView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLTabedSlideView.m; sourceTree = "<group>"; };
+		C3DA120F1D9D45C700758BAC /* DLUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLUtility.h; sourceTree = "<group>"; };
+		C3DA12101D9D45C700758BAC /* DLUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLUtility.m; sourceTree = "<group>"; };
+		C3DA121A1D9D488900758BAC /* ZWUserCommentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWUserCommentsViewController.h; sourceTree = "<group>"; };
+		C3DA121B1D9D488900758BAC /* ZWUserCommentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWUserCommentsViewController.m; sourceTree = "<group>"; };
+		C3DA12241D9D5DA400758BAC /* ZWReceivedCommentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWReceivedCommentsViewController.h; sourceTree = "<group>"; };
+		C3DA12251D9D5DA400758BAC /* ZWReceivedCommentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWReceivedCommentsViewController.m; sourceTree = "<group>"; };
+		C3DA12271D9D5DCE00758BAC /* ZWSendedCommentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWSendedCommentsViewController.h; sourceTree = "<group>"; };
+		C3DA12281D9D5DCE00758BAC /* ZWSendedCommentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWSendedCommentsViewController.m; sourceTree = "<group>"; };
+		C3DA122C1D9D5F1E00758BAC /* ZWBaseCommentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWBaseCommentsViewController.h; sourceTree = "<group>"; };
+		C3DA122D1D9D5F1E00758BAC /* ZWBaseCommentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWBaseCommentsViewController.m; sourceTree = "<group>"; };
+		C3DA12301D9D667B00758BAC /* ZWRSCommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWRSCommentCell.h; sourceTree = "<group>"; };
+		C3DA12311D9D667B00758BAC /* ZWRSCommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWRSCommentCell.m; sourceTree = "<group>"; };
 		C3DC4D831D33C3BD0081DB0A /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		C3DC4D851D33CC550081DB0A /* UIViewController+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Extension.h"; sourceTree = "<group>"; };
 		C3DC4D861D33CC550081DB0A /* UIViewController+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Extension.m"; sourceTree = "<group>"; };
@@ -676,13 +717,13 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		C3019E7C1D965B0500CC2F55 /* New Group */ = {
+		C3019E7C1D965B0500CC2F55 /* ZWCommentCell */ = {
 			isa = PBXGroup;
 			children = (
 				C3019E7D1D965B2800CC2F55 /* ZWCommentCell.h */,
 				C3019E7E1D965B2800CC2F55 /* ZWCommentCell.m */,
 			);
-			name = "New Group";
+			name = ZWCommentCell;
 			sourceTree = "<group>";
 		};
 		C3019E831D96E09C00CC2F55 /* Settings */ = {
@@ -698,13 +739,6 @@
 			children = (
 				C3019E851D96E0C700CC2F55 /* ZWSettingsViewController.h */,
 				C3019E861D96E0C700CC2F55 /* ZWSettingsViewController.m */,
-			);
-			name = "New Group";
-			sourceTree = "<group>";
-		};
-		C3019E881D97FB5E00CC2F55 /* New Group */ = {
-			isa = PBXGroup;
-			children = (
 			);
 			name = "New Group";
 			sourceTree = "<group>";
@@ -1416,6 +1450,15 @@
 			name = ZWModifyNicknameViewController;
 			sourceTree = "<group>";
 		};
+		C33B6D3B1D9D68B200710D75 /* ZWReplytPaddingLabel */ = {
+			isa = PBXGroup;
+			children = (
+				C33B6D3C1D9D68DC00710D75 /* ZWReplytPaddingLabel.h */,
+				C33B6D3D1D9D68DC00710D75 /* ZWReplytPaddingLabel.m */,
+			);
+			name = ZWReplytPaddingLabel;
+			sourceTree = "<group>";
+		};
 		C34778211CB263E700D26FA8 /* FileModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -1893,7 +1936,8 @@
 		C3792AD11D6F39230079FCF5 /* TableViewCell */ = {
 			isa = PBXGroup;
 			children = (
-				C3019E7C1D965B0500CC2F55 /* New Group */,
+				C3DA122F1D9D662100758BAC /* ZWRSCommentCell */,
+				C3019E7C1D965B0500CC2F55 /* ZWCommentCell */,
 				C35771151D8541CE00E9B166 /* ZWFolderCell */,
 				C357710E1D85418600E9B166 /* ZWFileCell */,
 				C35771021D842C1A00E9B166 /* ZWAcademyCell */,
@@ -1918,6 +1962,8 @@
 		C3792AD31D6F395F0079FCF5 /* Custom */ = {
 			isa = PBXGroup;
 			children = (
+				C33B6D3B1D9D68B200710D75 /* ZWReplytPaddingLabel */,
+				C3DA11FE1D9D45C700758BAC /* DLSlideView */,
 				C32666411D953115008C6B24 /* PhotoSelector */,
 				C31FE3D91D8A85F200732B02 /* WBEmoticonInputView */,
 				C3F162A11D4E3635006397B1 /* YYFPSLabel */,
@@ -2190,7 +2236,7 @@
 			children = (
 				C3019E831D96E09C00CC2F55 /* Settings */,
 				C3C8C13A1D92CDCD00771C61 /* Common */,
-				C3C8C1391D92CD8100771C61 /* AboutFeed */,
+				C3C8C1391D92CD8100771C61 /* Feed */,
 				C3C8C1381D92CD6B00771C61 /* User */,
 				C3C8C1371D92CD4200771C61 /* FileAndFolder */,
 				C3C8C1361D92CD3400771C61 /* CountDown */,
@@ -2320,6 +2366,10 @@
 		C3C8C1381D92CD6B00771C61 /* User */ = {
 			isa = PBXGroup;
 			children = (
+				C3DA122B1D9D5EDF00758BAC /* ZWBaseCommentsViewController */,
+				C3DA122A1D9D5DD500758BAC /* ZWSendedCommentsViewController */,
+				C3DA12231D9D5D7800758BAC /* ZWReceivedCommentsViewController */,
+				C3DA12181D9D483000758BAC /* ZWUserCommentsViewController */,
 				C35B67481D995E8300303D62 /* ZWUserDetailViewController */,
 				C3C8C1301D92CC6E00771C61 /* Modifier */,
 				C32EC91C1D8C36C2007FF94B /* ZWUserInfoViewController */,
@@ -2328,16 +2378,15 @@
 			name = User;
 			sourceTree = "<group>";
 		};
-		C3C8C1391D92CD8100771C61 /* AboutFeed */ = {
+		C3C8C1391D92CD8100771C61 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
-				C3019E881D97FB5E00CC2F55 /* New Group */,
 				C3FC44AA1D7DBA3C00896CDB /* ZWFeedComposeViewController */,
 				C3827B941D72DD8A002F6E5B /* ZWFeedDetailViewController */,
 				C37C03931D3F8C1900B22868 /* ZWStudentCircleViewController */,
 				C3792ACC1D6DE9F30079FCF5 /* ZWFeedTableViewController */,
 			);
-			name = AboutFeed;
+			name = Feed;
 			sourceTree = "<group>";
 		};
 		C3C8C13A1D92CDCD00771C61 /* Common */ = {
@@ -2346,6 +2395,90 @@
 				C37C03881D3E2C4000B22868 /* ZWPopViewController */,
 			);
 			name = Common;
+			sourceTree = "<group>";
+		};
+		C3DA11FE1D9D45C700758BAC /* DLSlideView */ = {
+			isa = PBXGroup;
+			children = (
+				C3DA11FF1D9D45C700758BAC /* DLCache */,
+				C3DA12031D9D45C700758BAC /* DLCustomSlideView.h */,
+				C3DA12041D9D45C700758BAC /* DLCustomSlideView.m */,
+				C3DA12051D9D45C700758BAC /* DLSlideView.h */,
+				C3DA12061D9D45C700758BAC /* DLSlideView.m */,
+				C3DA12071D9D45C700758BAC /* DLTabbarView */,
+				C3DA120D1D9D45C700758BAC /* DLTabedSlideView.h */,
+				C3DA120E1D9D45C700758BAC /* DLTabedSlideView.m */,
+				C3DA120F1D9D45C700758BAC /* DLUtility.h */,
+				C3DA12101D9D45C700758BAC /* DLUtility.m */,
+			);
+			path = DLSlideView;
+			sourceTree = "<group>";
+		};
+		C3DA11FF1D9D45C700758BAC /* DLCache */ = {
+			isa = PBXGroup;
+			children = (
+				C3DA12001D9D45C700758BAC /* DLCacheProtocol.h */,
+				C3DA12011D9D45C700758BAC /* DLLRUCache.h */,
+				C3DA12021D9D45C700758BAC /* DLLRUCache.m */,
+			);
+			path = DLCache;
+			sourceTree = "<group>";
+		};
+		C3DA12071D9D45C700758BAC /* DLTabbarView */ = {
+			isa = PBXGroup;
+			children = (
+				C3DA12081D9D45C700758BAC /* DLFixedTabbarView.h */,
+				C3DA12091D9D45C700758BAC /* DLFixedTabbarView.m */,
+				C3DA120A1D9D45C700758BAC /* DLScrollTabbarView.h */,
+				C3DA120B1D9D45C700758BAC /* DLScrollTabbarView.m */,
+				C3DA120C1D9D45C700758BAC /* DLSlideTabbarProtocol.h */,
+			);
+			path = DLTabbarView;
+			sourceTree = "<group>";
+		};
+		C3DA12181D9D483000758BAC /* ZWUserCommentsViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C3DA121A1D9D488900758BAC /* ZWUserCommentsViewController.h */,
+				C3DA121B1D9D488900758BAC /* ZWUserCommentsViewController.m */,
+			);
+			name = ZWUserCommentsViewController;
+			sourceTree = "<group>";
+		};
+		C3DA12231D9D5D7800758BAC /* ZWReceivedCommentsViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C3DA12241D9D5DA400758BAC /* ZWReceivedCommentsViewController.h */,
+				C3DA12251D9D5DA400758BAC /* ZWReceivedCommentsViewController.m */,
+			);
+			name = ZWReceivedCommentsViewController;
+			sourceTree = "<group>";
+		};
+		C3DA122A1D9D5DD500758BAC /* ZWSendedCommentsViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C3DA12271D9D5DCE00758BAC /* ZWSendedCommentsViewController.h */,
+				C3DA12281D9D5DCE00758BAC /* ZWSendedCommentsViewController.m */,
+			);
+			name = ZWSendedCommentsViewController;
+			sourceTree = "<group>";
+		};
+		C3DA122B1D9D5EDF00758BAC /* ZWBaseCommentsViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C3DA122C1D9D5F1E00758BAC /* ZWBaseCommentsViewController.h */,
+				C3DA122D1D9D5F1E00758BAC /* ZWBaseCommentsViewController.m */,
+			);
+			name = ZWBaseCommentsViewController;
+			sourceTree = "<group>";
+		};
+		C3DA122F1D9D662100758BAC /* ZWRSCommentCell */ = {
+			isa = PBXGroup;
+			children = (
+				C3DA12301D9D667B00758BAC /* ZWRSCommentCell.h */,
+				C3DA12311D9D667B00758BAC /* ZWRSCommentCell.m */,
+			);
+			name = ZWRSCommentCell;
 			sourceTree = "<group>";
 		};
 		C3E58AC51D54DFD300FDB384 /* ZWBindAccountViewController */ = {
@@ -2517,7 +2650,7 @@
 			attributes = {
 				CLASSPREFIX = ZW;
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0720;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = Administrator;
 				TargetAttributes = {
 					C3C44DE81BC687B0004B30BF = {
@@ -2675,11 +2808,13 @@
 				C38EACA91CB535C600EA6448 /* ZWOldFolderCell.m in Sources */,
 				C326666C1D9534DE008C6B24 /* UMComButton.m in Sources */,
 				C337B9C51D7334AF0060BDD6 /* ZWAPIRequestTool.m in Sources */,
+				C3DA12321D9D667B00758BAC /* ZWRSCommentCell.m in Sources */,
 				C32EC93C1D8D2A34007FF94B /* ZWModifyNicknameViewController.m in Sources */,
 				C3FC44AD1D7DBA8100896CDB /* ZWFeedComposeViewController.m in Sources */,
 				C347782D1CB263E700D26FA8 /* ZWOldFile.m in Sources */,
 				C3827B971D72DDBB002F6E5B /* ZWFeedDetailViewController.m in Sources */,
 				C32666B81D9560C1008C6B24 /* UMComActionDeleteView.m in Sources */,
+				C3DA122E1D9D5F1E00758BAC /* ZWBaseCommentsViewController.m in Sources */,
 				C3493C1B1D8D8E6E007C7144 /* ZWModifiAcademyViewController.m in Sources */,
 				C3162CBE1D7C54D300153EB9 /* ZWUserManager.m in Sources */,
 				C31FE3C81D8A712200732B02 /* UIView+Extension.m in Sources */,
@@ -2710,6 +2845,7 @@
 				C3FC44B51D82EB2500896CDB /* ZWSingleTypeSearchViewController.m in Sources */,
 				C3561A231D37743F0032C97B /* ZWRegisterViewCotroller.m in Sources */,
 				C3A14CA41D37D0FD0088E754 /* ZWSelectSchoolViewController.m in Sources */,
+				C3DA12261D9D5DA400758BAC /* ZWReceivedCommentsViewController.m in Sources */,
 				C31FE3D41D8A832000732B02 /* WBModel.m in Sources */,
 				C3792AC81D6C887A0079FCF5 /* ZWAPITool.m in Sources */,
 				C37C03921D3F716200B22868 /* CALayer+Extension.m in Sources */,
@@ -2717,14 +2853,18 @@
 				C3FF26291CA760070081FF58 /* ZWDownloadCenter.m in Sources */,
 				C3DC4D871D33CC550081DB0A /* UIViewController+Extension.m in Sources */,
 				C3E58AC81D54DFE600FDB384 /* ZWBindAccountViewController.m in Sources */,
+				C3DA12121D9D45C700758BAC /* DLCustomSlideView.m in Sources */,
 				C3C44DF11BC687B0004B30BF /* AppDelegate.m in Sources */,
+				C3DA12171D9D45C700758BAC /* DLUtility.m in Sources */,
 				C39804091D9177C2006D1471 /* ZWDataBaseTool.m in Sources */,
 				C3F78BEA1D537EB800E9C2AB /* ZWBasicViewController.m in Sources */,
+				C3DA12161D9D45C700758BAC /* DLTabedSlideView.m in Sources */,
 				C3C44E461BC6BBEF004B30BF /* ZWRootPathViewController.m in Sources */,
 				C31BB10C1CB7EDC000EE1E37 /* ZWAppCache.m in Sources */,
 				C3C44DEE1BC687B0004B30BF /* main.m in Sources */,
 				C35771081D843E5700E9B166 /* ZWCourseViewController.m in Sources */,
 				C37C038F1D3E77FF00B22868 /* ZWDiscoveryViewController.m in Sources */,
+				C33B6D3E1D9D68DC00710D75 /* ZWReplytPaddingLabel.m in Sources */,
 				C33D397C1C17264A00A582DF /* ZWBrowserViewController.m in Sources */,
 				C331EB541C9C5B6400C89925 /* NSString+Extension.m in Sources */,
 				C326665F1D9533C4008C6B24 /* UMComResouceDefines.m in Sources */,
@@ -2738,7 +2878,9 @@
 				C35B674C1D995F5800303D62 /* ZWUserDetailViewController.m in Sources */,
 				C32666B91D9560C1008C6B24 /* UMComActionPickerAddView.m in Sources */,
 				C3243E291D547A5A00FF97C3 /* ZWRegisterView.m in Sources */,
+				C3DA12141D9D45C700758BAC /* DLFixedTabbarView.m in Sources */,
 				C31FE3D81D8A83CD00732B02 /* WBTextLinePositionModifier.m in Sources */,
+				C3DA12291D9D5DCE00758BAC /* ZWSendedCommentsViewController.m in Sources */,
 				C3BE99EE1BCBE6C8000102A1 /* ZWDownloadInfoModel.m in Sources */,
 				C3162C9F1D7B229200153EB9 /* ZWLoginViewModel.m in Sources */,
 				C3EDA9181D830CA0009FF851 /* ZWFile.m in Sources */,
@@ -2751,10 +2893,12 @@
 				C37C03961D3F8C6000B22868 /* ZWStudentCircleViewController.m in Sources */,
 				C33B1D491CC53F0B008FA6E6 /* ZWDocumentCell.m in Sources */,
 				C35771051D842C4600E9B166 /* ZWCourseCell.m in Sources */,
+				C3DA12131D9D45C700758BAC /* DLSlideView.m in Sources */,
 				C31FE3DC1D8A85FA00732B02 /* WBEmoticonInputView.m in Sources */,
 				C35AA0B81C88500800D17A99 /* ZWAboutUsViewController.m in Sources */,
 				C35FD9C41D707E640066DE68 /* SDBrowserImageView.m in Sources */,
 				C3FC44B11D8154F100896CDB /* ZWBaseSearchViewController.m in Sources */,
+				C3DA12111D9D45C700758BAC /* DLLRUCache.m in Sources */,
 				C32666531D953125008C6B24 /* UMAssetsCollectionCheckMarkView.m in Sources */,
 				C3FC44B91D82EECA00896CDB /* ZWFileAndFolderViewController.m in Sources */,
 				C33140B81CEE0B6200387667 /* ZWCountDownViewController.m in Sources */,
@@ -2765,6 +2909,8 @@
 				C3F162A41D4E3658006397B1 /* YYFPSLabel.m in Sources */,
 				C37C038B1D3E2CBB00B22868 /* ZWPopViewController.m in Sources */,
 				C347782E1CB263E700D26FA8 /* ZWOldFolder.m in Sources */,
+				C3DA12151D9D45C700758BAC /* DLScrollTabbarView.m in Sources */,
+				C3DA121C1D9D488900758BAC /* ZWUserCommentsViewController.m in Sources */,
 				C3F854241D7709E800E51013 /* ZWBindAccountViewModel.m in Sources */,
 				C32666BA1D9560C1008C6B24 /* UMComAddedImageCellView.m in Sources */,
 				C35771191D8576A600E9B166 /* ZWFileDetailViewController.m in Sources */,
@@ -2829,6 +2975,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -2838,8 +2985,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -2879,6 +3028,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -2888,8 +3038,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
@@ -2922,6 +3074,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E42867274648E046FAFE969D /* Pods-Qimokaola.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -2930,7 +3083,6 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = NO;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2970,6 +3122,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 315CB58BA519F28C9D384FD5 /* Pods-Qimokaola.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -2978,7 +3131,6 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = NO;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
