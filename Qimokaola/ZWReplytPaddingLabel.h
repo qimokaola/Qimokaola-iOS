@@ -10,6 +10,7 @@
 
 #import <UMComDataStorage/UMComComment.h>
 #import <UMComDataStorage/UMComUser.h>
+#import <UMComDataStorage/UMComFeed.h>
 #import <SDAutoLayout/SDAutoLayout.h>
 
 #import <YYKit/YYKit.h>
@@ -18,10 +19,14 @@
 
 
 /**
- 回复的评论
+ 可选的回复的评论 当不知道replyComment是否有值时可直接赋值于此值，在setter方法里判断
+ */
+@property (nonatomic, strong) UMComComment *optionalReplyComment;
+
+/**
+ 明确replyComment有值时赋值
  */
 @property (nonatomic, strong) UMComComment *replyComment;
-
 
 /**
  回复的feed

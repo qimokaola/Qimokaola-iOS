@@ -7,6 +7,7 @@
 //
 
 #import "ZWReceivedCommentsViewController.h"
+#import "ZWHUDTool.h"
 
 @interface ZWReceivedCommentsViewController ()
 
@@ -32,9 +33,17 @@
 #pragma mark - Override Methods
 
 - (void)fetchCommentsData {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.tableView.mj_header endRefreshing];
-    });
+    __weak __typeof(self) weakSelf = self;
+    [[UMComDataRequestManager defaultManager] fetchCommentsUserReceivedWithCount:5
+                                                                      completion:^(NSDictionary *responseObject, NSError *error) {
+                                                                          [weakSelf.tableView.mj_header endRefreshing];
+                                                                          if (responseObject) {
+                                                                              [weakSelf.comments addObjectsFromArray:responseObject[@"data"]];
+                                                                              [weakSelf.tableView reloadData];
+                                                                          } else {
+                                                                              [ZWHUDTool showHUDInView:weakSelf.navigationController.view withTitle:@"获取数据失败" message:nil duration:kShowHUDShort];
+                                                                          }
+                                                                      }];
 }
 
 #pragma mark - Table view data source
@@ -44,16 +53,21 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 100;
+    return self.comments.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"celliden"];
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"celliden"];
-    }
-    cell.textLabel.text = @"已接受";
+    ZWRSCommentCell *cell = [tableView dequeueReusableCellWithIdentifier:RSCommentCellIdentifier];
+    cell.comment = self.comments[indexPath.row];
+    cell.rsCommentType = ZWRSCommentTypeReceived;
     return cell;
+}
+
+#pragma mark - UITableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    id model = self.comments[indexPath.row];
+    return [tableView cellHeightForIndexPath:indexPath model:model keyPath:@"comment" cellClass:[ZWRSCommentCell class] contentViewWidth:kScreenW];
 }
 
 /*

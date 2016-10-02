@@ -62,7 +62,7 @@
     //1.3.0版本开始简化初始化过程。如不需要交互式的通知，下面用下面一句话注册通知即可。
     [UMessage registerForRemoteNotifications];
     [UMessage setLogEnabled:YES];
-    
+
     // 初始化友盟微社区SDK
     [UMCommunitySDK setAppkey:@"57b447c6e0f55af52e000e0b" withAppSecret:@"6133327b2d31ba894071c89b186284ac"];
     

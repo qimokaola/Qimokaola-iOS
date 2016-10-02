@@ -17,9 +17,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.tableView.frame = self.view.bounds;
-    MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(fetchCommentsData)];
-    self.tableView.mj_header = header;
+    self.view.backgroundColor = defaultBackgroundColor;
+    
+    self.comments = [NSMutableArray array];
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self.tableView.mj_header beginRefreshing];
@@ -29,6 +29,25 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Lazy Loading
+
+- (UITableView *)tableView {
+    if (_tableView == nil) {
+        _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+        _tableView.backgroundColor = [UIColor whiteColor];
+        _tableView.delegate = self;
+        _tableView.dataSource = self;
+        _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+        [_tableView registerClass:[ZWRSCommentCell class] forCellReuseIdentifier:RSCommentCellIdentifier];
+        
+        MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(fetchCommentsData)];
+        _tableView.mj_header = header;
+        
+        [self.view addSubview:_tableView];
+    }
+    return _tableView;
 }
 
 #pragma mark - Common Methods

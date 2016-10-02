@@ -384,7 +384,6 @@
     _nameLabel = [[UILabel alloc] init];
     _nameLabel.font = [UIFont systemFontOfSize:midFontSize];
     _nameLabel.numberOfLines = 1;
-    _nameLabel.userInteractionEnabled = YES;
     
     _genderView = [[UIImageView alloc] init];
     
@@ -537,10 +536,11 @@
     __weak __typeof(self) weakSelf = self;
     NSString *anonyousString = [NSString stringWithFormat:@"{\"a\" : %d}", _anonymousButton.selected ? 1 : 0];
     MBProgressHUD * hud = [ZWHUDTool excutingHudInView:self.navigationController.view title:@"正在发送"];
+    NSLog(@"%@ %@", _commentToCommentWith.commentID, _commentToCommentWith.creator.uid);
     [[UMComDataRequestManager defaultManager] commentFeedWithFeedID:_feed.feedID
                                                      commentContent:_commentTextView.text
                                                      replyCommentID:_commentToCommentWith.commentID
-                                                        replyUserID:nil
+                                                        replyUserID:_commentToCommentWith ? _commentToCommentWith.creator.uid : _feed.creator.uid
                                                commentCustomContent:anonyousString
                                                              images:nil
                                                          completion:^(NSDictionary *responseObject, NSError *error) {

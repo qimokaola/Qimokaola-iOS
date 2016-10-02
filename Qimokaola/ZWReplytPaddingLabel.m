@@ -45,26 +45,63 @@
     [self setupAutoHeightWithBottomView:_contentLabel bottomMargin:margin];
 }
 
-- (void)setReplyComment:(UMComComment *)replyComment {
-    _replyComment = replyComment;
-    if (_replyComment) {
-        self.hidden = NO;
-        NSString *replyContent = nil;
-        if (_replyComment.content.length > 0) {
-            NSString *creator = [[[_replyComment.custom jsonValueDecoded] objectForKey:@"a"] intValue] == 0 ? _replyComment.creator.name : kStudentCircleAnonyousName;
-            replyContent = [NSString stringWithFormat:@"回复@%@的评论：%@", creator, _replyComment.content];
-        } else {
-            replyContent = @"该评论已被删除";
-        }
-        _contentLabel.text = replyContent;
+
+/**
+ 此方法主要用在feed详情的评论列表里，因其不确定是否有评论
+
+ @param optionalReplyComment 可选的replyComment
+ */
+- (void)setOptionalReplyComment:(UMComComment *)optionalReplyComment {
+    _optionalReplyComment = optionalReplyComment;
+    // 若可选的replyComment有值 则直接赋值给replyComment
+    if (_optionalReplyComment) {
+        self.replyComment = _optionalReplyComment;
     } else {
         self.hidden = YES;
         _contentLabel.text = nil;
     }
 }
 
+
+/**
+ 此方法用在收到或者发出的评论里，因为若赋值则表明一定有值
+
+ @param replyComment replyComment
+ */
+- (void)setReplyComment:(UMComComment *)replyComment {
+    _replyComment = replyComment;
+    
+    self.hidden = NO;
+    NSString *replyContent = nil;
+    if (_replyComment.content.length > 0) {
+        NSString *creator = [[[_replyComment.custom jsonValueDecoded] objectForKey:@"a"] intValue] == 0 ? _replyComment.creator.name : kStudentCircleAnonyousName;
+        replyContent = [NSString stringWithFormat:@"回复@%@的评论：%@", creator, _replyComment.content];
+    } else {
+        replyContent = @"该评论已被删除";
+    }
+    _contentLabel.text = replyContent;
+}
+
+/**
+ 此方法用在收到或者发出的评论里，因为若赋值则表明一定有值
+
+ @param replyFeed
+ */
 - (void)setReplyFeed:(UMComFeed *)replyFeed {
     _replyFeed = replyFeed;
+    
+    self.hidden = NO;
+//    NSString *feedContent = nil;
+//    if (_replyComment.content.length > 0) {
+//        NSString *creator = [[[_replyComment.custom jsonValueDecoded] objectForKey:@"a"] intValue] == 0 ? _replyComment.creator.name : kStudentCircleAnonyousName;
+//        feedContent = [NSString stringWithFormat:@"回复@%@的评论：%@", creator, _replyComment.content];
+//    } else {
+//        feedContent = @"该评论已被删除";
+//    }
+    
+    NSString *creator = [[[_replyFeed.custom jsonValueDecoded] objectForKey:@"a"] intValue] == 0 ? _replyFeed.creator.name : kStudentCircleAnonyousName;
+    NSString *feedContent = [NSString stringWithFormat:@"回复@%@的主题：%@", creator, _replyFeed.text];
+    _contentLabel.text = feedContent;
 }
 
 /*

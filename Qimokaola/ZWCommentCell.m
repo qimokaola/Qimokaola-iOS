@@ -74,7 +74,6 @@
     _nameLabel = [[UILabel alloc] init];
     _nameLabel.font = [UIFont systemFontOfSize:midFontSize];
     _nameLabel.numberOfLines = 1;
-    _nameLabel.userInteractionEnabled = YES;
     
     _timeLabel = [[UILabel alloc] init];
     _timeLabel.font = [UIFont systemFontOfSize:smallFontSize];
@@ -166,7 +165,7 @@
     _timeLabel.text = createTimeString(_comment.create_time);
     _contentLabel.text = _comment.content;
     
-    _replyLabel.replyComment = _comment.reply_comment;
+    _replyLabel.optionalReplyComment = _comment.reply_comment;
     
     UIView *bottomView = nil;
     if (_comment.reply_comment) {

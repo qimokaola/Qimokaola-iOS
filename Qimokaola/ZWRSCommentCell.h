@@ -20,6 +20,9 @@
 
 @protocol ZWRSCommentCellDelegate <NSObject>
 
+
+@required
+
 /**
  点击用户的代理方法
 
@@ -29,13 +32,22 @@
 - (void)cell:(ZWRSCommentCell *)cell didClickToUser:(UMComUser *)user;
 
 /**
- 点击原评论或者feed的代理方法
+ 点击原评论的代理方法
 
  @param cell    评论视图
- @param comment 原评论或原feed
+ @param comment 原评论
  */
 - (void)cell:(ZWRSCommentCell *)cell didClickReplyComment:(UMComComment *)comment;
 
+/**
+ 点击原feed的代理方法
+
+ @param cell 评论视图
+ @param feed 原feed
+ */
+- (void)cell:(ZWRSCommentCell *)cell didClickReplyFeed:(UMComFeed *)feed;
+
+@optional
 
 /**
  点击回复的代理方法

@@ -54,7 +54,6 @@
     _nameLabel = [[UILabel alloc] init];
     _nameLabel.font = [UIFont systemFontOfSize:midFontSize];
     _nameLabel.numberOfLines = 1;
-    _nameLabel.userInteractionEnabled = YES;
     
     _timeLabel = [[UILabel alloc] init];
     _timeLabel.font = [UIFont systemFontOfSize:smallFontSize];
@@ -69,6 +68,7 @@
     _contentLabel.font = [UIFont systemFontOfSize:contentLabelFontSize];
     
     _replyLabel = [[ZWReplytPaddingLabel alloc] init];
+    [_replyLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickReplyLabel)]];
     
     _commentButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_commentButton setImage:[UIImage imageNamed:@"icon_comment"] forState:UIControlStateNormal];
@@ -125,7 +125,6 @@
 
 - (void)setComment:(UMComComment *)comment {
     _comment = comment;
-    
     // 自定义字段 0为不匿名 1为匿名
     if ([[[_comment.custom jsonValueDecoded] objectForKey:@"a"] intValue] == 0) {
         [_avatarView setImageWithURL:[NSURL URLWithString:_comment.creator.icon_url.small_url_string] placeholder:[UIImage imageNamed:@"avatar"]];
@@ -140,11 +139,17 @@
     _timeLabel.text = createTimeString(_comment.create_time);
     _contentLabel.text = _comment.content;
 
+    NSLog(@"%@", _comment);
     if (_comment.reply_comment) {
         _replyLabel.replyComment = _comment.reply_comment;
     } else if (_comment.feed) {
         _replyLabel.replyFeed = _comment.feed;
     }
+}
+
+- (void)setRsCommentType:(ZWRSCommentType)rsCommentType {
+    _rsCommentType = rsCommentType;
+    _commentButton.hidden = _rsCommentType != ZWRSCommentTypeReceived;
 }
 
 - (void)clickCommentButton {
@@ -155,6 +160,9 @@
     
 }
 
+- (void)clickReplyLabel {
+    
+}
 
 - (void)awakeFromNib {
     [super awakeFromNib];

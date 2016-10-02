@@ -7,6 +7,7 @@
 //
 
 #import "ZWSendedCommentsViewController.h"
+#import "ZWHUDTool.h"
 
 @interface ZWSendedCommentsViewController ()
 
@@ -32,9 +33,7 @@
 #pragma mark - Override Methods
 
 - (void)fetchCommentsData {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.tableView.mj_header endRefreshing];
-    });
+    
 }
 
 #pragma mark - Table view data source
@@ -44,7 +43,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 100;
+    return self.comments.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

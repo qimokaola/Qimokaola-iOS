@@ -50,11 +50,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)dealloc
-{
-    NSLog(@"user comment dealloc");
-}
-
 #pragma mark - Lazy Loading
 
 - (NSArray *)items {

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ZWRSCommentCell.h"
 
 #import <MJRefresh/MJRefresh.h>
 #import <UMComDataStorage/UMComComment.h>
@@ -15,7 +16,16 @@
 #import <UMComDataStorage/UMComUser.h>
 #import <UMComDataStorage/UMComFeed.h>
 
-@interface ZWBaseCommentsViewController : UITableViewController
+static NSString *RSCommentCellIdentifier = @"RSCommentCellIdentifier";
+
+@interface ZWBaseCommentsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+
+@property (nonatomic, strong) UITableView *tableView;
+
+/**
+ 评论数组
+ */
+@property (nonatomic, strong) NSMutableArray *comments;
 
 - (void)fetchCommentsData;
 
