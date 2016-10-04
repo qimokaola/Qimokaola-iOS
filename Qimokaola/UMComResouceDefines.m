@@ -187,18 +187,18 @@ NSString *countString(NSNumber *count)
         }else if (displayCount < 100000){
             NSInteger secondNum = (displayCount - 10000 *highestNum)/1000;
             if (secondNum == 0) {
-                countString = [NSString stringWithFormat:@"%ldW",highestNum];
+                countString = [NSString stringWithFormat:@"%ldW",(long)highestNum];
             }else{
-                countString = [NSString stringWithFormat:@"%ld.%ldW",highestNum,secondNum];
+                countString = [NSString stringWithFormat:@"%ld.%ldW",(long)highestNum,secondNum];
             }
         }else if (displayCount < 100000000){
-            countString = [NSString stringWithFormat:@"%ldW",highestNum];
+            countString = [NSString stringWithFormat:@"%ldW",(long)highestNum];
         }else{
             countString = [NSString stringWithFormat:@"9999W"];
         }
     }
     else if (displayCount > 0){
-        countString = [NSString stringWithFormat:@"%ld",displayCount];
+        countString = [NSString stringWithFormat:@"%ld",(long)displayCount];
     }
     else{
         countString = @"0";
@@ -214,12 +214,12 @@ extern NSString *distanceString(NSNumber *distance)
         NSInteger highestNum = displayCount/1000;
        if (displayCount < 10000){
             NSInteger secondNum = (displayCount - 1000 *highestNum)/100;
-            countString = [NSString stringWithFormat:@"%ld.%ldkm",highestNum,secondNum];
+            countString = [NSString stringWithFormat:@"%ld.%ldkm",(long)highestNum,secondNum];
         }else{
             countString = [NSString stringWithFormat:@"10km+"];
         }
     }else{
-        countString = [NSString stringWithFormat:@"%ldm",displayCount];
+        countString = [NSString stringWithFormat:@"%ldm",(long)displayCount];
     }
     return countString;
 }

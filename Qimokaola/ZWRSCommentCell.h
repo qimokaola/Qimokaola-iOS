@@ -64,7 +64,7 @@
  */
 typedef NS_ENUM(NSUInteger, ZWRSCommentType) {
     ZWRSCommentTypeReceived = 0, // 收到的评论
-    ZWRSCommentTypeSended // 发出的评论
+    ZWRSCommentTypeSent // 发出的评论
 };
 
 /**
@@ -74,7 +74,9 @@ typedef NS_ENUM(NSUInteger, ZWRSCommentType) {
 
 @property (nonatomic, strong) UMComComment *comment;
 
-@property (nonatomic, assign) ZWRSCommentType rsCommentType;
+@property (nonatomic, strong) ZWReplytPaddingLabel *replyLabel;
+
+@property (nonatomic, strong) UIButton *commentButton;
 
 @property (nonatomic, weak) id<ZWRSCommentCellDelegate> delegate;
 

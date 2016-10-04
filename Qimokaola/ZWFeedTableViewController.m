@@ -32,7 +32,6 @@
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray<UMComFeed *> *feeds;
-@property (nonatomic, strong) NSMutableArray *userLikes;
 
 @end
 
@@ -62,15 +61,16 @@
     self.navigationItem.backBarButtonItem = backButtonItem;
     
     self.feeds = [NSMutableArray array];
-    self.userLikes = [NSMutableArray array];
     
     if (_feedType == ZWFeedTableViewTypeAboutTopic) {
         self.title = self.topic.name;
         UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"toolbar_compose_highlighted"] style:UIBarButtonItemStylePlain target:self action:@selector(presendNewFeedViewController)];
         rightItem.tintColor = UIColorHex(fd8224);
         self.navigationItem.rightBarButtonItem = rightItem;
-    } else {
-        self.title = self.user.name;
+    } else if (_feedType == ZWFeedTableViewTypeAboutUser) {
+        self.title = @"动态";
+    } else if (_feedType == ZWFeedTableViewTypeAboutCollection) {
+        self.title = @"收藏";
     }
 
     _tableView = [[UITableView alloc] init];
@@ -100,6 +100,11 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)dealloc
+{
+    NSLog(@"dealloc table list");
+}
+
 #pragma mark - Normal Methods
 
 - (void)goToFeedDetail:(UMComFeed *)feed atIndexPath:(NSIndexPath *)indexPath isFromCommentButton:(BOOL)fromCommentButton {
@@ -107,67 +112,61 @@
     __weak __typeof(self) weakSelf = self;
     ZWFeedDetailViewController *detailViewController = [[ZWFeedDetailViewController alloc] init];
     detailViewController.feed = feed;
-    detailViewController.isLiked = [self.userLikes containsObject:feed.feedID];
-    detailViewController.isCollected = feed.has_collected.boolValue;
     detailViewController.isCommentTextViewNeedFocusWhenInit = fromCommentButton ? feed.comments_count.intValue == 0 : NO;
     detailViewController.deleteCompletion = ^() {
         [weakSelf removeFeed:feed];
     };
     // isLike 为最新点赞情况
     detailViewController.isLikedChangedCompletion = ^(BOOL isLiked) {
-        if (isLiked != [weakSelf.userLikes containsObject:feed.feedID]) {
-            // 处理前后点赞情况不一致的情况
-            int likeCount = [weakSelf.feeds objectAtIndex:indexPath.row].likes_count.intValue;
-            if (!isLiked) {
-                // 取消点赞了
-                likeCount --;
-                [weakSelf.userLikes removeObject:feed.feedID];
-            } else {
-                // 点赞了
-                likeCount ++;
-                [weakSelf.userLikes addObject:feed.feedID];
-            }
-            [weakSelf.feeds objectAtIndex:indexPath.row].likes_count = [NSNumber numberWithInt:likeCount];
-            [weakSelf.tableView reloadRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationNone];
+        if (isLiked != feed.liked.boolValue) {
+            feed.liked = @(isLiked);
+            int likeCount = feed.likes_count.intValue;
+            feed.likes_count = isLiked ? @(likeCount + 1) : @(likeCount -1);
+            [weakSelf.tableView reloadRow:[weakSelf.feeds indexOfObject:feed] inSection:0 withRowAnimation:UITableViewRowAnimationNone];
+        }
+    };
+    detailViewController.isCollectedChangedCompletion = ^(BOOL isCollected) {
+        if (isCollected != feed.has_collected.boolValue) {
+            feed.has_collected = @(isCollected);
+            [weakSelf.tableView reloadRow:[weakSelf.feeds indexOfObject:feed] inSection:0 withRowAnimation:UITableViewRowAnimationNone];
         }
     };
     detailViewController.commentCountChangedCompletion = ^(NSNumber *commentCount) {
         [weakSelf.feeds objectAtIndex:indexPath.row].comments_count = commentCount;
-        [weakSelf.tableView reloadRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationNone];
+        [weakSelf.tableView reloadRow:[weakSelf.feeds indexOfObject:feed] inSection:0 withRowAnimation:UITableViewRowAnimationNone];
     };
     [self.navigationController pushViewController:detailViewController animated:YES];
 }
 
 - (void)fetchFeedsData {
     __weak __typeof(self) weakSelf = self;
-    [[UMComDataRequestManager defaultManager] fetchLikesUserSendsWithCount:9999999 completion:^(NSDictionary *responseObject, NSError *error) {
-        // 重新获取用户点赞列表
-        if (responseObject) {
-            [weakSelf.userLikes removeAllObjects];
-            [weakSelf.userLikes addObjectsFromArray:[responseObject[@"data"] linq_select:^id(UMComLike *item) {
-                return item.feed.feedID;
-            }]];
-        }
-        if (weakSelf.feedType == ZWFeedTableViewTypeAboutTopic) {
-            //获取feed数据
-            [[UMComDataRequestManager defaultManager] fetchFeedsTopicRelatedWithTopicId:self.topic.topicID
-                                                                               sortType:UMComTopicFeedSortType_default
-                                                                              isReverse:NO
-                                                                                  count:99999
-                                                                             completion:^(NSDictionary *responseObject, NSError *error) {
-                                                                                 
-                                                                                 [weakSelf dealWithFetchFeedResult:responseObject error:error];
-                                                                             }];
-        } else {
-            // 获取有关于用户的feed流
-            [[UMComDataRequestManager defaultManager] fetchFeedsTimelineWithUid:weakSelf.user.uid
-                                                                       sortType:UMComUserTimeLineFeedType_Default
-                                                                          count:999999
-                                                                     completion:^(NSDictionary *responseObject, NSError *error) {
-                                                                         [weakSelf dealWithFetchFeedResult:responseObject error:error];
-                                                                     }];
-        }
-    }];
+    if (self.feedType == ZWFeedTableViewTypeAboutTopic) {
+        //获取feed数据
+        [[UMComDataRequestManager defaultManager] fetchFeedsTopicRelatedWithTopicId:self.topic.topicID
+                                                                           sortType:UMComTopicFeedSortType_default
+                                                                          isReverse:NO
+                                                                              count:99999
+                                                                         completion:^(NSDictionary *responseObject, NSError *error) {
+                                                                             
+                                                                             [weakSelf dealWithFetchFeedResult:responseObject error:error];
+                                                                         }];
+    } else if (self.feedType == ZWFeedTableViewTypeAboutUser) {
+        // 获取有关于用户的feed流
+        [[UMComDataRequestManager defaultManager] fetchFeedsTimelineWithUid:weakSelf.user.uid
+                                                                   sortType:UMComUserTimeLineFeedType_Default
+                                                                      count:999999
+                                                                 completion:^(NSDictionary *responseObject, NSError *error) {
+                                                                     [weakSelf dealWithFetchFeedResult:responseObject error:error];
+                                                                 }];
+        
+    } else if (self.feedType == ZWFeedTableViewTypeAboutCollection) {
+        // 获取有关于用户收藏的feed流
+        [[UMComDataRequestManager defaultManager] fetchFeedsUserFavouriteWithCount:99999
+                                                                        completion:^(NSDictionary *responseObject, NSError *error) {
+                                                                            [weakSelf dealWithFetchFeedResult:responseObject error:error];
+                                                                        }];
+    }
+
 }
 
 - (void)dealWithFetchFeedResult:(NSDictionary *)responseObject error:(NSError *)error {
@@ -205,7 +204,6 @@
     if (responseObject) {
         content = @"举报成功";
     } else {
-        NSLog(@"%@", error);
         if (error.code == 40002) {
             content = @"该用户或内容已被举报";
         } else {
@@ -235,7 +233,6 @@
     UMComFeed *feed = [self.feeds objectAtIndex:indexPath.row];
     cell.feed = feed;
     cell.indexPath = indexPath;
-    cell.isLiked = [self.userLikes containsObject:feed.feedID];
     cell.delegate = self;
     
     return cell;
@@ -266,18 +263,11 @@
                                                           isLike:!isLiked
                                                       completion:^(NSDictionary *responseObject, NSError *error) {
                                                           if (responseObject) {
-                                                              NSInteger index = [weakSelf.feeds indexOfObject:cell.feed];
-                                                              int likeCount = [weakSelf.feeds objectAtIndex:index].likes_count.intValue;
-                                                              if (isLiked) {
-                                                                  // 原本点赞现在取消，故要去除用户已点赞数组中相应的元素
-                                                                  likeCount --;
-                                                                  [weakSelf.userLikes removeObject:cell.feed.feedID];
-                                                              } else {
-                                                                  likeCount ++;
-                                                                  [weakSelf.userLikes addObject:cell.feed.feedID];
-                                                              }
-                                                              [weakSelf.feeds objectAtIndex:index].likes_count = [NSNumber numberWithInt:likeCount];
-                                                              [weakSelf.tableView reloadRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0] withRowAnimation:UITableViewRowAnimationNone];
+                                                              cell.feed.liked = @(!isLiked);
+                                                              int likeCount = cell.feed.likes_count.intValue;
+                                                              cell.feed.likes_count = !isLiked ? @(likeCount + 1) : @(likeCount - 1);
+                                                              [weakSelf.tableView reloadRow:[weakSelf.feeds indexOfObject:cell.feed] inSection:0 withRowAnimation:UITableViewRowAnimationNone];
+                                                              
                                                           } else {
                                                               [ZWHUDTool showHUDInView:weakSelf.navigationController.view withTitle:@"呀,出错了！" message:nil duration:kShowHUDMid];
                                                           }
@@ -285,9 +275,19 @@
     
 }
 
-// 分享
-- (void)cell:(ZWFeedCell *)cell didClickCollectButtonAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"collect the feed: %@", cell.feed.text);
+// 收藏
+- (void)cell:(ZWFeedCell *)cell didClickCollectButtonInCollectState:(BOOL)isCollected atIndexPath:(NSIndexPath *)indexPath {
+    __weak __typeof(self) weakSelf = self;
+    [[UMComDataRequestManager defaultManager] feedFavouriteWithFeedId:cell.feed.feedID
+                                                          isFavourite:!isCollected
+                                                      completionBlock:^(NSDictionary *responseObject, NSError *error) {
+                                                          if (!error) {
+                                                              cell.feed.has_collected = @(!isCollected);
+                                                              [weakSelf.tableView reloadRow:[weakSelf.feeds indexOfObject:cell.feed] inSection:0 withRowAnimation:UITableViewRowAnimationNone];
+                                                          } else {
+                                                              [ZWHUDTool showHUDInView:weakSelf.navigationController.view withTitle:@"呀,出错了！" message:nil duration:kShowHUDMid];
+                                                          }
+                                                      }];
 }
 
 // 评论

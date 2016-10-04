@@ -7,8 +7,7 @@
 //
 
 #import "ZWUserCommentsViewController.h"
-#import "ZWSendedCommentsViewController.h"
-#import "ZWReceivedCommentsViewController.h"
+#import "ZWRSCommentsViewController.h"
 
 #import "DLTabedSlideView.h"
 
@@ -52,13 +51,6 @@
 
 #pragma mark - Lazy Loading
 
-- (NSArray *)items {
-    if (_items == nil) {
-        _items = @[[ZWReceivedCommentsViewController class], [ZWSendedCommentsViewController class]];
-    }
-    return _items;
-}
-
 #pragma mark - Common Methods
 
 - (void)zw_addSubViews {
@@ -81,12 +73,12 @@
 #pragma mark - DLSlideViewDelegate
 
 - (NSInteger)numberOfTabsInDLTabedSlideView:(DLTabedSlideView *)sender {
-    return self.items.count;
+    return 2;
 }
 
 - (UIViewController *)DLTabedSlideView:(DLTabedSlideView *)sender controllerAt:(NSInteger)index {
-    Class controllerClass = [self.items objectAtIndex:index];
-    return [[controllerClass alloc] init];
+    // 类型值可直接转换
+    return [[ZWRSCommentsViewController alloc] initWithUserCommentsType:index];
 }
 
 - (void)DLTabedSlideView:(DLTabedSlideView *)sender didSelectedAt:(NSInteger)index {

@@ -63,8 +63,8 @@ static NSString *const CourseCellIdentifier = @"CourseCellIdentifier";
                                            needDetail:YES
                                                result:^(id response, BOOL success) {
                                                    [weakSelf.tableView.mj_header endRefreshing];
-                                                   if (success && [[response objectForKey:@"code"] intValue] == 0) {
-                                                       [weakSelf loadRemoteData:[response objectForKey:@"res"]];
+                                                   if (success && [[response objectForKey:kHTTPResponseCodeKey] intValue] == 0) {
+                                                       [weakSelf loadRemoteData:[response objectForKey:kHTTPResponseResKey]];
                                                    } else {
                                                        NSLog(@"%@", response);
                                                    }

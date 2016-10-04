@@ -229,7 +229,6 @@
     };
     self.addImgView.imagesDeleteFinish = ^(NSInteger index){
         [weakSelf.images removeObjectAtIndex:index];
-        NSLog(@"%li", weakSelf.images.count);
     };
 }
 

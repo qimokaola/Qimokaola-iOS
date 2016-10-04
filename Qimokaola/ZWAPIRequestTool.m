@@ -106,7 +106,7 @@
                                     params:[ZWAPIRequestTool buildParameters:params ? params : @{}]
                                    success:^(NSURLSessionDataTask *task, id responseObject) {
                                        
-                                       if ([[responseObject objectForKey:@"info"] isEqualToString:kUserNotLoginInfo]) {
+                                       if ([[responseObject objectForKey:kHTTPResponseInfoKey] isEqualToString:kUserNotLoginInfo]) {
                                            [[NSNotificationCenter defaultCenter] postNotificationName:kUserNeedLoginNotification object:nil];
                                        }
                                        

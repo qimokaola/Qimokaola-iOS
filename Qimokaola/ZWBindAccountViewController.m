@@ -107,25 +107,25 @@
         
     }] subscribeNext:^(NSDictionary *result) {
        @strongify(self)
-        int resultCode = [[result objectForKey:@"code"] intValue];
+        int resultCode = [[result objectForKey:kHTTPResponseCodeKey] intValue];
         if (resultCode == 0) {
             NSLog(@"注册成功 上传头像图片");
             NSLog(@"%@", result);
-            ZWUser *user = [ZWUser modelWithDictionary:[result objectForKey:@"res"]];
+            ZWUser *user = [ZWUser modelWithDictionary:[result objectForKey:kHTTPResponseResKey]];
             [ZWUserManager sharedInstance].loginUser = user;
             [self handleUploadAvatarImage];
 
             
         } else {
             
-            [ZWHUDTool showHUDInView:self.navigationController.view withTitle:[result objectForKey:@"info"] message:nil duration:kShowHUDMid];
+            [ZWHUDTool showHUDInView:self.navigationController.view withTitle:[result objectForKey:kHTTPResponseInfoKey] message:nil duration:kShowHUDMid];
             
             // 暂时只处理需要更多信息的情况
             if (resultCode == NeedMoreCode) {
                 
                 NSLog(@"需要更多信息");
                 
-                [self handleNeedMore:[result objectForKey:@"res"]];
+                [self handleNeedMore:[result objectForKey:kHTTPResponseResKey]];
                 
             }
         }
@@ -160,7 +160,7 @@
                 hud.label.text = @"注册成功";
                 
                 ZWUser *user = [ZWUserManager sharedInstance].loginUser;
-                user.avatar_url = [[response objectForKey:@"res"] objectForKey:@"avatar"];
+                user.avatar_url = [[response objectForKey:kHTTPResponseResKey] objectForKey:@"avatar"];
                 NSLog(@"%@", user.avatar_url);
                 [ZWUserManager sharedInstance].loginUser = user;
                 
@@ -201,7 +201,7 @@
     isNeedMore = YES;
     // 构建更多参数
     self.moreInfo = [res objectForKey:@"sendback"];
-    NSDictionary *code = [[res objectForKey:@"prompt"] objectForKey:@"code"];
+    NSDictionary *code = [[res objectForKey:@"prompt"] objectForKey:kHTTPResponseCodeKey];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kShowHUDMid * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         
         [self addVerifyView:[code objectForKey:@"data"]];
@@ -312,7 +312,7 @@
         
         if (isNeedMore && self.verifyField && self.verifyField.text.length != 0) {
             
-            NSMutableDictionary *schoolMore = [NSMutableDictionary dictionaryWithDictionary:@{@"code": self.verifyField.text}];
+            NSMutableDictionary *schoolMore = [NSMutableDictionary dictionaryWithDictionary:@{kHTTPResponseCodeKey: self.verifyField.text}];
             [schoolMore addEntriesFromDictionary:self.moreInfo];
             
             [params addEntriesFromDictionary:@{@"schoolMore": schoolMore}];

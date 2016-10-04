@@ -41,7 +41,7 @@
     [ZWAPIRequestTool requestListSchool:^(id response, BOOL success) {
         if (success) {
             self.navigationItem.rightBarButtonItem = nil;
-            self.schools = [response objectForKey:@"res"];
+            self.schools = [response objectForKey:kHTTPResponseResKey];
             [self.tableView reloadData];
         }
     }];
@@ -53,7 +53,7 @@
     [ZWAPIRequestTool requestListAcademyWithParameter:@{@"college" : [self.selectedSchool objectForKey:@"id"]} result:^(id response, BOOL success) {
         if (success) {
             self.navigationItem.rightBarButtonItem = self.chooseSchool;
-            self.academies = [(NSDictionary *)response objectForKey:@"res"];
+            self.academies = [(NSDictionary *)response objectForKey:kHTTPResponseResKey];
             [self.tableView reloadData];
         }
     }];

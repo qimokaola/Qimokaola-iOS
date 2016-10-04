@@ -204,13 +204,13 @@
         [ZWAPIRequestTool requestUploadAvatarWithParamsters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
             [formData appendPartWithFileURL:avatarFileURL name:@"avatar" fileName:avatarFileName mimeType:@"image/jpeg" error:NULL];
         } result:^(id response, BOOL success) {
-            if (success && [[response objectForKey:@"code"] intValue] == 0) {
+            if (success && [[response objectForKey:kHTTPResponseCodeKey] intValue] == 0) {
                 // 同步学生圈社区头像
                 [[UMComDataRequestManager defaultManager] userUpdateAvatarWithImage:selectedImage completion:^(NSDictionary *responseObject, NSError *error) {
                     
                 }];
                 weakSelf.avatarView.image = selectedImage;
-                [[ZWUserManager sharedInstance] updateAvatarUrl:[[response objectForKey:@"res"] objectForKey:@"avatar"]];
+                [[ZWUserManager sharedInstance] updateAvatarUrl:[[response objectForKey:kHTTPResponseResKey] objectForKey:@"avatar"]];
                 if (weakSelf.completion) {
                     weakSelf.completion();
                 }

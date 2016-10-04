@@ -88,6 +88,7 @@
     _contentLabel.font = [UIFont systemFontOfSize:contentLabelFontSize];
     
     _replyLabel = [[ZWReplytPaddingLabel alloc] init];
+    _replyLabel.paddingLabelType = ZWReplyPaddingLabelTypeComment;
     
     _moreButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_moreButton setImage:[UIImage imageNamed:@"more_arrow"] forState:UIControlStateNormal];
@@ -152,7 +153,7 @@
 - (void)setComment:(UMComComment *)comment {
     _comment = comment;
     // 自定义字段 0为不匿名 1为匿名
-    if ([[[_comment.custom jsonValueDecoded] objectForKey:@"a"] intValue] == 0) {
+    if (DecodeAnonyousCode(_comment.custom) == 0) {
         [_avatarView setImageWithURL:[NSURL URLWithString:_comment.creator.icon_url.small_url_string] placeholder:[UIImage imageNamed:@"avatar"]];
         _nameLabel.text = _comment.creator.name;
         _schoolLabel.text = createSchoolName(_comment.creator.custom);
@@ -177,22 +178,22 @@
 }
 
 - (void)clickToUser {
-    if ([[[_comment.custom jsonValueDecoded] objectForKey:@"a"] intValue] == 1) {
+    if (DecodeAnonyousCode(_comment.custom) == 1) {
         return;
     }
-    if ([self.delegate respondsToSelector:@selector(cell:didClickUser:)]) {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(cell:didClickUser:)]) {
         [self.delegate cell:self didClickUser:_comment.creator];
     }
 }
 
 - (void)clickMoreButton {
-    if ([self.delegate respondsToSelector:@selector(didClickMoreButtonInInCell:)]) {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didClickMoreButtonInInCell:)]) {
         [self.delegate didClickMoreButtonInInCell:self];
     }
 }
 
 - (void)clickCommentButton {
-    if ([self.delegate respondsToSelector:@selector(didClickCommentButtonInCell:)]) {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didClickCommentButtonInCell:)]) {
         [self.delegate didClickCommentButtonInCell:self];
     }
 }

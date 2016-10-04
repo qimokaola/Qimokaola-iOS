@@ -346,7 +346,7 @@
 //                                                                             NSLog(@"%@\n%@\n%@", response, filePath, error);
 //                                                                         }];
 
-    NSURLSessionDataTask * dataTask = [self.downloadManager POST:[[ZWAPITool base] stringByAppendingString:[NSString stringWithFormat:@"/api/dbfs/%d/download", [[ZWUserManager sharedInstance].loginUser.collegeId intValue]]]
+   [self.downloadManager POST:[[ZWAPITool base] stringByAppendingString:[NSString stringWithFormat:@"/api/dbfs/%d/download", [[ZWUserManager sharedInstance].loginUser.collegeId intValue]]]
                     parameters:@{@"path" : [_path stringByAppendingString:_file.name]}
                       progress:^(NSProgress * _Nonnull uploadProgress) {
                           NSLog(@"uploadProgress: %@", uploadProgress);
@@ -358,10 +358,6 @@
                            NSLog(@"error: %@", error);
                        }];
     [self.downloadManager setTaskWillPerformHTTPRedirectionBlock:^NSURLRequest * _Nonnull(NSURLSession * _Nonnull session, NSURLSessionTask * _Nonnull task, NSURLResponse * _Nonnull response, NSURLRequest * _Nonnull request) {
-        NSLog(@"session: %@", session);
-        NSLog(@"task: %@", task);
-        NSLog(@"response: %@", response);
-        NSLog(@"request: %@", request);
         if (request) {
             return request;
         }

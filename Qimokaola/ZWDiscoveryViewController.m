@@ -15,6 +15,7 @@
 #import "ZWFeedTableViewController.h"
 #import "ZWUserCommentsViewController.h"
 #import "ZWSettingsViewController.h"
+#import "ZWUserLikesViewController.h"
 
 #import <UMCommunitySDK/UMComSession.h>
 
@@ -57,6 +58,7 @@
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
     self.view.backgroundColor = universalGrayColor;
+    self.title = @"发现";
     __weak __typeof(self) weakSelf = self;
     UIButton *settingsButton = [UIButton buttonWithType:UIButtonTypeCustom];
     settingsButton.frame = CGRectMake(0, 0, 40, 40);
@@ -140,8 +142,8 @@
     [ZWAPIRequestTool requestUserInfo:^(id response, BOOL success) {
         [weakSelf.tableView.mj_header endRefreshing];
         weakSelf.tableView.userInteractionEnabled = YES;
-        if (success && [[response objectForKey:@"code"] intValue] == 0) {
-            ZWUser *user = [ZWUser modelWithDictionary:[response objectForKey:@"res"]];
+        if (success && [[response objectForKey:kHTTPResponseCodeKey] intValue] == 0) {
+            ZWUser *user = [ZWUser modelWithDictionary:[response objectForKey:kHTTPResponseResKey]];
             if (![user isEqual:[ZWUserManager sharedInstance].loginUser]) {
                 [ZWUserManager sharedInstance].loginUser = user;
                 [weakSelf updateUserInfo];
@@ -291,9 +293,16 @@
         feedTabelViewController.feedType = ZWFeedTableViewTypeAboutUser;
         feedTabelViewController.user = [UMComSession sharedInstance].loginUser;
         [self.navigationController pushViewController:feedTabelViewController animated:YES];
+    } else if (indexPath.section == 0 && indexPath.row == 1) {
+        ZWFeedTableViewController *feedTableViewController = [[ZWFeedTableViewController alloc] init];
+        feedTableViewController.feedType = ZWFeedTableViewTypeAboutCollection;
+        [self.navigationController pushViewController:feedTableViewController animated:YES];
     } else if (indexPath.section == 0 && indexPath.row == 2) {
         ZWUserCommentsViewController *commentsViewController = [[ZWUserCommentsViewController alloc] init];
         [self.navigationController pushViewController:commentsViewController animated:YES];
+    } else if (indexPath.section == 0 && indexPath.row == 3) {
+        ZWUserLikesViewController *likeViewController = [[ZWUserLikesViewController alloc] init];
+        [self.navigationController pushViewController:likeViewController animated:YES];
     }
 }
 

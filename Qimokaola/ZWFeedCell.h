@@ -75,7 +75,7 @@
 
 // 点赞 分享 评论 按钮点击
 - (void)cell:(ZWFeedCell *)cell didClickLikeButtonInLikeState:(BOOL)isLiked atIndexPath:(NSIndexPath *)indexPath;
-- (void)cell:(ZWFeedCell *)cell didClickCollectButtonAtIndexPath:(NSIndexPath *)indexPath;
+- (void)cell:(ZWFeedCell *)cell didClickCollectButtonInCollectState:(BOOL)isCollected atIndexPath:(NSIndexPath *)indexPath;
 - (void)cell:(ZWFeedCell *)cell didClickCommentButtonAtIndexPath:(NSIndexPath *)indexPath;
 
 // 点击右上更多按钮
@@ -100,6 +100,5 @@
 @property (nonatomic, strong) NSNumber *likeCount;
 @property (nonatomic, strong) NSNumber *commentCount;
 
-@property (nonatomic, assign) BOOL isLiked;
 
 @end

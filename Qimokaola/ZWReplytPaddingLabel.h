@@ -15,6 +15,13 @@
 
 #import <YYKit/YYKit.h>
 
+typedef NS_ENUM(NSUInteger, ZWReplyPaddingLabelType) {
+    ZWReplyPaddingLabelTypeComment = 0, // feed评论中
+    ZWReplyPaddingLabelTypeReceivedComment, // 收发评论
+    ZWReplyPaddingLabelTypeSentComment, // 收发评论
+    ZWReplyPaddingLabelTypeUserLike, // 点赞中
+};
+
 @interface ZWReplytPaddingLabel : UIView
 
 
@@ -32,5 +39,7 @@
  回复的feed
  */
 @property (nonatomic, strong) UMComFeed *replyFeed;
+
+@property (nonatomic, assign) ZWReplyPaddingLabelType paddingLabelType;
 
 @end

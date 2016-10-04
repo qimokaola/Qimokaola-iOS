@@ -37,7 +37,7 @@
     if (indexPath.section == 1 && indexPath.row == 0) {
         MBProgressHUD *hud = [ZWHUDTool excutingHudInView:self.navigationController.view title:@"正在退出登录"];
         [[ZWUserManager sharedInstance] userLogout:^(id response, BOOL success) {
-            if (response && [[response objectForKey:@"code"] intValue] == 0) {
+            if (response && [[response objectForKey:kHTTPResponseCodeKey] intValue] == 0) {
                 [ZWUserManager sharedInstance].loginUser = nil;
                 [hud hideAnimated:YES];
                 [[NSNotificationCenter defaultCenter] postNotificationName:kUserLogoutSuccessNotification object:nil];

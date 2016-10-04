@@ -462,6 +462,9 @@
 // Feed 作者
 @property (nonatomic, strong) UMComUser *creator;
 
+@property (nonatomic, assign) BOOL isLiked;
+@property (nonatomic, assign) BOOL isCollected;
+
 @end
 
 @implementation ZWFeedCell
@@ -535,8 +538,8 @@
     UIColor *insideButtonColor = [UIColor lightGrayColor];
     
     _likeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_likeButton setImage:[UIImage imageNamed:@"icon_unlike"] forState:UIControlStateNormal];
-    [_likeButton setImage:[UIImage imageNamed:@"icon_like"] forState:UIControlStateSelected];
+    [_likeButton setImage:[UIImage imageNamed:@"icon_feed_unlike"] forState:UIControlStateNormal];
+    [_likeButton setImage:[UIImage imageNamed:@"icon_feed_liked"] forState:UIControlStateSelected];
     [_likeButton setBackgroundImage:backgroundImage forState:UIControlStateNormal];
     [_likeButton setBackgroundImage:highlightedBackgroundImage forState:UIControlStateHighlighted];
     [_likeButton addTarget:self action:@selector(likeButtonClicked) forControlEvents:UIControlEventTouchUpInside];
@@ -547,7 +550,8 @@
     [_likeButton addSubview:_likeCountLabel];
     
     _collectButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_collectButton setImage:[UIImage imageNamed:@"icon_share"] forState:UIControlStateNormal];
+    [_collectButton setImage:[UIImage imageNamed:@"icon_feed_uncollect"] forState:UIControlStateNormal];
+    [_collectButton setImage:[UIImage imageNamed:@"icon_feed_collcted"] forState:UIControlStateSelected];
     [_collectButton setBackgroundImage:backgroundImage forState:UIControlStateNormal];
     [_collectButton setBackgroundImage:highlightedBackgroundImage forState:UIControlStateHighlighted];
     [_collectButton addTarget:self action:@selector(collectButtonClicked) forControlEvents:UIControlEventTouchUpInside];
@@ -696,7 +700,7 @@
     _creator = feed.creator;
     
     // 自定义字段 0为不匿名 1为匿名
-    if ([[[feed.custom jsonValueDecoded] objectForKey:@"a"] intValue] == 0) {
+    if (DecodeAnonyousCode(_feed.custom) == 0) {
         [_avatarView setImageWithURL:[NSURL URLWithString:_creator.icon_url.small_url_string] placeholder:[UIImage imageNamed:@"avatar"]];
         _nameLabel.text = _creator.name;
         _schoolLabel.text = createSchoolName(_creator.custom);
@@ -708,23 +712,26 @@
     
     _genderView.image = _creator.gender.intValue == 0 ? [UIImage imageNamed:@"icon_female"] : [UIImage imageNamed:@"icon_male"];
     
-    _timeLabel.text = createTimeString(feed.create_time);
+    _timeLabel.text = createTimeString(_feed.create_time);
     
-    _contentLabel.text = feed.text;
+    _contentLabel.text = _feed.text;
     
-    self.likeCount = feed.likes_count;
-    self.commentCount = feed.comments_count;
+    self.likeCount = _feed.likes_count;
+    self.commentCount = _feed.comments_count;
     
-    _picContainerView.picPathStringsArray = [feed.image_urls linq_select:^id(UMComImageUrl *item) {
+    self.isLiked = _feed.liked.boolValue;
+    self.isCollected = _feed.has_collected.boolValue;
+    
+    _picContainerView.picPathStringsArray = [_feed.image_urls linq_select:^id(UMComImageUrl *item) {
         return item.small_url_string;
     }];
     
-    _picContainerView.highQuantityPicArray = [feed.image_urls linq_select:^id(UMComImageUrl *item) {
+    _picContainerView.highQuantityPicArray = [_feed.image_urls linq_select:^id(UMComImageUrl *item) {
         return item.large_url_string;
     }];
     
     CGFloat picContainerViewTopMargin = 0.f;
-    if (feed.image_urls && feed.image_urls.count > 0) {
+    if (_feed.image_urls && feed.image_urls.count > 0) {
         picContainerViewTopMargin = 10;
         _horizontalLine1.sd_layout.topSpaceToView(_picContainerView, 10);
     } else {
@@ -756,40 +763,45 @@
 
 - (void)setIsLiked:(BOOL)isLiked {
     _isLiked = isLiked;
-    _likeButton.selected = isLiked;
+    _likeButton.selected = _isLiked;
+}
+
+- (void)setIsCollected:(BOOL)isCollected {
+    _isCollected = isCollected;
+    _collectButton.selected = _isCollected;
 }
 
 #pragma mark - Action Methods
 
 - (void)likeButtonClicked {
-    if ([self.delegate respondsToSelector:@selector(cell:didClickLikeButtonInLikeState:atIndexPath:)]) {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(cell:didClickLikeButtonInLikeState:atIndexPath:)]) {
         [self.delegate cell:self didClickLikeButtonInLikeState:_isLiked atIndexPath:_indexPath];
     }
 }
 
 - (void)collectButtonClicked {
-    if ([self.delegate respondsToSelector:@selector(cell:didClickCollectButtonAtIndexPath:)]) {
-        [self.delegate cell:self didClickCollectButtonAtIndexPath:_indexPath];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(cell:didClickCollectButtonInCollectState:atIndexPath:)]) {
+        [self.delegate cell:self didClickCollectButtonInCollectState:_isCollected atIndexPath:_indexPath];
     }
 }
 
 - (void)commentButtonClicked {
-    if ([self.delegate respondsToSelector:@selector(cell:didClickCommentButtonAtIndexPath:)]) {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(cell:didClickCommentButtonAtIndexPath:)]) {
         [self.delegate cell:self didClickCommentButtonAtIndexPath:_indexPath];
     }
 }
 
 - (void)clickToUser {
-    if ([[[_feed.custom jsonValueDecoded] objectForKey:@"a"] intValue] == 1) {
+    if (DecodeAnonyousCode(_feed.custom) == 1) {
         return;
     }
-    if ([self.delegate respondsToSelector:@selector(cell:didClickUser:atIndexPath:)]) {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(cell:didClickUser:atIndexPath:)]) {
         [self.delegate cell:self didClickUser:_feed.creator atIndexPath:_indexPath];
     }
 }
 
 - (void)clickMoreButton {
-    if ([self.delegate respondsToSelector:@selector(cell:didClickMoreButtonAtIndexPath:)]) {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(cell:didClickMoreButtonAtIndexPath:)]) {
         [self.delegate cell:self didClickMoreButtonAtIndexPath:_indexPath];
     }
 }

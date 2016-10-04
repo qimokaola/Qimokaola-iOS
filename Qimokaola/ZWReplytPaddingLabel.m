@@ -70,11 +70,11 @@
  */
 - (void)setReplyComment:(UMComComment *)replyComment {
     _replyComment = replyComment;
-    
     self.hidden = NO;
+    
     NSString *replyContent = nil;
-    if (_replyComment.content.length > 0) {
-        NSString *creator = [[[_replyComment.custom jsonValueDecoded] objectForKey:@"a"] intValue] == 0 ? _replyComment.creator.name : kStudentCircleAnonyousName;
+    if (_replyComment.status.intValue == 0) {
+        NSString *creator = DecodeAnonyousCode(_replyComment.custom) == 0 ? _replyComment.creator.name : kStudentCircleAnonyousName;
         replyContent = [NSString stringWithFormat:@"回复@%@的评论：%@", creator, _replyComment.content];
     } else {
         replyContent = @"该评论已被删除";
@@ -91,16 +91,17 @@
     _replyFeed = replyFeed;
     
     self.hidden = NO;
-//    NSString *feedContent = nil;
-//    if (_replyComment.content.length > 0) {
-//        NSString *creator = [[[_replyComment.custom jsonValueDecoded] objectForKey:@"a"] intValue] == 0 ? _replyComment.creator.name : kStudentCircleAnonyousName;
-//        feedContent = [NSString stringWithFormat:@"回复@%@的评论：%@", creator, _replyComment.content];
-//    } else {
-//        feedContent = @"该评论已被删除";
-//    }
     
-    NSString *creator = [[[_replyFeed.custom jsonValueDecoded] objectForKey:@"a"] intValue] == 0 ? _replyFeed.creator.name : kStudentCircleAnonyousName;
-    NSString *feedContent = [NSString stringWithFormat:@"回复@%@的主题：%@", creator, _replyFeed.text];
+    NSString *feedContent = nil;
+    if (_paddingLabelType == ZWReplyPaddingLabelTypeReceivedComment) {
+        feedContent = DecodeAnonyousCode(_replyFeed.custom) == 0 ? [NSString stringWithFormat:@"回复我的主题: %@", _replyFeed.text] : [NSString stringWithFormat:@"回复我的匿名主题: %@", _replyFeed.text];
+    } else if (_paddingLabelType == ZWReplyPaddingLabelTypeSentComment) {
+        NSString *creator = DecodeAnonyousCode(_replyFeed.custom) == 0 ? _replyFeed.creator.name : kStudentCircleAnonyousName;
+        feedContent = [NSString stringWithFormat:@"回复@%@的主题：%@", creator, _replyFeed.text];
+    } else if (_paddingLabelType == ZWReplyPaddingLabelTypeUserLike) {
+        NSString *creator = DecodeAnonyousCode(_replyFeed.custom) == 0 ? _replyFeed.creator.name : kStudentCircleAnonyousName;
+        feedContent = [NSString stringWithFormat:@"@%@: %@", creator, _replyFeed.text];
+    }
     _contentLabel.text = feedContent;
 }
 

@@ -56,7 +56,7 @@ static NSString *const FolderCellIdentifier = @"FolderCellIdentifier";
                                                    [weakSelf.tableView.mj_header endRefreshing];
                                                    
                                                    if (success) {
-                                                       NSDictionary *res = [response objectForKey:@"res"];
+                                                       NSDictionary *res = [response objectForKey:kHTTPResponseResKey];
                                                        [weakSelf loadRemoteData:res];
                                                    }
                                                    

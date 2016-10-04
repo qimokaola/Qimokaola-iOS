@@ -50,9 +50,9 @@
     MBProgressHUD *hud = [ZWHUDTool excutingHudInView:self.navigationController.view title:nil];
     [ZWAPIRequestTool requestListAcademyWithParameter:@{@"college" : [ZWUserManager sharedInstance].loginUser.collegeId} result:^(id response, BOOL success) {
         
-        if (success && [[response objectForKey:@"code"] intValue] == 0) {
+        if (success && [[response objectForKey:kHTTPResponseCodeKey] intValue] == 0) {
             [hud hideAnimated:YES];
-            weakSelf.academies = [response objectForKey:@"res"];
+            weakSelf.academies = [response objectForKey:kHTTPResponseResKey];
             [weakSelf.tableView reloadData];
         } else {
             hud.mode = MBProgressHUDModeText;
@@ -118,7 +118,7 @@
         __weak __typeof(self) weakSelf = self;
         MBProgressHUD *hud = [ZWHUDTool excutingHudInView:self.navigationController.view title:nil];
         [[ZWUserManager sharedInstance] modifyUserAcademyId:_presentAcademyId result:^(id response, BOOL success) {
-            if (success && [[response objectForKey:@"code"] intValue] == 0) {
+            if (success && [[response objectForKey:kHTTPResponseCodeKey] intValue] == 0) {
                 [hud hideAnimated:YES];
                 [[ZWUserManager sharedInstance] updateAcademyId:_presentAcademyId academyName:[academy objectForKey:@"name"]];
                 if (weakSelf.completion) {

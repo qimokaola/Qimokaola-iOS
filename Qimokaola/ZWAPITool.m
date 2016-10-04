@@ -98,7 +98,7 @@
 @implementation ZWAPITool
 
 + (NSString *)base {
-    return @"http://www.finalexam.cn";
+    return @"https://www.finalexam.cn";
 }
 
 + (NSString *)sendCodeAPI {

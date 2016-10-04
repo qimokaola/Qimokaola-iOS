@@ -11,7 +11,7 @@
 #import "DLSlideView.h"
 #import "DLLRUCache.h"
 
-#define kDefaultTabbarHeight 34
+#define kDefaultTabbarHeight 40
 #define kDefaultTabbarBottomSpacing 0
 #define kDefaultCacheCount 4
 

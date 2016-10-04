@@ -17,8 +17,6 @@
 @property (nonatomic, strong) UILabel *timeLabel;
 @property (nonatomic, strong) UILabel *schoolLabel;
 @property (nonatomic, strong) UILabel *contentLabel;
-@property (nonatomic, strong) ZWReplytPaddingLabel *replyLabel;
-@property (nonatomic, strong) UIButton *commentButton;
 
 @end
 
@@ -126,7 +124,7 @@
 - (void)setComment:(UMComComment *)comment {
     _comment = comment;
     // 自定义字段 0为不匿名 1为匿名
-    if ([[[_comment.custom jsonValueDecoded] objectForKey:@"a"] intValue] == 0) {
+    if (DecodeAnonyousCode(_comment.custom) == 0) {
         [_avatarView setImageWithURL:[NSURL URLWithString:_comment.creator.icon_url.small_url_string] placeholder:[UIImage imageNamed:@"avatar"]];
         _nameLabel.text = _comment.creator.name;
         _schoolLabel.text = createSchoolName(_comment.creator.custom);
@@ -138,30 +136,39 @@
     
     _timeLabel.text = createTimeString(_comment.create_time);
     _contentLabel.text = _comment.content;
-
-    NSLog(@"%@", _comment);
-    if (_comment.reply_comment) {
-        _replyLabel.replyComment = _comment.reply_comment;
-    } else if (_comment.feed) {
+    
+    if (_comment.feed) {
         _replyLabel.replyFeed = _comment.feed;
+    } else if (_comment.reply_comment) {
+        _replyLabel.replyComment = _comment.reply_comment;
     }
 }
 
-- (void)setRsCommentType:(ZWRSCommentType)rsCommentType {
-    _rsCommentType = rsCommentType;
-    _commentButton.hidden = _rsCommentType != ZWRSCommentTypeReceived;
-}
-
 - (void)clickCommentButton {
-    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(cell:didClickCommentButton:)]) {
+        [self.delegate cell:self didClickCommentButton:_comment];
+    }
 }
 
 - (void)clickToUser {
-    
+    if (DecodeAnonyousCode(_comment.custom) == 1) {
+        return;
+    }
+    if (self.delegate && [self.delegate respondsToSelector:@selector(cell:didClickToUser:)]) {
+        [self.delegate cell:self didClickToUser:_comment.creator];
+    }
 }
 
 - (void)clickReplyLabel {
-    
+    if (_comment.feed) {
+        if (self.delegate && [self.delegate respondsToSelector:@selector(cell:didClickReplyFeed:)]) {
+            [self.delegate cell:self didClickReplyFeed:_comment.feed];
+        }
+    } else {
+        if (self.delegate && [self.delegate respondsToSelector:@selector(cell:didClickReplyComment:)]) {
+            [self.delegate cell:self didClickReplyComment:_comment.reply_comment];
+        }
+    }
 }
 
 - (void)awakeFromNib {

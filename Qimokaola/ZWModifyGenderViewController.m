@@ -97,7 +97,7 @@
         // 执行修改请求
         MBProgressHUD *hud = [ZWHUDTool excutingHudInView:self.navigationController.view title:nil];
         [[ZWUserManager sharedInstance] modifyUserGender:_presentGender result:^(id response, BOOL success) {
-            if (success && [[response objectForKey:@"code"] intValue] == 0) {
+            if (success && [[response objectForKey:kHTTPResponseCodeKey] intValue] == 0) {
                 [hud hideAnimated:YES];
                 [[ZWUserManager sharedInstance] updateGender:_presentGender];
                 ZWUser *user = [ZWUserManager sharedInstance].loginUser;

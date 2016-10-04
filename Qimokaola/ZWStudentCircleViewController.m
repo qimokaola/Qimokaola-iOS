@@ -144,7 +144,7 @@ typedef NS_ENUM(NSInteger, ZWFetchedDataSource) {
         
     }
     
-    NSLog(@"Fetched %ld group data. next page url: %@", fetchedTopics.count, [data objectForKey:@"next_page_url"]);
+    NSLog(@"Fetched %ld group data. next page url: %@", (unsigned long)fetchedTopics.count, [data objectForKey:@"next_page_url"]);
     
     if (source == ZWFetchedDataSourceFromHeader) {
         

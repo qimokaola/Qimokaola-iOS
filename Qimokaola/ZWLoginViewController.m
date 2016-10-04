@@ -64,10 +64,10 @@
     @weakify(self)
     [[self.nextBtn.rac_command.executionSignals switchToLatest] subscribeNext:^(NSDictionary *result) {
         @strongify(self)
-        int resultCode = [[result objectForKey:@"code"] intValue];
+        int resultCode = [[result objectForKey:kHTTPResponseCodeKey] intValue];
         if (resultCode == 0) {
             // 保存用户登录信息
-            ZWUser *user = [ZWUser modelWithDictionary:[result objectForKey:@"res"]];
+            ZWUser *user = [ZWUser modelWithDictionary:[result objectForKey:kHTTPResponseResKey]];
             [ZWUserManager sharedInstance].loginUser = user;
             
             // 发送用户登录成功通知
@@ -88,7 +88,7 @@
                 }
             });
         } else {
-            [ZWHUDTool showHUDWithTitle:[result objectForKey:@"info"] message:nil duration:kShowHUDMid];
+            [ZWHUDTool showHUDWithTitle:[result objectForKey:kHTTPResponseInfoKey] message:nil duration:kShowHUDMid];
         }
         
     }];

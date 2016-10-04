@@ -35,6 +35,12 @@
 
 #define kUserNotLoginInfo @"尚未登录"
 
+#define DecodeAnonyousCode(custom) [[[custom jsonValueDecoded] objectForKey:@"a"] intValue]
+
+#define kHTTPResponseCodeKey @"code"
+#define kHTTPResponseInfoKey @"info"
+#define kHTTPResponseResKey @"res"
+
 /**
  有关用户登录的通知
  */

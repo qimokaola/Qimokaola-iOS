@@ -42,7 +42,6 @@
     [saveButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateDisabled];
     @weakify(self)
     RAC(saveButton, enabled) = [_nicknameField.rac_textSignal map:^id(NSString *value) {
-        @strongify(self)
         return @(value.length > 0 && ![value isEqualToString:[ZWUserManager sharedInstance].loginUser.nickname]);
     }];
     [[saveButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
@@ -100,7 +99,7 @@
     [[ZWUserManager sharedInstance] modifyUserNickname:_nicknameField.text result:^(id response, BOOL success) {
         NSLog(@"%@", response);
         if (success) {
-            if ([[response objectForKey:@"code"] intValue] == 0) {
+            if ([[response objectForKey:kHTTPResponseCodeKey] intValue] == 0) {
                 [hud hideAnimated:YES];
                 // 重新设置用户昵称
                 [[ZWUserManager sharedInstance] updateNickname:weakSelf.nicknameField.text];

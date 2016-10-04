@@ -131,7 +131,7 @@
         [self.indicator stopAnimating];
         [self.nextBtn setTitle:@"下一步" forState:UIControlStateNormal];
         
-        if ([[[result objectForKey:@"res"] objectForKey:@"ok"] intValue] == 1) {
+        if ([[[result objectForKey:kHTTPResponseResKey] objectForKey:@"ok"] intValue] == 1) {
             MBProgressHUD *hud = [ZWHUDTool successHUDInView:self.navigationController.view withMessage:@"验证成功"];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kShowHUDShort * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [hud hideAnimated:YES];
@@ -446,7 +446,7 @@ int TimeInterval = 60;
        
         NSString *msg = nil;
         if (success) {
-            msg = [[response objectForKey:@"code"] intValue] == 113 ? @"该手机号已被注册" : [response objectForKey:@"info"];
+            msg = [[response objectForKey:kHTTPResponseCodeKey] intValue] == 113 ? @"该手机号已被注册" : [response objectForKey:kHTTPResponseInfoKey];
         } else {
             msg = @"获取验证码失败";
         }

@@ -133,6 +133,16 @@
  */
 @property (nonatomic, strong) UMComComment *commentToCommentWith;
 
+/**
+ 是否点赞
+ */
+@property (nonatomic, assign) BOOL isLiked;
+
+/**
+ 是否收藏
+ */
+@property (nonatomic, assign) BOOL isCollected;
+
 
 @end
 
@@ -158,7 +168,7 @@
     [RACObserve(self, commentToCommentWith) subscribeNext:^(UMComComment *comment) {
         NSString *placeholderPlainText = nil;
         if (comment) {
-            if ([[[comment.custom jsonValueDecoded] objectForKey:@"a"] intValue] == 0) {
+            if (DecodeAnonyousCode(comment.custom) == 0) {
                 placeholderPlainText = [NSString stringWithFormat:@"回复 %@", comment.creator.name];
             } else {
                 placeholderPlainText = @"回复 某同学";
@@ -189,6 +199,11 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+}
+
+- (void)dealloc
+{
+    NSLog(@"dealloc detail");
 }
 
 #pragma mark - Views
@@ -371,6 +386,7 @@
     UIColor *separatorViewColor = defaultBackgroundColor;
     
     CGFloat buttonHieght = 45.f;
+    CGSize imageSize = CGSizeMake(buttonHieght, buttonHieght);
     
     _separatorView = [[UIView alloc] init];
     _separatorView.backgroundColor = separatorViewColor;
@@ -403,13 +419,11 @@
     _picContainerView = [[SDWeiXinPhotoContainerView alloc] init];
     
     _likeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_likeButton setBackgroundColor:RGBA(244.f, 107.f, 107.f, 0.9f)];
-    [_likeButton setImage:[UIImage imageNamed:@"icon_detail_loved"] forState:UIControlStateNormal];
+    [_likeButton setImage:[[UIImage imageNamed:@"icon_detail_liked"] imageByResizeToSize:imageSize] forState:UIControlStateNormal];
     [_likeButton addTarget:self action:@selector(likeButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     
     _collectButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_collectButton setBackgroundColor:RGBA(128.f, 213.f, 72.f, 0.9f)];
-    [_collectButton setImage:[UIImage imageNamed:@"icon_detail_collect"] forState:UIControlStateNormal];
+    [_collectButton setImage:[[UIImage imageNamed:@"icon_detail_collected"] imageByResizeToSize:imageSize] forState:UIControlStateNormal];
     [_collectButton addTarget:self action:@selector(collectButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     
     NSArray *views = @[_avatarView, _nameLabel, _genderView, _timeLabel, _schoolLabel, _contentLabel, _picContainerView, _separatorView, _likeButton, _collectButton];
@@ -465,14 +479,12 @@
     .heightIs(buttonHieght)
     .widthEqualToHeight()
     .centerXIs(_headerView.centerX_sd - margin * 4);
-    _likeButton.sd_cornerRadiusFromHeightRatio = @0.5;
     
     _collectButton.sd_layout
     .topEqualToView(_likeButton)
     .heightRatioToView(_likeButton, 1.0)
     .widthEqualToHeight()
     .centerXIs(_headerView.centerX_sd + margin * 4);
-    _collectButton.sd_cornerRadiusFromHeightRatio = @0.5;
     
 }
 
@@ -484,10 +496,15 @@
     _likeButton.selected = isLiked;
 }
 
+- (void)setIsCollected:(BOOL)isCollected {
+    _isCollected = isCollected;
+    _collectButton.selected = _isCollected;
+}
+
 #pragma mark - Common Methods
 
 - (void)loadDetailData {
-    if ([[[_feed.custom jsonValueDecoded] objectForKey:@"a"] intValue] == 0) {
+    if (DecodeAnonyousCode(_feed.custom) == 0) {
         [_avatarView setImageWithURL:[NSURL URLWithString:_feed.creator.icon_url.small_url_string] placeholder:[UIImage imageNamed:@"avatar"]];
         _nameLabel.text = _feed.creator.name;
         _genderView.image = _feed.creator.gender.intValue == 0 ? [UIImage imageNamed:@"icon_female"] : [UIImage imageNamed:@"icon_male"];
@@ -502,6 +519,9 @@
     _timeLabel.text = createTimeString(_feed.create_time);
     
     _contentLabel.text = _feed.text;
+    
+    self.isLiked = _feed.liked.boolValue;
+    self.isCollected = _feed.has_collected.boolValue;
     
     _picContainerView.picPathStringsArray = [_feed.image_urls linq_select:^id(UMComImageUrl *item) {
         return item.small_url_string;
@@ -705,7 +725,7 @@
                                                           isLike:!_isLiked
                                                       completion:^(NSDictionary *responseObject, NSError *error) {
                                                           if (responseObject) {
-                                                              weakSelf.isLiked = !_isLiked;
+                                                              weakSelf.isLiked = !weakSelf.isLiked;
                                                               // 执行回调更新feed流页面数据
                                                               if (weakSelf.isLikedChangedCompletion) {
                                                                   weakSelf.isLikedChangedCompletion(weakSelf.isLiked);
@@ -718,27 +738,25 @@
 
 
 - (void)collectButtonClicked {
-//    __weak __typeof(self) weakSelf = self;
-//    ZWFeedComposeViewController *composeViewController = [[ZWFeedComposeViewController alloc] init];
-//    composeViewController.composeType = ZWFeedComposeTypeReplyFeed;
-//    composeViewController.feedID = _feed.feedID;
-//    composeViewController.completion = ^(UMComComment *newComment) {
-//        [weakSelf.comments insertObject:newComment atIndex:0];
-//        [weakSelf.tableView insertRow:0 inSection:0 withRowAnimation:UITableViewRowAnimationTop];
-//        // 执行回调更新feed流页面数据
-//        if (weakSelf.commentCountChangedCompletion) {
-//            weakSelf.commentCountChangedCompletion(@(weakSelf.comments.count));
-//        }
-//    };
-//    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:composeViewController];
-//    [self presentViewController:nav animated:YES completion:nil];
-    
+    __weak __typeof(self) weakSelf = self;
+    [[UMComDataRequestManager defaultManager] feedFavouriteWithFeedId:_feed.feedID
+                                                          isFavourite:!_isCollected
+                                                      completionBlock:^(NSDictionary *responseObject, NSError *error) {
+                                                          if (!error) {
+                                                              weakSelf.isCollected = !weakSelf.isCollected;
+                                                              if (weakSelf.isCollectedChangedCompletion) {
+                                                                  weakSelf.isCollectedChangedCompletion(weakSelf.isCollected);
+                                                              }
+                                                          } else {
+                                                              [ZWHUDTool showHUDInView:weakSelf.navigationController.view withTitle:@"呀,出错了！" message:nil duration:kShowHUDMid];
+                                                          }
+                                                      }];
 }
 
 
 
 - (void)clickToUser {
-    if ([[[_feed.custom jsonValueDecoded] objectForKey:@"a"] intValue] == 1) {
+    if (DecodeAnonyousCode(_feed.custom) == 1) {
         return;
     }
     [self gotoUserDetailViewController:_feed.creator];
@@ -830,8 +848,8 @@
 #pragma mark - UISCrollViewDelegate
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    if ([scrollView isEqual:self.tableView]) {
-        [self.commentTextView endEditing:YES];
+    if ([scrollView isEqual:self.tableView] && self.commentTextView.isFirstResponder) {
+        [self.commentTextView resignFirstResponder];
         // 清除要回复的comment
         if (self.commentToCommentWith) {
             self.commentToCommentWith = nil;
