@@ -24,20 +24,24 @@ static ZWNetworkingManager *_manager = nil;
     if (self) {
         self.sessionManager = [AFHTTPSessionManager manager];
         self.sessionManager.requestSerializer.timeoutInterval = 5.0;
+        
+//        AFSecurityPolicy *securityPolicy = [AFSecurityPolicy policyWithPinningMode: AFSSLPinningModeCertificate];
+//        NSString *certificatePath = [[NSBundle mainBundle] pathForResource:@"qimokaola" ofType:@"cer"];
+//        NSData *certificateData = [NSData dataWithContentsOfFile:certificatePath];
+//        
+//        NSSet *certificateSet  = [[NSSet alloc] initWithObjects:certificateData, nil];
+//        [securityPolicy setPinnedCertificates:certificateSet];
+//        securityPolicy.allowInvalidCertificates = YES;
+//        securityPolicy.validatesDomainName = NO;
+//        self.sessionManager.securityPolicy = securityPolicy;
+        
+//        AFSecurityPolicy *securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeCertificate];
+//        securityPolicy.allowInvalidCertificates = YES;
+//        self.sessionManager.securityPolicy = securityPolicy;
     }
     return self;
 }
 
-+ (void)changeRequestSerializer {
-    if ([[ZWNetworkingManager sharedManager].sessionManager.requestSerializer isKindOfClass:[AFHTTPRequestSerializer class]]) {
-        
-        [ZWNetworkingManager sharedManager].sessionManager.requestSerializer = [AFJSONRequestSerializer serializer];
-        [[ZWNetworkingManager sharedManager].sessionManager.requestSerializer setValue:@"application/json;charset=UTF-8" forHTTPHeaderField:@"Content-Type"];
-        
-    } else {
-        [ZWNetworkingManager sharedManager].sessionManager.requestSerializer = [AFHTTPRequestSerializer serializer];
-    }
-}
 
 + (instancetype)sharedManager {
     static dispatch_once_t onceToken;

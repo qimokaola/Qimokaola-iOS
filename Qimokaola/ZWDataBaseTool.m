@@ -14,7 +14,7 @@
 
 @property (nonatomic, strong) FMDatabase *db;
 
-@property (nonatomic, strong) NSMutableArray *downloads;
+@property (nonatomic, strong) NSMutableDictionary *downloads;
 
 @end
 
@@ -22,8 +22,9 @@
 
 // 数据库操作语句
 
-NSString *const sql_create_table = @"CREATE TABLE IF NOT EXISTS downloads (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, school TEXT, course TEXT, size TEXT, lastAccessTime TEXT)";
-NSString *const sql_query_downloads = @"SELECT name FROM downloads";
+NSString *const sql_create_table = @"CREATE TABLE IF NOT EXISTS downloads (id INTEGER PRIMARY KEY AUTOINCREMENT, storage_name TEXT, name TEXT, ctime TEXT, creator TEXT, uid TEXT, size TEXT, identifier TEXT, school TEXT, course TEXT, lastAccessTime TEXT, extra TEXT)";
+NSString *const sql_query_downloads = @"SELECT storage_name, identifier FROM downloads";
+NSString *const sql_add_download_info = @"INSERT INTO downloads (storage_name, name, ctime, creator, uid, size, identifier, school, course, lastAccessTime) VALUES ('%@', '%@', '%@', '%@', '%@', '%@', '%@', '%@', '%@', '%@')";
 
 - (instancetype)init
 {
@@ -31,13 +32,15 @@ NSString *const sql_query_downloads = @"SELECT name FROM downloads";
     if (self) {
         //创建数据库
         _db = [FMDatabase databaseWithPath:[[ZWPathTool dbDirectory] stringByAppendingPathComponent:@"downloads.db"]];
-        _downloads = [NSMutableArray array];
+        _downloads = [NSMutableDictionary dictionary];
         if ([_db open]) {
             BOOL res = [_db executeUpdate:sql_create_table];
             if (res) {
                 FMResultSet *results = [_db executeQuery:sql_query_downloads];
                 while ([results next]) {
-                    [_downloads addObject:[results stringForColumnIndex:0]];
+                    NSString *name = [results stringForColumnIndex:0];
+                    NSString *identifier = [results stringForColumnIndex:1];
+                    [_downloads setObject:name forKey:identifier];
                 }
             }
         }
@@ -54,12 +57,21 @@ NSString *const sql_query_downloads = @"SELECT name FROM downloads";
     return databaseTool;
 }
 
-+ (void)saveDownloadFileInfo:(ZWFile *)file {
-    
+- (BOOL)isFileDownloaded:(NSString *)fileIdentifier {
+    return [[self.downloads allKeys] containsObject:fileIdentifier];
 }
 
-+ (BOOL)isFileDownloaded:(ZWFile *)file {
-    return [[ZWDataBaseTool sharedInstance].downloads containsObject:file.name];
+- (BOOL)addFileDownloadInfo:(ZWFile *)file filenameInStorage:(NSString *)filenameInStorage inSchool:(NSString *)school inCourse:(NSString *)course {
+    NSString *now = [NSString stringWithFormat:@"%ld", (long)[[NSDate date] timeIntervalSince1970]];
+    BOOL res = [_db executeUpdate:[NSString stringWithFormat:sql_add_download_info, filenameInStorage, file.name, file.ctime, file.creator, file.uid, file.size, file.md5, school, course, now]];
+    if (res) {
+        [self.downloads setObject:filenameInStorage forKey:file.md5];
+    }
+    return res;
+}
+
+- (NSString *)fileNameInStorageWithIdentifier:(NSString *)fileIdentifier {
+    return [self.downloads objectForKey:fileIdentifier]; 
 }
 
 - (void)dealloc

@@ -98,7 +98,7 @@
 @implementation ZWAPITool
 
 + (NSString *)base {
-    return @"https://www.finalexam.cn";
+    return @"https://finalexam.cn";
 }
 
 + (NSString *)sendCodeAPI {
@@ -139,7 +139,7 @@
 }
 
 + (NSString *)listFileAndFolderAPI {
-    return [[[ZWAPITool dbfs] stringByAppendingPathComponent:@"%d"] stringByAppendingPathComponent:@"list"];
+    return [[ZWAPITool dbfsInUnknowSchool] stringByAppendingPathComponent:@"list"];
 }
 
 + (NSString *)modifyUserInfoAPI {
@@ -148,6 +148,10 @@
 
 + (NSString *)logoutAPI {
     return [[ZWAPITool user] logout];
+}
+
++ (NSString *)downloadUrlAPI {
+    return [[ZWAPITool dbfsInUnknowSchool] stringByAppendingPathComponent:@"downloadurl"];;
 }
 
 + (NSString *)api {
@@ -164,6 +168,10 @@
 
 + (NSString *)dbfs {
     return [[ZWAPITool api] dbfs];
+}
+
++ (NSString *)dbfsInUnknowSchool {
+    return [[ZWAPITool dbfs] stringByAppendingPathComponent:@"%d"];
 }
 
 @end

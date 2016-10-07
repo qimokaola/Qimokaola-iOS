@@ -1,23 +1,35 @@
 //
-//  ZWBasicViewController.m
+//  ZWBaseViewController.m
 //  Qimokaola
 //
-//  Created by Administrator on 16/8/4.
+//  Created by Administrator on 2016/10/6.
 //  Copyright © 2016年 Administrator. All rights reserved.
 //
 
-#import "ZWBasicViewController.h"
+#import "ZWBaseViewController.h"
 
-@interface ZWBasicViewController ()
+@interface ZWBaseViewController ()
 
 @end
 
-@implementation ZWBasicViewController
+@implementation ZWBaseViewController
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.hidesBottomBarWhenPushed = YES;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor whiteColor];
+    if ([self respondsToSelector:@selector(automaticallyAdjustsScrollViewInsets)]) {
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
+
 }
 
 - (void)didReceiveMemoryWarning {

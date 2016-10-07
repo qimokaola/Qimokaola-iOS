@@ -8,7 +8,6 @@
 
 #import "ZWTabBarController.h"
 #import "ZWCourseViewController.h"
-#import "ZWRootPathViewController.h"
 #import "ZWDownloadedViewController.h"
 #import "ZWStudentCircleViewController.h"
 #import "ZWDiscoveryViewController.h"
@@ -28,11 +27,10 @@
 - (NSArray *)viewControllersInfo {
     if (_viewControllersInfo == nil) {
         _viewControllersInfo = @[
-                                 @{@"class" : [ZWCourseViewController class], @"title" : @"资源", @"image" : @"resource"},
-                                 @{@"class" : [ZWRootPathViewController class], @"title" : @"资源", @"image" : @"resource"},
-                                 @{@"class" : [ZWDownloadedViewController class], @"title" : @"已下载", @"image" : @"user"},
-                                 @{@"class" : [ZWStudentCircleViewController class], @"title" : @"学生圈", @"image" : @"extra"},
-                                 @{@"class" : [ZWDiscoveryViewController class], @"title" : @"发现", @"image" : @"user"},
+                                 @{@"class" : [ZWCourseViewController class], @"title" : @"资源", @"image" : @"icon_resource", @"selected_image" : @"icon_resource_selected"},
+                                 @{@"class" : [ZWDownloadedViewController class], @"title" : @"已下载", @"image" : @"icon_downloaded", @"selected_image" : @"icon_downloaded_selected"},
+                                 @{@"class" : [ZWStudentCircleViewController class], @"title" : @"学生圈", @"image" : @"icon_circle", @"selected_image" : @"icon_circle_selected"},
+                                 @{@"class" : [ZWDiscoveryViewController class], @"title" : @"发现", @"image" : @"icon_discovery", @"selected_image" : @"icon_discovery_selected"},
                                  ];
     }
     return _viewControllersInfo;
@@ -40,13 +38,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.tabBar.barTintColor = [UIColor whiteColor];
+
     
     NSMutableArray<UIViewController *> *viewControllers = [NSMutableArray array];
     for (NSDictionary *dict in self.viewControllersInfo) {
         Class clazz = dict[@"class"];
-        ZWNavigationController *nav = [[ZWNavigationController alloc] initWithRootViewController:[[clazz alloc] init] tabBarItemComponents:@[dict[@"title"], dict[@"image"]]];
+        ZWNavigationController *nav = [[ZWNavigationController alloc] initWithRootViewController:[[clazz alloc] init] tabBarItemComponents:@[dict[@"title"], dict[@"image"], dict[@"selected_image"]]];
         [viewControllers addObject:nav];
     }
     

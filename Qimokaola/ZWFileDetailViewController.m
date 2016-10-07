@@ -13,12 +13,17 @@
 #import "ZWNetworkingManager.h"
 #import "ZWUserManager.h"
 #import "ZWPathTool.h"
+#import "ZWDataBaseTool.h"
+#import "ZWHUDTool.h"
 
 #import <AFNetworking/AFNetworking.h>
 #import "Masonry.h"
 #import "UMSocial.h"
+#import <ReactiveCocoa/ReactiveCocoa.h>
 
 @interface ZWFileDetailViewController () <UMSocialUIDelegate, UIDocumentInteractionControllerDelegate>
+
+
 
 // 分享UI
 @property (nonatomic, strong) UIDocumentInteractionController *documentController;
@@ -30,8 +35,10 @@
 @property (nonatomic, strong) UILabel *nameLabel;
 // 文件大小标签
 @property (nonatomic, strong) UILabel *sizeLabel;
-// 有关文件上传的信息
-@property (nonatomic, strong) UILabel *uploaderDesclabel;
+// 文件上传时间
+@property (nonatomic, strong) UILabel *uploadTimeLabel;
+// 文件上传者标签
+@property (nonatomic, strong) UILabel *uploaderLabel;
 // 打开、下载按钮
 @property (nonatomic, strong) UIButton *downloadOrOpenButton;
 // 分享按钮
@@ -46,6 +53,10 @@
 @property (nonatomic, strong) UIButton *cancelButton;
 
 @property (nonatomic, strong) AFHTTPSessionManager *downloadManager;
+
+@property (nonatomic, strong) NSURLSessionDownloadTask *downloadTask;
+
+
 
 @end
 
@@ -64,24 +75,31 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     if ([self respondsToSelector:@selector(automaticallyAdjustsScrollViewInsets)]) {
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
-    
     self.title = @"文件详情";
     
-    NSLog(@"%@", _path);
-    
     [self zw_addSubViews];
-    // 根据ZWFile设置相关视图
     [self setFileInfo];
+    
+    // 构建文件标识符
+    // 如果文件已经下载 则取出文件存于磁盘中的名字
+    if (self.hasDownloaded && self.storage_name != nil) {
+        self.storage_name = [[ZWDataBaseTool sharedInstance] fileNameInStorageWithIdentifier:self.file.md5];
+    }
+    
+    self.documentController = [[UIDocumentInteractionController alloc] init];
+    self.documentController.delegate = self;
+    
+    RAC(self.downloadOrOpenButton, selected) = RACObserve(self, hasDownloaded);
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 #pragma mark - Lazy Loading
 
@@ -98,8 +116,10 @@
 
 - (void)setFileInfo {
     _typeImageView.image = [UIImage imageNamed:[ZWFileTool fileTypeFromFileName:_file.name]];
+    
     _nameLabel.text = _file.name;
-    _sizeLabel.text = [ZWFileTool sizeWithString:_file.size];
+    
+    _uploaderLabel.text = [NSString stringWithFormat:@"分享者：@%@", _file.creator];
     
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
     [formatter setDateStyle:NSDateFormatterMediumStyle];
@@ -107,7 +127,9 @@
     [formatter setDateFormat:@"yyyy-MM-dd"];
     NSDate *datea = [NSDate dateWithTimeIntervalSince1970:[_file.ctime doubleValue] / 1000];
     NSString *dateString = [formatter stringFromDate:datea];
-    _uploaderDesclabel.text = [NSString stringWithFormat:@"由用户 %@\n 于 %@ 上传", _file.creator, dateString];
+    _uploadTimeLabel.text = [NSString stringWithFormat:@"%@上传",dateString];
+    
+    _sizeLabel.text = [NSString stringWithFormat:@"大小：%@", [ZWFileTool sizeWithString:_file.size]];
 }
 
 - (void)zw_addSubViews {
@@ -174,31 +196,42 @@
         label;
     });
     
+    _uploaderLabel = [[UILabel alloc] init];
+    _uploaderLabel.font = ZWFont(16);
+    _uploaderLabel.textColor = [UIColor blueColor];
+    _uploaderLabel.textAlignment = NSTextAlignmentCenter;
+    _uploaderLabel.numberOfLines = 1;
+    [self.view addSubview:_uploaderLabel];
+    [_uploaderLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(weakSelf.view);
+        make.top.equalTo(weakSelf.nameLabel.mas_bottom);
+    }];
+    
+    _uploadTimeLabel = [[UILabel alloc] init];
+    _uploadTimeLabel.textColor = [UIColor blackColor];
+    _uploadTimeLabel.font = ZWFont(16);
+    _uploadTimeLabel.numberOfLines = 0;
+    _uploadTimeLabel.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:_uploadTimeLabel];
+    [_uploadTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(weakSelf.view);
+        make.top.equalTo(weakSelf.uploaderLabel.mas_bottom).offset(40);
+    }];
+    
     self.sizeLabel = ({
         UILabel *label = [[UILabel alloc] init];
         UIFont *font = [UIFont systemFontOfSize:16];
         label.font = font;
-        label.textColor = [UIColor grayColor];
+        label.textColor = [UIColor blackColor];
         label.textAlignment = NSTextAlignmentCenter;
         [self.view addSubview:label];
         [label mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.mas_equalTo(weakSelf.view);
-            make.top.mas_equalTo(weakSelf.nameLabel.mas_bottom);
+            make.top.mas_equalTo(weakSelf.uploadTimeLabel.mas_bottom).with.offset(10);
             
         }];
         label;
     });
-    
-    _uploaderDesclabel = [[UILabel alloc] init];
-    _uploaderDesclabel.textColor = [UIColor lightGrayColor];
-    _uploaderDesclabel.font = ZWFont(15);
-    _uploaderDesclabel.numberOfLines = 0;
-    _uploaderDesclabel.textAlignment = NSTextAlignmentCenter;
-    [self.view addSubview:_uploaderDesclabel];
-    [_uploaderDesclabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(weakSelf.view);
-        make.top.equalTo(weakSelf.sizeLabel.mas_bottom).offset(40);
-    }];
     
     int margin =20;
     float cornerRadius = 5.0f;
@@ -209,6 +242,7 @@
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         [button.titleLabel setFont:buttonTitleFont];
         [button setTitle:@"下载文件" forState:UIControlStateNormal];
+        [button setTitle:@"打开文件" forState:UIControlStateSelected];
         [button setBackgroundImage:[tintColor parseToImage] forState:UIControlStateNormal];
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         button.layer.cornerRadius = cornerRadius;
@@ -247,17 +281,14 @@
     }];
     
     [self.shareButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.centerY.mas_equalTo(weakSelf.bottomBar);
         make.height.mas_equalTo(weakSelf.downloadOrOpenButton);
         make.right.mas_equalTo(weakSelf.bottomBar.mas_right).with.offset(- margin);
-        
         make.left.mas_equalTo(weakSelf.downloadOrOpenButton.mas_right).with.offset(margin * 2);
         make.width.mas_equalTo(weakSelf.downloadOrOpenButton);
     }];
     
     self.progressLabel = ({
-        
         UILabel *label = [[UILabel alloc] init];
         label.numberOfLines = 1;
         label.textAlignment = NSTextAlignmentCenter;
@@ -265,21 +296,18 @@
         label.textColor = [UIColor grayColor];
         [self.bottomBar addSubview:label];
         label.hidden = YES;
+        label.text  = @"正在准备下载...";
         label;
     });
     
     self.progressView = ({
-        
         UIProgressView *progress = [[UIProgressView alloc] init];
         progress.trackTintColor = RGB(229, 229, 229);
         progress.progressTintColor = RGB(101, 213, 33);
         progress.progress = 0.0;
         [self.bottomBar addSubview:progress];
-        
         progress.hidden = YES;
-        
         progress;
-        
     });
     
     self.cancelButton = ({
@@ -312,59 +340,87 @@
 }
 
 - (void)cancelDownload {
+    [self setDownloadState:NO];
+    if (self.downloadTask) {
+        [self.downloadTask cancel];
+        self.downloadTask = nil;
+    }
 }
 
 - (void)downloadOrOpenButtonClicked:(UIButton *)sender {
-//    [ZWNetworkingManager postWithURLString:[[ZWAPITool base] stringByAppendingString:[NSString stringWithFormat:@"/api/dbfs/%d/download", [[ZWUserManager sharedInstance].loginUser.collegeId intValue]]]
-//                                    params:@{@"path" : [_path stringByAppendingString:_file.name]}
-//                                  progress:^(NSProgress *progress) {
-//                                      NSLog(@"%@", progress);
-//                                  }
-//                                   success:^(NSURLSessionDataTask *task, id responseObject) {
-//                                       NSLog(@"success: %@", responseObject);
-//                                   }
-//                                   failure:^(NSURLSessionDataTask *task, NSError *error) {
-//                                       NSLog(@"failure: %@", error);
-//                                   }];
-    
-    
-    
-//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[[ZWAPITool base] stringByAppendingPathComponent:[NSString stringWithFormat:@"/api/dbfs/%d/download", [[ZWUserManager sharedInstance].loginUser.collegeId intValue]]]]];
-//    [request setHTTPMethod:@"POST"];
-//    NSDictionary *paramsDict = @{@"path" : _file.name};
-//    NSData *paramsData = [NSJSONSerialization dataWithJSONObject:paramsDict options:NSJSONWritingPrettyPrinted error:NULL];
-//    [request setHTTPBody:paramsData];
-//    NSURLSessionDownloadTask *downloadTask = [self.downloadManager downloadTaskWithRequest:request
-//                                                                                  progress:^(NSProgress * _Nonnull downloadProgress) {
-//                                                                                      //NSLog(@"%@", downloadProgress);
-//                                                                                  }
-//                                                                               destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
-//                                                                                   // NSLog(@"%@ %@", targetPath, response);
-//                                                                                   return [NSURL fileURLWithPath:[[ZWPathTool downloadDirectory] stringByAppendingPathComponent:_file.name]];
-//                                                                                }
-//                                                                         completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
-//                                                                             NSLog(@"%@\n%@\n%@", response, filePath, error);
-//                                                                         }];
+    if (!self.hasDownloaded) {
+        [self downloadFile];
+    } else {
+        [self openDocumentInThirdPartyApp];
+    }
+}
 
-   [self.downloadManager POST:[[ZWAPITool base] stringByAppendingString:[NSString stringWithFormat:@"/api/dbfs/%d/download", [[ZWUserManager sharedInstance].loginUser.collegeId intValue]]]
-                    parameters:@{@"path" : [_path stringByAppendingString:_file.name]}
-                      progress:^(NSProgress * _Nonnull uploadProgress) {
-                          NSLog(@"uploadProgress: %@", uploadProgress);
-                      }
-                       success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                           NSLog(@"responseObject: %@", responseObject);
-                       }
-                       failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                           NSLog(@"error: %@", error);
-                       }];
-    [self.downloadManager setTaskWillPerformHTTPRedirectionBlock:^NSURLRequest * _Nonnull(NSURLSession * _Nonnull session, NSURLSessionTask * _Nonnull task, NSURLResponse * _Nonnull response, NSURLRequest * _Nonnull request) {
-        if (request) {
-            return request;
-        }
-        return nil;
-    }];
-    
-    
+- (void)downloadFile {
+    __weak __typeof(self) weakSelf = self;
+    [self setDownloadState:YES];
+    [ZWAPIRequestTool requestDownloadUrlInSchool:[ZWUserManager sharedInstance].loginUser.collegeId
+                                            path:[_path stringByAppendingString:_file.name]
+                                          result:^(id response, BOOL success) {
+                                              if (success && [[response objectForKey:kHTTPResponseCodeKey] intValue] == 0) {
+                                                  NSString *urlString = [[response objectForKey:kHTTPResponseResKey] objectForKey:@"url"];
+                                                  [weakSelf downloadFileWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]]];
+                                              } else {
+                                                  [weakSelf setDownloadState:NO];
+                                                  [ZWHUDTool showHUDInView:weakSelf.navigationController.view withTitle:@"获取下载地址失败" message:nil duration:kShowHUDShort];
+                                              }
+                                          }];
+}
+
+- (void)downloadFileWithRequest:(NSURLRequest *)request {
+    __weak __typeof(self) weakSelf = self;
+    weakSelf.downloadTask = [self.downloadManager downloadTaskWithRequest:request
+                                                                     progress:^(NSProgress * _Nonnull downloadProgress) {
+                                                                         dispatch_async(dispatch_get_main_queue(), ^{
+                                                                             weakSelf.progressLabel.text = [NSString stringWithFormat:@"已完成：%.1f%%", downloadProgress.fractionCompleted * 100];
+                                                                             weakSelf.progressView.progress = downloadProgress.fractionCompleted;
+                                                                         });
+                                                                     }
+                                                                  destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
+                                                                      return [NSURL fileURLWithPath:[weakSelf properFileName:weakSelf.file.name]];
+                                                                  }
+                                                            completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
+                                                                [weakSelf setDownloadState:NO];
+                                                                if (error) {
+                                                                    NSLog(@"取消下载或下载失败");
+                                                                } else {
+                                                                    weakSelf.hasDownloaded = YES;
+                                                                    if (weakSelf.downloadCompletion) {
+                                                                        weakSelf.downloadCompletion();
+                                                                    }
+                                                                    [[ZWDataBaseTool sharedInstance] addFileDownloadInfo:weakSelf.file
+                                                                                                                filenameInStorage:weakSelf.storage_name
+                                                                                                                inSchool:[ZWUserManager sharedInstance].loginUser.collegeName
+                                                                                                                inCourse:weakSelf.course];
+                                                                }
+                                                            }];
+    [weakSelf.downloadTask resume];
+}
+
+
+
+/**
+ 获得文件的最佳存储路径
+
+ @param originFileName
+
+ @return
+ */
+- (NSString *)properFileName:(NSString *)originFileName {
+    NSString *properFileName = originFileName;
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *downloadDir = [ZWPathTool downloadDirectory];
+    NSRange range = [properFileName rangeOfString:@"." options:NSBackwardsSearch];
+    int suffix = 1;
+    while ([fileManager fileExistsAtPath:[downloadDir stringByAppendingPathComponent:properFileName]]) {
+        properFileName = [originFileName stringByReplacingCharactersInRange:range withString:[NSString stringWithFormat:@"(%d).", suffix ++]];
+    }
+    self.storage_name = properFileName;
+    return [downloadDir stringByAppendingPathComponent:properFileName];
 }
 
 #pragma mark - 分享至QQ QQ空间
@@ -381,7 +437,11 @@
 
 #pragma mark 打开已下载文件
 -(void)openDocumentInThirdPartyApp {
-    
+    NSString *filePath = [[ZWPathTool downloadDirectory] stringByAppendingPathComponent:self.storage_name];
+//    self.documentController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:filePath]];
+//    self.documentController.delegate = self;
+    self.documentController.URL = [NSURL fileURLWithPath:filePath];
+    [self.documentController presentOptionsMenuFromRect:self.view.bounds inView:self.view animated:YES];
 }
 
 - (void)sendButtonClicked:(UIButton *)sender {
@@ -402,6 +462,9 @@
     self.progressLabel.hidden = hidden;
     self.progressView.hidden = hidden;
     self.cancelButton.hidden = hidden;
+    
+    self.progressView.progress = 0.f;
+    self.progressLabel.text = @"正在准备下载...";
 }
 
 #pragma mark - UIDocumentInteractionControllerDelegate代理方法

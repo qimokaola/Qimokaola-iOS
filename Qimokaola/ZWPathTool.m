@@ -26,7 +26,7 @@
 }
 
 + (NSString *)dbDirectory {
-    NSString *dbDirectory = [[self documentDirectory] stringByAppendingPathComponent:@"db"];
+    NSString *dbDirectory = [[self documentDirectory] stringByAppendingPathComponent:@"Database"];
     return [self checkDirExistence:dbDirectory];
 }
 

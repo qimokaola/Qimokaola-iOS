@@ -1,13 +1,14 @@
 //
-//  ZWUserViewController.h
+//  ZWDownloadedViewController.h
 //  Qimokaola
 //
-//  Created by Administrator on 15/10/11.
-//  Copyright © 2015年 Administrator. All rights reserved.
+//  Created by Administrator on 2016/10/7.
+//  Copyright © 2016年 Administrator. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
+#import "ZWBaseSearchViewController.h"
 
-@interface ZWDownloadedViewController : UITableViewController
+@interface ZWDownloadedViewController : ZWBaseSearchViewController
 
 @end

@@ -38,4 +38,6 @@ typedef void(^APIRequestResult)(id response, BOOL success);
 
 + (void)requestLogout:(APIRequestResult)result;
 
++ (void)requestDownloadUrlInSchool:(NSNumber *)collegeId path:(NSString *)path result:(APIRequestResult)result;
+
 @end

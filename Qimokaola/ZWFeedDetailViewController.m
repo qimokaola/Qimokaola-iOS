@@ -697,16 +697,21 @@
 
 - (void)fetchCommentsData {
     __weak __typeof(self) weakSelf = self;
+    MBProgressHUD *hud = [ZWHUDTool excutingHudInView:self.navigationController.view title:nil];
     [[UMComDataRequestManager defaultManager] fetchCommentsWithFeedId:_feed.feedID
                                                         commentUserId:nil
                                                              sortType:UMComCommentSortType_Default
                                                                 count:9999
                                                            completion:^(NSDictionary *responseObject, NSError *error) {
                                                                if (responseObject) {
+                                                                   [hud hideAnimated:YES];
                                                                    [weakSelf.comments addObjectsFromArray:responseObject[@"data"]];
                                                                    [weakSelf.tableView reloadData];
                                                                } else {
                                                                    NSLog(@"%@", error);
+                                                                   hud.mode = MBProgressHUDModeText;
+                                                                   hud.label.text = @"获取失败";
+                                                                   [hud hideAnimated:YES afterDelay:kShowHUDShort];
                                                                }
                                                            }];
 }

@@ -19,6 +19,7 @@
 // 头像路径
 + (NSString *)avatarDirectory;
 
+// 数据库路径
 + (NSString *)dbDirectory;
 
 //广告路径

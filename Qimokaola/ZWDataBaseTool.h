@@ -11,8 +11,16 @@
 
 @interface ZWDataBaseTool : NSObject
 
-+ (void)saveDownloadFileInfo:(ZWFile *)file;
++ (instancetype)sharedInstance;
 
-+ (BOOL)isFileDownloaded:(ZWFile *)file;
+- (BOOL)isFileDownloaded:(NSString *)fileIdentifier;
+
+- (NSString *)fileNameInStorageWithIdentifier:(NSString *)fileIdentifier;
+
+- (BOOL)addFileDownloadInfo:(ZWFile *)file
+                    filenameInStorage:(NSString *)fileNameInStorage
+                    inSchool:(NSString *)school
+                    inCourse:(NSString *)course;
+- (BOOL)deleteFileDownloadInfo:(NSString *)identifier;
 
 @end

@@ -20,4 +20,8 @@
 // 文件大小
 @property (nonatomic, strong) NSString *size;
 
+@property (nonatomic, strong) NSString *md5;
+
+@property (nonatomic, assign) BOOL hasDownloaded;
+
 @end

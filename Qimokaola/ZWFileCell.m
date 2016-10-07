@@ -66,18 +66,18 @@
     .leftSpaceToView(_iconView, margin)
     .rightSpaceToView(contentView, margin)
     .topEqualToView(_iconView)
-    .autoHeightRatio(0);
+    .heightIs(20);
     
     _sizeLabel.sd_layout
     .rightEqualToView(_nameLabel)
     .bottomEqualToView(_iconView)
-    .autoHeightRatio(0);
+    .heightIs(20);
     [_sizeLabel setSingleLineAutoResizeWithMaxWidth:100];
     
     _isDownloadLabel.sd_layout
     .leftEqualToView(_nameLabel)
     .bottomEqualToView(_iconView)
-    .autoHeightRatio(0);
+    .heightIs(20);
     [_isDownloadLabel setSingleLineAutoResizeWithMaxWidth:100];
 }
 
@@ -87,7 +87,8 @@
     _iconView.image = [UIImage imageNamed:[ZWFileTool fileTypeFromFileName:file.name]];
     _nameLabel.text = file.name;
     _sizeLabel.text = [ZWFileTool sizeWithString:file.size];
-    _isDownloadLabel.hidden = arc4random_uniform(10) < 5;
+    
+    _isDownloadLabel.hidden = !file.hasDownloaded;
 }
 
 - (void)awakeFromNib {

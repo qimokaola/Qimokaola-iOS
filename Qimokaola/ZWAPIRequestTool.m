@@ -99,6 +99,12 @@
                               result:result];
 }
 
++ (void)requestDownloadUrlInSchool:(NSNumber *)collegeId path:(NSString *)path result:(APIRequestResult)result {
+    [ZWAPIRequestTool requestWithAPI:[NSString stringWithFormat:[ZWAPITool downloadUrlAPI], collegeId.intValue]
+                          parameters:@{@"path" : path}
+                              result:result];
+}
+
 // 通用请求接口，针对接收字典参数的接口
 + (void)requestWithAPI:(NSString *)API parameters:(id)params result:(APIRequestResult)result {
     

@@ -13,15 +13,16 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "ZWBaseTableViewController.h"
+
 #import "MJRefresh.h"
 
-@interface ZWBaseSearchViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UISearchResultsUpdating, UISearchControllerDelegate>
+@interface ZWBaseSearchViewController : ZWBaseTableViewController <UISearchResultsUpdating, UISearchControllerDelegate>
 
-// 列表视图
-@property (nonatomic, strong) UITableView *tableView;
 // 搜索控件
 @property (nonatomic, strong) UISearchController *searchController;
-// 对外暴露的下拉刷新时执行的方法
-- (void)freshHeaderStartFreshing;
+
+@property (nonatomic, strong) NSMutableArray *dataArray;
+@property (nonatomic, strong) NSMutableArray *filteredArray;
 
 @end

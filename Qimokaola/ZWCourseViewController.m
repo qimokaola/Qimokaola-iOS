@@ -23,7 +23,7 @@
 @implementation ZWCourseViewController
 
 static NSString *const ROOT = @"/";
-static NSString *const CourseCellIdentifier = @"CourseCellIdentifier";
+static NSString *const kCourseCellIdentifier = @"kCourseCellIdentifier";
 
 #pragma mark - Life Cycle
 
@@ -32,7 +32,9 @@ static NSString *const CourseCellIdentifier = @"CourseCellIdentifier";
     
     __weak __typeof(self) weakSelf = self;
     
-    [self.tableView registerClass:[ZWCourseCell class] forCellReuseIdentifier:CourseCellIdentifier];    
+    self.hidesBottomBarWhenPushed = NO;
+    
+    [self.tableView registerClass:[ZWCourseCell class] forCellReuseIdentifier:kCourseCellIdentifier];
     self.tableView.rowHeight = 50;
     
     [[[NSNotificationCenter defaultCenter] rac_addObserverForName:kUserLoginSuccessNotification object:nil] subscribeNext:^(id x) {
@@ -84,7 +86,7 @@ static NSString *const CourseCellIdentifier = @"CourseCellIdentifier";
 #pragma mark - UITableViewDataSource
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    ZWCourseCell *cell = [tableView dequeueReusableCellWithIdentifier:CourseCellIdentifier];
+    ZWCourseCell *cell = [tableView dequeueReusableCellWithIdentifier:kCourseCellIdentifier];
     ZWFolder *folder = nil;
     if (self.searchController.active) {
         folder = [self.filteredArray objectAtIndex:indexPath.row];
@@ -96,10 +98,6 @@ static NSString *const CourseCellIdentifier = @"CourseCellIdentifier";
 }
 
 #pragma mark - UITableViewDelegate
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 50;
-}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -116,6 +114,7 @@ static NSString *const CourseCellIdentifier = @"CourseCellIdentifier";
     path = [[ROOT stringByAppendingPathComponent:folder.name] stringByAppendingString:@"/"];
     ZWFileAndFolderViewController *fileAndFolder = [[ZWFileAndFolderViewController alloc] init];
     fileAndFolder.path = path;
+    fileAndFolder.course = folder.name;
     [self.navigationController pushViewController:fileAndFolder animated:YES];
 }
 

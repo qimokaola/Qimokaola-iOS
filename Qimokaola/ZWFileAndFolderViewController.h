@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ZWBaseSearchViewController.h"
+#import "ZWBaseTableViewController.h"
 #import "ZWAPIRequestTool.h"
 #import "ZWUserManager.h"
 #import "ZWFile.h"
@@ -19,7 +19,7 @@
  *  显示文件以及文件夹
  */
 
-@interface ZWFileAndFolderViewController : ZWBaseSearchViewController
+@interface ZWFileAndFolderViewController : ZWBaseTableViewController
 
 // 所有文件
 @property (nonatomic, strong) NSMutableArray *files;
@@ -31,6 +31,8 @@
 @property (nonatomic, strong) NSMutableArray *filteredFolder;
 // 当前路径
 @property (nonatomic, strong) NSString *path;
+// 当前课程
+@property (nonatomic, strong) NSString *course;
 // 检测row是否处于文件范围
 - (BOOL)isIndexInFiles:(NSInteger)index;
 

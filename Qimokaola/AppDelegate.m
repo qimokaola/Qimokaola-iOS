@@ -127,6 +127,7 @@
     }];
     
     [[UINavigationBar appearance] setBarTintColor:[UIColor whiteColor]];
+    [[UITabBar appearance] setBarTintColor:[UIColor whiteColor]];
     
     YYFPSLabel *fpsLabel = [[YYFPSLabel alloc] initWithFrame:CGRectMake(0, kScreenHeight - 100, 0, 0)];
     [fpsLabel sizeToFit];

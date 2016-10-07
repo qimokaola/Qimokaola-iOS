@@ -34,4 +34,6 @@
 
 + (NSString *)logoutAPI;
 
++ (NSString *)downloadUrlAPI;
+
 @end
