@@ -6,10 +6,10 @@
 //  Copyright © 2015年 Administrator. All rights reserved.
 //
 
-#import "ZWDownloadInfoCell.h"
+#import "ZWOldDownloadInfoCell.h"
 #import "ZWFileTool.h"
 
-@interface ZWDownloadInfoCell ()
+@interface ZWOldDownloadInfoCell ()
 @property (weak, nonatomic) IBOutlet UIImageView *imgViewIcon;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *sizeLabel;
@@ -17,12 +17,12 @@
 
 @end
 
-@implementation ZWDownloadInfoCell
+@implementation ZWOldDownloadInfoCell
 
 +(instancetype)downloadInfoCellWithTablelView:(UITableView *)tableView  {
     static NSString *cellID = @"downloadCellID";
     
-    ZWDownloadInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+    ZWOldDownloadInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
     if(cell == nil)  {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"ZWDownloadInfoCell" owner:nil options:nil] firstObject];
     }

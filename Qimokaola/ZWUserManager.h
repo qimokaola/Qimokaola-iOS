@@ -21,6 +21,9 @@
 
 + (instancetype)sharedInstance;
 
+- (void)loginStudentCircle;
+- (void)logoutStudentCircle;
+
 // 修改昵称
 - (void)modifyUserNickname:(NSString *)nickname result:(APIRequestResult)result;
 - (void)updateNickname:(NSString *)nickname;

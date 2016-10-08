@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ZWFile.h"
+#import "ZWDownloadedInfo.h"
 
 @interface ZWDataBaseTool : NSObject
 
@@ -15,12 +15,17 @@
 
 - (BOOL)isFileDownloaded:(NSString *)fileIdentifier;
 
-- (NSString *)fileNameInStorageWithIdentifier:(NSString *)fileIdentifier;
+- (NSString *)storage_nameWithIdentifier:(NSString *)identifier;
 
 - (BOOL)addFileDownloadInfo:(ZWFile *)file
-                    filenameInStorage:(NSString *)fileNameInStorage
+                    storage_name:(NSString *)storage_name
                     inSchool:(NSString *)school
                     inCourse:(NSString *)course;
+
 - (BOOL)deleteFileDownloadInfo:(NSString *)identifier;
+
+- (BOOL)updateLastAccessTimeWithIdentifier:(NSString *)identifier;
+
+- (NSMutableArray<ZWDownloadedInfo *> *)fetchDonwloadedInfos;
 
 @end

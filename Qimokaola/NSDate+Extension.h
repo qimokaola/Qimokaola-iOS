@@ -11,5 +11,7 @@
 @interface NSDate (Extension)
 
 + (NSString *)current;
++ (NSString *)secondsSince1970;
++ (NSString *)timeIntervalDescriptionWithPast:(NSString *)past;
 
 @end

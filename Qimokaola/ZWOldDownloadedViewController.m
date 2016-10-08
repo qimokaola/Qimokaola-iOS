@@ -11,7 +11,7 @@
 #import "FMDB.h"
 #import "AppDelegate.h"
 #import "ZWDownloadInfoModel.h"
-#import "ZWDownloadInfoCell.h"
+#import "ZWOldDownloadInfoCell.h"
 #import "UMSocial.h"
 #import "MBProgressHUD.h"
 #import "Masonry.h"
@@ -206,7 +206,7 @@
 #pragma mark 返回cell
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    ZWDownloadInfoCell *cell = [ZWDownloadInfoCell downloadInfoCellWithTablelView:tableView];
+    ZWOldDownloadInfoCell *cell = [ZWOldDownloadInfoCell downloadInfoCellWithTablelView:tableView];
     
     ZWDownloadInfoModel *model = [self.searchController.active ? self.searchResults : self.downloadInfos objectAtIndex:indexPath.row];
 

@@ -110,28 +110,31 @@
     
     // 在确认存在本地用户与用户登录成功之后执行登录学生圈
     [[[[NSNotificationCenter defaultCenter] rac_addObserverForName:kLocalUserLoginStateGuranteedNotification object:nil] deliverOnMainThread] subscribeNext:^(id x) {
-        NSLog(@"本地用户存在，执行学生圈登录流程");
+        // 本地用户存在，执行学生圈登录流程"
         [weakSelf loginTheStudentCircle];
     }];
     
     [[[[NSNotificationCenter defaultCenter] rac_addObserverForName:kUserLoginSuccessNotification object:nil] deliverOnMainThread] subscribeNext:^(id x) {
-        NSLog(@"用户登录成功，执行学生圈登录流程");
+        // 用户登录成功，执行学生圈登录流程
         [weakSelf loginTheStudentCircle];
     }];
     
     [[[NSNotificationCenter defaultCenter] rac_addObserverForName:kUserLogoutSuccessNotification object:nil] subscribeNext:^(id x) {
-        // 如果学生圈已经登录 则登出
-        if ([UMComSession sharedInstance].isLogin) {
-            [[UMComSession sharedInstance] userLogout];
-        }
+        [[ZWUserManager sharedInstance] logoutStudentCircle];
     }];
     
-    [[UINavigationBar appearance] setBarTintColor:[UIColor whiteColor]];
+    [[UINavigationBar appearance] setBarTintColor:RGB(80,140,238)];
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor],
+                                                           NSFontAttributeName : [UIFont systemFontOfSize:17 weight:UIFontWeightBold],
+                                                           }];
     [[UITabBar appearance] setBarTintColor:[UIColor whiteColor]];
     
+#ifdef DEBUG
     YYFPSLabel *fpsLabel = [[YYFPSLabel alloc] initWithFrame:CGRectMake(0, kScreenHeight - 100, 0, 0)];
     [fpsLabel sizeToFit];
     [self.window addSubview:fpsLabel];
+#endif
     
     return YES;
 }
@@ -148,49 +151,7 @@
 - (void)loginTheStudentCircle {
     // 登录学生圈
     dispatch_async(dispatch_get_main_queue(), ^{
-        ZWUser *user = [ZWUserManager sharedInstance].loginUser;
-        [[UMComDataRequestManager defaultManager] userCustomAccountLoginWithName:user.nickname
-                                                                        sourceId:user.uid
-                                                                        icon_url:[[ZWAPITool base] stringByAppendingPathComponent:user.avatar_url]
-                                                                          gender:[user.gender isEqualToString:@"男"] ? 1 : 0
-                                                                             age:0
-                                                                          custom:user.collegeName
-                                                                           score:0
-                                                                      levelTitle:nil
-                                                                           level:0
-                                                               contextDictionary:nil
-                                                                    userNameType:userNameNoRestrict
-                                                                  userNameLength:userNameLengthNoRestrict
-                                                                      completion:^(NSDictionary *responseObject, NSError *error) {
-                                                                          if (error) {
-                                                                              NSLog(@"登录发生错误 ;%@", error);
-                                                                          } else {
-                                                                              if ([responseObject isKindOfClass:[NSDictionary class]]) {
-                                                                                  UMComUser *user = responseObject[UMComModelDataKey];
-                                                                                  if (user) {
-                                                                                      NSLog(@"登录学生圈成功，登录用户: %@, 自定义字段: %@", user.name, user.custom);
-                                                                                      [UMComSession sharedInstance].loginUser = user;
-                                                                                      [[UMComDataBaseManager shareManager] saveRelatedIDTableWithType:UMComRelatedRegisterUserID withUsers:@[user]];
-                                                                                      // 若自定义字段为null，则更新用户信息确保自定义字段存在
-                                                                                      if (!user.custom) {
-                                                                                          [[UMComDataRequestManager defaultManager]
-                                                                                           updateProfileWithName:user.name
-                                                                                           age:user.age
-                                                                                           gender:user.gender
-                                                                                           custom:[ZWUserManager sharedInstance].loginUser.collegeName
-                                                                                           userNameType:userNameNoRestrict
-                                                                                           userNameLength:userNameLengthNoRestrict
-                                                                                           completion:^(NSDictionary *responseObject, NSError *error) {
-                                                                                               // 由于友盟SDK bug原因 此处修改信息必定错误 但修改生效 故不考虑结果
-                                                                                          }];
-                                                                                      }
-                                                                                      //[UMComSession sharedInstance].token = responseObject[UMComTokenKey];
-                                                                                      
-                                                                                      //                                                                                  [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoginSucceedNotification object:nil];
-                                                                                  }
-                                                                              }
-                                                                          }
-                                                                      }];
+        [[ZWUserManager sharedInstance] loginStudentCircle];
     });
     
 }

@@ -85,8 +85,8 @@
     
     // 构建文件标识符
     // 如果文件已经下载 则取出文件存于磁盘中的名字
-    if (self.hasDownloaded && self.storage_name != nil) {
-        self.storage_name = [[ZWDataBaseTool sharedInstance] fileNameInStorageWithIdentifier:self.file.md5];
+    if (self.hasDownloaded && self.storage_name == nil) {
+        self.storage_name = [[ZWDataBaseTool sharedInstance] storage_nameWithIdentifier:self.file.md5];
     }
     
     self.documentController = [[UIDocumentInteractionController alloc] init];
@@ -393,7 +393,7 @@
                                                                         weakSelf.downloadCompletion();
                                                                     }
                                                                     [[ZWDataBaseTool sharedInstance] addFileDownloadInfo:weakSelf.file
-                                                                                                                filenameInStorage:weakSelf.storage_name
+                                                                                                                storage_name:weakSelf.storage_name
                                                                                                                 inSchool:[ZWUserManager sharedInstance].loginUser.collegeName
                                                                                                                 inCourse:weakSelf.course];
                                                                 }
@@ -486,7 +486,17 @@
 //点击预览窗口的“Done”(完成)按钮时调用
 
 - (void)documentInteractionControllerDidEndPreview:(UIDocumentInteractionController*)controller {
-    
+    NSLog(@"documentInteractionControllerDidEndPreview");
+}
+
+// 预览文件或者拷贝至第三方App时都会触发以下两个方法
+
+- (void)documentInteractionControllerWillBeginPreview:(UIDocumentInteractionController *)controller {
+    [[ZWDataBaseTool sharedInstance] updateLastAccessTimeWithIdentifier:_file.md5];
+}
+
+- (void)documentInteractionController:(UIDocumentInteractionController *)controller willBeginSendingToApplication:(NSString *)application {
+    [[ZWDataBaseTool sharedInstance] updateLastAccessTimeWithIdentifier:_file.md5];
 }
 
 //弹出列表方法presentSnsIconSheetView需要设置delegate为self

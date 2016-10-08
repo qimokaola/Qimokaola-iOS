@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "ZWDownloadInfoModel.h"
 
-@interface ZWDownloadInfoCell : UITableViewCell
+@interface ZWOldDownloadInfoCell : UITableViewCell
 
 @property (nonatomic, strong) ZWDownloadInfoModel *downloadInfo;
 
