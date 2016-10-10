@@ -27,10 +27,10 @@
 - (NSArray *)viewControllersInfo {
     if (_viewControllersInfo == nil) {
         _viewControllersInfo = @[
-                                 @{@"class" : [ZWCourseViewController class], @"title" : @"资源", @"image" : @"icon_resource", @"selected_image" : @"icon_resource_selected"},
-                                 @{@"class" : [ZWDownloadedViewController class], @"title" : @"已下载", @"image" : @"icon_downloaded", @"selected_image" : @"icon_downloaded_selected"},
-                                 @{@"class" : [ZWStudentCircleViewController class], @"title" : @"学生圈", @"image" : @"icon_circle", @"selected_image" : @"icon_circle_selected"},
-                                 @{@"class" : [ZWDiscoveryViewController class], @"title" : @"发现", @"image" : @"icon_discovery", @"selected_image" : @"icon_discovery_selected"},
+                                 @{@"class" : [ZWCourseViewController class], @"title" : @"资源", @"image" : @"icon_tab_resource", @"selected_image" : @"icon_tab_resource_selected"},
+                                 @{@"class" : [ZWDownloadedViewController class], @"title" : @"已下载", @"image" : @"icon_tab_downloaded", @"selected_image" : @"icon_tab_downloaded_selected"},
+                                 @{@"class" : [ZWStudentCircleViewController class], @"title" : @"学生圈", @"image" : @"icon_tab_circle", @"selected_image" : @"icon_tab_circle_selected"},
+                                 @{@"class" : [ZWDiscoveryViewController class], @"title" : @"发现", @"image" : @"icon_tab_discovery", @"selected_image" : @"icon_tab_discovery_selected"},
                                  ];
     }
     return _viewControllersInfo;
@@ -46,8 +46,23 @@
         ZWNavigationController *nav = [[ZWNavigationController alloc] initWithRootViewController:[[clazz alloc] init] tabBarItemComponents:@[dict[@"title"], dict[@"image"], dict[@"selected_image"]]];
         [viewControllers addObject:nav];
     }
-    
     self.viewControllers = viewControllers;
+    
+//    [self.tabBar setClipsToBounds:YES];
+    
+    self.tabBar.layer.shadowOpacity = 0.05;
+    self.tabBar.layer.shadowOffset = CGSizeMake(0, -1.5);
+    self.tabBar.layer.shadowPath = [UIBezierPath bezierPathWithRect:self.tabBar.bounds].CGPath;
+    
+//    CALayer *shadowLayer = [CALayer layer];
+//    shadowLayer.frame = CGRectMake(0, 0, self.tabBar.frame.size.width, 0.5);
+//    shadowLayer.backgroundColor = [UIColor clearColor].CGColor;
+//    shadowLayer.shadowPath = [UIBezierPath bezierPathWithRect:shadowLayer.bounds].CGPath;
+//    [self.tabBar.layer addSublayer:shadowLayer];
+//    UIView *view = [[UIView alloc] initWithFrame:self.tabBar.bounds];
+//    view.backgroundColor = [UIColor clearColor];
+//    view.layer.shadowPath = [UIBezierPath bezierPathWithRect:view.bounds].CGPath;
+//    [self.tabBar addSubview:view];
 }
 
 - (void)didReceiveMemoryWarning {

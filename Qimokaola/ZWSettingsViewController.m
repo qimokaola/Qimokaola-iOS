@@ -16,6 +16,15 @@
 
 @implementation ZWSettingsViewController
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.hidesBottomBarWhenPushed = YES;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -41,7 +50,6 @@
                 [ZWUserManager sharedInstance].loginUser = nil;
                 [hud hideAnimated:YES];
                 [[NSNotificationCenter defaultCenter] postNotificationName:kUserLogoutSuccessNotification object:nil];
-                [weakSelf.navigationController popViewControllerAnimated:YES];
             } else {
                 hud.mode = MBProgressHUDModeText;
                 hud.label.text = @"出现错误，退出登录失败";

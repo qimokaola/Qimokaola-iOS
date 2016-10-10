@@ -75,7 +75,7 @@
 
     _tableView = [[UITableView alloc] init];
     _tableView.frame = self.view.bounds;
-    _tableView.contentInset = UIEdgeInsetsMake(64, 0, 10, 0);
+    _tableView.contentInset = UIEdgeInsetsMake(64, 0, 20, 0);
     _tableView.scrollIndicatorInsets = _tableView.contentInset;
     _tableView.backgroundColor = [UIColor clearColor];
     _tableView.backgroundView.backgroundColor = [UIColor clearColor];

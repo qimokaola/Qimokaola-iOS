@@ -36,4 +36,6 @@
 
 + (NSString *)downloadUrlAPI;
 
++ (NSString *)infoByNameAPI;
+
 @end

@@ -9,6 +9,7 @@
 #import "ZWStudentCircleViewController.h"
 #import "ZWHUDTool.h"
 #import "ZWFeedTableViewController.h"
+#import "UIColor+Extension.h"
 
 #import "MJRefresh.h"
 #import "SDCycleScrollView.h"
@@ -38,12 +39,26 @@ typedef NS_ENUM(NSInteger, ZWFetchedDataSource) {
     [super viewWillAppear:animated];
     self.cycleScrollView.autoScroll = YES;
     [self.cycleScrollView adjustWhenControllerViewWillAppera];
+    
+    self.navigationController.navigationBar.barTintColor = RGB(246,248,247);
+    [self.navigationController.navigationBar setBackgroundImage:[[UIColor whiteColor] parseToImage] forBarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : defaultBlueColor,
+                                                           NSFontAttributeName : [UIFont systemFontOfSize:17 weight:UIFontWeightBold],
+                                                           }];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
     self.cycleScrollView.autoScroll = NO;
+    
+    self.navigationController.navigationBar.barTintColor = defaultBlueColor;
+    [self.navigationController.navigationBar setBackgroundImage:nil forBarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar setShadowImage:nil];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor],
+                                                           NSFontAttributeName : [UIFont systemFontOfSize:17 weight:UIFontWeightBold],
+                                                           }];
 }
 
 - (void)viewDidLoad {
@@ -67,13 +82,16 @@ typedef NS_ENUM(NSInteger, ZWFetchedDataSource) {
     self.topics = [NSMutableArray array];
     
     NSArray *imgs = @[
-                      @"pic1.jpg",
-                      @"pic2.jpg",
-                      @"pic3.jpg",
-                      @"pic4.jpg",
-                      @"pic5.jpg"];
+                      @"pic6.png",
+                      @"pic6.png",
+                     @"pic6.png",
+                      @"pic6.png",
+                      @"pic6.png",
+                      @"pic6.png"];
     
-    self.cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, kScreenWidth, 150) shouldInfiniteLoop:YES imageNamesGroup:imgs];
+    
+    
+    self.cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, kScreenW, kScreenW / 1.599) shouldInfiniteLoop:YES imageNamesGroup:imgs];
     self.cycleScrollView.delegate = self;
     self.cycleScrollView.autoScrollTimeInterval = 5;
     self.tableView.tableHeaderView = self.cycleScrollView;

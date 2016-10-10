@@ -493,10 +493,10 @@
     
     CGFloat margin = 10.f;
     CGFloat smallMargin = 5.0f;
-    CGFloat avatarHeightOrWidth = 40;
+    CGFloat avatarHeightOrWidth = 43;
     CGFloat singleLineLabelMaxWidth = 200.f;
     CGFloat genderViewSize = 15;
-    CGFloat buttonHeight = 35.f;
+    CGFloat buttonHeight = 40.f;
     CGFloat separatorViewHeight = 10.f;
     UIColor *separatorViewColor = universalGrayColor;
     CGFloat separatorLineSize = .5f;
@@ -551,7 +551,7 @@
     
     _collectButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_collectButton setImage:[UIImage imageNamed:@"icon_feed_uncollect"] forState:UIControlStateNormal];
-    [_collectButton setImage:[UIImage imageNamed:@"icon_feed_collcted"] forState:UIControlStateSelected];
+    [_collectButton setImage:[UIImage imageNamed:@"icon_feed_collected"] forState:UIControlStateSelected];
     [_collectButton setBackgroundImage:backgroundImage forState:UIControlStateNormal];
     [_collectButton setBackgroundImage:highlightedBackgroundImage forState:UIControlStateHighlighted];
     [_collectButton addTarget:self action:@selector(collectButtonClicked) forControlEvents:UIControlEventTouchUpInside];
@@ -703,12 +703,12 @@
     if (DecodeAnonyousCode(_feed.custom) == 0) {
         [_avatarView setImageWithURL:[NSURL URLWithString:_creator.icon_url.small_url_string] placeholder:[UIImage imageNamed:@"avatar"]];
         _nameLabel.text = _creator.name;
-        _schoolLabel.text = createSchoolName(_creator.custom);
     } else {
-        _avatarView.image = [UIImage imageNamed:@"avatar"];
+        _avatarView.image = _creator.gender.intValue == 0 ? [UIImage imageNamed:@"icon_anonymous_female"] : [UIImage imageNamed:@"icon_anonymous_male"];
         _nameLabel.text = kStudentCircleAnonyousName;
-        _schoolLabel.text = nearBySchoolName;
     }
+    
+    _schoolLabel.text = createSchoolName(_creator.custom);
     
     _genderView.image = _creator.gender.intValue == 0 ? [UIImage imageNamed:@"icon_female"] : [UIImage imageNamed:@"icon_male"];
     

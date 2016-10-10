@@ -14,6 +14,7 @@
 #import "ZWBindAccountViewController.h"
 #import "ZWHUDTool.h"
 #import "ZWPathTool.h"
+#import "ZWAPIRequestTool.h"
 
 @interface ZWFilloutInformationViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
@@ -121,24 +122,66 @@
         return @(text.length > 0 && [schoolSelected boolValue] && ([maleBtnEnabled boolValue] != [femaleBtnEnabled boolValue]) && [avatarSelected boolValue]);
     }];
     
-    [[self.nextBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
+//    [[self.nextBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
+//        @strongify(self)
+//        [self goToBindAccountViewController];
+//    }];
+    
+    __block MBProgressHUD *hud;
+    [[[self.nextBtn rac_signalForControlEvents:UIControlEventTouchUpInside] flattenMap:^RACStream *(id value) {
         @strongify(self)
-        
-        ZWBindAccountViewController *bindAccount = [[ZWBindAccountViewController alloc] init];
-        NSMutableDictionary *params = [NSMutableDictionary dictionaryWithDictionary:self.registerParam];
-        NSString *nickname = self.nicknameField.text;
-        NSString *gender = self.maleBtn.enabled ? @"女" : @"男";
-        [params addEntriesFromDictionary:@{
-                                           @"nick": nickname,
-                                           @"gender": gender,
-                                           @"schoolId" : self.collegeID,
-                                           @"academyId": self.academyID,
-                                           @"enterYear": @"2014"
-                                        }];
-        bindAccount.registerParam = params;
-        bindAccount.collegeInfo = @{@"collegeName": self.collegeName, @"academyName": self.academyName};
-       [self.navigationController pushViewController:bindAccount animated:YES];
+        hud = [ZWHUDTool excutingHudInView:self.navigationController.view title:nil];
+        return [self checkNicknameValidSignal];
+    }] subscribeNext:^(NSDictionary *result) {
+        if ([[result objectForKey:kHTTPResponseResKey] allKeys].count == 0) {
+            [hud hideAnimated:YES];
+            [self goToBindAccountViewController];
+        } else {
+            hud.mode = MBProgressHUDModeText;
+            hud.label.text = @"该昵称已存在，请换一个";
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kShowHUDShort * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [hud hideAnimated:YES];
+                [self.nicknameField becomeFirstResponder];
+            });
+        }
+    } error:^(NSError *error) {
+        hud.mode = MBProgressHUDModeText;
+        hud.label.text = @"出现错误, 请重试";
+        [hud hideAnimated:YES afterDelay:kShowHUDShort];
     }];
+}
+
+- (RACSignal *)checkNicknameValidSignal {
+    @weakify(self)
+    return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+        @strongify(self)
+       [ZWAPIRequestTool reuqestInfoByName:self.nicknameField.text result:^(id response, BOOL success) {
+           if (success) {
+               [subscriber sendNext:response];
+               [subscriber sendCompleted];
+           } else {
+               [subscriber sendError:response];
+           }
+       }];
+        return nil;
+    }];
+}
+
+- (void)goToBindAccountViewController {
+    ZWBindAccountViewController *bindAccount = [[ZWBindAccountViewController alloc] init];
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithDictionary:self.registerParam];
+    NSString *nickname = self.nicknameField.text;
+    NSString *gender = self.maleBtn.enabled ? @"女" : @"男";
+    [params addEntriesFromDictionary:@{
+                                       @"nick": nickname,
+                                       @"gender": gender,
+                                       @"schoolId" : self.collegeID,
+                                       @"academyId": self.academyID,
+                                       @"enterYear": @"2014"
+                                       }];
+    bindAccount.registerParam = params;
+    bindAccount.collegeInfo = @{@"collegeName": self.collegeName, @"academyName": self.academyName};
+    [self.navigationController pushViewController:bindAccount animated:YES];
 }
 
 - (void)createSubViews {

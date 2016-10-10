@@ -28,6 +28,7 @@
 - (NSString *)userInfo;
 - (NSString *)modifyUserInfo;
 - (NSString *)logout;
+- (NSString *)infobyname;
 
 @end
 
@@ -93,6 +94,10 @@
     return [self stringByAppendingPathComponent:@"logout"];
 }
 
+- (NSString *)infobyname {
+    return [self stringByAppendingPathComponent:@"infobyname"];
+}
+
 @end
 
 @implementation ZWAPITool
@@ -152,6 +157,10 @@
 
 + (NSString *)downloadUrlAPI {
     return [[ZWAPITool dbfsInUnknowSchool] stringByAppendingPathComponent:@"downloadurl"];;
+}
+
++ (NSString *)infoByNameAPI {
+    return [[ZWAPITool user] infobyname];
 }
 
 + (NSString *)api {

@@ -419,11 +419,13 @@
     _picContainerView = [[SDWeiXinPhotoContainerView alloc] init];
     
     _likeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_likeButton setImage:[[UIImage imageNamed:@"icon_detail_liked"] imageByResizeToSize:imageSize] forState:UIControlStateNormal];
+    [_likeButton setImage:[[UIImage imageNamed:@"icon_detail_unlike"] imageByResizeToSize:imageSize] forState:UIControlStateNormal];
+    [_likeButton setImage:[[UIImage imageNamed:@"icon_detail_liked"] imageByResizeToSize:imageSize]forState:UIControlStateSelected];
     [_likeButton addTarget:self action:@selector(likeButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     
     _collectButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_collectButton setImage:[[UIImage imageNamed:@"icon_detail_collected"] imageByResizeToSize:imageSize] forState:UIControlStateNormal];
+    [_collectButton setImage:[[UIImage imageNamed:@"icon_detail_uncollecte"] imageByResizeToSize:imageSize] forState:UIControlStateNormal];
+    [_collectButton setImage:[[UIImage imageNamed:@"icon_detail_collected"] imageByResizeToSize:imageSize] forState:UIControlStateSelected];
     [_collectButton addTarget:self action:@selector(collectButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     
     NSArray *views = @[_avatarView, _nameLabel, _genderView, _timeLabel, _schoolLabel, _contentLabel, _picContainerView, _separatorView, _likeButton, _collectButton];
@@ -508,13 +510,13 @@
         [_avatarView setImageWithURL:[NSURL URLWithString:_feed.creator.icon_url.small_url_string] placeholder:[UIImage imageNamed:@"avatar"]];
         _nameLabel.text = _feed.creator.name;
         _genderView.image = _feed.creator.gender.intValue == 0 ? [UIImage imageNamed:@"icon_female"] : [UIImage imageNamed:@"icon_male"];
-        _schoolLabel.text = createSchoolName(_feed.creator.custom);
     } else {
-        _avatarView.image = [UIImage imageNamed:@"avatar"];
+        _avatarView.image = _feed.creator.gender.intValue == 0 ? [UIImage imageNamed:@"icon_anonymous_female"] : [UIImage imageNamed:@"icon_anonymous_male"];
         _nameLabel.text = kStudentCircleAnonyousName;
         _genderView.image = [UIImage imageNamed:@"icon_female"];
-        _schoolLabel.text = nearBySchoolName;
     }
+    
+    _schoolLabel.text = createSchoolName(_feed.creator.custom);
     
     _timeLabel.text = createTimeString(_feed.create_time);
     

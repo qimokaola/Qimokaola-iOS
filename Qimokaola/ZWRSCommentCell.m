@@ -127,13 +127,12 @@
     if (DecodeAnonyousCode(_comment.custom) == 0) {
         [_avatarView setImageWithURL:[NSURL URLWithString:_comment.creator.icon_url.small_url_string] placeholder:[UIImage imageNamed:@"avatar"]];
         _nameLabel.text = _comment.creator.name;
-        _schoolLabel.text = createSchoolName(_comment.creator.custom);
     } else {
         _avatarView.image = [UIImage imageNamed:@"avatar"];
         _nameLabel.text = kStudentCircleAnonyousName;
-        _schoolLabel.text = nearBySchoolName;
     }
     
+    _schoolLabel.text = createSchoolName(_comment.creator.custom);
     _timeLabel.text = createTimeString(_comment.create_time);
     _contentLabel.text = _comment.content;
     

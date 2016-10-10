@@ -105,6 +105,12 @@
                               result:result];
 }
 
++ (void)reuqestInfoByName:(NSString *)username result:(APIRequestResult)result {
+    [ZWAPIRequestTool requestWithAPI:[ZWAPITool infoByNameAPI]
+                          parameters:@{@"nickname" : username}
+                              result:result];
+}
+
 // 通用请求接口，针对接收字典参数的接口
 + (void)requestWithAPI:(NSString *)API parameters:(id)params result:(APIRequestResult)result {
     

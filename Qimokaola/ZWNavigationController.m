@@ -19,7 +19,7 @@
     if (self = [super initWithRootViewController:rootViewController]) {
         self.tabBarItem.title = components[0];
         self.tabBarItem.image = [UIImage imageNamed:components[1]];
-        //self.tabBarItem.selectedImage = [UIImage imageNamed:components[2]];
+        self.tabBarItem.selectedImage = [[UIImage imageNamed:components[2]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     }
     return self;
 }

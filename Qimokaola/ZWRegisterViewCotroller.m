@@ -55,14 +55,14 @@
 // 下一步按钮上的运行提示 - UIActivityIndicatorView
 @property (nonatomic, strong) UIActivityIndicatorView *indicator;
 
-// 底部几个有关于协议的控件的容器
-@property (nonatomic, strong) UIView *protocolView;
-
-// 底部协议标签
-@property (nonatomic, strong) UILabel *protocolLabel;
-
-// 底部协议按钮
-@property (nonatomic, strong) UIButton *protocolBtn;
+//// 底部几个有关于协议的控件的容器
+//@property (nonatomic, strong) UIView *protocolView;
+//
+//// 底部协议标签
+//@property (nonatomic, strong) UILabel *protocolLabel;
+//
+//// 底部协议按钮
+//@property (nonatomic, strong) UIButton *protocolBtn;
 
 // 计数器
 @property (nonatomic, weak) NSTimer *timer;
@@ -156,9 +156,9 @@
         
     }];
     
-    [[self.protocolBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
-        
-    }];
+//    [[self.protocolBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
+//        
+//    }];
     
     [[[self.sendCodeButton rac_signalForControlEvents:UIControlEventTouchUpInside] doNext:^(id x) {
         
@@ -177,29 +177,18 @@
     
     @weakify(self)
     return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-    
         @strongify(self)
-
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            
             [ZWAPIRequestTool requestVerifyCodeWithParameter:@{@"code": self.verifyField.text} result:^(id response, BOOL success) {
-                
                 if (success) {
-                    
                     [subscriber sendNext:response];
                     [subscriber sendCompleted];
-                    
                 } else {
-                    
                     [subscriber sendError:response];
                 }
-                
             }];
-            
         });
-        
         return nil;
-        
     }] ;
     
 }
@@ -298,31 +287,31 @@
     _indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     [_nextBtn addSubview:_indicator];
     
-    self.protocolView = [[UIView alloc] init];
-    [self.view addSubview:self.protocolView];
-    
-    self.protocolLabel = [[UILabel alloc] init];
-    self.protocolLabel.numberOfLines = 1;
-    self.protocolLabel.font = ZWFont(14);
-    self.protocolLabel.textColor = [UIColor lightGrayColor];
-    self.protocolLabel.text = @"注册即同意";
-    [self.protocolLabel sizeToFit];
-    [self.protocolView addSubview:self.protocolLabel];
-    
-    self.protocolBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    NSMutableAttributedString *title = [[NSMutableAttributedString alloc] initWithString:@"<期末考啦使用协议>"];
-    NSRange titleRange = {0,[title length]};
-    [title addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:titleRange];
-    [title addAttribute:NSFontAttributeName value:ZWFont(14) range:titleRange];
-    [title addAttribute:NSForegroundColorAttributeName value:RGB(80., 140., 238.) range:titleRange];
-    [self.protocolBtn setAttributedTitle:title
-                      forState:UIControlStateNormal];
-    NSMutableAttributedString *highlightedTitle = [title mutableCopy];
-    [highlightedTitle removeAttribute:NSForegroundColorAttributeName range:titleRange];
-    [highlightedTitle addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:titleRange];
-    [self.protocolBtn setAttributedTitle:highlightedTitle forState:UIControlStateHighlighted];
-    [self.protocolBtn sizeToFit];
-    [self.protocolView addSubview:self.protocolBtn];
+//    self.protocolView = [[UIView alloc] init];
+//    [self.view addSubview:self.protocolView];
+//    
+//    self.protocolLabel = [[UILabel alloc] init];
+//    self.protocolLabel.numberOfLines = 1;
+//    self.protocolLabel.font = ZWFont(14);
+//    self.protocolLabel.textColor = [UIColor lightGrayColor];
+//    self.protocolLabel.text = @"注册即同意";
+//    [self.protocolLabel sizeToFit];
+//    [self.protocolView addSubview:self.protocolLabel];
+//    
+//    self.protocolBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    NSMutableAttributedString *title = [[NSMutableAttributedString alloc] initWithString:@"<期末考啦使用协议>"];
+//    NSRange titleRange = {0,[title length]};
+//    [title addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:titleRange];
+//    [title addAttribute:NSFontAttributeName value:ZWFont(14) range:titleRange];
+//    [title addAttribute:NSForegroundColorAttributeName value:RGB(80., 140., 238.) range:titleRange];
+//    [self.protocolBtn setAttributedTitle:title
+//                      forState:UIControlStateNormal];
+//    NSMutableAttributedString *highlightedTitle = [title mutableCopy];
+//    [highlightedTitle removeAttribute:NSForegroundColorAttributeName range:titleRange];
+//    [highlightedTitle addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:titleRange];
+//    [self.protocolBtn setAttributedTitle:highlightedTitle forState:UIControlStateHighlighted];
+//    [self.protocolBtn sizeToFit];
+//    [self.protocolView addSubview:self.protocolBtn];
     
     //设置视图约束
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -396,23 +385,23 @@
         
     }];
     
-    [self.protocolView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.height.mas_equalTo(30.f);
-        make.centerX.equalTo(weakSelf.view);
-        make.bottom.equalTo(weakSelf.view).with.offset(- margin / 2);
-        make.left.equalTo(weakSelf.protocolLabel);
-        make.right.equalTo(weakSelf.protocolBtn);
-    }];
-    
-    [self.protocolLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.and.bottom.and.height.equalTo(weakSelf.protocolView);
-        make.right.equalTo(weakSelf.protocolBtn.mas_left);
-    }];
-    
-    [self.protocolBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.and.bottom.and.height.equalTo(weakSelf.protocolView);
-        make.left.equalTo(weakSelf.protocolLabel.mas_right);
-    }];
+//    [self.protocolView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.height.mas_equalTo(30.f);
+//        make.centerX.equalTo(weakSelf.view);
+//        make.bottom.equalTo(weakSelf.view).with.offset(- margin / 2);
+//        make.left.equalTo(weakSelf.protocolLabel);
+//        make.right.equalTo(weakSelf.protocolBtn);
+//    }];
+//    
+//    [self.protocolLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.and.bottom.and.height.equalTo(weakSelf.protocolView);
+//        make.right.equalTo(weakSelf.protocolBtn.mas_left);
+//    }];
+//    
+//    [self.protocolBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.right.and.bottom.and.height.equalTo(weakSelf.protocolView);
+//        make.left.equalTo(weakSelf.protocolLabel.mas_right);
+//    }];
 }
 
 - (BOOL)isPhoneNumberValid:(NSString *)phoneNumber {
@@ -439,6 +428,9 @@
 int TimeInterval = 60;
 
 - (void)tappedSendCodeButton {
+    
+    [self.phoneNumberField resignFirstResponder];
+    
     timeLeft = TimeInterval;
     [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
     

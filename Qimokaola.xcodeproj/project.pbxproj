@@ -16,7 +16,6 @@
 		C30BBA8A1DA78AE60090EB4A /* ZWDownloadedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C30BBA891DA78AE60090EB4A /* ZWDownloadedViewController.m */; };
 		C30BBA8E1DA80ED90090EB4A /* ZWDownloadedInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = C30BBA8D1DA80ED90090EB4A /* ZWDownloadedInfo.m */; };
 		C31608511CEE375D005BA30B /* ZWCreateCountDownViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C31608501CEE375D005BA30B /* ZWCreateCountDownViewController.m */; };
-		C3162C891D79EA9F00153EB9 /* heart_red.png in Resources */ = {isa = PBXBuildFile; fileRef = C3162C881D79EA9F00153EB9 /* heart_red.png */; };
 		C3162C9F1D7B229200153EB9 /* ZWLoginViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C3162C9E1D7B229100153EB9 /* ZWLoginViewModel.m */; };
 		C3162CBB1D7C517600153EB9 /* ZWUser.m in Sources */ = {isa = PBXBuildFile; fileRef = C3162CBA1D7C517600153EB9 /* ZWUser.m */; };
 		C3162CBE1D7C54D300153EB9 /* ZWUserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C3162CBD1D7C54D300153EB9 /* ZWUserManager.m */; };
@@ -185,12 +184,8 @@
 		C3DB85651DA3F3C900213878 /* ZWSentCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DB85641DA3F3C900213878 /* ZWSentCommentCell.m */; };
 		C3DC4D841D33C3BD0081DB0A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C3DC4D831D33C3BD0081DB0A /* Main.storyboard */; };
 		C3DC4D871D33CC550081DB0A /* UIViewController+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DC4D861D33CC550081DB0A /* UIViewController+Extension.m */; };
+		C3DE5B761DABEF2400E93C05 /* pic6.png in Resources */ = {isa = PBXBuildFile; fileRef = C3DE5B751DABEF2400E93C05 /* pic6.png */; };
 		C3E58AC81D54DFE600FDB384 /* ZWBindAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3E58AC71D54DFE600FDB384 /* ZWBindAccountViewController.m */; };
-		C3EAA7291D3FBBD1009FCC0E /* pic1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C3EAA7241D3FBBD1009FCC0E /* pic1.jpg */; };
-		C3EAA72A1D3FBBD1009FCC0E /* pic2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C3EAA7251D3FBBD1009FCC0E /* pic2.jpg */; };
-		C3EAA72B1D3FBBD1009FCC0E /* pic3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C3EAA7261D3FBBD1009FCC0E /* pic3.jpg */; };
-		C3EAA72C1D3FBBD1009FCC0E /* pic4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C3EAA7271D3FBBD1009FCC0E /* pic4.jpg */; };
-		C3EAA72D1D3FBBD1009FCC0E /* pic5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C3EAA7281D3FBBD1009FCC0E /* pic5.jpg */; };
 		C3EDA9181D830CA0009FF851 /* ZWFile.m in Sources */ = {isa = PBXBuildFile; fileRef = C3EDA9171D830CA0009FF851 /* ZWFile.m */; };
 		C3EDA91C1D830E79009FF851 /* ZWFolder.m in Sources */ = {isa = PBXBuildFile; fileRef = C3EDA91B1D830E79009FF851 /* ZWFolder.m */; };
 		C3F162A41D4E3658006397B1 /* YYFPSLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F162A31D4E3658006397B1 /* YYFPSLabel.m */; };
@@ -264,7 +259,6 @@
 		C30BBA8D1DA80ED90090EB4A /* ZWDownloadedInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWDownloadedInfo.m; sourceTree = "<group>"; };
 		C316084F1CEE375D005BA30B /* ZWCreateCountDownViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWCreateCountDownViewController.h; sourceTree = "<group>"; };
 		C31608501CEE375D005BA30B /* ZWCreateCountDownViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWCreateCountDownViewController.m; sourceTree = "<group>"; };
-		C3162C881D79EA9F00153EB9 /* heart_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heart_red.png; sourceTree = "<group>"; };
 		C3162C9D1D7B229100153EB9 /* ZWLoginViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWLoginViewModel.h; sourceTree = "<group>"; };
 		C3162C9E1D7B229100153EB9 /* ZWLoginViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWLoginViewModel.m; sourceTree = "<group>"; };
 		C3162CB91D7C517600153EB9 /* ZWUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWUser.h; sourceTree = "<group>"; };
@@ -584,14 +578,10 @@
 		C3DC4D831D33C3BD0081DB0A /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		C3DC4D851D33CC550081DB0A /* UIViewController+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Extension.h"; sourceTree = "<group>"; };
 		C3DC4D861D33CC550081DB0A /* UIViewController+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Extension.m"; sourceTree = "<group>"; };
+		C3DE5B751DABEF2400E93C05 /* pic6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pic6.png; sourceTree = "<group>"; };
 		C3E58AC61D54DFE600FDB384 /* ZWBindAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWBindAccountViewController.h; sourceTree = "<group>"; };
 		C3E58AC71D54DFE600FDB384 /* ZWBindAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWBindAccountViewController.m; sourceTree = "<group>"; };
 		C3EAA7231D3FB79F009FCC0E /* Qimokaola-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Qimokaola-Bridging-Header.h"; sourceTree = "<group>"; };
-		C3EAA7241D3FBBD1009FCC0E /* pic1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = pic1.jpg; sourceTree = "<group>"; };
-		C3EAA7251D3FBBD1009FCC0E /* pic2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = pic2.jpg; sourceTree = "<group>"; };
-		C3EAA7261D3FBBD1009FCC0E /* pic3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = pic3.jpg; sourceTree = "<group>"; };
-		C3EAA7271D3FBBD1009FCC0E /* pic4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = pic4.jpg; sourceTree = "<group>"; };
-		C3EAA7281D3FBBD1009FCC0E /* pic5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = pic5.jpg; sourceTree = "<group>"; };
 		C3EDA9161D830CA0009FF851 /* ZWFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWFile.h; sourceTree = "<group>"; };
 		C3EDA9171D830CA0009FF851 /* ZWFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWFile.m; sourceTree = "<group>"; };
 		C3EDA91A1D830E79009FF851 /* ZWFolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWFolder.h; sourceTree = "<group>"; };
@@ -748,18 +738,18 @@
 		C3019E831D96E09C00CC2F55 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				C3019E841D96E0A700CC2F55 /* New Group */,
+				C3019E841D96E0A700CC2F55 /* ZWSettingsViewController */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
 		};
-		C3019E841D96E0A700CC2F55 /* New Group */ = {
+		C3019E841D96E0A700CC2F55 /* ZWSettingsViewController */ = {
 			isa = PBXGroup;
 			children = (
 				C3019E851D96E0C700CC2F55 /* ZWSettingsViewController.h */,
 				C3019E861D96E0C700CC2F55 /* ZWSettingsViewController.m */,
 			);
-			name = "New Group";
+			name = ZWSettingsViewController;
 			sourceTree = "<group>";
 		};
 		C3039DAF1DA5702B006AFFCE /* ZWBaseTableViewController */ = {
@@ -1754,12 +1744,7 @@
 		C3C44DEC1BC687B0004B30BF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				C3162C881D79EA9F00153EB9 /* heart_red.png */,
-				C3EAA7241D3FBBD1009FCC0E /* pic1.jpg */,
-				C3EAA7251D3FBBD1009FCC0E /* pic2.jpg */,
-				C3EAA7261D3FBBD1009FCC0E /* pic3.jpg */,
-				C3EAA7271D3FBBD1009FCC0E /* pic4.jpg */,
-				C3EAA7281D3FBBD1009FCC0E /* pic5.jpg */,
+				C3DE5B751DABEF2400E93C05 /* pic6.png */,
 				C33AC5FC1DA3A0DA00A96AB7 /* File&Folder.xcassets */,
 				C34832761CB2D8C1009EA4D7 /* Assets.xcassets */,
 				C33AC5FA1DA3A0C100A96AB7 /* StudentCircle.xcassets */,
@@ -2235,26 +2220,21 @@
 				C37067A71D6B465F007B18A8 /* UMSLoginViewController.xib in Resources */,
 				C3019E811D96DF9600CC2F55 /* Settings.storyboard in Resources */,
 				C37067B01D6B465F007B18A8 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
-				C3EAA72B1D3FBBD1009FCC0E /* pic3.jpg in Resources */,
 				C37067AD1D6B465F007B18A8 /* WeiboSDK.bundle in Resources */,
 				C37067A31D6B465F007B18A8 /* UMSCommentInputController.xib in Resources */,
 				C33AC5FD1DA3A0DA00A96AB7 /* File&Folder.xcassets in Resources */,
 				C3DC4D841D33C3BD0081DB0A /* Main.storyboard in Resources */,
-				C3EAA72C1D3FBBD1009FCC0E /* pic4.jpg in Resources */,
-				C3EAA72D1D3FBBD1009FCC0E /* pic5.jpg in Resources */,
+				C3DE5B761DABEF2400E93C05 /* pic6.png in Resources */,
 				C369BD981C7DB4A4001A44AB /* ZWMoreCollectionViewHeader.xib in Resources */,
 				C331E6F11C887D39001CDACB /* Launch Screen.storyboard in Resources */,
 				C37067A41D6B465F007B18A8 /* UMSCommentInputControlleriPad.xib in Resources */,
 				C37067AA1D6B465F007B18A8 /* UMSocialSDKResourcesNew.bundle in Resources */,
 				C3BE99FC1BCBFB45000102A1 /* ZWOldDownloadInfoCell.xib in Resources */,
 				C33B1D4A1CC53F0B008FA6E6 /* ZWDocumentCell.xib in Resources */,
-				C3162C891D79EA9F00153EB9 /* heart_red.png in Resources */,
 				C34832771CB2D8C1009EA4D7 /* Assets.xcassets in Resources */,
 				C37067A01D6B465F007B18A8 /* UMSocialLocalizable.strings in Resources */,
-				C3EAA72A1D3FBBD1009FCC0E /* pic2.jpg in Resources */,
 				C37067A61D6B465F007B18A8 /* UMShareEditViewControlleriPad.xib in Resources */,
 				C37067A51D6B465F007B18A8 /* UMShareEditViewController.xib in Resources */,
-				C3EAA7291D3FBBD1009FCC0E /* pic1.jpg in Resources */,
 				C38EACAA1CB535C600EA6448 /* ZWOldFolderCell.xib in Resources */,
 				C369BD8D1C7D9968001A44AB /* ZWServiceCollectionViewCell.xib in Resources */,
 				C33AC5FB1DA3A0C100A96AB7 /* StudentCircle.xcassets in Resources */,

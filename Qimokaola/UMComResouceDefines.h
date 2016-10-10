@@ -63,7 +63,6 @@
 
 
 #define createSchoolName(schoolName) [NSString stringWithFormat:@"来自[%@]", schoolName]
-#define nearBySchoolName createSchoolName(@"附近的学校")
 
 //Common block
 typedef void (^PageDataResponse)(id responseData,NSString * navigationUrl,NSError *error);

@@ -60,17 +60,6 @@
     self.view.backgroundColor = universalGrayColor;
     self.title = @"发现";
     __weak __typeof(self) weakSelf = self;
-    UIButton *settingsButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    settingsButton.frame = CGRectMake(0, 0, 40, 40);
-    [settingsButton setImage:[UIImage imageNamed:@"icon_setting"] forState:UIControlStateNormal];
-    [settingsButton setImage:[UIImage imageNamed:@"icon_setting_hightlight"] forState:UIControlStateHighlighted];
-    [[settingsButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Settings" bundle:[NSBundle mainBundle]];
-        ZWSettingsViewController *settingsViewController = [storyboard instantiateViewControllerWithIdentifier:@"ZWSettingsViewController"];
-        [weakSelf.navigationController pushViewController:settingsViewController animated:YES];
-    }];
-    UIBarButtonItem *settingsItem = [[UIBarButtonItem alloc] initWithCustomView:settingsButton];
-    self.navigationItem.rightBarButtonItem = settingsItem;
     
     [self createSubViews];
     
@@ -101,16 +90,16 @@
     if (_channels == nil) {
         _channels = @[
                       @[
-                          @{@"icon" : @"radio_button_checked", @"title" : @"我的动态", @"detail" : @"我发的学生圈"},
-                          @{@"icon" : @"radio_button_checked", @"title" : @"我的收藏", @"detail" : @"收藏的帖子"},
-                          @{@"icon" : @"radio_button_checked", @"title" : @"评论", @"detail" : @"我的评论"},
-                          @{@"icon" : @"radio_button_checked", @"title" : @"赞我的", @"detail" : @"你说得好"}
+                          @{@"icon" : @"radio_button_checked", @"title" : @"我的动态", @"detail" : @"我发的学生圈", @"image" : @"icon_discovery_feeds"},
+                          @{@"icon" : @"radio_button_checked", @"title" : @"我的收藏", @"detail" : @"收藏的帖子", @"image" : @"icon_discovery_colllections"},
+                          @{@"icon" : @"radio_button_checked", @"title" : @"评论", @"detail" : @"我的评论", @"image" : @"icon_discovery_comments"},
+                          @{@"icon" : @"radio_button_checked", @"title" : @"赞我的", @"detail" : @"你说得好", @"image" : @"icon_discovery_liked"}
                         ],
                       
                       @[
-                          @{@"icon" : @"radio_button_checked", @"title" : @"考试倒计时", @"detail" : @"新建倒计时"},
-                          @{@"icon" : @"radio_button_checked", @"title" : @"四六级查询", @"detail" : @"免准考号查询"},
-                          @{@"icon" : @"radio_button_checked", @"title" : @"加入我们", @"detail" : @"版主及校代表"}
+                          @{@"icon" : @"radio_button_checked", @"title" : @"意见反馈", @"detail" : @"说出你的想法", @"image" : @"icon_discovery_advice"},
+                          @{@"icon" : @"radio_button_checked", @"title" : @"加入我们", @"detail" : @"志愿者及版主", @"image" : @"icon_discovery_join_us"},
+                          @{@"icon" : @"radio_button_checked", @"title" : @"退出登录", @"detail" : @"", @"image" : @""}
                           
                         ]
                       
@@ -169,7 +158,7 @@
 
 - (void)createSubViews {
     __weak __typeof(self) weakSelf = self;
-    CGFloat sizeRate = 0.7;
+    CGFloat sizeRate = 0.6;
     CGFloat marginRate = (1. - sizeRate) / 2.;
     CGFloat margin = 10;
     CGFloat smallMargin = 5.f;
@@ -269,15 +258,23 @@
     static NSString *cellID = @"cellID";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellID];
-        cell.detailTextLabel.font = [UIFont systemFontOfSize:12];
-        cell.backgroundColor = [UIColor whiteColor];
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        if (!(indexPath.section == 1 && indexPath.row == 2)) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellID];
+            cell.detailTextLabel.font = [UIFont systemFontOfSize:12];
+            cell.backgroundColor = [UIColor whiteColor];
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        } else {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+            cell.textLabel.textColor = [UIColor redColor];
+            cell.textLabel.textAlignment = NSTextAlignmentCenter;
+            cell.accessoryType = UITableViewCellAccessoryNone;
+        }
     }
     NSDictionary *dict = [self.channels[indexPath.section] objectAtIndex:indexPath.row];
     cell.imageView.image = [UIImage imageNamed:dict[@"icon"]];
     cell.textLabel.text = dict[@"title"];
     cell.detailTextLabel.text = dict[@"detail"];
+    cell.imageView.image = [UIImage imageNamed:dict[@"image"]];
     return cell;
 }
 
@@ -288,21 +285,56 @@
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     });
     
-    if (indexPath.section == 0 && indexPath.row == 0) {
-        ZWFeedTableViewController *feedTabelViewController = [[ZWFeedTableViewController alloc] init];
-        feedTabelViewController.feedType = ZWFeedTableViewTypeAboutUser;
-        feedTabelViewController.user = [UMComSession sharedInstance].loginUser;
-        [self.navigationController pushViewController:feedTabelViewController animated:YES];
-    } else if (indexPath.section == 0 && indexPath.row == 1) {
-        ZWFeedTableViewController *feedTableViewController = [[ZWFeedTableViewController alloc] init];
-        feedTableViewController.feedType = ZWFeedTableViewTypeAboutCollection;
-        [self.navigationController pushViewController:feedTableViewController animated:YES];
-    } else if (indexPath.section == 0 && indexPath.row == 2) {
-        ZWUserCommentsViewController *commentsViewController = [[ZWUserCommentsViewController alloc] init];
-        [self.navigationController pushViewController:commentsViewController animated:YES];
-    } else if (indexPath.section == 0 && indexPath.row == 3) {
-        ZWUserLikesViewController *likeViewController = [[ZWUserLikesViewController alloc] init];
-        [self.navigationController pushViewController:likeViewController animated:YES];
+    if (indexPath.section == 0) {
+        switch (indexPath.row) {
+            case 0: {
+                ZWFeedTableViewController *feedTabelViewController = [[ZWFeedTableViewController alloc] init];
+                feedTabelViewController.feedType = ZWFeedTableViewTypeAboutUser;
+                feedTabelViewController.user = [UMComSession sharedInstance].loginUser;
+                [self.navigationController pushViewController:feedTabelViewController animated:YES];
+            }
+                break;
+                
+            case 1: {
+                ZWFeedTableViewController *feedTableViewController = [[ZWFeedTableViewController alloc] init];
+                feedTableViewController.feedType = ZWFeedTableViewTypeAboutCollection;
+                [self.navigationController pushViewController:feedTableViewController animated:YES];
+            }
+                
+                break;
+                
+            case 2: {
+                ZWUserCommentsViewController *commentsViewController = [[ZWUserCommentsViewController alloc] init];
+                [self.navigationController pushViewController:commentsViewController animated:YES];
+            }
+                break;
+                
+            case 3: {
+                ZWUserLikesViewController *likeViewController = [[ZWUserLikesViewController alloc] init];
+                [self.navigationController pushViewController:likeViewController animated:YES];
+            }
+                break;
+            default:
+                break;
+        }
+    } else {
+        switch (indexPath.row) {
+            case 0: {
+            }
+                break;
+                
+            case 1: {
+            }
+                
+                break;
+                
+            case 2: {
+            }
+                break;
+                
+            default:
+                break;
+        }
     }
 }
 

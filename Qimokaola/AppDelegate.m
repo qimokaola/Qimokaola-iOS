@@ -19,6 +19,7 @@
 #import "ZWLoginViewController.h"
 #import "ZWAPITool.h"
 #import "ZWUserManager.h"
+#import "UIColor+Extension.h"
 
 #import "UMSocial.h"
 #import "UMSocialQQHandler.h"
@@ -28,8 +29,6 @@
 #import "UMPushSDK_1.3.0/UMessage.h"
 #import "ReactiveCocoa.h"
 #import <YYKit/YYKit.h>
-#import <UMCommunitySDK/UMComDataRequestManager.h>
-#import <UMCommunitySDK/UMComSession.h>
 
 @interface AppDelegate () {
     // 记录是否第一次进入，用以决定是否显示网络变化提示 若第一次进入且无网络才显示网络情况
@@ -101,10 +100,7 @@
     }
 
     [[[[NSNotificationCenter defaultCenter] rac_addObserverForName:kUserNeedLoginNotification object:nil] deliverOnMainThread] subscribeNext:^(id x) {
-        // 如果学生圈已经登录 则登出
-        if ([UMComSession sharedInstance].isLogin) {
-            [[UMComSession sharedInstance] userLogout];
-        }
+        [[ZWUserManager sharedInstance] logoutStudentCircle];
         [weakSelf presentLoginViewController];
     }];
     
@@ -121,14 +117,19 @@
     
     [[[NSNotificationCenter defaultCenter] rac_addObserverForName:kUserLogoutSuccessNotification object:nil] subscribeNext:^(id x) {
         [[ZWUserManager sharedInstance] logoutStudentCircle];
+        [weakSelf presentLoginViewController];
+        
     }];
     
-    [[UINavigationBar appearance] setBarTintColor:RGB(80,140,238)];
+    [[UINavigationBar appearance] setBarTintColor:defaultBlueColor];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor],
                                                            NSFontAttributeName : [UIFont systemFontOfSize:17 weight:UIFontWeightBold],
                                                            }];
     [[UITabBar appearance] setBarTintColor:[UIColor whiteColor]];
+    
+    [[UITabBar appearance] setShadowImage:[UIImage new]];
+    [[UITabBar appearance] setBackgroundImage:[[UIColor whiteColor] parseToImage]];
     
 #ifdef DEBUG
     YYFPSLabel *fpsLabel = [[YYFPSLabel alloc] initWithFrame:CGRectMake(0, kScreenHeight - 100, 0, 0)];
@@ -159,8 +160,9 @@
 - (void)presentLoginViewController {
     [ZWHUDTool showHUDWithTitle:@"登录状态失效 请重新登录" message:nil duration:kShowHUDMid];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kShowHUDMid * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        ZWLoginViewController *loginViewController = [[ZWLoginViewController alloc] init];
-        [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:[[UINavigationController alloc] initWithRootViewController:loginViewController] animated:YES completion:nil];
+//        ZWLoginViewController *loginViewController = [[ZWLoginViewController alloc] init];
+//        [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:[[UINavigationController alloc] initWithRootViewController:loginViewController] animated:YES completion:nil];
+        [UIApplication sharedApplication].keyWindow.rootViewController = [[ZWLoginAndRegisterViewController alloc] init];
     });
 }
 
