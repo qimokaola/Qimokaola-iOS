@@ -35,7 +35,8 @@
     }
     self.title = @"头像";
     
-    UIBarButtonItem *modifyAvatarItem = [[UIBarButtonItem alloc] initWithTitle:@"更换" style:UIBarButtonItemStyleDone target:self action:@selector(showModifyAvatarWay)];
+    
+    UIBarButtonItem *modifyAvatarItem = [[UIBarButtonItem alloc] initWithTitle:@"•••" style:UIBarButtonItemStyleDone target:self action:@selector(showModifyAvatarWay)];
     self.navigationItem.rightBarButtonItem = modifyAvatarItem;
     
     _scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
@@ -52,20 +53,22 @@
     UITapGestureRecognizer *doubleTapToZoom = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleDoubleTap:)];
     doubleTapToZoom.numberOfTapsRequired = 2;
     [_avatarView addGestureRecognizer:doubleTapToZoom];
-    [_avatarView setImageURL:[NSURL URLWithString:[[ZWAPITool base] stringByAppendingPathComponent:[ZWUserManager sharedInstance].loginUser.avatar_url]]];
     [_scrollView addSubview:_avatarView];
     
+    [_avatarView setImageURL:[NSURL URLWithString:self.avatarUrl]];
+    
+    // 监听图片，当设置新的有效图片时处理大小
     @weakify(self)
     [RACObserve(_avatarView, image) subscribeNext:^(YYImage *image) {
         @strongify(self)
         if (image) {
             
-            CGFloat width= image.size.width;
-            CGFloat height= image.size.height;
-            CGFloat maxHeight= self.scrollView.bounds.size.height;
-            CGFloat maxWidth= self.scrollView.bounds.size.width;
+            CGFloat width = image.size.width;
+            CGFloat height = image.size.height;
+            CGFloat maxHeight = self.scrollView.bounds.size.height;
+            CGFloat maxWidth = self.scrollView.bounds.size.width;
             //如果图片尺寸大于view尺寸，按比例缩放
-            if (width>maxWidth || height>width){
+            if (width > maxWidth || height>width){
                 CGFloat ratio = height / width;
                 CGFloat maxRatio = maxHeight / maxWidth;
                 if(ratio < maxRatio){
@@ -81,6 +84,7 @@
                 height = width * ratio;
             }
             self.avatarView.frame = CGRectMake((maxWidth-width) / 2, (maxHeight-height) /2, width, height);
+            // 使图片得意显示全部
             self.scrollView.contentOffset = CGPointZero;
         }
     }];
@@ -98,16 +102,27 @@
     
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
-    UIAlertAction *fromCameraAction = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [weakSelf selectedImage:0];
+    if (self.avatarViewType == ZWAvatarViewControllerTypeSelf) {
+        UIAlertAction *fromCameraAction = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [weakSelf selectedImage:0];
+        }];
+        UIAlertAction *fromPickerAction = [UIAlertAction actionWithTitle:@"从相册获取" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [weakSelf selectedImage:1];
+        }];
+        [alertController addAction:fromCameraAction];
+        [alertController addAction:fromPickerAction];
+    }
+    UIAlertAction *saveToAlbumAction = [UIAlertAction actionWithTitle:@"保存至相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UIImageWriteToSavedPhotosAlbum(weakSelf.avatarView.image, self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
     }];
-    UIAlertAction *fromPickerAction = [UIAlertAction actionWithTitle:@"从相册获取" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [weakSelf selectedImage:1];
-    }];
+    [alertController addAction:saveToAlbumAction];
     [alertController addAction:cancelAction];
-    [alertController addAction:fromCameraAction];
-    [alertController addAction:fromPickerAction];
     [self presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo{
+    NSString *result = error ? @"保存失败" : @"已存入手机相册";
+    [ZWHUDTool showHUDInView:self.navigationController.view withTitle:result message:nil duration:kShowHUDShort];
 }
 
 /**
@@ -190,7 +205,7 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
     __weak __typeof(self) weakSelf = self;
-    UIImage *selectedImage = info[UIImagePickerControllerEditedImage];
+    UIImage *selectedImage = [info[UIImagePickerControllerEditedImage] imageByResizeToSize:CGSizeMake(320, 320)];
     // 将所选图片写进文件，以便上传使用
     NSString *avatarFileName = @"avatar.jpeg";
     NSData *imageData = UIImageJPEGRepresentation(selectedImage, 0.3);

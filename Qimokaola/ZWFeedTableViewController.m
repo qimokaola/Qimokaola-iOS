@@ -64,10 +64,10 @@
     
     if (_feedType == ZWFeedTableViewTypeAboutTopic) {
         self.title = self.topic.name;
-        UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"toolbar_compose_highlighted"] style:UIBarButtonItemStylePlain target:self action:@selector(presendNewFeedViewController)];
-        rightItem.tintColor = UIColorHex(fd8224);
+        UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon_compose_feed"] style:UIBarButtonItemStylePlain target:self action:@selector(presendNewFeedViewController)];
+//        rightItem.tintColor = UIColorHex(fd8224);
         self.navigationItem.rightBarButtonItem = rightItem;
-    } else if (_feedType == ZWFeedTableViewTypeAboutUser) {
+    } else if (_feedType == ZWFeedTableViewTypeAboutUser || _feedType == ZWFeedTableViewTypeAboutOthers) {
         self.title = @"动态";
     } else if (_feedType == ZWFeedTableViewTypeAboutCollection) {
         self.title = @"收藏";
@@ -165,6 +165,14 @@
                                                                         completion:^(NSDictionary *responseObject, NSError *error) {
                                                                             [weakSelf dealWithFetchFeedResult:responseObject error:error];
                                                                         }];
+    } else if (self.feedType == ZWFeedTableViewTypeAboutOthers) {
+        // 获取有关于用户的feed流
+        [[UMComDataRequestManager defaultManager] fetchFeedsTimelineWithUid:weakSelf.user.uid
+                                                                   sortType:UMComUserTimeLineFeedType_Default
+                                                                      count:999999
+                                                                 completion:^(NSDictionary *responseObject, NSError *error) {
+                                                                     [weakSelf dealWithFetchFeedResult:responseObject error:error];
+                                                                 }];
     }
 
 }
@@ -173,7 +181,13 @@
     [self.tableView.mj_header endRefreshing];
     if (responseObject) {
         [self.feeds removeAllObjects];
-        [self.feeds addObjectsFromArray:[responseObject objectForKey:@"data"]];
+        if (self.feedType != ZWFeedTableViewTypeAboutOthers) {
+            [self.feeds addObjectsFromArray:[responseObject objectForKey:@"data"]];
+        } else {
+            [self.feeds addObjectsFromArray:[[responseObject objectForKey:@"data"] linq_where:^BOOL(UMComFeed *item) {
+                return DecodeAnonyousCode(item.custom) == 0;
+            }]];
+        }
         [self.tableView reloadData];
     } else {
         [ZWHUDTool showHUDInView:self.navigationController.view withTitle:@"出错了，获取失败" message:nil duration:kShowHUDMid];
@@ -298,7 +312,7 @@
 // 点击用户
 - (void)cell:(ZWFeedCell *)cell didClickUser:(UMComUser *)user atIndexPath:(NSIndexPath *)indexPath {
     ZWUserDetailViewController *userDetailViewController = [[ZWUserDetailViewController alloc] init];
-    userDetailViewController.user = user;
+    userDetailViewController.umUser = user;
     [self.navigationController pushViewController:userDetailViewController animated:YES];
 }
 

@@ -7,9 +7,25 @@
 //
 
 #import "ZWUserDetailViewController.h"
+#import "ZWModifyAvatarViewController.h"
+#import "ZWHUDTool.h"
+#import "ZWAPIRequestTool.h"
+#import "ZWUser.h"
+#import "ZWFeedTableViewController.h"
+
+#import "ZWUMUserFeedCell.h"
+#import "ZWAppUserInfoCell.h"
+#import "ZWUMUserFeedHeader.h"
 
 #import <SDAutoLayout/SDAutoLayout.h>
 #import <ReactiveCocoa/ReactiveCocoa.h>
+#import <YYKit/YYKit.h>
+
+#define kUMUserFeedCellIdentifier @"kUMUserFeedCellIdentifier"
+#define kAppUserInfoCellIdentifier @"kAppUserInfoCellIdentifier"
+#define kUMUserFeedHeaderIdentifier @"kUMUserFeedHeaderIdentifier"
+
+#define kBackgroundViewHeight 252
 
 @interface ZWUserDetailViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -23,6 +39,12 @@
 @property (nonatomic, strong) UILabel *academyLabel;
 @property (nonatomic, strong) UILabel *titleLabel;
 
+// 需要显示的用户以及用户发送的第一条feed
+@property (nonatomic, strong) ZWUser *appUser;
+@property (nonatomic, strong) UMComFeed *feed;
+
+@property (nonatomic, assign) BOOL disappear;
+
 @end
 //92, 75, 57
 @implementation ZWUserDetailViewController
@@ -32,11 +54,44 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.navigationController.navigationBar.subviews objectAtIndex:0].alpha = 0.f;
+    self.navigationItem.titleView.hidden = YES;
+    
+    self.disappear = NO;
+    
+    __weak __typeof(self) weakSelf = self;
+    
+    [[RACObserve(_tableView, contentOffset) takeUntilBlock:^BOOL(id x) {
+        return self.disappear;
+    } ] subscribeNext:^(NSNumber *offset) {
+        CGFloat yOffset = offset.CGPointValue.y;
+        if (yOffset > 0) {
+            weakSelf.navigationController.navigationBar.subviews[0].alpha = weakSelf.navigationItem.titleView.alpha = yOffset < 64. ? yOffset / 64. : 1.0;
+            if (weakSelf.navigationItem.titleView.hidden) {
+                weakSelf.navigationItem.titleView.hidden = NO;
+            }
+            
+        } else {
+            weakSelf.navigationController.navigationBar.subviews[0].alpha = self.navigationItem.titleView.alpha = 0.0;
+        }
+        weakSelf.backgroundView.height = kBackgroundViewHeight - yOffset;
+    }];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [self.navigationController.navigationBar.subviews objectAtIndex:0].alpha = 1.0f;
+    
+    self.disappear = YES;
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    self.navigationItem.titleView.alpha = 0.5f;
+}
+
+- (void)dealloc
+{
+    NSLog(@"user detail dealloc");
 }
 
 - (void)viewDidLoad {
@@ -48,28 +103,57 @@
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
     
+    self.view.backgroundColor = defaultBackgroundColor;
+    
     UILabel *titleLabel = [[UILabel alloc] init];
     titleLabel.text = @"个人资料";
     titleLabel.font =ZWFont(17);
     titleLabel.textColor = [UIColor blackColor];
     [titleLabel sizeToFit];
     self.navigationItem.titleView = titleLabel;
-    self.navigationItem.titleView.alpha = 0.0;
     
     [self zw_addSubViews];
     
-    [RACObserve(_tableView, contentOffset) subscribeNext:^(NSNumber *offset) {
-        NSLog(@"%@", offset);
-        CGFloat yOffset = offset.CGPointValue.y;
-        if (yOffset > 0) {
-            // 64 + 10
-            if (yOffset > 74) {
-                // 74 + 64
-                weakSelf.navigationController.navigationBar.subviews[0].alpha = weakSelf.navigationItem.titleView.alpha = yOffset < 138 ? (yOffset - 74) / 64. : 1.0;
-            } else {
-                weakSelf.navigationController.navigationBar.subviews[0].alpha = self.navigationItem.titleView.alpha = 0.0;
-            }
+    MBProgressHUD *hud = [ZWHUDTool excutingHudInView:self.navigationController.view title:nil];
+    
+    [ZWAPIRequestTool reuqestInfoByName:self.umUser.name result:^(id response, BOOL success) {
+        if (success && [[response objectForKey:kHTTPResponseCodeKey] intValue] == 0) {
+            weakSelf.appUser = [ZWUser modelWithDictionary:[response objectForKey:kHTTPResponseResKey]];
+        } else {
+            NSLog(@"获取失败");
         }
+    }];
+    
+    [[UMComDataRequestManager defaultManager] fetchFeedsTimelineWithUid:self.umUser.uid
+                                                               sortType:UMComUserTimeLineFeedType_Default
+                                                                  count:1
+                                                             completion:^(NSDictionary *responseObject, NSError *error) {
+                                                                 if (responseObject) {
+                                                                     weakSelf.feed = [(NSArray *)responseObject[@"data"] objectAtIndex:0];
+                                                                 }
+                                                             }];
+    
+    RACSignal *feedNotNilSignal = [RACObserve(self, feed) map:^id(id value) {
+        return @(value != nil);
+    }];
+    
+    RACSignal *appUserNotNilSignal = [RACObserve(self, appUser) map:^id(id value) {
+        return @(value != nil);
+    }];
+    
+    [[[RACSignal combineLatest:@[feedNotNilSignal, appUserNotNilSignal] reduce:^NSNumber *(NSNumber *feedValid, NSNumber * appUserValid){
+        return @([feedValid boolValue] & [appUserValid boolValue]);
+    }] filter:^BOOL(id value) {
+        return [value boolValue];
+    }] subscribeNext:^(id x) {
+        
+        [hud hideAnimated:YES];
+        [weakSelf.tableView reloadData];
+        
+        [weakSelf.avatarView setImageURL:[NSURL URLWithString:[[ZWAPITool base] stringByAppendingPathComponent:weakSelf.appUser.avatar_url]]];
+        weakSelf.collegeLabel.text = weakSelf.appUser.collegeName;
+        weakSelf.academyLabel.text = weakSelf.appUser.academyName;
+        
     }];
 }
 
@@ -87,18 +171,21 @@
 }
 
 - (void)initBackgroundView {
-    _backgroundView = [[UIView alloc] initWithFrame:self.view.bounds];
-    _backgroundView.backgroundColor = RGB(92., 75., 57.);
+    _backgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenW, kBackgroundViewHeight)];
+    _backgroundView.backgroundColor = defaultBlueColor;
     [self.view addSubview:_backgroundView];
 }
 
 - (void)initTableView {
-    _tableView = [[UITableView alloc] initWithFrame:self.view.frame style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc] initWithFrame:self.view.frame style:UITableViewStyleGrouped];
     _tableView.backgroundColor = [UIColor clearColor];
     _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tableView.dataSource = self;
     _tableView.delegate = self;
+    [_tableView registerNib:[UINib nibWithNibName:@"ZWUMUserFeedCell" bundle:nil] forCellReuseIdentifier:kUMUserFeedCellIdentifier];
+    [_tableView registerNib:[UINib nibWithNibName:@"ZWAppUserInfoCell" bundle:nil] forCellReuseIdentifier:kAppUserInfoCellIdentifier];
+    [_tableView registerNib:[UINib nibWithNibName:@"ZWUMUserFeedHeader" bundle:nil] forHeaderFooterViewReuseIdentifier:kUMUserFeedHeaderIdentifier];
     [self.view insertSubview:_tableView aboveSubview:_backgroundView];
 }
 
@@ -108,6 +195,9 @@
     _headerView.width = kScreenW;
     
     _avatarView = [[UIImageView alloc] init];
+    _avatarView.userInteractionEnabled = YES;
+    [_avatarView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapToAvatarView)]];
+    
     _genderView = [[UIImageView alloc] init];
     _nameLabel = [self commentLabelWithFontSize:16];
     _collegeLabel = [self commentLabelWithFontSize:14];
@@ -155,12 +245,10 @@
     
     [_headerView setupAutoHeightWithBottomView:_academyLabel bottomMargin:margin * 2];
     
-    
-    _avatarView.image = [UIImage imageNamed:@"avatar"];
-    _genderView.image = [UIImage imageNamed:_user.gender.intValue == 0 ? @"icon_female" : @"icon_male"];
-    _nameLabel.text = @"我是凌子文";
-    _collegeLabel.text = @"福州大学";
-    _academyLabel.text = @"数学与计算机科学学院";
+    _genderView.image = [UIImage imageNamed:_umUser.gender.intValue == 0 ? @"icon_gender_female" : @"icon_gender_male"];
+    _nameLabel.text = self.umUser.name;
+    _collegeLabel.text = @"...";
+    _academyLabel.text = @"...";
     
     [_headerView layoutSubviews];
     _tableView.tableHeaderView = _headerView;
@@ -174,13 +262,19 @@
     return label;
 }
 
+- (void)tapToAvatarView {
+    ZWModifyAvatarViewController *avatarViewController = [[ZWModifyAvatarViewController alloc] init];
+    avatarViewController.avatarViewType = [self.umUser.uid isEqualToString:[UMComSession sharedInstance].loginUser.uid] ? ZWAvatarViewControllerTypeSelf : ZWAvatarViewControllerTypeOthers;
+    avatarViewController.avatarUrl = self.umUser.icon_url.large_url_string;
+    [self.navigationController pushViewController:avatarViewController animated:YES];
+}
+
 #pragma mark - Setters and Getters
 
-- (void)setUser:(UMComUser *)user {
-    _user = user;
-    
-    
-}
+//- (void)setUser:(UMComUser *)user {
+//    _user = user;
+//
+//}
 
 #pragma mark - Common Methods
 
@@ -195,16 +289,65 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-    return cell;
+//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:indexPath.section == 0 ? kUMUserFeedCellIdentifier : kAppUserInfoCellIdentifier];
+//    return cell;
+    
+    if (indexPath.section == 0) {
+        ZWUMUserFeedCell *cell = [tableView dequeueReusableCellWithIdentifier:kUMUserFeedCellIdentifier];
+        if (DecodeAnonyousCode(self.feed.custom) == 0) {
+            cell.contentLabel.text= self.feed.text;
+            cell.timeLabel.text = self.feed.create_time;
+        } else {
+            cell.contentLabel.text = @"\n点击以查看该用户的详细动态";
+            cell.timeLabel.text = nil;
+        }
+        return cell;
+    } else {
+        ZWAppUserInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:kAppUserInfoCellIdentifier];
+        cell.nicknameLabel.text = self.appUser.nickname;
+        cell.schoolLabel.text = self.appUser.collegeName;
+        cell.academyLabel.text = self.appUser.academyName;
+        cell.enterYearLabel.text = self.appUser.enterYear;
+        cell.genderLabel.text = self.appUser.gender;
+        
+        return cell;
+    }
 }
 
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 300;
+    if (indexPath.section == 0) {
+        return 100;
+    } else {
+        return 155;
+    }
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 40;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    ZWUMUserFeedHeader *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:kUMUserFeedHeaderIdentifier];
+    if (section == 0) {
+        header.typeImageView.image = [UIImage imageNamed:@"icon_personal_feed"];
+        header.typeLabel.text = @"个人动态";
+    } else {
+        header.typeImageView.image = [UIImage imageNamed:@"icon_personal_info"];
+        header.typeLabel.text = @"个人信息";
+    }
+    return header;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0) {
+        ZWFeedTableViewController *feedListController = [[ZWFeedTableViewController alloc] init];
+        feedListController.feedType = ZWFeedTableViewTypeAboutOthers;
+        feedListController.user = self.umUser;
+        [self.navigationController pushViewController:feedListController animated:YES];
+    }
+}
 
 
 /*

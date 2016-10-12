@@ -16,6 +16,8 @@
 #import "ZWDataBaseTool.h"
 #import "ZWHUDTool.h"
 
+#import "ZWAPITool.h"
+
 #import <AFNetworking/AFNetworking.h>
 #import "Masonry.h"
 #import "UMSocial.h"
@@ -425,10 +427,10 @@
 
 #pragma mark - 分享至QQ QQ空间
 - (void)shareToComputer{
-    
+    NSString *shareUrl = [[NSString stringWithFormat:[ZWAPITool shareFileAPI], [ZWUserManager sharedInstance].loginUser.collegeId.intValue] stringByAppendingPathComponent:[NSString stringWithCString:[self.file.name UTF8String] encoding:NSUTF8StringEncoding]];
     [UMSocialSnsService presentSnsIconSheetView:self
                                          appKey:nil
-                                      shareText:nil
+                                      shareText:shareUrl
                                      shareImage:nil
                                 shareToSnsNames:@[UMShareToQQ]
                                        delegate:self];
@@ -438,8 +440,6 @@
 #pragma mark 打开已下载文件
 -(void)openDocumentInThirdPartyApp {
     NSString *filePath = [[ZWPathTool downloadDirectory] stringByAppendingPathComponent:self.storage_name];
-//    self.documentController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:filePath]];
-//    self.documentController.delegate = self;
     self.documentController.URL = [NSURL fileURLWithPath:filePath];
     [self.documentController presentOptionsMenuFromRect:self.view.bounds inView:self.view animated:YES];
 }

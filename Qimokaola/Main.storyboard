@@ -41,6 +41,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="fbw-Se-dCN">
                         <barButtonItem key="leftBarButtonItem" title="福州大学" id="vkE-cz-6Vy">
+                            <color key="tintColor" red="0.28174603174603174" green="0.28174603174603174" blue="0.28174603174603174" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="popToChangeSchool:" destination="gnt-BG-iJ9" id="MDu-fP-V6l"/>
                             </connections>
@@ -56,7 +57,7 @@
             <objects>
                 <navigationController id="hXW-ie-D9S" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="已下载" image="user" id="Ck7-Sl-MGS"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="tmZ-uQ-cgU">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="tmZ-uQ-cgU">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

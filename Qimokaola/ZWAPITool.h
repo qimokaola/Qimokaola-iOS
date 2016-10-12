@@ -38,4 +38,6 @@
 
 + (NSString *)infoByNameAPI;
 
++ (NSString *)shareFileAPI;
+
 @end

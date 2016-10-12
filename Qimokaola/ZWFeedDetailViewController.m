@@ -51,7 +51,8 @@
 /**
  分隔视图
  */
-@property (nonatomic, strong) UIView *separatorView;
+@property (nonatomic, strong) UIView *topSeparatorView;
+@property (nonatomic, strong) UIView *bottomSeparatorView;
 
 /**
  用户头像
@@ -382,14 +383,17 @@
     CGFloat avatarHeightOrWidth = 40;
     CGFloat singleLineLabelMaxWidth = 200.f;
     CGFloat genderViewSize = 15;
-    CGFloat separatorViewHeight = 10.f;
+    CGFloat separatorViewHeight = 15.f;
     UIColor *separatorViewColor = defaultBackgroundColor;
     
     CGFloat buttonHieght = 45.f;
     CGSize imageSize = CGSizeMake(buttonHieght, buttonHieght);
     
-    _separatorView = [[UIView alloc] init];
-    _separatorView.backgroundColor = separatorViewColor;
+    _topSeparatorView = [[UIView alloc] init];
+    _topSeparatorView.backgroundColor = separatorViewColor;
+    
+    _bottomSeparatorView = [[UIView alloc] init];
+    _bottomSeparatorView.backgroundColor = separatorViewColor;
     
     _avatarView = [[UIImageView alloc] init];
     _avatarView.layer.cornerRadius = avatarHeightOrWidth / 2;
@@ -428,11 +432,11 @@
     [_collectButton setImage:[[UIImage imageNamed:@"icon_detail_collected"] imageByResizeToSize:imageSize] forState:UIControlStateSelected];
     [_collectButton addTarget:self action:@selector(collectButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     
-    NSArray *views = @[_avatarView, _nameLabel, _genderView, _timeLabel, _schoolLabel, _contentLabel, _picContainerView, _separatorView, _likeButton, _collectButton];
+    NSArray *views = @[_avatarView, _nameLabel, _genderView, _timeLabel, _schoolLabel, _contentLabel, _picContainerView, _topSeparatorView, _bottomSeparatorView, _likeButton, _collectButton];
     
     [_headerView sd_addSubviews:views];
     
-    _separatorView.sd_layout
+    _topSeparatorView.sd_layout
     .leftEqualToView(_headerView)
     .rightEqualToView(_headerView)
     .topEqualToView(_headerView)
@@ -440,7 +444,7 @@
     
     _avatarView.sd_layout
     .leftSpaceToView(_headerView, margin)
-    .topSpaceToView(_separatorView, margin)
+    .topSpaceToView(_topSeparatorView, margin)
     .heightIs(avatarHeightOrWidth)
     .widthIs(avatarHeightOrWidth);
     
@@ -488,6 +492,11 @@
     .widthEqualToHeight()
     .centerXIs(_headerView.centerX_sd + margin * 4);
     
+    _bottomSeparatorView.sd_layout
+    .leftEqualToView(_topSeparatorView)
+    .rightEqualToView(_topSeparatorView)
+    .heightRatioToView(_topSeparatorView, 1)
+    .topSpaceToView(_likeButton, 20);
 }
 
 
@@ -509,11 +518,11 @@
     if (DecodeAnonyousCode(_feed.custom) == 0) {
         [_avatarView setImageWithURL:[NSURL URLWithString:_feed.creator.icon_url.small_url_string] placeholder:[UIImage imageNamed:@"avatar"]];
         _nameLabel.text = _feed.creator.name;
-        _genderView.image = _feed.creator.gender.intValue == 0 ? [UIImage imageNamed:@"icon_female"] : [UIImage imageNamed:@"icon_male"];
+        _genderView.image = _feed.creator.gender.intValue == 0 ? [UIImage imageNamed:@"icon_gender_female"] : [UIImage imageNamed:@"icon_gender_male"];
     } else {
         _avatarView.image = _feed.creator.gender.intValue == 0 ? [UIImage imageNamed:@"icon_anonymous_female"] : [UIImage imageNamed:@"icon_anonymous_male"];
         _nameLabel.text = kStudentCircleAnonyousName;
-        _genderView.image = [UIImage imageNamed:@"icon_female"];
+        _genderView.image = [UIImage imageNamed:@"icon_gender_female"];
     }
     
     _schoolLabel.text = createSchoolName(_feed.creator.custom);
@@ -544,7 +553,7 @@
     
     _picContainerView.sd_layout.topSpaceToView(_contentLabel, picContainerViewTopMargin);
     
-    [_headerView setupAutoHeightWithBottomView:_likeButton bottomMargin:margin];
+    [_headerView setupAutoHeightWithBottomView:_bottomSeparatorView bottomMargin:0.f];
     [_headerView layoutSubviews];
     
     _tableView.tableHeaderView = _headerView;
@@ -720,7 +729,7 @@
 
 - (void)gotoUserDetailViewController:(UMComUser *)user {
     ZWUserDetailViewController *userDetailViewController = [[ZWUserDetailViewController alloc] init];
-    userDetailViewController.user = user;
+    userDetailViewController.umUser = user;
     [self.navigationController pushViewController:userDetailViewController animated:YES];
 }
 
@@ -1358,12 +1367,12 @@
 //    if ([feed.custom intValue] == 0) {
 //        [_avatarView setImageWithURL:[NSURL URLWithString:_creator.icon_url.small_url_string] placeholder:[UIImage imageNamed:@"avatar"]];
 //        _nameLabel.text = _creator.name;
-//        _genderView.image = _creator.gender.intValue == 0 ? [UIImage imageNamed:@"icon_female"] : [UIImage imageNamed:@"icon_male"];
+//        _genderView.image = _creator.gender.intValue == 0 ? [UIImage imageNamed:@"icon_gender_female"] : [UIImage imageNamed:@"icon_gender_male"];
 //        _schoolLabel.text = createSchoolName(_creator.custom);
 //    } else {
 //        _avatarView.image = [UIImage imageNamed:@"avatar"];
 //        _nameLabel.text = kStudentCircleAnonyousName;
-//        _genderView.image = [UIImage imageNamed:@"icon_female"];
+//        _genderView.image = [UIImage imageNamed:@"icon_gender_female"];
 //        _schoolLabel.text = nearBySchoolName;
 //    }
 //    

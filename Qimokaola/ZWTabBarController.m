@@ -48,21 +48,9 @@
     }
     self.viewControllers = viewControllers;
     
-//    [self.tabBar setClipsToBounds:YES];
-    
     self.tabBar.layer.shadowOpacity = 0.05;
     self.tabBar.layer.shadowOffset = CGSizeMake(0, -1.5);
     self.tabBar.layer.shadowPath = [UIBezierPath bezierPathWithRect:self.tabBar.bounds].CGPath;
-    
-//    CALayer *shadowLayer = [CALayer layer];
-//    shadowLayer.frame = CGRectMake(0, 0, self.tabBar.frame.size.width, 0.5);
-//    shadowLayer.backgroundColor = [UIColor clearColor].CGColor;
-//    shadowLayer.shadowPath = [UIBezierPath bezierPathWithRect:shadowLayer.bounds].CGPath;
-//    [self.tabBar.layer addSublayer:shadowLayer];
-//    UIView *view = [[UIView alloc] initWithFrame:self.tabBar.bounds];
-//    view.backgroundColor = [UIColor clearColor];
-//    view.layer.shadowPath = [UIBezierPath bezierPathWithRect:view.bounds].CGPath;
-//    [self.tabBar addSubview:view];
 }
 
 - (void)didReceiveMemoryWarning {

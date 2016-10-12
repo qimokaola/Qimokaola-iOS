@@ -149,7 +149,7 @@
 //    [_commentButton addSubview:_commentCountLabel];
 //    
 //    _moreButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [_moreButton setImage:[UIImage imageNamed:@"more_arrow"] forState:UIControlStateNormal];
+//    [_moreButton setImage:[UIImage imageNamed:@"icon_more_operation_menu"] forState:UIControlStateNormal];
 //    [_moreButton addTarget:self action:@selector(clickMoreButton) forControlEvents:UIControlEventTouchUpInside];
 //    
 //    _separatorView = [[UIView alloc] init];
@@ -268,12 +268,12 @@
 //    if ([feed.custom intValue] == 0) {
 //        [_avatarView setImageWithURL:[NSURL URLWithString:_feed.creator.icon_url.small_url_string] placeholder:[UIImage imageNamed:@"avatar"]];
 //        _nameLabel.text = _feed.creator.name;
-//        _genderView.image = _feed.creator.gender.intValue == 0 ? [UIImage imageNamed:@"icon_female"] : [UIImage imageNamed:@"icon_male"];
+//        _genderView.image = _feed.creator.gender.intValue == 0 ? [UIImage imageNamed:@"icon_gender_female"] : [UIImage imageNamed:@"icon_gender_male"];
 //        _schoolLabel.text = createSchoolName(_feed.creator.custom);
 //    } else {
 //        _avatarView.image = [UIImage imageNamed:@"avatar"];
 //        _nameLabel.text = kStudentCircleAnonyousName;
-//        _genderView.image = [UIImage imageNamed:@"icon_female"];
+//        _genderView.image = [UIImage imageNamed:@"icon_gender_female"];
 //        _schoolLabel.text = nearBySchoolName;
 //    }
 //    
@@ -568,7 +568,7 @@
     [_commentButton addSubview:_commentCountLabel];
     
     _moreButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_moreButton setImage:[UIImage imageNamed:@"more_arrow"] forState:UIControlStateNormal];
+    [_moreButton setImage:[UIImage imageNamed:@"icon_more_operation_menu"] forState:UIControlStateNormal];
     [_moreButton addTarget:self action:@selector(clickMoreButton) forControlEvents:UIControlEventTouchUpInside];
     
     _separatorView = [[UIView alloc] init];
@@ -710,7 +710,7 @@
     
     _schoolLabel.text = createSchoolName(_creator.custom);
     
-    _genderView.image = _creator.gender.intValue == 0 ? [UIImage imageNamed:@"icon_female"] : [UIImage imageNamed:@"icon_male"];
+    _genderView.image = _creator.gender.intValue == 0 ? [UIImage imageNamed:@"icon_gender_female"] : [UIImage imageNamed:@"icon_gender_male"];
     
     _timeLabel.text = createTimeString(_feed.create_time);
     

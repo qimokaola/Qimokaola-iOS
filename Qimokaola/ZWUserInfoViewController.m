@@ -201,6 +201,8 @@
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
             ZWModifyAvatarViewController *modifyAvatar = [[ZWModifyAvatarViewController alloc] init];
+            modifyAvatar.avatarUrl = [[ZWAPITool base] stringByAppendingPathComponent:[ZWUserManager sharedInstance].loginUser.avatar_url];
+            modifyAvatar.avatarViewType = ZWAvatarViewControllerTypeSelf;
             modifyAvatar.completion = ^() {
                 [weakSelf.tableView reloadRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationNone];
             };

@@ -8,13 +8,15 @@
 
 #import "ZWFilloutInformationViewController.h"
 #import "ZWSelectSchoolViewController.h"
-#import "Masonry.h"
-#import "ReactiveCocoa.h"
 #import "UIColor+Extension.h"
 #import "ZWBindAccountViewController.h"
 #import "ZWHUDTool.h"
 #import "ZWPathTool.h"
 #import "ZWAPIRequestTool.h"
+
+#import "Masonry.h"
+#import "ReactiveCocoa.h"
+#import <YYKit/YYKit.h>
 
 @interface ZWFilloutInformationViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
@@ -478,10 +480,10 @@
     
     __weak __typeof(self) weakSelf = self;
     
-    UIImage *selectedImage = info[UIImagePickerControllerEditedImage];
+    UIImage *selectedImage = [info[UIImagePickerControllerEditedImage] imageByResizeToSize:CGSizeMake(320, 320)];
     
     // 将所选图片写进文件，以便上传使用
-    NSData *imageData = UIImageJPEGRepresentation(selectedImage, 0.5);
+    NSData *imageData = UIImageJPEGRepresentation(selectedImage, 0.3);
     NSString *avatarPath = [[ZWPathTool avatarDirectory] stringByAppendingPathComponent:@"avatar.jpeg"];
     NSURL *avatarFileURL = [NSURL fileURLWithPath:avatarPath];
     [imageData writeToURL:avatarFileURL atomically:YES];

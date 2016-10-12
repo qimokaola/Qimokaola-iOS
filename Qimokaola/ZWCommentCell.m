@@ -91,7 +91,7 @@
     _replyLabel.paddingLabelType = ZWReplyPaddingLabelTypeComment;
     
     _moreButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_moreButton setImage:[UIImage imageNamed:@"more_arrow"] forState:UIControlStateNormal];
+    [_moreButton setImage:[UIImage imageNamed:@"icon_more_operation_menu"] forState:UIControlStateNormal];
     [_moreButton addTarget:self action:@selector(clickMoreButton) forControlEvents:UIControlEventTouchUpInside];
     
     _commentButton = [UIButton buttonWithType:UIButtonTypeCustom];

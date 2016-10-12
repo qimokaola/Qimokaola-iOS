@@ -103,7 +103,7 @@
 @implementation ZWAPITool
 
 + (NSString *)base {
-    return @"https://finalexam.cn";
+    return @"https://www.finalexam.cn";
 }
 
 + (NSString *)sendCodeAPI {
@@ -161,6 +161,10 @@
 
 + (NSString *)infoByNameAPI {
     return [[ZWAPITool user] infobyname];
+}
+
++ (NSString *)shareFileAPI {
+    return [[ZWAPITool dbfsInUnknowSchool] stringByAppendingPathComponent:@"public"];
 }
 
 + (NSString *)api {

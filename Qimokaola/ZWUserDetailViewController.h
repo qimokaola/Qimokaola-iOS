@@ -8,10 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+#import <UMCommunitySDK/UMComDataRequestManager.h>
+#import <UMCommunitySDK/UMComSession.h>
 #import <UMComDataStorage/UMComUser.h>
+#import <UMComDataStorage/UMComImageUrl.h>
+#import <UMComDataStorage/UMComFeed.h>
 
 @interface ZWUserDetailViewController : UIViewController
 
-@property (nonatomic, strong) UMComUser *user;
+@property (nonatomic, strong) UMComUser *umUser;
 
 @end

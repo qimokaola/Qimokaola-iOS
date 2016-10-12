@@ -130,7 +130,7 @@
 
 - (void)cell:(ZWLikeCell *)cell didClickUser:(UMComUser *)user {
     ZWUserDetailViewController *userDetailViewController = [[ZWUserDetailViewController alloc] init];
-    userDetailViewController.user = user;
+    userDetailViewController.umUser = user;
     [self.navigationController pushViewController:userDetailViewController animated:YES];
 }
 

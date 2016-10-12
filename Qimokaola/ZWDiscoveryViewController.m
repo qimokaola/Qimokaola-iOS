@@ -149,7 +149,7 @@
         [self.avatarImageView setImageWithURL:[NSURL URLWithString:[[ZWAPITool base] stringByAppendingPathComponent:loginUser.avatar_url]] placeholder:_avatarImageView.image];
         self.nicknameLabel.text  = loginUser.nickname;
         self.schoolLabel.text = loginUser.collegeName;
-        NSString *genderImageName = [loginUser.gender isEqualToString:@"男"] ? @"icon_male" : @"icon_female";
+        NSString *genderImageName = [loginUser.gender isEqualToString:@"男"] ? @"icon_gender_male" : @"icon_gender_female";
         self.genderView.image = [UIImage imageNamed:genderImageName];
     } else {
         
@@ -162,7 +162,7 @@
     CGFloat marginRate = (1. - sizeRate) / 2.;
     CGFloat margin = 10;
     CGFloat smallMargin = 5.f;
-    CGFloat genderViewSize = 20.f;
+    CGFloat genderViewSize = 15.f;
     UIColor *commonBlueColor = RGB(80, 140, 238);
     
     //用户信息View
@@ -329,6 +329,18 @@
                 break;
                 
             case 2: {
+                MBProgressHUD *hud = [ZWHUDTool excutingHudInView:self.navigationController.view title:@"正在退出登录"];
+                [[ZWUserManager sharedInstance] userLogout:^(id response, BOOL success) {
+                    if (success && [[response objectForKey:kHTTPResponseCodeKey] intValue] == 0) {
+                        [ZWUserManager sharedInstance].loginUser = nil;
+                        [hud hideAnimated:YES];
+                        [[NSNotificationCenter defaultCenter] postNotificationName:kUserLogoutSuccessNotification object:nil];
+                    } else {
+                        hud.mode = MBProgressHUDModeText;
+                        hud.label.text = @"出现错误，退出登录失败";
+                        [hud hideAnimated:YES afterDelay:kShowHUDMid];
+                    }
+                }];
             }
                 break;
                 

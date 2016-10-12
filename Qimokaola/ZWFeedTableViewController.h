@@ -12,7 +12,8 @@
 typedef NS_ENUM(NSUInteger, ZWFeedTableViewType) {
     ZWFeedTableViewTypeAboutTopic = 0, // 有关话题的 feed 流
     ZWFeedTableViewTypeAboutUser,      // 有关用户发出的 feed 流
-    ZWFeedTableViewTypeAboutCollection  // 用户收藏的 feed 流
+    ZWFeedTableViewTypeAboutCollection,  // 用户收藏的 feed 流
+    ZWFeedTableViewTypeAboutOthers     // 其他用户发布的 feed 流
 };
 
 @interface ZWFeedTableViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>

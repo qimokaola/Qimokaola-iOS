@@ -77,17 +77,15 @@ typedef NS_ENUM(NSInteger, ZWFetchedDataSource) {
     UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:nil action:nil];
     self.navigationItem.backBarButtonItem = backButtonItem;
     
-    self.placeholderImage = [[UIImage imageNamed:@"avatar"] imageByResizeToSize:CGSizeMake(40, 40)];
+    self.placeholderImage = [[[UIColor whiteColor] parseToImage] imageByResizeToSize:CGSizeMake(40, 40)];
     
     self.topics = [NSMutableArray array];
     
     NSArray *imgs = @[
-                      @"pic6.png",
-                      @"pic6.png",
-                     @"pic6.png",
-                      @"pic6.png",
-                      @"pic6.png",
-                      @"pic6.png"];
+                      @"pic1.png",
+                      @"pic2.png",
+                     @"pic3.png",
+                      @"pic4.png"];
     
     
     
@@ -211,6 +209,7 @@ typedef NS_ENUM(NSInteger, ZWFetchedDataSource) {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellID];
+        cell.textLabel.textColor = RGB(72, 72, 72);
         cell.detailTextLabel.font = [UIFont systemFontOfSize:12];
         cell.detailTextLabel.textColor = [UIColor lightGrayColor];
     }
