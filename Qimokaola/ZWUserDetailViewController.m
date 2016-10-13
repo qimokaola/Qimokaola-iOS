@@ -150,7 +150,7 @@
         [hud hideAnimated:YES];
         [weakSelf.tableView reloadData];
         
-        [weakSelf.avatarView setImageURL:[NSURL URLWithString:[[ZWAPITool base] stringByAppendingPathComponent:weakSelf.appUser.avatar_url]]];
+        [weakSelf.avatarView setImageURL:[NSURL URLWithString:[[[ZWAPITool base] stringByAppendingString:@"/"] stringByAppendingString:weakSelf.appUser.avatar_url]]];
         weakSelf.collegeLabel.text = weakSelf.appUser.collegeName;
         weakSelf.academyLabel.text = weakSelf.appUser.academyName;
         

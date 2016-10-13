@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^SwitchCompleteBlock)(NSString *school);
-
 @interface ZWPopViewController : UITableViewController
 
-@property (nonatomic, copy) SwitchCompleteBlock block;
+@property (nonatomic, strong) NSArray *dataArray;
+@property (nonatomic, strong) NSArray *imageNameArray;
+@property (nonatomic, copy) void(^popViewSelectedBlock)(NSInteger index);
 
 @end

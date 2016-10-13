@@ -12,6 +12,16 @@
 
 + (NSString *)base;
 
++ (NSString *)api;
+
++ (NSString *)user;
+
++ (NSString *)school;
+
++ (NSString *)dbfs;
+
++ (NSString *)dbfsInUnknowSchool;
+
 + (NSString *)sendCodeAPI;
 
 + (NSString *)verifyCodeAPI;

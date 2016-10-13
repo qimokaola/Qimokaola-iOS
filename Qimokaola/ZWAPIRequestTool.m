@@ -113,7 +113,6 @@
 
 // 通用请求接口，针对接收字典参数的接口
 + (void)requestWithAPI:(NSString *)API parameters:(id)params result:(APIRequestResult)result {
-    
     [ZWNetworkingManager postWithURLString:API
                                     params:[ZWAPIRequestTool buildParameters:params ? params : @{}]
                                    success:^(NSURLSessionDataTask *task, id responseObject) {

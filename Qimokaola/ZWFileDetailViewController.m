@@ -362,7 +362,7 @@
 - (void)downloadFile {
     __weak __typeof(self) weakSelf = self;
     [self setDownloadState:YES];
-    [ZWAPIRequestTool requestDownloadUrlInSchool:[ZWUserManager sharedInstance].loginUser.collegeId
+    [ZWAPIRequestTool requestDownloadUrlInSchool:[ZWUserManager sharedInstance].loginUser.currentCollegeId
                                             path:[_path stringByAppendingString:_file.name]
                                           result:^(id response, BOOL success) {
                                               if (success && [[response objectForKey:kHTTPResponseCodeKey] intValue] == 0) {
@@ -398,7 +398,7 @@
                                                                     }
                                                                     [[ZWDataBaseTool sharedInstance] addFileDownloadInfo:weakSelf.file
                                                                                                                 storage_name:weakSelf.storage_name
-                                                                                                                inSchool:[ZWUserManager sharedInstance].loginUser.collegeName
+                                                                                                                inSchool:[ZWUserManager sharedInstance].loginUser.currentCollegeName
                                                                                                                 inCourse:weakSelf.course];
                                                                 }
                                                             }];
@@ -429,7 +429,7 @@
 
 #pragma mark - 分享至QQ QQ空间
 - (void)shareToComputer{
-    NSString *shareUrl = [NSString stringWithFormat:[ZWAPITool shareFileAPI], self.file.md5, [self.file.name URLEncodedString]];
+    NSString *shareUrl = [NSString stringWithFormat:@"%@：%@", self.file.name, [NSString stringWithFormat:[ZWAPITool shareFileAPI], self.file.md5, [self.file.name URLEncodedString]]];
     [UMSocialSnsService presentSnsIconSheetView:self
                                          appKey:nil
                                       shareText:shareUrl

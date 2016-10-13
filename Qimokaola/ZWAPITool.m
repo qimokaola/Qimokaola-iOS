@@ -35,67 +35,67 @@
 @implementation NSString (URLExtension)
 
 - (NSString *)api {
-    return [self stringByAppendingPathComponent:@"api"];
+    return [self stringByAppendingString:@"/api"];
 }
 
 - (NSString *)user {
-    return [self stringByAppendingPathComponent:@"user"];
+    return [self stringByAppendingString:@"/user"];
 }
 
 - (NSString *)school {
-    return [self stringByAppendingPathComponent:@"school"];
+    return [self stringByAppendingString:@"/school"];
 }
 
 - (NSString *)sb {
-    return [self stringByAppendingPathComponent:@"sb"];
+    return [self stringByAppendingString:@"/sb"];
 }
 
 - (NSString *)sendCode {
-    return [self stringByAppendingPathComponent:@"sendCode"];
+    return [self stringByAppendingString:@"/sendCode"];
 }
 
 - (NSString *)verifyCode {
-    return [self stringByAppendingPathComponent:@"verifyCode"];
+    return [self stringByAppendingString:@"/verifyCode"];
 }
 
 - (NSString *)listSchool {
-    return [self stringByAppendingPathComponent:@"list"];
+    return [self stringByAppendingString:@"/list"];
 }
 
 - (NSString *)listAcademy {
-    return [self stringByAppendingPathComponent:@"listAcademy"];
+    return [self stringByAppendingString:@"/listAcademy"];
 }
 
 - (NSString *)register {
-    return [self stringByAppendingPathComponent:@"register"];
+    return [self stringByAppendingString:@"/register"];
 }
 
 - (NSString *)uploadAvatar {
-    return [self stringByAppendingPathComponent:@"upload"];
+    return [self stringByAppendingString:@"/upload"];
 }
 
 - (NSString *)login {
-    return [self stringByAppendingPathComponent:@"login"];
+    return [self stringByAppendingString:@"/login"];
 }
 
 - (NSString *)userInfo {
-    return [self stringByAppendingPathComponent:@"info"];
+    return [self stringByAppendingString:@"/info"];
 }
 
 - (NSString *)dbfs {
-    return [self stringByAppendingPathComponent:@"dbfs"];
+    return [self stringByAppendingString:@"/dbfs"];
 }
 
 - (NSString *)modifyUserInfo {
-    return [self stringByAppendingPathComponent:@"modify"];
+    return [self stringByAppendingString:@"/modify"];
 }
 
 - (NSString *)logout {
-    return [self stringByAppendingPathComponent:@"logout"];
+    return [self stringByAppendingString:@"/logout"];
 }
 
 - (NSString *)infobyname {
-    return [self stringByAppendingPathComponent:@"infobyname"];
+    return [self stringByAppendingString:@"/infobyname"];
 }
 
 @end
@@ -103,31 +103,26 @@
 @implementation ZWAPITool
 
 + (NSString *)base {
-    return @"https://www.finalexam.cn";
+    return @"https://finalexam.cn";
 }
 
 + (NSString *)sendCodeAPI {
-    //return [[self base] stringByAppendingString:@"/api/user/sendcode"];
     return [[ZWAPITool user] sendCode];
 }
 
 + (NSString *)verifyCodeAPI {
-    //return [[self base] stringByAppendingString:@"/api/user/verifycode"];
     return [[ZWAPITool user] verifyCode];
 }
 
 + (NSString *)listSchoolAPI {
-    //return [[self base] stringByAppendingString:@"/api/school/list"];
     return [[ZWAPITool school] listSchool];
 }
 
 + (NSString *)listAcademyAPI {
-    //return [[self base] stringByAppendingString:@"/api/school/listAcademy"];
     return [[ZWAPITool school] listAcademy];
 }
 
 + (NSString *)registerAPI {
-    //return [[self base] stringByAppendingString:@"/api/user/register"];
     return [[ZWAPITool user] register];
 }
 
@@ -144,7 +139,7 @@
 }
 
 + (NSString *)listFileAndFolderAPI {
-    return [[ZWAPITool dbfsInUnknowSchool] stringByAppendingPathComponent:@"list"];
+    return [[ZWAPITool dbfsInUnknowSchool] stringByAppendingString:@"/list"];
 }
 
 + (NSString *)modifyUserInfoAPI {
@@ -156,7 +151,7 @@
 }
 
 + (NSString *)downloadUrlAPI {
-    return [[ZWAPITool dbfsInUnknowSchool] stringByAppendingPathComponent:@"downloadurl"];;
+    return [[ZWAPITool dbfsInUnknowSchool] stringByAppendingString:@"/downloadurl"];;
 }
 
 + (NSString *)infoByNameAPI {
@@ -164,7 +159,7 @@
 }
 
 + (NSString *)shareFileAPI {
-    return [[[[ZWAPITool dbfs] stringByAppendingPathComponent:@"md5"] stringByAppendingPathComponent:@"%@"] stringByAppendingPathComponent:@"%@"];
+    return [[ZWAPITool dbfs] stringByAppendingString:@"/md5/%@/%@"];
 }
 
 + (NSString *)api {
@@ -184,7 +179,7 @@
 }
 
 + (NSString *)dbfsInUnknowSchool {
-    return [[ZWAPITool dbfs] stringByAppendingPathComponent:@"%d"];
+    return [[ZWAPITool dbfs] stringByAppendingString:@"/%d"];
 }
 
 @end

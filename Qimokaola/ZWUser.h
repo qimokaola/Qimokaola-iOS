@@ -33,4 +33,10 @@
 // 入学年份
 @property (nonatomic, strong) NSString *enterYear;
 
+// 以下两个变量首次登陆无效 用已标记登录用户当前所选择的学校 若未登录置空
+// 当前选择的学校id
+@property (nonatomic, strong) NSNumber *currentCollegeId;
+// 当前选择的学校名
+@property (nonatomic, strong) NSString *currentCollegeName;
+
 @end

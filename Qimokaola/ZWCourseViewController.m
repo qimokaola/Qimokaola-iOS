@@ -12,11 +12,21 @@
 #import "ZWUserManager.h"
 #import "ZWFileAndFolderViewController.h"
 #import "ZWCourseCell.h"
+#import "ZWPathTool.h"
+
+#import "ZWSwitchSchollViewController.h"
+
+#import "ZWPopViewController.h"
 
 #import "LinqToObjectiveC.h"
 #import <ReactiveCocoa/ReactiveCocoa.h>
+#import <Masonry/Masonry.h>
 
 @interface ZWCourseViewController ()
+
+@property (nonatomic, strong) UIView *schoolNameView;
+@property (nonatomic, strong) UILabel *schoolNameLabel;
+@property (nonatomic, strong) UIImageView *arrowView;
 
 @end
 
@@ -37,6 +47,35 @@ static NSString *const kCourseCellIdentifier = @"kCourseCellIdentifier";
     [self.tableView registerClass:[ZWCourseCell class] forCellReuseIdentifier:kCourseCellIdentifier];
     self.tableView.rowHeight = 50;
     
+    _schoolNameView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenH, 44)];
+    _schoolNameView.backgroundColor = [UIColor clearColor];
+    [_schoolNameView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(popToSwitchSchool:)]];
+    
+    _schoolNameLabel = [[UILabel alloc] init];
+    _schoolNameLabel.font = [[[UINavigationBar appearance] titleTextAttributes] objectForKey:NSFontAttributeName];
+    _schoolNameLabel.textColor = [UIColor whiteColor];
+    [self setSchoolNameLabelData];
+    [_schoolNameLabel sizeToFit];
+    [_schoolNameView addSubview:_schoolNameLabel];
+    [_schoolNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.top.bottom.equalTo(weakSelf.schoolNameView);
+    }];
+    
+    _arrowView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_switch_school"]];
+    [_schoolNameView addSubview:_arrowView];
+    [_arrowView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeMake(15, 15));
+        make.left.equalTo(weakSelf.schoolNameLabel.mas_right).with.offset(5);
+        make.centerY.equalTo(weakSelf.schoolNameLabel);
+    }];
+    
+    UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc]
+                                       initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
+                                       target:nil action:nil];
+    negativeSpacer.width = -10;
+    UIBarButtonItem *schoolNameItem = [[UIBarButtonItem alloc] initWithCustomView:_schoolNameView];
+    self.navigationItem.leftBarButtonItems = @[negativeSpacer, schoolNameItem];
+    
     [[[NSNotificationCenter defaultCenter] rac_addObserverForName:kUserLoginSuccessNotification object:nil] subscribeNext:^(id x) {
         if (!weakSelf.tableView.mj_header.isRefreshing) {
             [weakSelf.tableView.mj_header beginRefreshing];
@@ -53,14 +92,37 @@ static NSString *const kCourseCellIdentifier = @"kCourseCellIdentifier";
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - Getters & Setters
+
 #pragma mark - Normal Method
+
+- (void)setSchoolNameLabelData {
+    _schoolNameLabel.text = [ZWUserManager sharedInstance].loginUser.currentCollegeName;
+}
+
+- (void)popToSwitchSchool:(UIGestureRecognizer *)sender {
+    __weak __typeof(self) weakSelf = self;
+    ZWSwitchSchollViewController *switchSchoolViewController = [[ZWSwitchSchollViewController alloc] init];
+    switchSchoolViewController.switchSchoolCompletion = ^(NSString *collegeName, NSString *collegeID) {
+        if ([weakSelf.schoolNameLabel.text isEqualToString:collegeName]) {
+            return;
+        }
+        [[ZWUserManager sharedInstance] updateCurrentCollegeId:@(collegeID.intValue) collegeName:collegeName];
+        [weakSelf setSchoolNameLabelData];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [weakSelf.tableView.mj_header beginRefreshing];
+        });
+    };
+    UINavigationController *navc = [[UINavigationController alloc] initWithRootViewController:switchSchoolViewController];
+    [self presentViewController:navc animated:YES completion:nil];
+}
 
 #pragma mark 重写覆盖下拉刷新方法
 - (void)freshHeaderStartFreshing {
     
     __weak __typeof(self) weakSelf = self;
     ZWUser *user = [ZWUserManager sharedInstance].loginUser;
-    [ZWAPIRequestTool requstFileAndFolderListInSchool:user.collegeId
+    [ZWAPIRequestTool requstFileAndFolderListInSchool:user.currentCollegeId
                                                  path:ROOT
                                            needDetail:YES
                                                result:^(id response, BOOL success) {
@@ -125,6 +187,12 @@ static NSString *const kCourseCellIdentifier = @"kCourseCellIdentifier";
     NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"name CONTAINS[c] %@", searchController.searchBar.text];
     self.filteredArray = [[self.dataArray filteredArrayUsingPredicate:searchPredicate] mutableCopy];
     [self.tableView reloadData];
+}
+
+#pragma mark - UIPopoverPresentationControllerDelegate
+
+- (UIModalPresentationStyle)adaptivePresentationStyleForPresentationController:(UIPresentationController *)controller {
+    return UIModalPresentationNone;
 }
 
 /*

@@ -11,14 +11,13 @@
 
 #import <UMCommunitySDK/UMComDataRequestManager.h>
 #import <UMCommunitySDK/UMComSession.h>
-
 @interface ZWUserManager ()
 
 @property (nonatomic, strong) YYCache *cache;
 
 @end
 
-NSString *const kLoginedUser = @"kLoginedUser";
+NSString *const kLoginedUserKey = @"kLoginedUserKey";
 
 @implementation ZWUserManager
 
@@ -36,10 +35,11 @@ NSString *const kLoginedUser = @"kLoginedUser";
     self = [super init];
     if (self) {
         self.cache = [[YYCache alloc] initWithName:@"UserInfo"];
-        self.loginUser = (ZWUser *)[_cache objectForKey:kLoginedUser];
+        self.loginUser = (ZWUser *)[_cache objectForKey:kLoginedUserKey];
         if (self.loginUser) {
             [[NSNotificationCenter defaultCenter] postNotificationName:kLocalUserLoginStateGuranteedNotification object:nil];
         }
+        
     }
     return self;
 }
@@ -48,7 +48,7 @@ NSString *const kLoginedUser = @"kLoginedUser";
     __weak __typeof(self) weakSelf = self;
     [[UMComDataRequestManager defaultManager] userCustomAccountLoginWithName:_loginUser.nickname
                                                                     sourceId:_loginUser.uid
-                                                                    icon_url:[[ZWAPITool base] stringByAppendingPathComponent:_loginUser.avatar_url]
+                                                                    icon_url:[[[ZWAPITool base] stringByAppendingString:@"/"] stringByAppendingString:_loginUser.avatar_url]
                                                                       gender:[_loginUser.gender isEqualToString:@"男"] ? 1 : 0
                                                                          age:0
                                                                       custom:_loginUser.collegeName
@@ -99,10 +99,26 @@ NSString *const kLoginedUser = @"kLoginedUser";
 }
 
 - (void)setLoginUser:(ZWUser *)loginUser {
-    _loginUser = loginUser;
+    if (_loginUser) {
+        NSNumber *currentCollegeId = _loginUser.currentCollegeId;
+        NSString *currentCollegeName = _loginUser.currentCollegeName;
+        _loginUser = loginUser;
+        _loginUser.currentCollegeId = currentCollegeId;
+        _loginUser.currentCollegeName = currentCollegeName;
+    } else {
+        _loginUser = loginUser;
+        if (_loginUser) {
+            if (!_loginUser.currentCollegeId) {
+                _loginUser.currentCollegeId = _loginUser.collegeId;
+            }
+            if (!_loginUser.currentCollegeName) {
+                _loginUser.currentCollegeName = _loginUser.collegeName;
+            }
+        }
+    }
     _isLogin = loginUser != nil;
     [[NSUserDefaults standardUserDefaults] setBool:_isLogin forKey:@"LoginState"];
-    [_cache setObject:loginUser forKey:kLoginedUser];
+    [_cache setObject:_loginUser forKey:kLoginedUserKey];
 }
 
 - (void)modifyUserNickname:(NSString *)nickname result:(APIRequestResult)result {
@@ -110,11 +126,8 @@ NSString *const kLoginedUser = @"kLoginedUser";
 }
 
 - (void)updateNickname:(NSString *)nickname {
-    if (nickname) {
-        ZWUser *user = self.loginUser;
-        user.nickname = nickname;
-        self.loginUser = user;
-    }
+    _loginUser.nickname = nickname;
+    [_cache setObject:_loginUser forKey:kLoginedUserKey];
 }
 
 - (void)modifyUserGender:(NSString *)gender result:(APIRequestResult)result {
@@ -122,11 +135,8 @@ NSString *const kLoginedUser = @"kLoginedUser";
 }
 
 - (void)updateGender:(NSString *)gender {
-    if (gender) {
-        ZWUser *user = self.loginUser;
-        user.gender = gender;
-        self.loginUser = user;
-    }
+    _loginUser.gender = gender;
+    [_cache setObject:_loginUser forKey:kLoginedUserKey];
 }
 
 - (void)modifyUserAcademyId:(NSNumber *)academyId result:(APIRequestResult)result {
@@ -134,20 +144,21 @@ NSString *const kLoginedUser = @"kLoginedUser";
 }
 
 - (void)updateAcademyId:(NSNumber *)academyId academyName:(NSString *)academyName {
-    if (academyId && academyName) {
-        ZWUser *user = self.loginUser;
-        user.academyId = academyId;
-        user.academyName = academyName;
-        self.loginUser = user;
-    }
+    _loginUser.academyId = academyId;
+    _loginUser.academyName = academyName;
+    [_cache setObject:_loginUser forKey:kLoginedUserKey];
+}
+
+
+- (void)updateCurrentCollegeId:(NSNumber *)collegeId collegeName:(NSString *)collegeName {
+    _loginUser.currentCollegeId = collegeId;
+    _loginUser.currentCollegeName = collegeName;
+    [_cache setObject:_loginUser forKey:kLoginedUserKey];
 }
 
 - (void)updateAvatarUrl:(NSString *)avatarUrl {
-    if (avatarUrl) {
-        ZWUser *user = self.loginUser;
-        user.avatar_url = avatarUrl;
-        self.loginUser = user;
-    }
+    _loginUser.avatar_url = avatarUrl;
+    [_cache setObject:_loginUser forKey:kLoginedUserKey];
 }
 
 - (void)modifyUserInfo:(id)params result:(APIRequestResult)result {

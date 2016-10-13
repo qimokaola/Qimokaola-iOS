@@ -194,6 +194,13 @@
 		C3DE5B931DAE644B00E93C05 /* ZWUMUserFeedHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3DE5B921DAE644B00E93C05 /* ZWUMUserFeedHeader.xib */; };
 		C3DE5B961DAE658200E93C05 /* ZWUMUserFeedHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DE5B951DAE658200E93C05 /* ZWUMUserFeedHeader.m */; };
 		C3DE5B981DAE8B6400E93C05 /* pic1.png in Resources */ = {isa = PBXBuildFile; fileRef = C3DE5B971DAE8B6400E93C05 /* pic1.png */; };
+		C3DE5BA61DAFAD4900E93C05 /* WBTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DE5B9B1DAFAD4900E93C05 /* WBTableViewCell.m */; };
+		C3DE5BA71DAFAD4900E93C05 /* WBTableViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DE5B9D1DAFAD4900E93C05 /* WBTableViewDataSource.m */; };
+		C3DE5BA81DAFAD4900E93C05 /* WBTableViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DE5B9F1DAFAD4900E93C05 /* WBTableViewDelegate.m */; };
+		C3DE5BA91DAFAD4900E93C05 /* WBPopMenuSingleton.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DE5BA11DAFAD4900E93C05 /* WBPopMenuSingleton.m */; };
+		C3DE5BAA1DAFAD4900E93C05 /* WBPopMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DE5BA31DAFAD4900E93C05 /* WBPopMenuView.m */; };
+		C3DE5BAB1DAFAD4900E93C05 /* WBPopMenuModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DE5BA51DAFAD4900E93C05 /* WBPopMenuModel.m */; };
+		C3DE5BAF1DAFC16900E93C05 /* ZWSwitchSchollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DE5BAE1DAFC16900E93C05 /* ZWSwitchSchollViewController.m */; };
 		C3E58AC81D54DFE600FDB384 /* ZWBindAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3E58AC71D54DFE600FDB384 /* ZWBindAccountViewController.m */; };
 		C3EDA9181D830CA0009FF851 /* ZWFile.m in Sources */ = {isa = PBXBuildFile; fileRef = C3EDA9171D830CA0009FF851 /* ZWFile.m */; };
 		C3EDA91C1D830E79009FF851 /* ZWFolder.m in Sources */ = {isa = PBXBuildFile; fileRef = C3EDA91B1D830E79009FF851 /* ZWFolder.m */; };
@@ -600,6 +607,20 @@
 		C3DE5B941DAE658200E93C05 /* ZWUMUserFeedHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWUMUserFeedHeader.h; sourceTree = "<group>"; };
 		C3DE5B951DAE658200E93C05 /* ZWUMUserFeedHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWUMUserFeedHeader.m; sourceTree = "<group>"; };
 		C3DE5B971DAE8B6400E93C05 /* pic1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pic1.png; sourceTree = "<group>"; };
+		C3DE5B9A1DAFAD4900E93C05 /* WBTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBTableViewCell.h; sourceTree = "<group>"; };
+		C3DE5B9B1DAFAD4900E93C05 /* WBTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBTableViewCell.m; sourceTree = "<group>"; };
+		C3DE5B9C1DAFAD4900E93C05 /* WBTableViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBTableViewDataSource.h; sourceTree = "<group>"; };
+		C3DE5B9D1DAFAD4900E93C05 /* WBTableViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBTableViewDataSource.m; sourceTree = "<group>"; };
+		C3DE5B9E1DAFAD4900E93C05 /* WBTableViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBTableViewDelegate.h; sourceTree = "<group>"; };
+		C3DE5B9F1DAFAD4900E93C05 /* WBTableViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBTableViewDelegate.m; sourceTree = "<group>"; };
+		C3DE5BA01DAFAD4900E93C05 /* WBPopMenuSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBPopMenuSingleton.h; sourceTree = "<group>"; };
+		C3DE5BA11DAFAD4900E93C05 /* WBPopMenuSingleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBPopMenuSingleton.m; sourceTree = "<group>"; };
+		C3DE5BA21DAFAD4900E93C05 /* WBPopMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBPopMenuView.h; sourceTree = "<group>"; };
+		C3DE5BA31DAFAD4900E93C05 /* WBPopMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBPopMenuView.m; sourceTree = "<group>"; };
+		C3DE5BA41DAFAD4900E93C05 /* WBPopMenuModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBPopMenuModel.h; sourceTree = "<group>"; };
+		C3DE5BA51DAFAD4900E93C05 /* WBPopMenuModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBPopMenuModel.m; sourceTree = "<group>"; };
+		C3DE5BAD1DAFC16900E93C05 /* ZWSwitchSchollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWSwitchSchollViewController.h; sourceTree = "<group>"; };
+		C3DE5BAE1DAFC16900E93C05 /* ZWSwitchSchollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWSwitchSchollViewController.m; sourceTree = "<group>"; };
 		C3E58AC61D54DFE600FDB384 /* ZWBindAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWBindAccountViewController.h; sourceTree = "<group>"; };
 		C3E58AC71D54DFE600FDB384 /* ZWBindAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWBindAccountViewController.m; sourceTree = "<group>"; };
 		C3EAA7231D3FB79F009FCC0E /* Qimokaola-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Qimokaola-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -1532,6 +1553,7 @@
 		C3792AD31D6F395F0079FCF5 /* Custom */ = {
 			isa = PBXGroup;
 			children = (
+				C3DE5B991DAFAD2B00E93C05 /* Popmenu */,
 				C33B6D3B1D9D68B200710D75 /* ZWReplytPaddingLabel */,
 				C3DA11FE1D9D45C700758BAC /* DLSlideView */,
 				C32666411D953115008C6B24 /* PhotoSelector */,
@@ -1927,6 +1949,7 @@
 		C3C8C1371D92CD4200771C61 /* FileAndFolder */ = {
 			isa = PBXGroup;
 			children = (
+				C3DE5BAC1DAFC14400E93C05 /* New Group */,
 				C30BBA871DA78A660090EB4A /* ZWDownloadedViewController */,
 				C35771161D85763D00E9B166 /* ZWFileDetailViewController */,
 				C35771091D843E6300E9B166 /* ZWCourseViewController */,
@@ -2066,6 +2089,34 @@
 				C3DE5B951DAE658200E93C05 /* ZWUMUserFeedHeader.m */,
 			);
 			name = ZWUMUserFeedHeader;
+			sourceTree = "<group>";
+		};
+		C3DE5B991DAFAD2B00E93C05 /* Popmenu */ = {
+			isa = PBXGroup;
+			children = (
+				C3DE5B9A1DAFAD4900E93C05 /* WBTableViewCell.h */,
+				C3DE5B9B1DAFAD4900E93C05 /* WBTableViewCell.m */,
+				C3DE5B9C1DAFAD4900E93C05 /* WBTableViewDataSource.h */,
+				C3DE5B9D1DAFAD4900E93C05 /* WBTableViewDataSource.m */,
+				C3DE5B9E1DAFAD4900E93C05 /* WBTableViewDelegate.h */,
+				C3DE5B9F1DAFAD4900E93C05 /* WBTableViewDelegate.m */,
+				C3DE5BA01DAFAD4900E93C05 /* WBPopMenuSingleton.h */,
+				C3DE5BA11DAFAD4900E93C05 /* WBPopMenuSingleton.m */,
+				C3DE5BA21DAFAD4900E93C05 /* WBPopMenuView.h */,
+				C3DE5BA31DAFAD4900E93C05 /* WBPopMenuView.m */,
+				C3DE5BA41DAFAD4900E93C05 /* WBPopMenuModel.h */,
+				C3DE5BA51DAFAD4900E93C05 /* WBPopMenuModel.m */,
+			);
+			name = Popmenu;
+			sourceTree = "<group>";
+		};
+		C3DE5BAC1DAFC14400E93C05 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+				C3DE5BAD1DAFC16900E93C05 /* ZWSwitchSchollViewController.h */,
+				C3DE5BAE1DAFC16900E93C05 /* ZWSwitchSchollViewController.m */,
+			);
+			name = "New Group";
 			sourceTree = "<group>";
 		};
 		C3E58AC51D54DFD300FDB384 /* ZWBindAccountViewController */ = {
@@ -2387,10 +2438,12 @@
 				C3FC44AD1D7DBA8100896CDB /* ZWFeedComposeViewController.m in Sources */,
 				C347782D1CB263E700D26FA8 /* ZWOldFile.m in Sources */,
 				C3827B971D72DDBB002F6E5B /* ZWFeedDetailViewController.m in Sources */,
+				C3DE5BA61DAFAD4900E93C05 /* WBTableViewCell.m in Sources */,
 				C32666B81D9560C1008C6B24 /* UMComActionDeleteView.m in Sources */,
 				C3DA122E1D9D5F1E00758BAC /* ZWRSCommentsViewController.m in Sources */,
 				C3493C1B1D8D8E6E007C7144 /* ZWModifiAcademyViewController.m in Sources */,
 				C3162CBE1D7C54D300153EB9 /* ZWUserManager.m in Sources */,
+				C3DE5BA91DAFAD4900E93C05 /* WBPopMenuSingleton.m in Sources */,
 				C31FE3C81D8A712200732B02 /* UIView+Extension.m in Sources */,
 				C39004B21D5C61900097358E /* ZWNavigationController.m in Sources */,
 				C3217B0E1BCAAF830037937F /* ZWOldDownloadedViewController.m in Sources */,
@@ -2420,6 +2473,7 @@
 				C3019E871D96E0C700CC2F55 /* ZWSettingsViewController.m in Sources */,
 				C35FD9C51D707E640066DE68 /* SDPhotoBrowser.m in Sources */,
 				C3561A231D37743F0032C97B /* ZWRegisterViewCotroller.m in Sources */,
+				C3DE5BA71DAFAD4900E93C05 /* WBTableViewDataSource.m in Sources */,
 				C3A14CA41D37D0FD0088E754 /* ZWSelectSchoolViewController.m in Sources */,
 				C31FE3D41D8A832000732B02 /* WBModel.m in Sources */,
 				C3792AC81D6C887A0079FCF5 /* ZWAPITool.m in Sources */,
@@ -2435,6 +2489,7 @@
 				C39804091D9177C2006D1471 /* ZWDataBaseTool.m in Sources */,
 				C3DA12161D9D45C700758BAC /* DLTabedSlideView.m in Sources */,
 				C3C44E461BC6BBEF004B30BF /* ZWRootPathViewController.m in Sources */,
+				C3DE5BAB1DAFAD4900E93C05 /* WBPopMenuModel.m in Sources */,
 				C31BB10C1CB7EDC000EE1E37 /* ZWAppCache.m in Sources */,
 				C3C44DEE1BC687B0004B30BF /* main.m in Sources */,
 				C35771081D843E5700E9B166 /* ZWCourseViewController.m in Sources */,
@@ -2456,9 +2511,11 @@
 				C3243E291D547A5A00FF97C3 /* ZWRegisterView.m in Sources */,
 				C3DA12141D9D45C700758BAC /* DLFixedTabbarView.m in Sources */,
 				C30BBA8A1DA78AE60090EB4A /* ZWDownloadedViewController.m in Sources */,
+				C3DE5BA81DAFAD4900E93C05 /* WBTableViewDelegate.m in Sources */,
 				C31FE3D81D8A83CD00732B02 /* WBTextLinePositionModifier.m in Sources */,
 				C3BE99EE1BCBE6C8000102A1 /* ZWDownloadInfoModel.m in Sources */,
 				C3162C9F1D7B229200153EB9 /* ZWLoginViewModel.m in Sources */,
+				C3DE5BAA1DAFAD4900E93C05 /* WBPopMenuView.m in Sources */,
 				C3EDA9181D830CA0009FF851 /* ZWFile.m in Sources */,
 				C3A609BF1CBE79A1000CC03C /* ZWOldFileDetailViewController.m in Sources */,
 				C39004AE1D5C5F360097358E /* ZWTabBarController.m in Sources */,
@@ -2471,6 +2528,7 @@
 				C35771051D842C4600E9B166 /* ZWCourseCell.m in Sources */,
 				C3DA12131D9D45C700758BAC /* DLSlideView.m in Sources */,
 				C31FE3DC1D8A85FA00732B02 /* WBEmoticonInputView.m in Sources */,
+				C3DE5BAF1DAFC16900E93C05 /* ZWSwitchSchollViewController.m in Sources */,
 				C35AA0B81C88500800D17A99 /* ZWAboutUsViewController.m in Sources */,
 				C35FD9C41D707E640066DE68 /* SDBrowserImageView.m in Sources */,
 				C3FC44B11D8154F100896CDB /* ZWBaseSearchViewController.m in Sources */,

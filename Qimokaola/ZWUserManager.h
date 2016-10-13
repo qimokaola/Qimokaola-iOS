@@ -34,6 +34,7 @@
 
 - (void)modifyUserAcademyId:(NSNumber *)academyId result:(APIRequestResult)result;
 - (void)updateAcademyId:(NSNumber *)academyId academyName:(NSString *)academyName;
+- (void)updateCurrentCollegeId:(NSNumber *)collegeId collegeName:(NSString *)collegeName;
 
 - (void)updateAvatarUrl:(NSString *)avatarUrl;
 

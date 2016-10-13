@@ -16,7 +16,7 @@
 }
 
 + (NSString *)avatarDirectory {
-    NSString *avatarDir = [[self cacheDirectory] stringByAppendingPathComponent:@"avatar"];
+    NSString *avatarDir = [[self cacheDirectory] stringByAppendingPathComponent:@"Avatar"];
     return [self checkDirExistence:avatarDir];
 }
 
@@ -38,6 +38,11 @@
 + (NSString *)appCacheDirectory {
     NSString *cachaDirectory = [[self cacheDirectory] stringByAppendingPathComponent:@"AppCache"];
     return [self checkDirExistence:cachaDirectory];
+}
+
++ (NSString *)otherDataDirectory {
+    NSString *otherDataDirectory = [[ZWPathTool cacheDirectory] stringByAppendingPathComponent:@"OtherData"];
+    return [self checkDirExistence:otherDataDirectory];
 }
 
 + (NSString *)cacheDirectory {

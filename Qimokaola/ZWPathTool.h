@@ -22,6 +22,9 @@
 // 数据库路径
 + (NSString *)dbDirectory;
 
+// 存放写轻量级数据
++ (NSString *)otherDataDirectory;
+
 //广告路径
 + (NSString *)adImageDirectory;
 

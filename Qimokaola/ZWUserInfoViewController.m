@@ -99,7 +99,7 @@
         _avatarView.layer.masksToBounds = YES;
         _avatarView.layer.borderWidth = 1;
         _avatarView.layer.borderColor = universalGrayColor.CGColor;
-        [_avatarView setImageWithURL:[NSURL URLWithString:[[ZWAPITool base] stringByAppendingPathComponent:[ZWUserManager sharedInstance].loginUser.avatar_url]] options:YYWebImageOptionProgressive];
+        [_avatarView setImageWithURL:[NSURL URLWithString:[[[ZWAPITool base] stringByAppendingString:@"/"] stringByAppendingString:[ZWUserManager sharedInstance].loginUser.avatar_url]] options:YYWebImageOptionProgressive];
         [_avatarAccessoryView addSubview:_avatarView];
         
         // 箭头
@@ -153,7 +153,7 @@
         switch (indexPath.row) {
             case 0:
                 cell.accessoryView = self.avatarAccessoryView;
-                [_avatarView setImageWithURL:[NSURL URLWithString:[[ZWAPITool base] stringByAppendingPathComponent:[ZWUserManager sharedInstance].loginUser.avatar_url]] options:YYWebImageOptionProgressive];
+                [_avatarView setImageWithURL:[NSURL URLWithString:[[[ZWAPITool base] stringByAppendingString:@"/"] stringByAppendingString:[ZWUserManager sharedInstance].loginUser.avatar_url]] options:YYWebImageOptionProgressive];
                 break;
             case 1:
                 cell.detailTextLabel.text = user.nickname;
@@ -201,7 +201,7 @@
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
             ZWModifyAvatarViewController *modifyAvatar = [[ZWModifyAvatarViewController alloc] init];
-            modifyAvatar.avatarUrl = [[ZWAPITool base] stringByAppendingPathComponent:[ZWUserManager sharedInstance].loginUser.avatar_url];
+            modifyAvatar.avatarUrl = [[[ZWAPITool base] stringByAppendingString:@"/"] stringByAppendingString:[ZWUserManager sharedInstance].loginUser.avatar_url];
             modifyAvatar.avatarViewType = ZWAvatarViewControllerTypeSelf;
             modifyAvatar.completion = ^() {
                 [weakSelf.tableView reloadRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationNone];

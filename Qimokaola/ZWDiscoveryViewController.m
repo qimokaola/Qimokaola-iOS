@@ -146,7 +146,7 @@
 - (void)updateUserInfo {
     if ([ZWUserManager sharedInstance].isLogin) {
         ZWUser *loginUser = [ZWUserManager sharedInstance].loginUser;
-        [self.avatarImageView setImageWithURL:[NSURL URLWithString:[[ZWAPITool base] stringByAppendingPathComponent:loginUser.avatar_url]] placeholder:_avatarImageView.image];
+        [self.avatarImageView setImageURL:[NSURL URLWithString:[[[ZWAPITool base] stringByAppendingString:@"/"] stringByAppendingString:loginUser.avatar_url]]];
         self.nicknameLabel.text  = loginUser.nickname;
         self.schoolLabel.text = loginUser.collegeName;
         NSString *genderImageName = [loginUser.gender isEqualToString:@"男"] ? @"icon_gender_male" : @"icon_gender_female";

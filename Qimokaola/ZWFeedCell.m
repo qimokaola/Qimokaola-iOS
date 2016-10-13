@@ -570,6 +570,7 @@
     _moreButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_moreButton setImage:[UIImage imageNamed:@"icon_more_operation_menu"] forState:UIControlStateNormal];
     [_moreButton addTarget:self action:@selector(clickMoreButton) forControlEvents:UIControlEventTouchUpInside];
+    _moreButton.imageView.contentMode = UIViewContentModeCenter;
     
     _separatorView = [[UIView alloc] init];
     _separatorView.backgroundColor = separatorViewColor;
@@ -640,8 +641,8 @@
     _moreButton.sd_layout
     .topSpaceToView(contentView, margin)
     .rightSpaceToView(contentView, margin)
-    .widthIs(25)
-    .heightIs(25);
+    .widthIs(30)
+    .heightIs(30);
     
     _horizontalLine1.sd_layout
     .leftEqualToView(contentView)

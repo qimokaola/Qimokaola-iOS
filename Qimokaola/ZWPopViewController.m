@@ -7,10 +7,9 @@
 //
 
 #import "ZWPopViewController.h"
+#import "UIView+Extension.h"
 
 @interface ZWPopViewController ()
-
-@property (nonatomic, strong) NSArray *schools;
 
 @end
 
@@ -26,9 +25,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.schools = @[@"福州大学", @"福建工程学院", @"闽江大学", @"福建师范大学"];
-    self.tableView.separatorInset = UIEdgeInsetsZero;
+
+    self.tableView.scrollEnabled = NO;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -58,7 +56,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.schools.count;
+    return self.dataArray.count;
 }
 
 
@@ -69,21 +67,23 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+        cell.imageView.width = cell.imageView.height = 20;
     }
-    cell.textLabel.text = self.schools[indexPath.row];
-    
+    cell.textLabel.text = self.dataArray[indexPath.row];
+    if (self.dataArray) {
+        NSString *imageAssetName = self.imageNameArray[indexPath.row];
+        if (imageAssetName) {
+            cell.imageView.image = [UIImage imageNamed:imageAssetName];
+        }
+    }
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    if (_block) {
-        _block(self.schools[indexPath.row]);
+    if (_popViewSelectedBlock) {
+        _popViewSelectedBlock(indexPath.row);
     }
-    
     [self dismissViewControllerAnimated:YES completion:nil];
-    
-    
 }
 
 

@@ -34,7 +34,7 @@ NSString *const sql_query_all_download_info = @"SELECT storage_name, name, ctime
 NSString *const sql_query_download_info_identifier = @"SELECT storage_name, identifier FROM downloads";
 
 // 添加下载数据
-NSString *const sql_add_download_info = @"INSERT INTO downloads (storage_name, name, ctime, creator, uid, size, identifier, school, course, lastAccessTime) VALUES ('%@', '%@', '%@', '%@', '%@', '%@', '%@', '%@', '%@', '%@')";
+NSString *const sql_add_download_info = @"INSERT INTO downloads (storage_name, name, ctime, creator, uid, size, identifier, school, course, lastAccessTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 // 删除下载数据
 NSString *const sql_delete_download_info = @"DELETE FROM downloads WHERE identifier = '%@'";
@@ -81,7 +81,8 @@ NSString *const sql_update_last_access_time = @"UPDATE downloads SET lastAccessT
 
 - (BOOL)addFileDownloadInfo:(ZWFile *)file storage_name:(NSString *)storage_name inSchool:(NSString *)school inCourse:(NSString *)course {
     NSString *now = [NSDate secondsSince1970];
-    BOOL res = [_db executeUpdate:[NSString stringWithFormat:sql_add_download_info, storage_name, file.name, file.ctime, file.creator, file.uid, file.size, file.md5, school, course, now]];
+    NSArray *argsArray = @[storage_name, file.name, file.ctime, file.creator, file.uid, file.size, file.md5, school, course, now];
+    BOOL res = [_db executeUpdate:sql_add_download_info withArgumentsInArray:argsArray];
     if (res) {
         [self.downloadsDict setObject:storage_name forKey:file.md5];
     }

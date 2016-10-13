@@ -175,18 +175,18 @@
     __weak __typeof(self) weakSelf = self;
     
     ZWPopViewController *popViewController = [[ZWPopViewController alloc] init];
-    popViewController.block = ^(NSString *school) {
-        
-        if ([weakSelf.navigationItem.leftBarButtonItem.title isEqualToString:school]) {
-            return;
-        }
-        
-        weakSelf.navigationItem.leftBarButtonItem.title = school;
-        
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [weakSelf startRefresh];
-        });
-    };
+//    popViewController.block = ^(NSString *school) {
+//        
+//        if ([weakSelf.navigationItem.leftBarButtonItem.title isEqualToString:school]) {
+//            return;
+//        }
+//        
+//        weakSelf.navigationItem.leftBarButtonItem.title = school;
+//        
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//            [weakSelf startRefresh];
+//        });
+//    };
     popViewController.modalPresentationStyle = UIModalPresentationPopover;
     popViewController.popoverPresentationController.barButtonItem = sender;
     popViewController.preferredContentSize = CGSizeMake(400, 400);

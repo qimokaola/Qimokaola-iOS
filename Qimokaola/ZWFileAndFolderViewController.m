@@ -18,6 +18,7 @@
 @interface ZWFileAndFolderViewController ()
 
 
+
 @end
 
 @implementation ZWFileAndFolderViewController
@@ -51,7 +52,7 @@ static NSString *const kFolderCellIdentifier = @"kFolderCellIdentifier";
  */
 - (void)freshHeaderStartFreshing {
     __weak __typeof(self) weakSelf = self;
-    [ZWAPIRequestTool requstFileAndFolderListInSchool:[ZWUserManager sharedInstance].loginUser.collegeId
+    [ZWAPIRequestTool requstFileAndFolderListInSchool:[ZWUserManager sharedInstance].loginUser.currentCollegeId
                                                  path:self.path
                                            needDetail:YES
                                                result:^(id response, BOOL success) {
