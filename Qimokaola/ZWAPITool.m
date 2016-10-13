@@ -164,7 +164,7 @@
 }
 
 + (NSString *)shareFileAPI {
-    return [[ZWAPITool dbfsInUnknowSchool] stringByAppendingPathComponent:@"public"];
+    return [[[[ZWAPITool dbfs] stringByAppendingPathComponent:@"md5"] stringByAppendingPathComponent:@"%@"] stringByAppendingPathComponent:@"%@"];
 }
 
 + (NSString *)api {

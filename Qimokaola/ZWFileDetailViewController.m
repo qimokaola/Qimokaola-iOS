@@ -16,6 +16,8 @@
 #import "ZWDataBaseTool.h"
 #import "ZWHUDTool.h"
 
+#import "NSString+Extension.h"
+
 #import "ZWAPITool.h"
 
 #import <AFNetworking/AFNetworking.h>
@@ -427,7 +429,7 @@
 
 #pragma mark - 分享至QQ QQ空间
 - (void)shareToComputer{
-    NSString *shareUrl = [[NSString stringWithFormat:[ZWAPITool shareFileAPI], [ZWUserManager sharedInstance].loginUser.collegeId.intValue] stringByAppendingPathComponent:[NSString stringWithCString:[self.file.name UTF8String] encoding:NSUTF8StringEncoding]];
+    NSString *shareUrl = [NSString stringWithFormat:[ZWAPITool shareFileAPI], self.file.md5, [self.file.name URLEncodedString]];
     [UMSocialSnsService presentSnsIconSheetView:self
                                          appKey:nil
                                       shareText:shareUrl
