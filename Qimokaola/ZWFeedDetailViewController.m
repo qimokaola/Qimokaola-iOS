@@ -11,6 +11,7 @@
 #import "SDWeiXinPhotoContainerView.h"
 #import "UIColor+Extension.h"
 #import "ZWCommentCell.h"
+#import "ZWFeedDetailCommentsHeader.h"
 #import "ZWFeedComposeViewController.h"
 #import "ZWHUDTool.h"
 
@@ -24,12 +25,14 @@
 #import <SDAutoLayout/SDAutoLayout.h>
 #import <YYKit/YYKit.h>
 #import <LinqToObjectiveC/LinqToObjectiveC.h>
+#import <MJRefresh/MJRefresh.h>
 
 #define kCommentTextViewInitilzedHeight 35
 #define kCommentTextViewMaxHeight 85
 #define kCommentTextLimit 140
 
 #define kCommentCellIdentifier @"kCommentCellIdentifier"
+#define kFeedDetailCommentsHeaderIdentifier @"kFeedDetailCommentsHeaderIdentifier"
 
 @interface ZWFeedDetailViewController () <UITableViewDataSource, UITableViewDelegate, ZWCommentCellDelegate, YYTextViewDelegate>
 
@@ -144,6 +147,7 @@
  */
 @property (nonatomic, assign) BOOL isCollected;
 
+@property (nonatomic, strong) ZWFeedDetailCommentsHeader *commentsSectionHeader;
 
 @end
 
@@ -165,6 +169,14 @@
     self.navigationItem.rightBarButtonItem = moreBarButtonItem;
     
     __weak __typeof(self) weakSelf = self;
+    
+    // 添加子视图
+    [self zw_addSubViews];
+    // 根据feed加载数据
+    [self loadDetailData];
+    // 获取feed的评论并加载
+    [self fetchCommentsData];
+    
     // 监听要评论的评论 来设置评论框的placeholder
     [RACObserve(self, commentToCommentWith) subscribeNext:^(UMComComment *comment) {
         NSString *placeholderPlainText = nil;
@@ -182,13 +194,6 @@
         atr.font = [UIFont systemFontOfSize:17];
         weakSelf.commentTextView.placeholderAttributedText = atr;
     }];
-    
-    // 添加子视图
-    [self zw_addSubViews];
-    // 根据feed加载数据
-    [self loadDetailData];
-    // 获取feed的评论并加载
-    [self fetchCommentsData];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -356,6 +361,9 @@
     [self.view addSubview:_tableView];
     
     [_tableView registerClass:[ZWCommentCell class] forCellReuseIdentifier:kCommentCellIdentifier];
+    [_tableView registerNib:[UINib nibWithNibName:@"ZWFeedDetailCommentsHeader" bundle:nil] forHeaderFooterViewReuseIdentifier:kFeedDetailCommentsHeaderIdentifier];
+    
+    _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(fetchCommentsData)];
     
     __weak __typeof(self) weakSelf = self;
     [_tableView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithActionBlock:^(UIGestureRecognizer *recognizer) {
@@ -601,6 +609,7 @@
 - (void)insertCommentToTop:(UMComComment *)comment {
     [self.comments insertObject:comment atIndex:0];
     [self.tableView insertRow:0 inSection:0 withRowAnimation:UITableViewRowAnimationNone];
+    self.commentsSectionHeader.commentsCount = (int)self.comments.count;
     if (self.commentCountChangedCompletion) {
         self.commentCountChangedCompletion(@(self.comments.count));
     }
@@ -639,6 +648,7 @@
                                                                               if (responseObject) {
                                                                                   [weakSelf.comments removeObjectAtIndex:index];
                                                                                   [weakSelf.tableView deleteRow:index inSection:0 withRowAnimation:UITableViewRowAnimationFade];
+                                                                                  weakSelf.commentsSectionHeader.commentsCount = (int)self.comments.count;
                                                                                   // 执行回调更新feed流页面数据
                                                                                   if (weakSelf.commentCountChangedCompletion) {
                                                                                       weakSelf.commentCountChangedCompletion(@(weakSelf.comments.count));
@@ -708,21 +718,20 @@
 
 - (void)fetchCommentsData {
     __weak __typeof(self) weakSelf = self;
-    MBProgressHUD *hud = [ZWHUDTool excutingHudInView:self.navigationController.view title:nil];
     [[UMComDataRequestManager defaultManager] fetchCommentsWithFeedId:_feed.feedID
                                                         commentUserId:nil
                                                              sortType:UMComCommentSortType_Default
                                                                 count:9999
                                                            completion:^(NSDictionary *responseObject, NSError *error) {
+                                                               if ([weakSelf.tableView.mj_header isRefreshing]) {
+                                                                   [weakSelf.tableView.mj_header endRefreshing];
+                                                               }
                                                                if (responseObject) {
-                                                                   [hud hideAnimated:YES];
+                                                                   [weakSelf.comments removeAllObjects];
                                                                    [weakSelf.comments addObjectsFromArray:responseObject[@"data"]];
                                                                    [weakSelf.tableView reloadData];
                                                                } else {
-                                                                   NSLog(@"%@", error);
-                                                                   hud.mode = MBProgressHUDModeText;
-                                                                   hud.label.text = @"获取失败";
-                                                                   [hud hideAnimated:YES afterDelay:kShowHUDShort];
+                                                                   [ZWHUDTool showHUDInView:weakSelf.navigationController.view withTitle:@"出错了" message:nil duration:kShowHUDShort];
                                                                }
                                                            }];
 }
@@ -802,6 +811,18 @@
     return [self.tableView cellHeightForIndexPath:indexPath model:model keyPath:@"comment" cellClass:[ZWCommentCell class] contentViewWidth:kScreenWidth];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 40;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    if (!self.commentsSectionHeader) {
+        self.commentsSectionHeader = [tableView dequeueReusableHeaderFooterViewWithIdentifier:kFeedDetailCommentsHeaderIdentifier];
+    }
+    self.commentsSectionHeader.commentsCount = (int)self.comments.count;
+    return self.commentsSectionHeader;
+}
+
 #pragma mark - ZWCommentCellDelegate
 
 - (void)cell:(ZWCommentCell *)cell didClickUser:(UMComUser *)user {
@@ -813,17 +834,6 @@
 }
 
 - (void)didClickCommentButtonInCell:(ZWCommentCell *)cell {
-//    __weak __typeof(self) weakSelf = self;
-//    ZWFeedComposeViewController *composeViewController = [[ZWFeedComposeViewController alloc] init];
-//    composeViewController.composeType = ZWFeedComposeTypeReplyComment;
-//    composeViewController.feedID = _feed.feedID;
-//    composeViewController.commentID = cell.comment.commentID;
-//    composeViewController.completion = ^(UMComComment *newComment) {
-//        [weakSelf.comments insertObject:newComment atIndex:0];
-//        [weakSelf.tableView insertRow:0 inSection:0 withRowAnimation:UITableViewRowAnimationTop];
-//    };
-//    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:composeViewController];
-//    [self presentViewController:nav animated:YES completion:nil];
     [self.commentTextView becomeFirstResponder];
     [self.tableView scrollToRow:[self.comments indexOfObject:cell.comment] inSection:0 atScrollPosition:UITableViewScrollPositionNone animated:YES];
     self.commentToCommentWith = cell.comment;
@@ -858,6 +868,16 @@
         [self sendComment];
         return NO;
     }
+    return YES;
+}
+
+- (BOOL)textViewShouldBeginEditing:(YYTextView *)textView {
+    self.headerView.userInteractionEnabled = NO;
+    return YES;
+}
+
+- (BOOL)textViewShouldEndEditing:(YYTextView *)textView {
+    self.headerView.userInteractionEnabled = YES;
     return YES;
 }
 

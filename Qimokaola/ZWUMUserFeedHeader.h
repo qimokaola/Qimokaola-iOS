@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UIView+Extension.h"
+#import "ZWBaseTableViewHeaderFooter.h"
 
-@interface ZWUMUserFeedHeader : UITableViewHeaderFooterView
+@interface ZWUMUserFeedHeader : ZWBaseTableViewHeaderFooter
 
 @property (weak, nonatomic) IBOutlet UIImageView *typeImageView;
 @property (weak, nonatomic) IBOutlet UILabel *typeLabel;
