@@ -21,11 +21,7 @@
 		C3162CBE1D7C54D300153EB9 /* ZWUserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C3162CBD1D7C54D300153EB9 /* ZWUserManager.m */; };
 		C31BB10C1CB7EDC000EE1E37 /* ZWAppCache.m in Sources */ = {isa = PBXBuildFile; fileRef = C31BB10B1CB7EDC000EE1E37 /* ZWAppCache.m */; };
 		C31FE3C81D8A712200732B02 /* UIView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = C31FE3C71D8A712200732B02 /* UIView+Extension.m */; };
-		C31FE3CC1D8A81DF00732B02 /* ZWFeedComposeTextParser.m in Sources */ = {isa = PBXBuildFile; fileRef = C31FE3CB1D8A81DF00732B02 /* ZWFeedComposeTextParser.m */; };
-		C31FE3D01D8A825900732B02 /* WBStatusHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C31FE3CF1D8A825900732B02 /* WBStatusHelper.m */; };
 		C31FE3D41D8A832000732B02 /* WBModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C31FE3D31D8A832000732B02 /* WBModel.m */; };
-		C31FE3D81D8A83CD00732B02 /* WBTextLinePositionModifier.m in Sources */ = {isa = PBXBuildFile; fileRef = C31FE3D71D8A83CD00732B02 /* WBTextLinePositionModifier.m */; };
-		C31FE3DC1D8A85FA00732B02 /* WBEmoticonInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = C31FE3DB1D8A85FA00732B02 /* WBEmoticonInputView.m */; };
 		C3217B0E1BCAAF830037937F /* ZWOldDownloadedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3217B0D1BCAAF830037937F /* ZWOldDownloadedViewController.m */; };
 		C3243E291D547A5A00FF97C3 /* ZWRegisterView.m in Sources */ = {isa = PBXBuildFile; fileRef = C3243E281D547A5A00FF97C3 /* ZWRegisterView.m */; };
 		C3259ED81D351B09004DC58F /* ZWAdvertisementView.m in Sources */ = {isa = PBXBuildFile; fileRef = C3259ED71D351B09004DC58F /* ZWAdvertisementView.m */; };
@@ -97,7 +93,6 @@
 		C35FD9C41D707E640066DE68 /* SDBrowserImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = C35FD9BE1D707E640066DE68 /* SDBrowserImageView.m */; };
 		C35FD9C51D707E640066DE68 /* SDPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = C35FD9C01D707E640066DE68 /* SDPhotoBrowser.m */; };
 		C35FD9C61D707E640066DE68 /* SDWaitingView.m in Sources */ = {isa = PBXBuildFile; fileRef = C35FD9C31D707E640066DE68 /* SDWaitingView.m */; };
-		C35FD9CA1D7177260066DE68 /* ZWPhotoContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C35FD9C91D7177260066DE68 /* ZWPhotoContainerView.m */; };
 		C367ADD41CB6934A002184DF /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C367ADD31CB6934A002184DF /* CFNetwork.framework */; };
 		C367ADD61CB6935E002184DF /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C367ADD51CB6935E002184DF /* CoreFoundation.framework */; };
 		C367ADD81CB69394002184DF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C367ADD71CB69394002184DF /* Foundation.framework */; };
@@ -155,7 +150,6 @@
 		C39004B21D5C61900097358E /* ZWNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C39004B11D5C61900097358E /* ZWNavigationController.m */; };
 		C39803FE1D903C45006D1471 /* ZWModifyAvatarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C39803FD1D903C45006D1471 /* ZWModifyAvatarViewController.m */; };
 		C39804091D9177C2006D1471 /* ZWDataBaseTool.m in Sources */ = {isa = PBXBuildFile; fileRef = C39804081D9177C2006D1471 /* ZWDataBaseTool.m */; };
-		C398040E1D9181C8006D1471 /* ZWDownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C398040D1D9181C8006D1471 /* ZWDownloadManager.m */; };
 		C3A14CA41D37D0FD0088E754 /* ZWSelectSchoolViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3A14CA31D37D0FD0088E754 /* ZWSelectSchoolViewController.m */; };
 		C3A609BF1CBE79A1000CC03C /* ZWOldFileDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3A609BD1CBE79A1000CC03C /* ZWOldFileDetailViewController.m */; };
 		C3AF73E31BCBE3C60064C3F5 /* NSDate+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = C3AF73E21BCBE3C60064C3F5 /* NSDate+Extension.m */; };
@@ -194,12 +188,6 @@
 		C3DE5B931DAE644B00E93C05 /* ZWUMUserFeedHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3DE5B921DAE644B00E93C05 /* ZWUMUserFeedHeader.xib */; };
 		C3DE5B961DAE658200E93C05 /* ZWUMUserFeedHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DE5B951DAE658200E93C05 /* ZWUMUserFeedHeader.m */; };
 		C3DE5B981DAE8B6400E93C05 /* pic1.png in Resources */ = {isa = PBXBuildFile; fileRef = C3DE5B971DAE8B6400E93C05 /* pic1.png */; };
-		C3DE5BA61DAFAD4900E93C05 /* WBTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DE5B9B1DAFAD4900E93C05 /* WBTableViewCell.m */; };
-		C3DE5BA71DAFAD4900E93C05 /* WBTableViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DE5B9D1DAFAD4900E93C05 /* WBTableViewDataSource.m */; };
-		C3DE5BA81DAFAD4900E93C05 /* WBTableViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DE5B9F1DAFAD4900E93C05 /* WBTableViewDelegate.m */; };
-		C3DE5BA91DAFAD4900E93C05 /* WBPopMenuSingleton.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DE5BA11DAFAD4900E93C05 /* WBPopMenuSingleton.m */; };
-		C3DE5BAA1DAFAD4900E93C05 /* WBPopMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DE5BA31DAFAD4900E93C05 /* WBPopMenuView.m */; };
-		C3DE5BAB1DAFAD4900E93C05 /* WBPopMenuModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DE5BA51DAFAD4900E93C05 /* WBPopMenuModel.m */; };
 		C3DE5BAF1DAFC16900E93C05 /* ZWSwitchSchollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DE5BAE1DAFC16900E93C05 /* ZWSwitchSchollViewController.m */; };
 		C3E58AC81D54DFE600FDB384 /* ZWBindAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3E58AC71D54DFE600FDB384 /* ZWBindAccountViewController.m */; };
 		C3EDA9181D830CA0009FF851 /* ZWFile.m in Sources */ = {isa = PBXBuildFile; fileRef = C3EDA9171D830CA0009FF851 /* ZWFile.m */; };
@@ -285,16 +273,8 @@
 		C31BB10B1CB7EDC000EE1E37 /* ZWAppCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWAppCache.m; sourceTree = "<group>"; };
 		C31FE3C61D8A712200732B02 /* UIView+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Extension.h"; sourceTree = "<group>"; };
 		C31FE3C71D8A712200732B02 /* UIView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Extension.m"; sourceTree = "<group>"; };
-		C31FE3CA1D8A81DF00732B02 /* ZWFeedComposeTextParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWFeedComposeTextParser.h; sourceTree = "<group>"; };
-		C31FE3CB1D8A81DF00732B02 /* ZWFeedComposeTextParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWFeedComposeTextParser.m; sourceTree = "<group>"; };
-		C31FE3CE1D8A825900732B02 /* WBStatusHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBStatusHelper.h; sourceTree = "<group>"; };
-		C31FE3CF1D8A825900732B02 /* WBStatusHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBStatusHelper.m; sourceTree = "<group>"; };
 		C31FE3D21D8A832000732B02 /* WBModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBModel.h; sourceTree = "<group>"; };
 		C31FE3D31D8A832000732B02 /* WBModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBModel.m; sourceTree = "<group>"; };
-		C31FE3D61D8A83CD00732B02 /* WBTextLinePositionModifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBTextLinePositionModifier.h; sourceTree = "<group>"; };
-		C31FE3D71D8A83CD00732B02 /* WBTextLinePositionModifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBTextLinePositionModifier.m; sourceTree = "<group>"; };
-		C31FE3DA1D8A85FA00732B02 /* WBEmoticonInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBEmoticonInputView.h; sourceTree = "<group>"; };
-		C31FE3DB1D8A85FA00732B02 /* WBEmoticonInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBEmoticonInputView.m; sourceTree = "<group>"; };
 		C3217B0C1BCAAF830037937F /* ZWOldDownloadedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWOldDownloadedViewController.h; sourceTree = "<group>"; };
 		C3217B0D1BCAAF830037937F /* ZWOldDownloadedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWOldDownloadedViewController.m; sourceTree = "<group>"; };
 		C3243E271D547A5A00FF97C3 /* ZWRegisterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWRegisterView.h; sourceTree = "<group>"; };
@@ -423,8 +403,6 @@
 		C35FD9C11D707E640066DE68 /* SDPhotoBrowserConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDPhotoBrowserConfig.h; sourceTree = "<group>"; };
 		C35FD9C21D707E640066DE68 /* SDWaitingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWaitingView.h; sourceTree = "<group>"; };
 		C35FD9C31D707E640066DE68 /* SDWaitingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWaitingView.m; sourceTree = "<group>"; };
-		C35FD9C81D7177260066DE68 /* ZWPhotoContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWPhotoContainerView.h; sourceTree = "<group>"; };
-		C35FD9C91D7177260066DE68 /* ZWPhotoContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWPhotoContainerView.m; sourceTree = "<group>"; };
 		C367ADC91CB681DA002184DF /* JSPatch.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = JSPatch.framework; sourceTree = "<group>"; };
 		C367ADD31CB6934A002184DF /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		C367ADD51CB6935E002184DF /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
@@ -534,8 +512,6 @@
 		C39803FD1D903C45006D1471 /* ZWModifyAvatarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWModifyAvatarViewController.m; sourceTree = "<group>"; };
 		C39804071D9177C2006D1471 /* ZWDataBaseTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWDataBaseTool.h; sourceTree = "<group>"; };
 		C39804081D9177C2006D1471 /* ZWDataBaseTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWDataBaseTool.m; sourceTree = "<group>"; };
-		C398040C1D9181C8006D1471 /* ZWDownloadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWDownloadManager.h; sourceTree = "<group>"; };
-		C398040D1D9181C8006D1471 /* ZWDownloadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWDownloadManager.m; sourceTree = "<group>"; };
 		C3A14CA21D37D0FD0088E754 /* ZWSelectSchoolViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWSelectSchoolViewController.h; sourceTree = "<group>"; };
 		C3A14CA31D37D0FD0088E754 /* ZWSelectSchoolViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWSelectSchoolViewController.m; sourceTree = "<group>"; };
 		C3A609BC1CBE79A1000CC03C /* ZWOldFileDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWOldFileDetailViewController.h; sourceTree = "<group>"; };
@@ -607,18 +583,6 @@
 		C3DE5B941DAE658200E93C05 /* ZWUMUserFeedHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWUMUserFeedHeader.h; sourceTree = "<group>"; };
 		C3DE5B951DAE658200E93C05 /* ZWUMUserFeedHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWUMUserFeedHeader.m; sourceTree = "<group>"; };
 		C3DE5B971DAE8B6400E93C05 /* pic1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pic1.png; sourceTree = "<group>"; };
-		C3DE5B9A1DAFAD4900E93C05 /* WBTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBTableViewCell.h; sourceTree = "<group>"; };
-		C3DE5B9B1DAFAD4900E93C05 /* WBTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBTableViewCell.m; sourceTree = "<group>"; };
-		C3DE5B9C1DAFAD4900E93C05 /* WBTableViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBTableViewDataSource.h; sourceTree = "<group>"; };
-		C3DE5B9D1DAFAD4900E93C05 /* WBTableViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBTableViewDataSource.m; sourceTree = "<group>"; };
-		C3DE5B9E1DAFAD4900E93C05 /* WBTableViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBTableViewDelegate.h; sourceTree = "<group>"; };
-		C3DE5B9F1DAFAD4900E93C05 /* WBTableViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBTableViewDelegate.m; sourceTree = "<group>"; };
-		C3DE5BA01DAFAD4900E93C05 /* WBPopMenuSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBPopMenuSingleton.h; sourceTree = "<group>"; };
-		C3DE5BA11DAFAD4900E93C05 /* WBPopMenuSingleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBPopMenuSingleton.m; sourceTree = "<group>"; };
-		C3DE5BA21DAFAD4900E93C05 /* WBPopMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBPopMenuView.h; sourceTree = "<group>"; };
-		C3DE5BA31DAFAD4900E93C05 /* WBPopMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBPopMenuView.m; sourceTree = "<group>"; };
-		C3DE5BA41DAFAD4900E93C05 /* WBPopMenuModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBPopMenuModel.h; sourceTree = "<group>"; };
-		C3DE5BA51DAFAD4900E93C05 /* WBPopMenuModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBPopMenuModel.m; sourceTree = "<group>"; };
 		C3DE5BAD1DAFC16900E93C05 /* ZWSwitchSchollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWSwitchSchollViewController.h; sourceTree = "<group>"; };
 		C3DE5BAE1DAFC16900E93C05 /* ZWSwitchSchollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWSwitchSchollViewController.m; sourceTree = "<group>"; };
 		C3E58AC61D54DFE600FDB384 /* ZWBindAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWBindAccountViewController.h; sourceTree = "<group>"; };
@@ -860,7 +824,6 @@
 		C31BB1091CB7ED8D00EE1E37 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
-				C398040A1D9181A0006D1471 /* ZWDownloadManager */,
 				C39804061D91779E006D1471 /* ZWDataBaseTool */,
 				C39804051D917790006D1471 /* ZWAPIRequestTool */,
 				C39804041D917785006D1471 /* ZWAPITool */,
@@ -869,31 +832,10 @@
 				C39804011D91775F006D1471 /* ZWPathTool */,
 				C39804001D917757006D1471 /* ZWNetworkingManager */,
 				C39803FF1D917745006D1471 /* ZWAppCache */,
-				C31FE3D51D8A83BA00732B02 /* WBTextLinePositionModifier */,
-				C31FE3CD1D8A824F00732B02 /* WBStatusHelper */,
-				C31FE3C91D8A81C900732B02 /* ZWFeedComposeTextParser */,
 				C3162CB81D7C512C00153EB9 /* ZWDownloadCenter */,
 				C3162CB71D7C511900153EB9 /* ZWUserManager */,
 			);
 			name = Tools;
-			sourceTree = "<group>";
-		};
-		C31FE3C91D8A81C900732B02 /* ZWFeedComposeTextParser */ = {
-			isa = PBXGroup;
-			children = (
-				C31FE3CA1D8A81DF00732B02 /* ZWFeedComposeTextParser.h */,
-				C31FE3CB1D8A81DF00732B02 /* ZWFeedComposeTextParser.m */,
-			);
-			name = ZWFeedComposeTextParser;
-			sourceTree = "<group>";
-		};
-		C31FE3CD1D8A824F00732B02 /* WBStatusHelper */ = {
-			isa = PBXGroup;
-			children = (
-				C31FE3CE1D8A825900732B02 /* WBStatusHelper.h */,
-				C31FE3CF1D8A825900732B02 /* WBStatusHelper.m */,
-			);
-			name = WBStatusHelper;
 			sourceTree = "<group>";
 		};
 		C31FE3D11D8A830A00732B02 /* WBModel */ = {
@@ -903,24 +845,6 @@
 				C31FE3D31D8A832000732B02 /* WBModel.m */,
 			);
 			name = WBModel;
-			sourceTree = "<group>";
-		};
-		C31FE3D51D8A83BA00732B02 /* WBTextLinePositionModifier */ = {
-			isa = PBXGroup;
-			children = (
-				C31FE3D61D8A83CD00732B02 /* WBTextLinePositionModifier.h */,
-				C31FE3D71D8A83CD00732B02 /* WBTextLinePositionModifier.m */,
-			);
-			name = WBTextLinePositionModifier;
-			sourceTree = "<group>";
-		};
-		C31FE3D91D8A85F200732B02 /* WBEmoticonInputView */ = {
-			isa = PBXGroup;
-			children = (
-				C31FE3DA1D8A85FA00732B02 /* WBEmoticonInputView.h */,
-				C31FE3DB1D8A85FA00732B02 /* WBEmoticonInputView.m */,
-			);
-			name = WBEmoticonInputView;
 			sourceTree = "<group>";
 		};
 		C32666411D953115008C6B24 /* PhotoSelector */ = {
@@ -1344,15 +1268,6 @@
 			name = SDPhotoBrowser;
 			sourceTree = "<group>";
 		};
-		C35FD9C71D7176F40066DE68 /* ZWPhotoContainerView */ = {
-			isa = PBXGroup;
-			children = (
-				C35FD9C81D7177260066DE68 /* ZWPhotoContainerView.h */,
-				C35FD9C91D7177260066DE68 /* ZWPhotoContainerView.m */,
-			);
-			name = ZWPhotoContainerView;
-			sourceTree = "<group>";
-		};
 		C36D67E01DA932EF00442FD4 /* ZWDownloadedInfoCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -1553,13 +1468,10 @@
 		C3792AD31D6F395F0079FCF5 /* Custom */ = {
 			isa = PBXGroup;
 			children = (
-				C3DE5B991DAFAD2B00E93C05 /* Popmenu */,
 				C33B6D3B1D9D68B200710D75 /* ZWReplytPaddingLabel */,
 				C3DA11FE1D9D45C700758BAC /* DLSlideView */,
 				C32666411D953115008C6B24 /* PhotoSelector */,
-				C31FE3D91D8A85F200732B02 /* WBEmoticonInputView */,
 				C3F162A11D4E3635006397B1 /* YYFPSLabel */,
-				C35FD9C71D7176F40066DE68 /* ZWPhotoContainerView */,
 				C35FD9BC1D707E270066DE68 /* SDPhotoBrowser */,
 				C35FD9B81D707E0E0066DE68 /* SDWeiXinPhotoContainerView */,
 				C34EF1911D36533000B6449B /* ZWAdvertisementView */,
@@ -1727,15 +1639,6 @@
 				C39804081D9177C2006D1471 /* ZWDataBaseTool.m */,
 			);
 			name = ZWDataBaseTool;
-			sourceTree = "<group>";
-		};
-		C398040A1D9181A0006D1471 /* ZWDownloadManager */ = {
-			isa = PBXGroup;
-			children = (
-				C398040C1D9181C8006D1471 /* ZWDownloadManager.h */,
-				C398040D1D9181C8006D1471 /* ZWDownloadManager.m */,
-			);
-			name = ZWDownloadManager;
 			sourceTree = "<group>";
 		};
 		C3A14C9B1D37CF710088E754 /* ZWSelectSchoolViewController */ = {
@@ -2091,25 +1994,6 @@
 			name = ZWUMUserFeedHeader;
 			sourceTree = "<group>";
 		};
-		C3DE5B991DAFAD2B00E93C05 /* Popmenu */ = {
-			isa = PBXGroup;
-			children = (
-				C3DE5B9A1DAFAD4900E93C05 /* WBTableViewCell.h */,
-				C3DE5B9B1DAFAD4900E93C05 /* WBTableViewCell.m */,
-				C3DE5B9C1DAFAD4900E93C05 /* WBTableViewDataSource.h */,
-				C3DE5B9D1DAFAD4900E93C05 /* WBTableViewDataSource.m */,
-				C3DE5B9E1DAFAD4900E93C05 /* WBTableViewDelegate.h */,
-				C3DE5B9F1DAFAD4900E93C05 /* WBTableViewDelegate.m */,
-				C3DE5BA01DAFAD4900E93C05 /* WBPopMenuSingleton.h */,
-				C3DE5BA11DAFAD4900E93C05 /* WBPopMenuSingleton.m */,
-				C3DE5BA21DAFAD4900E93C05 /* WBPopMenuView.h */,
-				C3DE5BA31DAFAD4900E93C05 /* WBPopMenuView.m */,
-				C3DE5BA41DAFAD4900E93C05 /* WBPopMenuModel.h */,
-				C3DE5BA51DAFAD4900E93C05 /* WBPopMenuModel.m */,
-			);
-			name = Popmenu;
-			sourceTree = "<group>";
-		};
 		C3DE5BAC1DAFC14400E93C05 /* New Group */ = {
 			isa = PBXGroup;
 			children = (
@@ -2438,12 +2322,10 @@
 				C3FC44AD1D7DBA8100896CDB /* ZWFeedComposeViewController.m in Sources */,
 				C347782D1CB263E700D26FA8 /* ZWOldFile.m in Sources */,
 				C3827B971D72DDBB002F6E5B /* ZWFeedDetailViewController.m in Sources */,
-				C3DE5BA61DAFAD4900E93C05 /* WBTableViewCell.m in Sources */,
 				C32666B81D9560C1008C6B24 /* UMComActionDeleteView.m in Sources */,
 				C3DA122E1D9D5F1E00758BAC /* ZWRSCommentsViewController.m in Sources */,
 				C3493C1B1D8D8E6E007C7144 /* ZWModifiAcademyViewController.m in Sources */,
 				C3162CBE1D7C54D300153EB9 /* ZWUserManager.m in Sources */,
-				C3DE5BA91DAFAD4900E93C05 /* WBPopMenuSingleton.m in Sources */,
 				C31FE3C81D8A712200732B02 /* UIView+Extension.m in Sources */,
 				C39004B21D5C61900097358E /* ZWNavigationController.m in Sources */,
 				C3217B0E1BCAAF830037937F /* ZWOldDownloadedViewController.m in Sources */,
@@ -2454,13 +2336,11 @@
 				C32666BB1D9560C1008C6B24 /* UMComAddedImageView.m in Sources */,
 				C3594EFD1BCF6B3900532FA5 /* ZWDocumentModel.m in Sources */,
 				C347782B1CB263E700D26FA8 /* ZWChild.m in Sources */,
-				C31FE3CC1D8A81DF00732B02 /* ZWFeedComposeTextParser.m in Sources */,
 				C3EDA91C1D830E79009FF851 /* ZWFolder.m in Sources */,
 				C3DE5B961DAE658200E93C05 /* ZWUMUserFeedHeader.m in Sources */,
 				C347782C1CB263E700D26FA8 /* ZWFileModel.m in Sources */,
 				C3561A201D3770530032C97B /* ZWFilloutInformationViewController.m in Sources */,
 				C3D1F2691CB3E18B0017723B /* ZWFileFolderViewController.m in Sources */,
-				C35FD9CA1D7177260066DE68 /* ZWPhotoContainerView.m in Sources */,
 				C35FD9BB1D707E160066DE68 /* SDWeiXinPhotoContainerView.m in Sources */,
 				C32666591D953125008C6B24 /* UMImagePickerThumbnailView.m in Sources */,
 				C3BE99FB1BCBFB45000102A1 /* ZWOldDownloadInfoCell.m in Sources */,
@@ -2473,7 +2353,6 @@
 				C3019E871D96E0C700CC2F55 /* ZWSettingsViewController.m in Sources */,
 				C35FD9C51D707E640066DE68 /* SDPhotoBrowser.m in Sources */,
 				C3561A231D37743F0032C97B /* ZWRegisterViewCotroller.m in Sources */,
-				C3DE5BA71DAFAD4900E93C05 /* WBTableViewDataSource.m in Sources */,
 				C3A14CA41D37D0FD0088E754 /* ZWSelectSchoolViewController.m in Sources */,
 				C31FE3D41D8A832000732B02 /* WBModel.m in Sources */,
 				C3792AC81D6C887A0079FCF5 /* ZWAPITool.m in Sources */,
@@ -2489,7 +2368,6 @@
 				C39804091D9177C2006D1471 /* ZWDataBaseTool.m in Sources */,
 				C3DA12161D9D45C700758BAC /* DLTabedSlideView.m in Sources */,
 				C3C44E461BC6BBEF004B30BF /* ZWRootPathViewController.m in Sources */,
-				C3DE5BAB1DAFAD4900E93C05 /* WBPopMenuModel.m in Sources */,
 				C31BB10C1CB7EDC000EE1E37 /* ZWAppCache.m in Sources */,
 				C3C44DEE1BC687B0004B30BF /* main.m in Sources */,
 				C35771081D843E5700E9B166 /* ZWCourseViewController.m in Sources */,
@@ -2511,23 +2389,18 @@
 				C3243E291D547A5A00FF97C3 /* ZWRegisterView.m in Sources */,
 				C3DA12141D9D45C700758BAC /* DLFixedTabbarView.m in Sources */,
 				C30BBA8A1DA78AE60090EB4A /* ZWDownloadedViewController.m in Sources */,
-				C3DE5BA81DAFAD4900E93C05 /* WBTableViewDelegate.m in Sources */,
-				C31FE3D81D8A83CD00732B02 /* WBTextLinePositionModifier.m in Sources */,
 				C3BE99EE1BCBE6C8000102A1 /* ZWDownloadInfoModel.m in Sources */,
 				C3162C9F1D7B229200153EB9 /* ZWLoginViewModel.m in Sources */,
-				C3DE5BAA1DAFAD4900E93C05 /* WBPopMenuView.m in Sources */,
 				C3EDA9181D830CA0009FF851 /* ZWFile.m in Sources */,
 				C3A609BF1CBE79A1000CC03C /* ZWOldFileDetailViewController.m in Sources */,
 				C39004AE1D5C5F360097358E /* ZWTabBarController.m in Sources */,
 				C3792ACB1D6DE9200079FCF5 /* ZWFeedTableViewController.m in Sources */,
-				C31FE3D01D8A825900732B02 /* WBStatusHelper.m in Sources */,
 				C35FD9C61D707E640066DE68 /* SDWaitingView.m in Sources */,
 				C3792ABF1D6C824D0079FCF5 /* ZWPathTool.m in Sources */,
 				C37C03961D3F8C6000B22868 /* ZWStudentCircleViewController.m in Sources */,
 				C33B1D491CC53F0B008FA6E6 /* ZWDocumentCell.m in Sources */,
 				C35771051D842C4600E9B166 /* ZWCourseCell.m in Sources */,
 				C3DA12131D9D45C700758BAC /* DLSlideView.m in Sources */,
-				C31FE3DC1D8A85FA00732B02 /* WBEmoticonInputView.m in Sources */,
 				C3DE5BAF1DAFC16900E93C05 /* ZWSwitchSchollViewController.m in Sources */,
 				C35AA0B81C88500800D17A99 /* ZWAboutUsViewController.m in Sources */,
 				C35FD9C41D707E640066DE68 /* SDBrowserImageView.m in Sources */,
@@ -2551,7 +2424,6 @@
 				C3019E7F1D965B2800CC2F55 /* ZWCommentCell.m in Sources */,
 				C3561A261D3774560032C97B /* ZWLoginViewController.m in Sources */,
 				C30BBA8E1DA80ED90090EB4A /* ZWDownloadedInfo.m in Sources */,
-				C398040E1D9181C8006D1471 /* ZWDownloadManager.m in Sources */,
 				C32666601D9533C4008C6B24 /* UMComResourceManager.m in Sources */,
 				C3F78BE61D537CC400E9C2AB /* ZWLoginAndRegisterViewController.m in Sources */,
 				C341B9AF1D47BA0600CEECFF /* ZWNetworkingManager.m in Sources */,

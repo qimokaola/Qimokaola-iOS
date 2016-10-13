@@ -7,11 +7,7 @@
 //
 
 #import "ZWFeedComposeViewController.h"
-#import "ZWFeedComposeTextParser.h"
 #import "UIView+Extension.h"
-#import "WBTextLinePositionModifier.h"
-#import "WBStatusHelper.h"
-#import "WBEmoticonInputView.h"
 #import "ZWHUDTool.h"
 #import "UMImagePickerController.h"
 #import "UMComAddedImageView.h"

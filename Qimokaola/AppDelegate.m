@@ -169,7 +169,7 @@
 - (RACSignal *)fetchADSignal {
     return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
        
-        [ZWNetworkingManager getWithURLString:@"http://121.42.177.33:8080/api/sb/getSB"
+        [ZWNetworkingManager getWithURLString:@"https://finalexam.cn/api/sb/getSB"
                                       success:^(NSURLSessionDataTask *task, id responseObject) {
                                           
                                           ZWAdvertisement *ad = [ZWAdvertisement modelWithJSON:responseObject];
