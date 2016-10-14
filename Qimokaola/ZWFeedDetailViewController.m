@@ -147,6 +147,12 @@
  */
 @property (nonatomic, assign) BOOL isCollected;
 
+// 存在评论时底部空白view
+@property (nonatomic, strong) UIView *footerZeroView;
+
+// 没有评论时底部提示View
+@property (nonatomic, strong) UIView *footerNoCommentsHintView;
+
 @property (nonatomic, strong) ZWFeedDetailCommentsHeader *commentsSectionHeader;
 
 @end
@@ -360,6 +366,9 @@
     _tableView.delegate = self;
     [self.view addSubview:_tableView];
     
+    _footerZeroView = [[UIView alloc] initWithFrame:CGRectZero];
+    _tableView.tableFooterView = _footerZeroView;
+    
     [_tableView registerClass:[ZWCommentCell class] forCellReuseIdentifier:kCommentCellIdentifier];
     [_tableView registerNib:[UINib nibWithNibName:@"ZWFeedDetailCommentsHeader" bundle:nil] forHeaderFooterViewReuseIdentifier:kFeedDetailCommentsHeaderIdentifier];
     
@@ -510,6 +519,41 @@
 
 #pragma mark - Setters and Getters
 
+- (UIView *)footerNoCommentsHintView {
+    if (_footerNoCommentsHintView == nil) {
+        _footerNoCommentsHintView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenW, 150)];
+        _footerNoCommentsHintView.backgroundColor = [UIColor whiteColor];
+        
+        UILabel *footerNoCommentsHintLaebl = [[UILabel alloc] init];
+        footerNoCommentsHintLaebl.numberOfLines = 1;
+        footerNoCommentsHintLaebl.font = ZWFont(15);
+        footerNoCommentsHintLaebl.textAlignment = NSTextAlignmentCenter;
+        footerNoCommentsHintLaebl.textColor = [UIColor brownColor];
+        footerNoCommentsHintLaebl.text = @"还没有评论, 来评论吧？";
+        [footerNoCommentsHintLaebl sizeToFit];
+        
+        UIImage *hintImage = [UIImage imageNamed:@"icon_detail_no_comments_hint"];
+        UIImageView *hintImageView = [[UIImageView alloc] initWithImage:hintImage];
+        
+        [_footerNoCommentsHintView addSubview:footerNoCommentsHintLaebl];
+        [_footerNoCommentsHintView addSubview:hintImageView];
+        
+        hintImageView.sd_layout
+        .centerXEqualToView(_footerNoCommentsHintView)
+        .topEqualToView(_footerNoCommentsHintView)
+        .heightIs(120)
+        .widthEqualToHeight();
+        
+        footerNoCommentsHintLaebl.sd_layout
+        .centerXEqualToView(_footerNoCommentsHintView)
+        .topSpaceToView(hintImageView, -5)
+        .heightIs(30)
+        .widthRatioToView(_footerNoCommentsHintView, 1);
+        
+    }
+    return _footerNoCommentsHintView;
+}
+
 - (void)setIsLiked:(BOOL)isLiked {
     _isLiked = isLiked;
     _likeButton.selected = isLiked;
@@ -613,6 +657,9 @@
     if (self.commentCountChangedCompletion) {
         self.commentCountChangedCompletion(@(self.comments.count));
     }
+    if (self.tableView.tableFooterView != self.footerZeroView) {
+        self.tableView.tableFooterView = self.footerZeroView;
+    }
 }
 
 - (void)feedMoreButtonClicked {
@@ -649,6 +696,9 @@
                                                                                   [weakSelf.comments removeObjectAtIndex:index];
                                                                                   [weakSelf.tableView deleteRow:index inSection:0 withRowAnimation:UITableViewRowAnimationFade];
                                                                                   weakSelf.commentsSectionHeader.commentsCount = (int)self.comments.count;
+                                                                                  if (weakSelf.comments.count == 0 && weakSelf.tableView.tableFooterView != weakSelf.footerNoCommentsHintView) {
+                                                                                      weakSelf.tableView.tableFooterView = weakSelf.footerNoCommentsHintView;
+                                                                                  }
                                                                                   // 执行回调更新feed流页面数据
                                                                                   if (weakSelf.commentCountChangedCompletion) {
                                                                                       weakSelf.commentCountChangedCompletion(@(weakSelf.comments.count));
@@ -730,10 +780,46 @@
                                                                    [weakSelf.comments removeAllObjects];
                                                                    [weakSelf.comments addObjectsFromArray:responseObject[@"data"]];
                                                                    [weakSelf.tableView reloadData];
+                                                                   if (weakSelf.comments.count > 0) {
+                                                                       if (weakSelf.tableView.tableFooterView != weakSelf.footerZeroView) {
+                                                                           weakSelf.tableView.tableFooterView = weakSelf.footerZeroView;
+                                                                       }
+                                                                   } else {
+                                                                       if (weakSelf.tableView.tableFooterView != weakSelf.footerNoCommentsHintView) {
+                                                                           weakSelf.tableView.tableFooterView = weakSelf.footerNoCommentsHintView;
+                                                                       }
+                                                                   }
+                                                               } else if (error.code == 20001) {
+                                                                   [weakSelf showFeedHadBeenDeleted];
                                                                } else {
                                                                    [ZWHUDTool showHUDInView:weakSelf.navigationController.view withTitle:@"出错了" message:nil duration:kShowHUDShort];
                                                                }
                                                            }];
+}
+
+- (void)updateAndCheckFeed {
+    __weak __typeof(self) weakSelf = self;
+    [[UMComDataRequestManager defaultManager] fetchFeedWithFeedId:_feed.feedID
+                                                        commentId:nil
+                                                       completion:^(NSDictionary *responseObject, NSError *error) {
+                                                           if (responseObject) {
+                                                               weakSelf.feed = responseObject[@"data"];
+                                                               if (weakSelf.feed.status.intValue >= 2) {
+                                                                   [weakSelf showFeedHadBeenDeleted];
+                                                               }
+                                                           }
+                                                       }];
+}
+
+- (void)showFeedHadBeenDeleted {
+    [self.commentTextView resignFirstResponder];
+    [ZWHUDTool showHUDInView:self.navigationController.view withTitle:@"该动态已被删除，去看看别的吧" message:nil duration:kShowHUDShort];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kShowHUDShort * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        if (self.deleteCompletion) {
+            self.deleteCompletion();
+        }
+        [self.navigationController popViewControllerAnimated:YES];
+    });
 }
 
 - (void)gotoUserDetailViewController:(UMComUser *)user {
@@ -861,6 +947,7 @@
  @return should change text
  */
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    NSLog(@"%@", text);
     NSRange resultRange = [text rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet] options:NSBackwardsSearch];
     if ([text length] == 1 && resultRange.location != NSNotFound) {
         [textView resignFirstResponder];

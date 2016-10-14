@@ -158,7 +158,7 @@
 
 - (void)createSubViews {
     __weak __typeof(self) weakSelf = self;
-    CGFloat sizeRate = 0.6;
+    CGFloat sizeRate = 0.65;
     CGFloat marginRate = (1. - sizeRate) / 2.;
     CGFloat margin = 10;
     CGFloat smallMargin = 5.f;
