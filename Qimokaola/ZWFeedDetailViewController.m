@@ -34,6 +34,8 @@
 #define kCommentCellIdentifier @"kCommentCellIdentifier"
 #define kFeedDetailCommentsHeaderIdentifier @"kFeedDetailCommentsHeaderIdentifier"
 
+#define kButtonSizeAnimationTime 0.2
+
 @interface ZWFeedDetailViewController () <UITableViewDataSource, UITableViewDelegate, ZWCommentCellDelegate, YYTextViewDelegate>
 
 /**
@@ -98,9 +100,19 @@
 @property (nonatomic, strong) UIButton *likeButton;
 
 /**
- 评论按钮
+ 喜欢标签
+ */
+@property (nonatomic, strong) UILabel *likeLabel;
+
+/**
+ 收藏按钮
  */
 @property (nonatomic, strong) UIButton *collectButton;
+
+/**
+ 收藏标签
+ */
+@property (nonatomic, strong) UILabel *collectLabel;
 
 /**
  操作按钮
@@ -171,7 +183,7 @@
     self.view.backgroundColor = defaultBackgroundColor;
     _comments = [NSMutableArray array];
     
-    UIBarButtonItem *moreBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"更多" style:UIBarButtonItemStyleDone target:self action:@selector(feedMoreButtonClicked)];
+    UIBarButtonItem *moreBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"•••" style:UIBarButtonItemStyleDone target:self action:@selector(feedMoreButtonClicked)];
     self.navigationItem.rightBarButtonItem = moreBarButtonItem;
     
     __weak __typeof(self) weakSelf = self;
@@ -180,8 +192,6 @@
     [self zw_addSubViews];
     // 根据feed加载数据
     [self loadDetailData];
-    // 获取feed的评论并加载
-    [self fetchCommentsData];
     
     // 监听要评论的评论 来设置评论框的placeholder
     [RACObserve(self, commentToCommentWith) subscribeNext:^(UMComComment *comment) {
@@ -440,16 +450,30 @@
     _picContainerView = [[SDWeiXinPhotoContainerView alloc] init];
     
     _likeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    _likeButton.adjustsImageWhenDisabled = NO;
     [_likeButton setImage:[[UIImage imageNamed:@"icon_detail_unlike"] imageByResizeToSize:imageSize] forState:UIControlStateNormal];
-    [_likeButton setImage:[[UIImage imageNamed:@"icon_detail_liked"] imageByResizeToSize:imageSize]forState:UIControlStateSelected];
+    [_likeButton setImage:[[UIImage imageNamed:@"icon_detail_liked"] imageByResizeToSize:imageSize]forState:UIControlStateHighlighted];
     [_likeButton addTarget:self action:@selector(likeButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     
+    _likeLabel = [[UILabel alloc] init];
+    _likeLabel.textColor = [UIColor brownColor];
+    _likeLabel.font = ZWFont(14);
+    _likeLabel.numberOfLines = 1;
+    _likeLabel.textAlignment = NSTextAlignmentCenter;
+    
     _collectButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_collectButton setImage:[[UIImage imageNamed:@"icon_detail_uncollecte"] imageByResizeToSize:imageSize] forState:UIControlStateNormal];
-    [_collectButton setImage:[[UIImage imageNamed:@"icon_detail_collected"] imageByResizeToSize:imageSize] forState:UIControlStateSelected];
+    _collectButton.adjustsImageWhenDisabled = NO;
+    [_collectButton setImage:[[UIImage imageNamed:@"icon_detail_uncollect "] imageByResizeToSize:imageSize] forState:UIControlStateNormal];
+    [_collectButton setImage:[[UIImage imageNamed:@"icon_detail_collected"] imageByResizeToSize:imageSize] forState:UIControlStateHighlighted];
     [_collectButton addTarget:self action:@selector(collectButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     
-    NSArray *views = @[_avatarView, _nameLabel, _genderView, _timeLabel, _schoolLabel, _contentLabel, _picContainerView, _topSeparatorView, _bottomSeparatorView, _likeButton, _collectButton];
+    _collectLabel = [[UILabel alloc] init];
+    _collectLabel.textColor = [UIColor brownColor];
+    _collectLabel.font = ZWFont(14);
+    _collectLabel.numberOfLines = 1;
+    _collectLabel.textAlignment = NSTextAlignmentCenter;
+    
+    NSArray *views = @[_avatarView, _nameLabel, _genderView, _timeLabel, _schoolLabel, _contentLabel, _picContainerView, _topSeparatorView, _bottomSeparatorView, _likeButton, _likeLabel, _collectButton, _collectLabel];
     
     [_headerView sd_addSubviews:views];
     
@@ -503,17 +527,29 @@
     .widthEqualToHeight()
     .centerXIs(_headerView.centerX_sd - margin * 4);
     
+    _likeLabel.sd_layout
+    .centerXEqualToView(_likeButton)
+    .topSpaceToView(_likeButton, margin)
+    .heightIs(20)
+    .widthIs(100);
+    
     _collectButton.sd_layout
     .topEqualToView(_likeButton)
     .heightRatioToView(_likeButton, 1.0)
     .widthEqualToHeight()
     .centerXIs(_headerView.centerX_sd + margin * 4);
     
+    _collectLabel.sd_layout
+    .centerXEqualToView(_collectButton)
+    .topSpaceToView(_collectButton, margin)
+    .heightIs(20)
+    .widthIs(100);
+    
     _bottomSeparatorView.sd_layout
     .leftEqualToView(_topSeparatorView)
     .rightEqualToView(_topSeparatorView)
     .heightRatioToView(_topSeparatorView, 1)
-    .topSpaceToView(_likeButton, 20);
+    .topSpaceToView(_likeLabel, 10);
 }
 
 
@@ -556,17 +592,79 @@
 
 - (void)setIsLiked:(BOOL)isLiked {
     _isLiked = isLiked;
-    _likeButton.selected = isLiked;
+    
+    __weak __typeof(self) weakSelf = self;
+    
+    [self animateButtonWithButton:self.likeButton completion:^{
+        if (weakSelf.isLiked) {
+            weakSelf.likeLabel.text = @"已喜欢";
+        } else {
+            weakSelf.likeLabel.text = @"喜欢";
+        }
+    }];
 }
 
 - (void)setIsCollected:(BOOL)isCollected {
     _isCollected = isCollected;
-    _collectButton.selected = _isCollected;
+    
+    __weak __typeof(self) weakSelf = self;
+    
+    [self animateButtonWithButton:self.collectButton completion:^{
+        if (weakSelf.isCollected) {
+            weakSelf.collectLabel.text = @"已收藏";
+        } else {
+            weakSelf.collectLabel.text = @"收藏";
+        }
+    }];
+}
+
+- (void)animateButtonWithButton:(UIButton *)button completion:(void (^)(void))completion {
+//    button.transform = CGAffineTransformIdentity;
+//    [UIView animateWithDuration:kButtonSizeAnimationTime animations:^{
+//        button.transform = CGAffineTransformMakeScale(1.3, 1.3);
+//        button.userInteractionEnabled = NO;
+//    } completion:^(BOOL finished) {
+//        [UIView animateWithDuration:kButtonSizeAnimationTime animations:^{
+//            button.transform = CGAffineTransformMakeScale(1.0, 1.0);
+//        } completion:^(BOOL finished) {
+//            button.userInteractionEnabled = YES;
+//            if (completion) {
+//                completion();
+//            }
+//        }];
+//    }];
+    
+    button.enabled = NO;
+    CABasicAnimation *zoominAnimation = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
+    zoominAnimation.fromValue = @1.;
+    zoominAnimation.toValue = @1.3;
+    zoominAnimation.duration = (CFTimeInterval)kButtonSizeAnimationTime;
+    zoominAnimation.repeatCount = 1;
+    zoominAnimation.autoreverses = YES;
+    zoominAnimation.removedOnCompletion = YES;
+    zoominAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    
+    [button.layer addAnimation:zoominAnimation forKey:nil];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * kButtonSizeAnimationTime * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        button.enabled = YES;
+        if (completion) {
+            completion();
+        }
+    });
 }
 
 #pragma mark - Common Methods
 
 - (void)loadDetailData {
+    
+    if (_feed.status.intValue >= 2) {
+        [self showFeedHadBeenDeleted];
+    } else {
+        // 获取feed的评论并加载
+        [self fetchCommentsData];
+    }
+    
     if (DecodeAnonyousCode(_feed.custom) == 0) {
         [_avatarView setImageWithURL:[NSURL URLWithString:_feed.creator.icon_url.small_url_string] placeholder:[UIImage imageNamed:@"avatar"]];
         _nameLabel.text = _feed.creator.name;
@@ -583,8 +681,12 @@
     
     _contentLabel.text = _feed.text;
     
-    self.isLiked = _feed.liked.boolValue;
-    self.isCollected = _feed.has_collected.boolValue;
+    // 初始化加载界面时不触发setter方法
+    _isLiked = _feed.liked.boolValue;
+    _isCollected = _feed.has_collected.boolValue;
+    
+    _likeLabel.text = _isLiked ? @"已喜欢" : @"喜欢";
+    _collectLabel.text = _isCollected ? @"已收藏" : @"收藏";
     
     _picContainerView.picPathStringsArray = [_feed.image_urls linq_select:^id(UMComImageUrl *item) {
         return item.small_url_string;
@@ -797,19 +899,19 @@
                                                            }];
 }
 
-- (void)updateAndCheckFeed {
-    __weak __typeof(self) weakSelf = self;
-    [[UMComDataRequestManager defaultManager] fetchFeedWithFeedId:_feed.feedID
-                                                        commentId:nil
-                                                       completion:^(NSDictionary *responseObject, NSError *error) {
-                                                           if (responseObject) {
-                                                               weakSelf.feed = responseObject[@"data"];
-                                                               if (weakSelf.feed.status.intValue >= 2) {
-                                                                   [weakSelf showFeedHadBeenDeleted];
-                                                               }
-                                                           }
-                                                       }];
-}
+//- (void)updateAndCheckFeed {
+//    __weak __typeof(self) weakSelf = self;
+//    [[UMComDataRequestManager defaultManager] fetchFeedWithFeedId:_feed.feedID
+//                                                        commentId:nil
+//                                                       completion:^(NSDictionary *responseObject, NSError *error) {
+//                                                           if (responseObject) {
+//                                                               weakSelf.feed = responseObject[@"data"];
+//                                                               if (weakSelf.feed.status.intValue >= 2) {
+//                                                                   [weakSelf showFeedHadBeenDeleted];
+//                                                               }
+//                                                           }
+//                                                       }];
+//}
 
 - (void)showFeedHadBeenDeleted {
     [self.commentTextView resignFirstResponder];
@@ -947,7 +1049,6 @@
  @return should change text
  */
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
-    NSLog(@"%@", text);
     NSRange resultRange = [text rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet] options:NSBackwardsSearch];
     if ([text length] == 1 && resultRange.location != NSNotFound) {
         [textView resignFirstResponder];
