@@ -32,6 +32,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
+    
     //设置下级页面的返回键
     UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:nil action:nil];
     self.navigationItem.backBarButtonItem = backButtonItem;
@@ -43,9 +45,10 @@
     self.searchController.hidesNavigationBarDuringPresentation = YES;
     [self.searchController.searchBar sizeToFit];
     self.searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
-    self.searchController.searchBar.backgroundColor = [UIColor whiteColor];
     
     self.tableView.tableHeaderView = self.searchController.searchBar;
+    
+    self.searchController.searchBar.text = @"1";
     
     self.definesPresentationContext = YES;
 }

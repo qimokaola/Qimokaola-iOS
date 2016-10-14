@@ -63,7 +63,7 @@
     CGFloat margin = 10.f;
     
     //初始化并添加视图
-    self.appImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"happy"]];
+    self.appImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_login_register_display"]];
     [self.view addSubview:self.appImageView];
     
     self.btnContainer = [[UIView alloc] init];

@@ -143,6 +143,7 @@ static NSString *const kCourseCellIdentifier = @"kCourseCellIdentifier";
     }] mutableCopy];
     
     [self.tableView reloadData];
+    NSLog(@"%@", NSStringFromCGRect(self.tableView.frame));
 }
 
 #pragma mark - UITableViewDataSource
@@ -187,6 +188,8 @@ static NSString *const kCourseCellIdentifier = @"kCourseCellIdentifier";
     NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"name CONTAINS[c] %@", searchController.searchBar.text];
     self.filteredArray = [[self.dataArray filteredArrayUsingPredicate:searchPredicate] mutableCopy];
     [self.tableView reloadData];
+    
+    NSLog(@"%@", NSStringFromCGRect(self.tableView.frame));
 }
 
 #pragma mark - UIPopoverPresentationControllerDelegate

@@ -14,4 +14,5 @@ target "Qimokaola" do
     pod 'SDAutoLayout'
     pod 'LinqToObjectiveC'
     pod 'YYKit'
+    pod 'AXWebViewController'
 end

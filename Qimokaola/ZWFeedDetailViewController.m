@@ -463,7 +463,7 @@
     
     _collectButton = [UIButton buttonWithType:UIButtonTypeCustom];
     _collectButton.adjustsImageWhenDisabled = NO;
-    [_collectButton setImage:[[UIImage imageNamed:@"icon_detail_uncollect "] imageByResizeToSize:imageSize] forState:UIControlStateNormal];
+    [_collectButton setImage:[[UIImage imageNamed:@"icon_detail_uncollect"] imageByResizeToSize:imageSize] forState:UIControlStateNormal];
     [_collectButton setImage:[[UIImage imageNamed:@"icon_detail_collected"] imageByResizeToSize:imageSize] forState:UIControlStateHighlighted];
     [_collectButton addTarget:self action:@selector(collectButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     

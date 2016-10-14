@@ -14,6 +14,12 @@ PODS:
   - AFNetworking/Serialization (3.1.0)
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
+  - Aspects (1.4.1)
+  - AXNavigationBackItemInjection (0.0.1)
+  - AXWebViewController (0.3.3):
+    - Aspects
+    - AXNavigationBackItemInjection
+    - NJKWebViewProgress
   - FMDB (2.6.2):
     - FMDB/standard (= 2.6.2)
   - FMDB/standard (2.6.2)
@@ -22,6 +28,11 @@ PODS:
   - Masonry (1.0.2)
   - MBProgressHUD (1.0.0)
   - MJRefresh (3.1.12)
+  - NJKWebViewProgress (0.2.3):
+    - NJKWebViewProgress/Core (= 0.2.3)
+    - NJKWebViewProgress/ProgressView (= 0.2.3)
+  - NJKWebViewProgress/Core (0.2.3)
+  - NJKWebViewProgress/ProgressView (0.2.3)
   - ReactiveCocoa (2.5):
     - ReactiveCocoa/UI (= 2.5)
   - ReactiveCocoa/Core (2.5):
@@ -41,6 +52,7 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking
+  - AXWebViewController
   - FMDB
   - IQKeyboardManager
   - LinqToObjectiveC
@@ -55,18 +67,22 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
+  Aspects: 7595ba96a6727a58ebcbfc954497fc5d2fdde546
+  AXNavigationBackItemInjection: 0ab0742fafd9ec37e44b8767c96cbbc77ec13575
+  AXWebViewController: 38ed1a586ecad4338957faf1b5842489e8a75727
   FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
   IQKeyboardManager: 50b62c0603308968256f8208886e206c1dcce607
   LinqToObjectiveC: f0e40c137a458b6b9725c4c7b6a575c0c72e3aec
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
+  NJKWebViewProgress: f481fd424cb5ecc27eacae11b5397db92fba9a4d
   ReactiveCocoa: e2db045570aa97c695e7aa97c2bcab222ae51f4a
   SDAutoLayout: e9b36d04b8c0b504762a04d76fbbe5108944297a
   SDCycleScrollView: f72904c77698a7f93a41bcbbc2d78b073bf7326c
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   YYKit: 7cda43304a8dc3696c449041e2cb3107b4e236e7
 
-PODFILE CHECKSUM: ae26032cf4337f958e47e8b7c0362a56d0fd2967
+PODFILE CHECKSUM: 42ab801b2fd07edce56affcf3ee10aee8564a147
 
 COCOAPODS: 1.0.1

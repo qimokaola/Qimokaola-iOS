@@ -23,7 +23,7 @@
 #define kToolBarSubViewSize 25
 #define kToolBarSubViewMargin 25
 
-@interface ZWFeedComposeViewController () <UITextViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+@interface ZWFeedComposeViewController () <YYTextViewDelegate , UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @property (nonatomic, strong) YYTextView *textView;
 @property (nonatomic, strong) UIView *toolbar;
@@ -32,6 +32,7 @@
 @property (nonatomic, strong) UILabel *anonymousLabel;
 @property (nonatomic, strong) UMComBriefAddedImageView *addImgView;
 @property (nonatomic, strong) NSMutableArray *images;
+@property (nonatomic, strong) UILabel *composeLimitLabel;
 
 @end
 
@@ -52,7 +53,7 @@
     self.navigationItem.rightBarButtonItem = rightPostItem;
     
     if (self.composeType == ZWFeedComposeTypeNewFeed) {
-        self.title = @"新鲜事";
+        self.title = @"发表动态";
     } else {
         self.title = @"发评论";
     }
@@ -101,6 +102,7 @@
     _textView.alwaysBounceVertical = YES;
     _textView.allowsCopyAttributedString = NO;
     _textView.font = ZWFont(17);
+    _textView.delegate = self;
     // 设置行间距
     CGFloat lineSpacing = 3.f;
     const CFIndex kNumberOfSettings = 3;
@@ -115,7 +117,7 @@
     NSString *placeholderPlainText = nil;
     switch (_composeType) {
         case ZWFeedComposeTypeNewFeed: {
-            placeholderPlainText = @"分享新鲜事...";
+            placeholderPlainText = @"说点什么吧...";
         }
             break;
         case ZWFeedComposeTypeReplyComment:
@@ -190,6 +192,17 @@
     [_toolbar addSubview:_anonymousLabel];
     [_anonymousLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(weakSelf.anonyousSwitch.mas_left).with.offset(- 5);
+        make.centerY.equalTo(weakSelf.toolbar);
+    }];
+    
+    _composeLimitLabel = [[UILabel alloc] init];
+    _composeLimitLabel.text = @"140";
+    _composeLimitLabel.textColor = [UIColor lightGrayColor];
+    _composeLimitLabel.font = ZWFont(14);
+    [_composeLimitLabel sizeToFit];
+    [_toolbar addSubview:_composeLimitLabel];
+    [_composeLimitLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(weakSelf.anonymousLabel.mas_left).with.offset(- 20);
         make.centerY.equalTo(weakSelf.toolbar);
     }];
 }
@@ -492,6 +505,10 @@
 }
 
 #pragma mark - UITextViewDelegate
+
+- (void)textViewDidChange:(UITextView *)textView {
+    self.composeLimitLabel.text = [NSString stringWithFormat:@"%d", (int)(140 - textView.text.length)];
+}
 
 //- (void)textViewDidChange:(UITextView *)textView {
 //    //[textView scrollToBottom];

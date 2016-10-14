@@ -28,7 +28,9 @@
     BOOL isNeedMore;
 }
 
-@property (nonatomic, strong) UILabel *titleLabel;
+@property (nonatomic, strong) UILabel *titleLabel1;
+@property (nonatomic, strong) UILabel *titleLabel2;
+@property (nonatomic, strong) UIImageView *titleImageView;
 
 @property (nonatomic, strong) UITextField *accountField;
 
@@ -71,6 +73,8 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
+    self.title = @"验证身份";
+    
     isNeedMore = NO;
     
     [self createSubViews];
@@ -101,7 +105,7 @@
         
         @strongify(self)
         
-        [self.nextBtn setTitle:@"注册" forState:UIControlStateDisabled];
+        [self.nextBtn setTitle:@"完成" forState:UIControlStateDisabled];
         
         NSLog(@"%@", x);
         
@@ -355,16 +359,28 @@
 - (void)createSubViews {
     
     //创建并添加至父视图
-    self.titleLabel = ({
+    self.titleLabel1 = ({
         UILabel *label = [[UILabel alloc] init];
-        label.font = ZWFont(22);
+        label.font = ZWFont(21);
         label.textColor = [UIColor blackColor];
-        label.text = @"绑定您的教务处账号";
+        label.text = @"学习资料仅供大学生下载";
+        label.textAlignment = NSTextAlignmentCenter;
         [label sizeToFit];
         [self.view addSubview:label];
         
         label;
     });
+    
+    _titleLabel2 = [[UILabel alloc] init];
+    _titleLabel2.font = ZWFont(18);
+    _titleLabel2.textColor = [UIColor blackColor];
+    _titleLabel2.text = @"因此需要验证大学生身份";
+    _titleLabel2.textAlignment = NSTextAlignmentCenter;
+    [_titleLabel2 sizeToFit];
+    [self.view addSubview:_titleLabel2];
+    
+    _titleImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_register_certificate"]];
+    [self.view addSubview:_titleImageView];
     
     self.accountField = ({
         UITextField *textField = [self commonTextField];
@@ -394,7 +410,7 @@
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         [btn setBackgroundImage:[RGB(80., 140., 238.) parseToImage] forState:UIControlStateNormal];
         [btn setBackgroundImage:[[UIColor lightGrayColor] parseToImage] forState:UIControlStateDisabled];
-        [btn setTitle:@"注册" forState:UIControlStateNormal];
+        [btn setTitle:@"完成" forState:UIControlStateNormal];
         [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         btn.layer.cornerRadius = 5;
         btn.layer.masksToBounds = YES;
@@ -424,9 +440,21 @@
     CGFloat textFieldHeight = 30.f;
     CGFloat lineHiehgt = .5f;
     
-    [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.titleLabel1 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(weakSelf.view);
-        make.centerY.equalTo(weakSelf.view).multipliedBy(.5f);
+        make.centerY.equalTo(weakSelf.view).multipliedBy(.35f);
+    }];
+    
+    [self.titleLabel2 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(weakSelf.view);
+        make.top.equalTo(weakSelf.titleLabel1.mas_bottom).with.offset(10);
+        make.height.mas_equalTo(25);
+    }];
+    
+    [self.titleImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(weakSelf.view);
+        make.top.equalTo(weakSelf.titleLabel2.mas_bottom).with.offset(10);
+        make.size.mas_equalTo(CGSizeMake(66, 66));
     }];
     
     [@[self.accountField, self.accountLine, self.passwordField, self.passwordLine, self.nextBtn] mas_makeConstraints:^(MASConstraintMaker *make) {

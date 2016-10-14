@@ -91,6 +91,8 @@
     self.exitItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(exit)];
     self.navigationItem.leftBarButtonItem = self.exitItem;
     
+    self.title = @"注册";
+    
     //创建并布局子视图
     [self createSubViews];
     
