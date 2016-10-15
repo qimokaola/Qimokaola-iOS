@@ -39,6 +39,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    [UIApplication sharedApplication].keyWindow.backgroundColor = [UIColor whiteColor];
     
     NSMutableArray<UIViewController *> *viewControllers = [NSMutableArray array];
     for (NSDictionary *dict in self.viewControllersInfo) {

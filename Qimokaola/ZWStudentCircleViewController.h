@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ZWBaseTableViewController.h"
 
-@interface ZWStudentCircleViewController : UITableViewController
+@interface ZWStudentCircleViewController : ZWBaseTableViewController
 
 @end

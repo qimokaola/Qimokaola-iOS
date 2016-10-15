@@ -15,4 +15,5 @@ target "Qimokaola" do
     pod 'LinqToObjectiveC'
     pod 'YYKit'
     pod 'AXWebViewController'
+    pod 'DZNEmptyDataSet'
 end

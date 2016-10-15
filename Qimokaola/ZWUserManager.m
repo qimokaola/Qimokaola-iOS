@@ -156,6 +156,15 @@ NSString *const kLoginedUserKey = @"kLoginedUserKey";
     [_cache setObject:_loginUser forKey:kLoginedUserKey];
 }
 
+- (void)modifyUserEnterYear:(NSString *)enterYear result:(APIRequestResult)result {
+    [self modifyUserInfo:@{@"enterYear" : enterYear} result:result];
+}
+
+- (void)updateEnterYear:(NSString *)enterYear {
+    _loginUser.enterYear = enterYear;
+    [_cache setObject:_loginUser forKey:kLoginedUserKey];
+}
+
 - (void)updateAvatarUrl:(NSString *)avatarUrl {
     _loginUser.avatar_url = avatarUrl;
     [_cache setObject:_loginUser forKey:kLoginedUserKey];

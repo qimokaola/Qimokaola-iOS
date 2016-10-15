@@ -34,21 +34,10 @@
     UIBarButtonItem *leftCancelItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStyleDone target:self action:@selector(cancleModification)];
     self.navigationItem.leftBarButtonItem = leftCancelItem;
     
-    UIButton *saveButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    saveButton.frame = CGRectMake(0, 0, 40, 40);
-    saveButton.titleLabel.font =ZWFont(17);
-    [saveButton setTitle:@"保存" forState:UIControlStateNormal];
-    [saveButton setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
-    [saveButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateDisabled];
-    @weakify(self)
-    RAC(saveButton, enabled) = [_nicknameField.rac_textSignal map:^id(NSString *value) {
+    UIBarButtonItem *rightSavaItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleDone target:self action:@selector(saveModification)];
+    RAC(rightSavaItem, enabled) = [_nicknameField.rac_textSignal map:^id(NSString *value) {
         return @(value.length > 0 && ![value isEqualToString:[ZWUserManager sharedInstance].loginUser.nickname]);
     }];
-    [[saveButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
-       @strongify(self)
-        [self saveModification];
-    }];
-    UIBarButtonItem *rightSavaItem = [[UIBarButtonItem alloc] initWithCustomView:saveButton];
     self.navigationItem.rightBarButtonItem = rightSavaItem;
 }
 
@@ -64,6 +53,11 @@
     [super viewWillDisappear:animated];
     [IQKeyboardManager sharedManager].enable = YES;
     [IQKeyboardManager sharedManager].enableAutoToolbar = YES;
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [_nicknameField becomeFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -84,8 +78,6 @@
     _nicknameField.leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, nicknameFieldHeight)];
     _nicknameField.leftViewMode = UITextFieldViewModeAlways;
     [self.view addSubview:_nicknameField];
-    
-    [_nicknameField becomeFirstResponder];
 }
 
 - (void)cancleModification {

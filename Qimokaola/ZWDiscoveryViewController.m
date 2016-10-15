@@ -17,6 +17,8 @@
 #import "ZWSettingsViewController.h"
 #import "ZWUserLikesViewController.h"
 
+#import "ZWBrowserTool.h"
+
 #import <UMCommunitySDK/UMComSession.h>
 
 #import "MJRefresh.h"
@@ -320,10 +322,14 @@
     } else {
         switch (indexPath.row) {
             case 0: {
+                NSString *title = [[[self.channels objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] objectForKey:@"title"];
+                [ZWBrowserTool openWebAddress:@"http://robinchen.mikecrm.com/Fc00ps" fixedTitle:title];
             }
                 break;
                 
             case 1: {
+                NSString *title = [[[self.channels objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] objectForKey:@"title"];
+                [ZWBrowserTool openWebAddress:@"http://robinchen.mikecrm.com/V36ze6" fixedTitle:title];
             }
                 
                 break;

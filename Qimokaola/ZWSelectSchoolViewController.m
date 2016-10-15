@@ -9,15 +9,24 @@
 #import "ZWSelectSchoolViewController.h"
 #import "ZWAPIRequestTool.h"
 
-@interface ZWSelectSchoolViewController () {
-    // 记录是否处于学校列表
-    BOOL isInSchoolList;
-}
+#import <YYKit/YYKit.h>
+
+typedef NS_ENUM(NSUInteger, ZWSelectSchoolViewControllerCuerentType) {
+    ZWSelectSchoolViewControllerCuerentTypeSchool,
+    ZWSelectSchoolViewControllerCuerentTypeAcademy,
+    ZWSelectSchoolViewControllerCuerentTypeEnterYear,
+};
+
+@interface ZWSelectSchoolViewController ()
 
 @property (nonatomic, strong) NSArray *schools;
 @property (nonatomic, strong) NSArray *academies;
 @property (nonatomic, strong) NSDictionary *selectedSchool;
+@property (nonatomic, strong) NSDictionary *selectedAcademy;
 @property (nonatomic, strong) UIBarButtonItem *chooseSchool;
+@property (nonatomic, strong) UIBarButtonItem *chooseAcademy;
+@property (nonatomic, strong) NSArray *enterYearArray;
+@property (nonatomic, assign) ZWSelectSchoolViewControllerCuerentType type;
 
 @end
 
@@ -30,13 +39,16 @@
     UIView *v = [[UIView alloc] initWithFrame:CGRectZero];
     [self.tableView setTableFooterView:v];
     self.chooseSchool = [[UIBarButtonItem alloc] initWithTitle:@"换个学校" style:UIBarButtonItemStyleDone target:self action:@selector(fetchSchoolList)];
+    self.chooseAcademy = [[UIBarButtonItem alloc] initWithTitle:@"换个学院" style:UIBarButtonItemStyleDone target:self action:@selector(fetchAcademiesList)];
+    NSInteger currentYear = [[NSDate date] year];
+    self.enterYearArray = @[@(currentYear), @(currentYear - 1), @(currentYear - 2), @(currentYear - 3), @(currentYear - 4)];
     // 开始时加载学校列表
     [self fetchSchoolList];
 }
 
 
 - (void)fetchSchoolList {
-    isInSchoolList = YES;
+    _type = ZWSelectSchoolViewControllerCuerentTypeSchool;
     self.title = @"选择学校";
     [ZWAPIRequestTool requestListSchool:^(id response, BOOL success) {
         if (success) {
@@ -48,7 +60,7 @@
 }
 
 - (void)fetchAcademiesList {
-    isInSchoolList = NO;
+    _type = ZWSelectSchoolViewControllerCuerentTypeAcademy;
     self.title = [self.selectedSchool objectForKey:@"name"];
     [ZWAPIRequestTool requestListAcademyWithParameter:@{@"college" : [self.selectedSchool objectForKey:@"id"]} result:^(id response, BOOL success) {
         if (success) {
@@ -72,7 +84,13 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return isInSchoolList ? self.schools.count : self.academies.count;
+    if (_type == ZWSelectSchoolViewControllerCuerentTypeSchool) {
+        return self.schools.count;
+    } else if (_type == ZWSelectSchoolViewControllerCuerentTypeAcademy) {
+        return self.academies.count;
+    } else {
+        return 5;
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -85,8 +103,13 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
     }
-    NSDictionary *dict = isInSchoolList ? [self.schools objectAtIndex:indexPath.row] : [self.academies objectAtIndex:indexPath.row];
-    cell.textLabel.text = [dict objectForKey:@"name"];
+    if (_type == ZWSelectSchoolViewControllerCuerentTypeSchool || _type == ZWSelectSchoolViewControllerCuerentTypeAcademy) {
+        NSDictionary *dict = _type == ZWSelectSchoolViewControllerCuerentTypeSchool ? [self.schools objectAtIndex:indexPath.row] : [self.academies objectAtIndex:indexPath.row];
+        cell.textLabel.text = [dict objectForKey:@"name"];
+    } else {
+        NSNumber *enterYear = [self.enterYearArray objectAtIndex:indexPath.row];
+        cell.textLabel.text = enterYear.stringValue;
+    }
     return cell;
 }
 
@@ -95,22 +118,25 @@
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    
-    if (isInSchoolList) {
+    if (_type == ZWSelectSchoolViewControllerCuerentTypeSchool) {
         self.selectedSchool = [self.schools objectAtIndex:indexPath.row];
         [self fetchAcademiesList];
+    } else if (_type == ZWSelectSchoolViewControllerCuerentTypeAcademy) {
+        self.selectedAcademy = [self.academies objectAtIndex:indexPath.row];
+        self.title = [self.selectedAcademy objectForKey:@"name"];
+        _type = ZWSelectSchoolViewControllerCuerentTypeEnterYear;
+        self.navigationItem.rightBarButtonItem = self.chooseAcademy;
+        [self.tableView reloadData];
     } else {
         if (_completionBlock) {
-            
-            NSDictionary *selectedAcademy = [self.academies objectAtIndex:indexPath.row];
-            NSDictionary *result = [NSDictionary dictionaryWithObjects:@[self.selectedSchool, selectedAcademy] forKeys:@[@"school", @"academy"]];
-            NSLog(@"selected school and academy info: %@", result);
+            NSNumber *selectedEnterYear = [self.enterYearArray objectAtIndex:indexPath.row];
+            NSDictionary *result = [NSDictionary dictionaryWithObjects:@[self.selectedSchool, self.selectedAcademy, selectedEnterYear] forKeys:@[@"school", @"academy", @"enterYear"]];
+            NSLog(@"selected school, academy, enterYear info: %@", result);
             _completionBlock(result);
             
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [self.navigationController popViewControllerAnimated:YES];
             });
-            
         }
     }
     

@@ -162,6 +162,14 @@
     return [[ZWAPITool dbfs] stringByAppendingString:@"/md5/%@/%@"];
 }
 
++ (NSString *)sbAPI {
+    return [[ZWAPITool api] stringByAppendingString:@"/sb/getSB"];
+}
+
++ (NSString *)appInfoAPI {
+    return @"http://itunes.apple.com/lookup?id=1054613325";
+}
+
 + (NSString *)api {
     return [[ZWAPITool base] api];
 }

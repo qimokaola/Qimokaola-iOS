@@ -22,10 +22,12 @@
 #define NeedMoreCode 116
 #define AccountErrorCode 115
 #define UserAlreadyExistCode 113
+#define VerifyErrorCode 115
 
 @interface ZWBindAccountViewController () {
     // 标记是否需要更多信息
     BOOL isNeedMore;
+    BOOL isRefreshVerify;
 }
 
 @property (nonatomic, strong) UILabel *titleLabel1;
@@ -118,22 +120,28 @@
             ZWUser *user = [ZWUser modelWithDictionary:[result objectForKey:kHTTPResponseResKey]];
             [ZWUserManager sharedInstance].loginUser = user;
             [self handleUploadAvatarImage];
-
-            
         } else {
-            
-            [ZWHUDTool showHUDInView:self.navigationController.view withTitle:[result objectForKey:kHTTPResponseInfoKey] message:nil duration:kShowHUDMid];
-            
+            if (!isRefreshVerify) {
+                [ZWHUDTool showHUDInView:self.navigationController.view withTitle:[result objectForKey:kHTTPResponseInfoKey] message:nil duration:kShowHUDMid];
+            }
             // 暂时只处理需要更多信息的情况
             if (resultCode == NeedMoreCode) {
-                
                 NSLog(@"需要更多信息");
-                
                 [self handleNeedMore:[result objectForKey:kHTTPResponseResKey]];
-                
+            } else if (resultCode == VerifyErrorCode && [[result objectForKey:kHTTPResponseInfoKey] isEqualToString:@"验证码错误"]) {
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kShowHUDMid * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    self.verifyField.text = nil;
+                    isRefreshVerify = YES;
+                    [self.nextBtn.rac_command execute:nil];
+                });
             }
         }
         
+    }];
+    
+    [self.nextBtn.rac_command.errors subscribeNext:^(id x) {
+       @strongify(self)
+        [ZWHUDTool showHUDInView:self.navigationController.view withTitle:@"出现错误" message:nil duration:kShowHUDShort];
     }];
     
     RAC(self.indicator, hidden) = [self.nextBtn.rac_command.executing not];
@@ -167,12 +175,9 @@
                 user.avatar_url = [[response objectForKey:kHTTPResponseResKey] objectForKey:@"avatar"];
                 NSLog(@"%@", user.avatar_url);
                 [ZWUserManager sharedInstance].loginUser = user;
-                
-               
             } else {
-                
-               hud.label.text = @"上传头像出错, 您可以稍后再次上传";
-                
+                hud.mode = MBProgressHUDModeText;
+                hud.label.text = @"上传头像出错, 您可以稍后再次上传";
             }
             
             // 发送用户登录成功通知
@@ -206,7 +211,15 @@
     // 构建更多参数
     self.moreInfo = [res objectForKey:@"sendback"];
     NSDictionary *code = [[res objectForKey:@"prompt"] objectForKey:kHTTPResponseCodeKey];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kShowHUDMid * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    NSTimeInterval delayTime;
+    // 若是刷新验证码，则由于不显示HUD缘故，故不延迟替换验证码
+    if (isRefreshVerify) {
+        delayTime = 0.;
+        isRefreshVerify = NO;
+    } else {
+        delayTime = kShowHUDMid;
+    }
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayTime * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         
         [self addVerifyView:[code objectForKey:@"data"]];
     });
@@ -265,21 +278,21 @@
             
         } completion:^(BOOL finished) {
             
-            [_verifyField mas_makeConstraints:^(MASConstraintMaker *make) {
+            [_verifyField mas_remakeConstraints:^(MASConstraintMaker *make) {
                 make.top.equalTo(weakSelf.passwordLine.mas_bottom).with.offset(midMargin);
                 make.left.equalTo(weakSelf.view).with.offset(margin);
                 make.height.mas_equalTo(textFieldHeight);
                 make.width.equalTo(weakSelf.view).multipliedBy(0.7);
             }];
             
-            [_verifyImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+            [_verifyImageView mas_remakeConstraints:^(MASConstraintMaker *make) {
                 make.left.equalTo(weakSelf.verifyField.mas_right);
                 make.bottom.equalTo(weakSelf.verifyField);
                 make.right.equalTo(weakSelf.view).with.offset(- margin);
-                make.height.mas_equalTo(textFieldHeight);
+                make.height.mas_equalTo(textFieldHeight + 5);
             }];
             
-            [_verifyLine mas_makeConstraints:^(MASConstraintMaker *make) {
+            [_verifyLine mas_remakeConstraints:^(MASConstraintMaker *make) {
                 make.left.equalTo(weakSelf.view).with.offset(margin);
                 make.right.equalTo(weakSelf.view).with.offset(- margin);
                 make.height.mas_equalTo(lineHiehgt);
@@ -303,7 +316,7 @@
         
         @strongify(self)
 
-        [self.nextBtn setTitle:@"正在注册" forState:UIControlStateDisabled];
+        [self.nextBtn setTitle:isRefreshVerify ? @"刷新验证码" : @"正在注册" forState:UIControlStateDisabled];
         [self.indicator startAnimating];
         
         NSMutableDictionary *params = [NSMutableDictionary dictionaryWithDictionary:self.registerParam];

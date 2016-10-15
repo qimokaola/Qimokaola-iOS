@@ -20,6 +20,7 @@ PODS:
     - Aspects
     - AXNavigationBackItemInjection
     - NJKWebViewProgress
+  - DZNEmptyDataSet (1.8.1)
   - FMDB (2.6.2):
     - FMDB/standard (= 2.6.2)
   - FMDB/standard (2.6.2)
@@ -53,6 +54,7 @@ PODS:
 DEPENDENCIES:
   - AFNetworking
   - AXWebViewController
+  - DZNEmptyDataSet
   - FMDB
   - IQKeyboardManager
   - LinqToObjectiveC
@@ -70,6 +72,7 @@ SPEC CHECKSUMS:
   Aspects: 7595ba96a6727a58ebcbfc954497fc5d2fdde546
   AXNavigationBackItemInjection: 0ab0742fafd9ec37e44b8767c96cbbc77ec13575
   AXWebViewController: 38ed1a586ecad4338957faf1b5842489e8a75727
+  DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
   IQKeyboardManager: 50b62c0603308968256f8208886e206c1dcce607
   LinqToObjectiveC: f0e40c137a458b6b9725c4c7b6a575c0c72e3aec
@@ -83,6 +86,6 @@ SPEC CHECKSUMS:
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   YYKit: 7cda43304a8dc3696c449041e2cb3107b4e236e7
 
-PODFILE CHECKSUM: 42ab801b2fd07edce56affcf3ee10aee8564a147
+PODFILE CHECKSUM: a6585a5a561d4ef0b64c49159b5cb0b57e97e9fe
 
 COCOAPODS: 1.0.1

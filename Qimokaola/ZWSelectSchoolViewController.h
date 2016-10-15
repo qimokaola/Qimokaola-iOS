@@ -8,10 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^SelectSchoolBlock)(NSDictionary *result);
-
 @interface ZWSelectSchoolViewController : UITableViewController
 
-@property (nonatomic, copy) SelectSchoolBlock completionBlock;
+@property (nonatomic, copy, readwrite) void(^completionBlock)(NSDictionary *result);
 
 @end

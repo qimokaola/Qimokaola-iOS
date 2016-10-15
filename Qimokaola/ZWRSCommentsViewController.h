@@ -10,6 +10,8 @@
 #import "ZWReceivedCommentCell.h"
 #import "ZWSentCommentCell.h"
 
+#import "ZWBaseTableViewController.h"
+
 #import <MJRefresh/MJRefresh.h>
 #import <UMComDataStorage/UMComComment.h>
 #import <UMCommunitySDK/UMComSession.h>
@@ -22,7 +24,7 @@ typedef NS_ENUM(NSUInteger, ZWUserCommentsType) {
     ZWUserCommentsTypeSent // 发出的评论
 };
 
-@interface ZWRSCommentsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, ZWRSCommentCellDelegate>
+@interface ZWRSCommentsViewController : ZWBaseTableViewController <ZWRSCommentCellDelegate>
 
 @property (nonatomic, assign) ZWUserCommentsType userCommentsType;
 

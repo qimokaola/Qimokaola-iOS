@@ -111,27 +111,42 @@
                               result:result];
 }
 
++ (void)requestSBInfo:(APIRequestResult)result {
+    [ZWAPIRequestTool requestWithAPI:[ZWAPITool sbAPI]
+                          parameters:nil
+                              result:result];
+}
+
++ (void)requestAppInfo:(APIRequestResult)result {
+    [ZWNetworkingManager getWithURLString:[ZWAPITool appInfoAPI]
+                                  success:^(NSURLSessionDataTask *task, id responseObject) {
+                                      if (result) {
+                                          result(responseObject, YES);
+                                      }
+                                  }
+                                  failure:^(NSURLSessionDataTask *task, NSError *error) {
+                                      if (result) {
+                                          result(error, NO);
+                                      }
+                                  }];
+}
+
 // 通用请求接口，针对接收字典参数的接口
 + (void)requestWithAPI:(NSString *)API parameters:(id)params result:(APIRequestResult)result {
     [ZWNetworkingManager postWithURLString:API
                                     params:[ZWAPIRequestTool buildParameters:params ? params : @{}]
                                    success:^(NSURLSessionDataTask *task, id responseObject) {
-                                       
                                        if ([[responseObject objectForKey:kHTTPResponseInfoKey] isEqualToString:kUserNotLoginInfo]) {
                                            [[NSNotificationCenter defaultCenter] postNotificationName:kUserNeedLoginNotification object:nil];
                                        }
-                                       
                                        if (result) {
                                            result(responseObject, YES);
                                        }
-                                       
                                    }
                                    failure:^(NSURLSessionDataTask *task, NSError *error) {
-                                       
                                        if (result) {
                                            result(error, NO);
                                        }
-                                       
                                    }];
     
 }

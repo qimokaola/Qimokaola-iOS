@@ -42,4 +42,8 @@ typedef void(^APIRequestResult)(id response, BOOL success);
 
 + (void)reuqestInfoByName:(NSString *)username result:(APIRequestResult)result;
 
++ (void)requestSBInfo:(APIRequestResult)result;
+
++ (void)requestAppInfo:(APIRequestResult)result;
+
 @end

@@ -48,8 +48,6 @@
     
     self.tableView.tableHeaderView = self.searchController.searchBar;
     
-    self.searchController.searchBar.text = @"1";
-    
     self.definesPresentationContext = YES;
 }
 

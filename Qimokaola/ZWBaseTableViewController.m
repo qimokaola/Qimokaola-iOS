@@ -16,25 +16,27 @@
 
 #pragma mark - Life Cycle
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.hidesBottomBarWhenPushed = YES;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = defaultBackgroundColor;
-    
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kScreenW, kScreenH)];
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
-    _tableView.backgroundColor = [UIColor whiteColor];
-    _tableView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
-    _tableView.scrollIndicatorInsets = UIEdgeInsetsMake(64, 0, 0, 0);
-    _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    
-    _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(freshHeaderStartFreshing)];
-    
-    [self.view addSubview:_tableView];
-
+    //self.edgesForExtendedLayout = UIRectEdgeNone;
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.tableView.emptyDataSetSource = self;
+    self.tableView.emptyDataSetDelegate = self;
+    self.tableView.tableFooterView = [UIView new];
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(freshHeaderStartFreshing)];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [_tableView.mj_header beginRefreshing];
+        _shouldEmptyViewShow = YES;
+        [self.tableView.mj_header beginRefreshing];
     });
 }
 
@@ -43,26 +45,34 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView   {
+    return [UIImage imageNamed:@"none_hint"];
+}
+
+- (BOOL)emptyDataSetShouldDisplay:(UIScrollView *)scrollView
+{
+    return _shouldEmptyViewShow;
+}
+
+- (BOOL)emptyDataSetShouldAllowScroll:(UIScrollView *)scrollView {
+    
+    return YES;
+}
+
+- (void)emptyDataSetWillAppear:(UIScrollView *)scrollView {
+    scrollView.contentOffset = CGPointZero;
+}
+
+//- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
+//    UIEdgeInsets insets = self.tableView.contentInset;
+//    return (insets.top == 0.0f) ? -64.0f : 0.0f;
+//}
+
 #pragma mark - Common Methods
 
 - (void)freshHeaderStartFreshing {
     
 }
-
-#pragma mark - UITableViewDataSource
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 0;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return nil;
-}
-
 /*
 #pragma mark - Navigation
 

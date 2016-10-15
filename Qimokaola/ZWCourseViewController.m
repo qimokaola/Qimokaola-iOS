@@ -37,6 +37,15 @@ static NSString *const kCourseCellIdentifier = @"kCourseCellIdentifier";
 
 #pragma mark - Life Cycle
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.hidesBottomBarWhenPushed = NO;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad]; 
     
@@ -47,7 +56,7 @@ static NSString *const kCourseCellIdentifier = @"kCourseCellIdentifier";
     [self.tableView registerClass:[ZWCourseCell class] forCellReuseIdentifier:kCourseCellIdentifier];
     self.tableView.rowHeight = 50;
     
-    _schoolNameView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenH, 44)];
+    _schoolNameView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenW, 44)];
     _schoolNameView.backgroundColor = [UIColor clearColor];
     [_schoolNameView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(popToSwitchSchool:)]];
     
@@ -76,6 +85,11 @@ static NSString *const kCourseCellIdentifier = @"kCourseCellIdentifier";
     UIBarButtonItem *schoolNameItem = [[UIBarButtonItem alloc] initWithCustomView:_schoolNameView];
     self.navigationItem.leftBarButtonItems = @[negativeSpacer, schoolNameItem];
     
+    UIBarButtonItem *uploadItem = [[UIBarButtonItem alloc] initWithTitle:@"上传资料" style:UIBarButtonItemStyleDone target:self action:@selector(tapUpload)];
+    self.navigationItem.rightBarButtonItem = uploadItem;
+    
+    [self checkAppUpdate];
+    
     [[[NSNotificationCenter defaultCenter] rac_addObserverForName:kUserLoginSuccessNotification object:nil] subscribeNext:^(id x) {
         if (!weakSelf.tableView.mj_header.isRefreshing) {
             [weakSelf.tableView.mj_header beginRefreshing];
@@ -96,8 +110,50 @@ static NSString *const kCourseCellIdentifier = @"kCourseCellIdentifier";
 
 #pragma mark - Normal Method
 
+- (void)tapUpload {
+    
+}
+
+- (void)checkAppUpdate {
+    __weak __typeof(self) weakSelf = self;
+    [ZWAPIRequestTool requestAppInfo:^(id response, BOOL success) {
+        if (success) {
+            NSDictionary *info = [[response objectForKey:@"results"] objectAtIndex:0];
+            NSString *serverVersion = [info objectForKey:@"version"];
+            NSString *localVersion =  [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+            NSArray *serverArray = [serverVersion componentsSeparatedByString:@"."];
+            NSArray *localArray = [localVersion componentsSeparatedByString:@"."];
+            NSInteger maxCount = MAX(serverArray.count, localArray.count);
+            for (int i = 0; i < maxCount; i ++) {
+                NSInteger v1 = serverArray.count - 1 >= i ? [serverArray[i] integerValue] : 0;
+                NSInteger v2 = localArray.count - 1 >= i ? [localArray[i] integerValue] : 0;
+                if (v1 > v2) {
+                    [weakSelf showUpdateAlertWithReleaseNotes:[info objectForKey:@"releaseNotes"]];
+                    break;
+                } else if (v2 > v1) {
+                    break;
+                }
+            }
+        }
+    }];
+}
+
+- (void)showUpdateAlertWithReleaseNotes:(NSString *)releaseNotes {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"发现新版本" message:releaseNotes preferredStyle:UIAlertControllerStyleAlert];
+    // 添加按钮
+    [alert addAction:[UIAlertAction actionWithTitle:@"稍后再说" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"立即更新" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/app/id1054613325"]];
+    }]];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
 - (void)setSchoolNameLabelData {
     _schoolNameLabel.text = [ZWUserManager sharedInstance].loginUser.currentCollegeName;
+    _schoolNameView.width = _schoolNameLabel.width + 15;
 }
 
 - (void)popToSwitchSchool:(UIGestureRecognizer *)sender {
@@ -107,9 +163,13 @@ static NSString *const kCourseCellIdentifier = @"kCourseCellIdentifier";
         if ([weakSelf.schoolNameLabel.text isEqualToString:collegeName]) {
             return;
         }
+        weakSelf.shouldEmptyViewShow = NO;
+        [weakSelf.dataArray removeAllObjects];
+        [weakSelf.tableView reloadData];
         [[ZWUserManager sharedInstance] updateCurrentCollegeId:@(collegeID.intValue) collegeName:collegeName];
         [weakSelf setSchoolNameLabelData];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            weakSelf.shouldEmptyViewShow = YES;
             [weakSelf.tableView.mj_header beginRefreshing];
         });
     };
@@ -143,7 +203,6 @@ static NSString *const kCourseCellIdentifier = @"kCourseCellIdentifier";
     }] mutableCopy];
     
     [self.tableView reloadData];
-    NSLog(@"%@", NSStringFromCGRect(self.tableView.frame));
 }
 
 #pragma mark - UITableViewDataSource
@@ -185,11 +244,9 @@ static NSString *const kCourseCellIdentifier = @"kCourseCellIdentifier";
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
     [self.filteredArray removeAllObjects];
-    NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"name CONTAINS[c] %@", searchController.searchBar.text];
+    NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"name like[c] %@", searchController.searchBar.text];
     self.filteredArray = [[self.dataArray filteredArrayUsingPredicate:searchPredicate] mutableCopy];
     [self.tableView reloadData];
-    
-    NSLog(@"%@", NSStringFromCGRect(self.tableView.frame));
 }
 
 #pragma mark - UIPopoverPresentationControllerDelegate

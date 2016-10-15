@@ -50,4 +50,8 @@
 
 + (NSString *)shareFileAPI;
 
++ (NSString *)sbAPI;
+
++ (NSString *)appInfoAPI;
+
 @end

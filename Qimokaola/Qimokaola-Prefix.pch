@@ -50,6 +50,8 @@
 #define kUserLogoutSuccessNotification @"kUserLogoutSuccessNotification"
 #define kLocalUserLoginStateGuranteedNotification @"kLocalUserLoginStateGuranteed" //本地用户信息存在时发送相应通知，为了确保每次进入应用若用户登录状态正常则登录微社区
 
+#define kShowAdNotification @"kShowAdNotification"
+
 #define kStudentCircleAnonyousName @"某同学"
 
 #define universalGrayColor RGB(242, 242, 242)

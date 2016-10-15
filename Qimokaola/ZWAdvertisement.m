@@ -8,10 +8,6 @@
 
 #import "ZWAdvertisement.h"
 
-@implementation ZWAdvertisementResource
-
-@end
-
 @implementation ZWAdvertisement
 
 @end

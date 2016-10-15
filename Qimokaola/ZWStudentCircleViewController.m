@@ -35,6 +35,15 @@ typedef NS_ENUM(NSInteger, ZWFetchedDataSource) {
 
 @implementation ZWStudentCircleViewController
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.hidesBottomBarWhenPushed = NO;
+    }
+    return self;
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.cycleScrollView.autoScroll = YES;

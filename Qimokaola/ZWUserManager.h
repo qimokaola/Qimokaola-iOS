@@ -32,9 +32,14 @@
 - (void)modifyUserGender:(NSString *)gender result:(APIRequestResult)result;
 - (void)updateGender:(NSString *)gender;
 
+// 修改学院
 - (void)modifyUserAcademyId:(NSNumber *)academyId result:(APIRequestResult)result;
 - (void)updateAcademyId:(NSNumber *)academyId academyName:(NSString *)academyName;
 - (void)updateCurrentCollegeId:(NSNumber *)collegeId collegeName:(NSString *)collegeName;
+
+// 修改入学年份
+- (void)modifyUserEnterYear:(NSString *)enterYear result:(APIRequestResult)result;
+- (void)updateEnterYear:(NSString *)enterYear;
 
 - (void)updateAvatarUrl:(NSString *)avatarUrl;
 

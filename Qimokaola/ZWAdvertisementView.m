@@ -9,6 +9,8 @@
 #import "ZWAdvertisementView.h"
 #import "UIImageView+WebCache.h"
 
+#import "ZWAPITool.h"
+
 @interface ZWAdvertisementView() {
     int count;
 }
@@ -16,9 +18,8 @@
 @property (nonatomic, strong) UIImageView *adView;
 @property (nonatomic, strong) UIButton *countBtn;
 @property (nonatomic, strong) NSTimer *timer;
-@property (nonatomic, strong) NSDictionary *adInfo;
 
-@property (nonatomic, strong) ZWAdvertisementResource *res;
+@property (nonatomic, strong) ZWAdvertisement *advertisement;
 
 @end
 
@@ -54,7 +55,7 @@ static int const showTime = 3;
         self.adView.image = [UIImage imageNamed:@"happy"];
         
         //跳过按钮
-        CGFloat btnWidth = 33;
+        CGFloat btnWidth = 40;
         CGFloat btnHeight = btnWidth;
         self.countBtn = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(frame) - btnWidth * 1.5, btnHeight * 0.8, btnWidth, btnHeight)];
         [self.countBtn addTarget:self action:@selector(dismissAdView) forControlEvents:UIControlEventTouchUpInside];
@@ -73,14 +74,10 @@ static int const showTime = 3;
 - (void)checkAD {
 }
 
-- (void)showAdWithADRes:(ZWAdvertisementResource *)res {
-    
-    self.res = res;
-    
-    [self.adView sd_setImageWithURL:[NSURL URLWithString:res.pic]];
-    
+- (void)showAdvertisement:(ZWAdvertisement *)advertisement {
+    self.advertisement = advertisement;
+    [self.adView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", [ZWAPITool base], advertisement.pic]]];
     [[UIApplication sharedApplication].keyWindow addSubview:self];
-    
     [self startTimer];
 }
 
@@ -91,20 +88,15 @@ static int const showTime = 3;
 
 - (void)clickToAdvertisement {
     [self dismissAdView];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"PapersClickAdvertisementNotification" object:nil userInfo:@{@"url" : self.res.url}];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowAdNotification object:nil userInfo:@{@"url" : self.advertisement.url}];
 }
 
 - (void)countDown {
-    
-    NSLog(@"%d", count);
-    
     if (-- count == 0) {
         [self dismissAdView];
     } else {
         [self.countBtn setTitle:[NSString stringWithFormat:@"跳过 %d", count] forState:UIControlStateNormal];
     }
-    
 }
 
 - (void)dismissAdView {
@@ -115,15 +107,7 @@ static int const showTime = 3;
         self.transform = CGAffineTransformMakeScale(4.f, 4.f);
     } completion:^(BOOL finished) {
         [self removeFromSuperview];
-        if (_completion) {
-            _completion();
-        }
     }];
-}
-
-- (void)dealloc
-{
-    NSLog(@"advertisementView dealloc");
 }
 
 @end

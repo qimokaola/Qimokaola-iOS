@@ -30,7 +30,6 @@
 
 @interface ZWFeedTableViewController () <ZWFeedCellDelegate>
 
-@property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray<UMComFeed *> *feeds;
 
 @end
@@ -53,9 +52,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    if ([self respondsToSelector:@selector(automaticallyAdjustsScrollViewInsets)]) {
-        self.automaticallyAdjustsScrollViewInsets = NO;
-    }
+    self.tableView.backgroundColor = defaultBackgroundColor;
+    
     //设置下级页面的返回键
     UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:nil action:nil];
     self.navigationItem.backBarButtonItem = backButtonItem;
@@ -73,24 +71,10 @@
         self.title = @"收藏";
     }
 
-    _tableView = [[UITableView alloc] init];
-    _tableView.frame = self.view.bounds;
-    _tableView.contentInset = UIEdgeInsetsMake(64, 0, 20, 0);
-    _tableView.scrollIndicatorInsets = _tableView.contentInset;
-    _tableView.backgroundColor = [UIColor clearColor];
-    _tableView.backgroundView.backgroundColor = [UIColor clearColor];
-    [_tableView registerClass:[ZWFeedCell class] forCellReuseIdentifier:kFeedTableViewCellID];
-    _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
-    [self.view addSubview:_tableView];
-    self.view.backgroundColor = UIColorHex(f2f2f2);
-   // self.view.backgroundColor = universalGrayColor;
-    _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(fetchFeedsData)];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [_tableView.mj_header beginRefreshing];
-    });
+    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 10, 0);
+    self.tableView.scrollIndicatorInsets = self.tableView.contentInset;
+    [self.tableView registerClass:[ZWFeedCell class] forCellReuseIdentifier:kFeedTableViewCellID];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 
 
@@ -138,7 +122,7 @@
     [self.navigationController pushViewController:detailViewController animated:YES];
 }
 
-- (void)fetchFeedsData {
+- (void)freshHeaderStartFreshing {
     __weak __typeof(self) weakSelf = self;
     if (self.feedType == ZWFeedTableViewTypeAboutTopic) {
         //获取feed数据
@@ -358,6 +342,9 @@
     [alertController addAction:copyAction];
     [self presentViewController:alertController animated:YES completion:nil];
 }
+
+#pragma mark - DTEmptySetDelegate
+
 
 
 /*

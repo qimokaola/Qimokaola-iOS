@@ -18,8 +18,6 @@
 
 @interface ZWRSCommentsViewController ()
 
-@property (nonatomic, strong) UITableView *tableView;
-
 /**
  评论数组
  */
@@ -39,13 +37,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = defaultBackgroundColor;
-    
     self.comments = [NSMutableArray array];
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.tableView.mj_header beginRefreshing];
-    });
+    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 74, 0);
+    self.tableView.scrollIndicatorInsets = self.tableView.contentInset;
+    if (_userCommentsType == ZWUserCommentsTypeReceived) {
+        [self.tableView registerClass:[ZWReceivedCommentCell class] forCellReuseIdentifier:kUserCommentsReceivedIdentifier];
+    } else {
+        [self.tableView registerClass:[ZWSentCommentCell class] forCellReuseIdentifier:kUserCommentsSentIdentifier];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -55,34 +54,9 @@
 
 #pragma mark - Lazy Loading
 
-- (UITableView *)tableView {
-    if (_tableView == nil) {
-        _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-        // 64 + 10
-        _tableView.contentInset = UIEdgeInsetsMake(0, 0, 74, 0);
-        _tableView.scrollIndicatorInsets = _tableView.contentInset;
-        _tableView.backgroundColor = [UIColor clearColor];
-        _tableView.delegate = self;
-        _tableView.dataSource = self;
-        _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-        
-        if (_userCommentsType == ZWUserCommentsTypeReceived) {
-            [_tableView registerClass:[ZWReceivedCommentCell class] forCellReuseIdentifier:kUserCommentsReceivedIdentifier];
-        } else {
-            [_tableView registerClass:[ZWSentCommentCell class] forCellReuseIdentifier:kUserCommentsSentIdentifier];
-        }
-        
-        MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(fetchCommentsData)];
-        _tableView.mj_header = header;
-        
-        [self.view addSubview:_tableView];
-    }
-    return _tableView;
-}
-
 #pragma mark - Common Methods
 
-- (void)fetchCommentsData {
+- (void)freshHeaderStartFreshing {
     __weak __typeof(self) weakSelf = self;
     if (_userCommentsType == ZWUserCommentsTypeReceived) {
         [[UMComDataRequestManager defaultManager] fetchCommentsUserReceivedWithCount:5

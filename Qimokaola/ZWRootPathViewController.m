@@ -65,7 +65,7 @@
     });
     
     @weakify(self)
-    [[[NSNotificationCenter defaultCenter] rac_addObserverForName:@"PapersClickAdvertisementNotification" object:nil] subscribeNext:^(NSNotification *notification) {
+    [[[NSNotificationCenter defaultCenter] rac_addObserverForName:kShowAdNotification object:nil] subscribeNext:^(NSNotification *notification) {
         
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             ZWBrowserViewController *browser = [[ZWBrowserViewController alloc] initWithURLString:notification.userInfo[@"url"] titleString:@"测试广告" loadType:ZWBrowserLoadTypeFromServices];

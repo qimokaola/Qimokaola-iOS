@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ZWAdvertisementResource : NSObject
+@interface ZWAdvertisement : NSObject
 
 @property (nonatomic, assign) NSUInteger version;
 
@@ -19,15 +19,5 @@
 @property (nonatomic, copy) NSString *fallback;
 
 @property (nonatomic, assign) BOOL enabled;
-
-@end
-
-@interface ZWAdvertisement : NSObject
-
-@property (nonatomic, assign) NSUInteger code;
-
-@property (nonatomic, copy) NSString *info;
-
-@property (nonatomic, strong) ZWAdvertisementResource *res;
 
 @end

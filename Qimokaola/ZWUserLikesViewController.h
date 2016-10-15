@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ZWBaseTableViewController.h"
 
-@interface ZWUserLikesViewController : UIViewController
+@interface ZWUserLikesViewController : ZWBaseTableViewController
 
 @end

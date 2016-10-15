@@ -51,6 +51,7 @@
 @property (nonatomic, strong) NSString *collegeName;
 @property (nonatomic, copy) NSString *academyID;
 @property (nonatomic, strong) NSString *academyName;
+@property (nonatomic, strong) NSNumber *enterYear;
 
 @end
 
@@ -79,6 +80,7 @@
         selectSchool.completionBlock = ^(NSDictionary *result) {
             NSDictionary *school = [result objectForKey:@"school"];
             NSDictionary *academy = [result objectForKey:@"academy"];
+            self.enterYear = [result objectForKey:@"enterYear"];
             
             self.collegeID = [school objectForKey:@"id"];
             self.collegeName = [school objectForKey:@"name"];
@@ -87,7 +89,7 @@
             
             self.selectSchoolBtn.titleLabel.font = ZWFont(15);
             
-            [self.selectSchoolBtn setTitle:[NSString stringWithFormat:@"%@-%@", [school objectForKey:@"name"], [academy objectForKey:@"name"]] forState:UIControlStateNormal];
+            [self.selectSchoolBtn setTitle:[NSString stringWithFormat:@"%@-%@-%@", [school objectForKey:@"name"], [academy objectForKey:@"name"], self.enterYear.stringValue] forState:UIControlStateNormal];
             [self.selectSchoolBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
             self.isSchoolSelected = YES;
         };
@@ -179,7 +181,7 @@
                                        @"gender": gender,
                                        @"schoolId" : self.collegeID,
                                        @"academyId": self.academyID,
-                                       @"enterYear": @"2014"
+                                       @"enterYear": self.enterYear
                                        }];
     bindAccount.registerParam = params;
     bindAccount.collegeInfo = @{@"collegeName": self.collegeName, @"academyName": self.academyName};

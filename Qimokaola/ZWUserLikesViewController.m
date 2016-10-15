@@ -19,9 +19,7 @@
 
 #define kUserLikesCellIdentifier @"kUserLikesCellIdentifier"
 
-@interface ZWUserLikesViewController () <UITableViewDelegate, UITableViewDataSource, ZWLikeCellDelegate>
-
-@property (nonatomic, strong) UITableView *tableView;
+@interface ZWUserLikesViewController () <ZWLikeCellDelegate>
 
 @property (nonatomic, strong) NSMutableArray *likes;
 
@@ -40,16 +38,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    if ([self respondsToSelector:@selector(automaticallyAdjustsScrollViewInsets)]) {
-        self.automaticallyAdjustsScrollViewInsets = NO;
-    }
-    self.view.backgroundColor = defaultBackgroundColor;
+
     self.title = @"赞";
     
     self.likes = [NSMutableArray array];
-    
-    [self.tableView.mj_header beginRefreshing];
+    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 10, 0);
+    self.tableView.scrollIndicatorInsets = self.tableView.contentInset;
+    [self.tableView registerClass:[ZWLikeCell class] forCellReuseIdentifier:kUserLikesCellIdentifier];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -59,29 +54,9 @@
 
 #pragma mark - Getters and Setters
 
-- (UITableView *)tableView {
-    if (_tableView == nil) {
-        _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-        _tableView.contentInset = UIEdgeInsetsMake(64, 0, 10, 0);
-        _tableView.scrollIndicatorInsets = _tableView.contentInset;
-        _tableView.backgroundColor = [UIColor clearColor];
-        _tableView.delegate = self;
-        _tableView.dataSource = self;
-        _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-        
-        [_tableView registerClass:[ZWLikeCell class] forCellReuseIdentifier:kUserLikesCellIdentifier];
-        
-        MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(fetchUserLikes)];
-        _tableView.mj_header = header;
-        
-        [self.view addSubview:_tableView];
-    }
-    return _tableView;
-}
-
 #pragma mark - Common Methods
 
-- (void)fetchUserLikes {
+- (void)freshHeaderStartFreshing {
     __weak __typeof(self) weakSelf = self;
     [[UMComDataRequestManager defaultManager] fetchLikesUserReceivedWithCount:9999
                                                                    completion:^(NSDictionary *responseObject, NSError *error) {

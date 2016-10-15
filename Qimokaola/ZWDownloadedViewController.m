@@ -20,9 +20,6 @@
 
 @interface ZWDownloadedViewController () <UISearchResultsUpdating, UISearchControllerDelegate>
 
-@property (nonatomic, strong) UIImageView *hintView;
-
-
 @end
 
 @implementation ZWDownloadedViewController
@@ -40,10 +37,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.shouldEmptyViewShow = YES;
     self.title = @"已下载";
     self.view.backgroundColor = [UIColor whiteColor];
     self.hidesBottomBarWhenPushed = NO;
-    [self initView];
+    
+    //编辑按钮
+    UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithTitle:@"编辑" style:UIBarButtonItemStyleDone target:self action:@selector(edit:)];
+    self.navigationItem.rightBarButtonItem = editButton;
     
     self.tableView.mj_header = nil;
     self.tableView.rowHeight = 55;
@@ -57,8 +59,6 @@
  
     self.dataArray = [[ZWDataBaseTool sharedInstance] fetchDonwloadedInfos];
     [self.tableView reloadData];
-    
-    [self checkDonwloadInfosCount];
 }
 
 - (void)viewWillDisappear:(BOOL)animated  {
@@ -76,25 +76,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)initView  {
-    
-    //编辑按钮
-    UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithTitle:@"编辑" style:UIBarButtonItemStyleDone target:self action:@selector(edit:)];
-    self.navigationItem.rightBarButtonItem = editButton;
-    
-    //显示无下载文档提示图
-    self.hintView = ({
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"none_hint"]];
-        [self.view insertSubview:imageView belowSubview:self.tableView];
-        [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerX.equalTo(self.view.mas_centerX);
-            make.centerY.equalTo(self.view.mas_centerY);
-        }];
-        imageView;
-    });
-    
-}
-
 - (void)edit:(UIBarButtonItem *)sender  {
     self.tableView.editing = !self.tableView.editing;
     if (self.tableView.isEditing) {
@@ -102,10 +83,6 @@
     }  else  {
         sender.title = @"编辑";
     }
-}
-
-- (void)checkDonwloadInfosCount {
-    self.tableView.hidden = self.dataArray.count == 0;
 }
 
 #pragma mark - UITableViewDataSource
@@ -145,7 +122,9 @@
         [self.dataArray removeObject:downloadInfo];
         // 4.更新视图
         [tableView deleteRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationAutomatic];
-        [self checkDonwloadInfosCount];
+        if (self.dataArray.count == 0) {
+            [self.tableView reloadData];
+        }
     }
 }
 

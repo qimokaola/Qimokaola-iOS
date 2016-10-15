@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ZWBaseTableViewController.h"
+
 #import <UMCommunitySDK/UMComDataRequestManager.h>
 
 typedef NS_ENUM(NSUInteger, ZWFeedTableViewType) {
@@ -16,7 +18,7 @@ typedef NS_ENUM(NSUInteger, ZWFeedTableViewType) {
     ZWFeedTableViewTypeAboutOthers     // 其他用户发布的 feed 流
 };
 
-@interface ZWFeedTableViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface ZWFeedTableViewController : ZWBaseTableViewController
 
 // feed 类型 有关于话题或者有关于用户
 @property (nonatomic, assign) ZWFeedTableViewType feedType;

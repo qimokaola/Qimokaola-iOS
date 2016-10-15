@@ -20,6 +20,11 @@
 #import "ZWAPITool.h"
 #import "ZWUserManager.h"
 #import "UIColor+Extension.h"
+#import "ZWBrowserViewController.h"
+
+#import "ZWBrowserTool.h"
+
+#import <AXWebViewController/AXWebViewController.h>
 
 #import "UMSocial.h"
 #import "UMSocialQQHandler.h"
@@ -78,26 +83,6 @@
     [self performSelector:@selector(monitorNetworkStatus) withObject:nil afterDelay:0.5f];
     
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
-    
-    BOOL isLogin = [[NSUserDefaults standardUserDefaults] boolForKey:@"LoginState"];
-    //检测是否已经登录
-    if (isLogin) {
-        [self setWindowRootControllerWithClass:[ZWTabBarController class]];
-        [[[[self fetchADSignal] timeout:2.0 onScheduler:[RACScheduler mainThreadScheduler]] deliverOnMainThread] subscribeNext:^(ZWAdvertisement *ad) {
-            if (ad.res.enabled) {
-                ZWAdvertisementView *adView = [[ZWAdvertisementView alloc] initWithWindow:weakSelf.window];
-                adView.completion = ^{
-                    NSLog(@"ad completion");
-                };
-                [adView showAdWithADRes:ad.res];
-                
-            }
-        } error:^(NSError *error) {
-        }];
-    } else {
-        //显示登录，注册视图
-        [self setWindowRootControllerWithClass:[ZWLoginAndRegisterViewController class]];
-    }
 
     [[[[NSNotificationCenter defaultCenter] rac_addObserverForName:kUserNeedLoginNotification object:nil] deliverOnMainThread] subscribeNext:^(id x) {
         [[ZWUserManager sharedInstance] logoutStudentCircle];
@@ -121,6 +106,13 @@
         
     }];
     
+    [[[NSNotificationCenter defaultCenter] rac_addObserverForName:kShowAdNotification object:nil] subscribeNext:^(NSNotification *notification) {
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [ZWBrowserTool openWebAddress:notification.userInfo[@"url"]];
+        });
+    }];
+    
     [[UINavigationBar appearance] setBarTintColor:defaultBlueColor];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor],
@@ -130,6 +122,22 @@
     
     [[UITabBar appearance] setShadowImage:[UIImage new]];
     [[UITabBar appearance] setBackgroundImage:[[UIColor whiteColor] parseToImage]];
+    
+    BOOL isLogin = [[NSUserDefaults standardUserDefaults] boolForKey:@"LoginState"];
+    //检测是否已经登录
+    if (isLogin) {
+        [self setWindowRootControllerWithClass:[ZWTabBarController class]];
+        [[[[self fetchADSignal] timeout:5.0 onScheduler:[RACScheduler mainThreadScheduler]] deliverOnMainThread] subscribeNext:^(ZWAdvertisement *ad) {
+            if (ad.enabled) {
+                ZWAdvertisementView *adView = [[ZWAdvertisementView alloc] initWithWindow:weakSelf.window];
+                [adView showAdvertisement:ad];
+            }
+        } error:^(NSError *error) {
+        }];
+    } else {
+        //显示登录，注册视图
+        [self setWindowRootControllerWithClass:[ZWLoginAndRegisterViewController class]];
+    }
     
 #ifdef DEBUG
     YYFPSLabel *fpsLabel = [[YYFPSLabel alloc] initWithFrame:CGRectMake(0, kScreenHeight - 100, 0, 0)];
@@ -160,29 +168,21 @@
 - (void)presentLoginViewController {
     [ZWHUDTool showHUDWithTitle:@"登录状态失效 请重新登录" message:nil duration:kShowHUDMid];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kShowHUDMid * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//        ZWLoginViewController *loginViewController = [[ZWLoginViewController alloc] init];
-//        [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:[[UINavigationController alloc] initWithRootViewController:loginViewController] animated:YES completion:nil];
         [UIApplication sharedApplication].keyWindow.rootViewController = [[ZWLoginAndRegisterViewController alloc] init];
     });
 }
 
 - (RACSignal *)fetchADSignal {
     return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-       
-        [ZWNetworkingManager getWithURLString:@"https://finalexam.cn/api/sb/getSB"
-                                      success:^(NSURLSessionDataTask *task, id responseObject) {
-                                          
-                                          ZWAdvertisement *ad = [ZWAdvertisement modelWithJSON:responseObject];
-                                          [subscriber sendNext:ad];
-                                          [subscriber sendCompleted];
-                                          
-                                      }
-                                      failure:^(NSURLSessionDataTask *task, NSError *error) {
-                                          
-                                          [subscriber sendError:error];
-                                          
-                                      }];
-        
+        [ZWAPIRequestTool requestSBInfo:^(id response, BOOL success) {
+            if (success && [[response objectForKey:kHTTPResponseCodeKey] intValue] == 0) {
+                ZWAdvertisement *ad = [ZWAdvertisement modelWithJSON:[response objectForKey:kHTTPResponseResKey]];
+                [subscriber sendNext:ad];
+                [subscriber sendCompleted];
+            } else {
+                [subscriber sendError:response];
+            }
+        }];
         return nil;
     }];
 }
@@ -226,8 +226,6 @@
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-    
-
     [UMessage didReceiveRemoteNotification:userInfo];
     
 }
@@ -235,8 +233,7 @@
 
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
-    //Optional
-    NSLog(@"did Fail To Register For Remote Notifications With Error: %@", error);
+
 }
 
 

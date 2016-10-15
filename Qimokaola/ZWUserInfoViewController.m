@@ -14,11 +14,13 @@
 #import "ZWModifiAcademyViewController.h"
 #import "ZWModifyAvatarViewController.h"
 
+#import "ZWHUDTool.h"
+
+#import "JNSelectView.h"
+
 #import <YYKit/YYKit.h>
 
-@interface ZWUserInfoViewController () <UITableViewDataSource, UITableViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate> {
-    NSInteger thisYear;
-}
+@interface ZWUserInfoViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 
@@ -28,7 +30,7 @@
 
 @property (nonatomic, strong) UIImageView *avatarView;
 
-@property (nonatomic, strong) UIPickerView *enterYearPicker;
+@property (nonatomic, strong) NSMutableArray *enterYearArray;
 
 @end
 
@@ -53,9 +55,11 @@
     self.view.backgroundColor = universalGrayColor;
     self.title = @"个人信息";
     [self zw_addSubViews];
-    // 获取今年年份
-    NSDate *date = [NSDate date];
-    thisYear = [date year];
+    NSInteger thisYear = [[NSDate date] year];
+    self.enterYearArray = [NSMutableArray array];
+    for (NSInteger i = 0; i < 5; i ++) {
+        [self.enterYearArray addObject:@(thisYear - i).stringValue];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -108,16 +112,6 @@
         [_avatarAccessoryView addSubview:arrowView];
     }
     return _avatarAccessoryView;
-}
-
-- (UIPickerView *)enterYearPicker {
-    if (_enterYearPicker == nil) {
-        CGFloat pickerViewHeight = 150;
-        _enterYearPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, kScreenHeight - pickerViewHeight, kScreenWidth, pickerViewHeight)];
-        _enterYearPicker.dataSource = self;
-        _enterYearPicker.delegate = self;
-    }
-    return _enterYearPicker;
 }
 
 #pragma mark - Common Methods
@@ -198,37 +192,110 @@
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     });
     __weak __typeof(self) weakSelf = self;
+//    if (indexPath.section == 0) {
+//        if (indexPath.row == 0) {
+//            ZWModifyAvatarViewController *modifyAvatar = [[ZWModifyAvatarViewController alloc] init];
+//            modifyAvatar.avatarUrl = [[[ZWAPITool base] stringByAppendingString:@"/"] stringByAppendingString:[ZWUserManager sharedInstance].loginUser.avatar_url];
+//            modifyAvatar.avatarViewType = ZWAvatarViewControllerTypeSelf;
+//            modifyAvatar.completion = ^() {
+//                [weakSelf.tableView reloadRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationNone];
+//            };
+//            [self.navigationController pushViewController:modifyAvatar animated:YES];
+//        } else if (indexPath.row == 1) {
+//            ZWModifyNicknameViewController *modifyNickname = [[ZWModifyNicknameViewController alloc] init];
+//            modifyNickname.completion = ^() {
+//                [weakSelf.tableView reloadRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationNone];
+//            };
+//            [self.navigationController pushViewController:modifyNickname animated:YES];
+//        }
+//    } else {
+//        if (indexPath.row == 1) {
+//            ZWModifiAcademyViewController *modifyAcademy = [[ZWModifiAcademyViewController alloc] init];
+//            modifyAcademy.completion = ^() {
+//                [weakSelf.tableView reloadRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationNone];
+//            };
+//            [self.navigationController pushViewController:modifyAcademy animated:YES];
+//        } else if (indexPath.row == 2) {
+//        } else if (indexPath.row == 3) {
+//            ZWModifyGenderViewController *modifyGender = [[ZWModifyGenderViewController alloc] init];
+//            modifyGender.comletion = ^() {
+//                [weakSelf.tableView reloadRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationNone];
+//            };
+//            [self.navigationController pushViewController:modifyGender animated:YES];
+//        }
+//    }
+    
     if (indexPath.section == 0) {
-        if (indexPath.row == 0) {
-            ZWModifyAvatarViewController *modifyAvatar = [[ZWModifyAvatarViewController alloc] init];
-            modifyAvatar.avatarUrl = [[[ZWAPITool base] stringByAppendingString:@"/"] stringByAppendingString:[ZWUserManager sharedInstance].loginUser.avatar_url];
-            modifyAvatar.avatarViewType = ZWAvatarViewControllerTypeSelf;
-            modifyAvatar.completion = ^() {
-                [weakSelf.tableView reloadRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationNone];
-            };
-            [self.navigationController pushViewController:modifyAvatar animated:YES];
-        } else if (indexPath.row == 1) {
-            ZWModifyNicknameViewController *modifyNickname = [[ZWModifyNicknameViewController alloc] init];
-            modifyNickname.completion = ^() {
-                [weakSelf.tableView reloadRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationNone];
-            };
-            [self.navigationController pushViewController:modifyNickname animated:YES];
+        switch (indexPath.row) {
+            case 0:
+            {
+                ZWModifyAvatarViewController *modifyAvatar = [[ZWModifyAvatarViewController alloc] init];
+                modifyAvatar.avatarUrl = [[[ZWAPITool base] stringByAppendingString:@"/"] stringByAppendingString:[ZWUserManager sharedInstance].loginUser.avatar_url];
+                modifyAvatar.avatarViewType = ZWAvatarViewControllerTypeSelf;
+                modifyAvatar.completion = ^() {
+                    [weakSelf.tableView reloadRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationNone];
+                };
+                [self.navigationController pushViewController:modifyAvatar animated:YES];
+            }
+                break;
+                
+            case 1:
+            {
+                ZWModifyNicknameViewController *modifyNickname = [[ZWModifyNicknameViewController alloc] init];
+                modifyNickname.completion = ^() {
+                    [weakSelf.tableView reloadRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationNone];
+                };
+                [self.navigationController pushViewController:modifyNickname animated:YES];
+            }
+                break;
+        
+            default:
+                break;
         }
     } else {
-        if (indexPath.row == 1) {
-            ZWModifiAcademyViewController *modifyAcademy = [[ZWModifiAcademyViewController alloc] init];
-            modifyAcademy.completion = ^() {
-                [weakSelf.tableView reloadRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationNone];
-            };
-            [self.navigationController pushViewController:modifyAcademy animated:YES];
-        } else if (indexPath.row == 2) {
-            [self.view addSubview:self.enterYearPicker];
-        } else if (indexPath.row == 3) {
-            ZWModifyGenderViewController *modifyGender = [[ZWModifyGenderViewController alloc] init];
-            modifyGender.comletion = ^() {
-                [weakSelf.tableView reloadRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationNone];
-            };
-            [self.navigationController pushViewController:modifyGender animated:YES];
+        switch (indexPath.row) {
+            case 1:
+            {
+                ZWModifiAcademyViewController *modifyAcademy = [[ZWModifiAcademyViewController alloc] init];
+                modifyAcademy.completion = ^() {
+                    [weakSelf.tableView reloadRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationNone];
+                };
+                [self.navigationController pushViewController:modifyAcademy animated:YES];
+            }
+                break;
+                
+            case 2:
+            {
+                [JNSelectView presentSingleSelectViewWithList:self.enterYearArray title:@"选择入学年份" completionHandler:^(NSInteger index) {
+                    NSString *selectedEnteryear = weakSelf.enterYearArray[index];
+                    if ([selectedEnteryear isEqualToString:[ZWUserManager sharedInstance].loginUser.enterYear]) {
+                        return;
+                    } else {
+                        [[ZWUserManager sharedInstance] modifyUserEnterYear:selectedEnteryear result:^(id response, BOOL success) {
+                            if (success && [[response objectForKey:kHTTPResponseCodeKey] intValue] == 0) {
+                                [[ZWUserManager sharedInstance] updateEnterYear:selectedEnteryear];
+                                [weakSelf.tableView reloadRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationNone];
+                            } else {
+                                [ZWHUDTool showHUDInView:weakSelf.navigationController.view withTitle:@"出现了，修改失败" message:nil duration:kShowHUDShort];
+                            }
+                        }];
+                    }
+                }];
+            }
+                break;
+                
+            case 3:
+            {
+                ZWModifyGenderViewController *modifyGender = [[ZWModifyGenderViewController alloc] init];
+                modifyGender.comletion = ^() {
+                    [weakSelf.tableView reloadRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationNone];
+                };
+                [self.navigationController pushViewController:modifyGender animated:YES];
+            }
+                break;
+                
+            default:
+                break;
         }
     }
 }
@@ -243,28 +310,6 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 10;
-}
-
-#pragma mark - UIPickerViewDataSource
-
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
-    return 1;
-}
-
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    return 5;
-}
-
-#pragma mark - UIPickerViewDelegate
-
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-    return [NSString stringWithFormat:@"%li", thisYear - row];
-}
-
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [pickerView removeFromSuperview];
-    });
 }
 
 /*
