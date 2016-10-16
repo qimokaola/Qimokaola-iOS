@@ -7,6 +7,7 @@
 //
 
 #import "ZWRSCommentCell.h"
+#import "ZWHUDTool.h"
 
 #import "UMComResouceDefines.h"
 
@@ -144,6 +145,10 @@
 }
 
 - (void)clickCommentButton {
+    if (_comment.feed.status.intValue >= 2) {
+        [ZWHUDTool showHUDWithTitle:@"该动态已被删除，试试别的吧" message:nil duration:kShowHUDShort];
+        return;
+    }
     if (self.delegate && [self.delegate respondsToSelector:@selector(cell:didClickCommentButton:)]) {
         [self.delegate cell:self didClickCommentButton:_comment];
     }
@@ -159,6 +164,10 @@
 }
 
 - (void)clickReplyLabel {
+    if (_comment.feed.status.intValue >= 2) {
+        [ZWHUDTool showHUDWithTitle:@"该动态已被删除，试试别的吧" message:nil duration:kShowHUDShort];
+        return;
+    }
     if (_comment.feed) {
         if (self.delegate && [self.delegate respondsToSelector:@selector(cell:didClickReplyFeed:)]) {
             [self.delegate cell:self didClickReplyFeed:_comment.feed];

@@ -118,7 +118,6 @@
 		C37067B01D6B465F007B18A8 /* TencentOpenApi_IOS_Bundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C370678C1D6B465F007B18A8 /* TencentOpenApi_IOS_Bundle.bundle */; };
 		C37067B11D6B465F007B18A8 /* libSocialWechat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C370678F1D6B465F007B18A8 /* libSocialWechat.a */; };
 		C37067B21D6B465F007B18A8 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C37067901D6B465F007B18A8 /* libWeChatSDK.a */; };
-		C37067B81D6B465F007B18A8 /* libUMessage_Sdk_1.3.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C370679C1D6B465F007B18A8 /* libUMessage_Sdk_1.3.0.a */; };
 		C37067B91D6B465F007B18A8 /* UMMobClick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C370679F1D6B465F007B18A8 /* UMMobClick.framework */; };
 		C37067BB1D6B4685007B18A8 /* UMComDataStorage.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C37067971D6B465F007B18A8 /* UMComDataStorage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C37067BD1D6B4685007B18A8 /* UMComFoundation.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C37067981D6B465F007B18A8 /* UMComFoundation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -157,6 +156,13 @@
 		C3C44E071BC687B0004B30BF /* QimokaolaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C3C44E061BC687B0004B30BF /* QimokaolaTests.m */; };
 		C3C44E121BC687B0004B30BF /* QimokaolaUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = C3C44E111BC687B0004B30BF /* QimokaolaUITests.m */; };
 		C3C44E461BC6BBEF004B30BF /* ZWRootPathViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3C44E441BC6BBEF004B30BF /* ZWRootPathViewController.m */; };
+		C3C531081DB363C8000C3562 /* libUMessage_Sdk_1.4.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C3C531061DB363C8000C3562 /* libUMessage_Sdk_1.4.0.a */; };
+		C3C5310A1DB36409000C3562 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3C531091DB36409000C3562 /* UserNotifications.framework */; };
+		C3C531181DB37881000C3562 /* UTI-Image.png in Resources */ = {isa = PBXBuildFile; fileRef = C3C531171DB37881000C3562 /* UTI-Image.png */; };
+		C3C5311F1DB3874B000C3562 /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3C5311E1DB3874B000C3562 /* QuickLook.framework */; };
+		C3C531231DB3EF2C000C3562 /* ZWUploadMethodViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3C531221DB3EF2C000C3562 /* ZWUploadMethodViewController.m */; };
+		C3C531271DB3F161000C3562 /* pic_upload_method_computer.png in Resources */ = {isa = PBXBuildFile; fileRef = C3C531251DB3F161000C3562 /* pic_upload_method_computer.png */; };
+		C3C531281DB3F161000C3562 /* pic_upload_method_phone.png in Resources */ = {isa = PBXBuildFile; fileRef = C3C531261DB3F161000C3562 /* pic_upload_method_phone.png */; };
 		C3D1F2691CB3E18B0017723B /* ZWFileFolderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D1F2681CB3E18B0017723B /* ZWFileFolderViewController.m */; };
 		C3D1F2701CB3E33F0017723B /* ZWOldFileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D1F26E1CB3E33F0017723B /* ZWOldFileCell.m */; };
 		C3D1F2961CB401BE0017723B /* ZWOldFileCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3D1F2951CB401BE0017723B /* ZWOldFileCell.xib */; };
@@ -456,8 +462,6 @@
 		C37067981D6B465F007B18A8 /* UMComFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UMComFoundation.framework; path = "/Users/Administrator/Desktop/Works/iOS/Qimokaola-iOS/Qimokaola/UMCommunitySDK_2.7/UMComFoundation.framework"; sourceTree = "<absolute>"; };
 		C37067991D6B465F007B18A8 /* UMCommunitySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UMCommunitySDK.framework; path = "/Users/Administrator/Desktop/Works/iOS/Qimokaola-iOS/Qimokaola/UMCommunitySDK_2.7/UMCommunitySDK.framework"; sourceTree = "<absolute>"; };
 		C370679A1D6B465F007B18A8 /* UMComNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UMComNetwork.framework; path = "/Users/Administrator/Desktop/Works/iOS/Qimokaola-iOS/Qimokaola/UMCommunitySDK_2.7/UMComNetwork.framework"; sourceTree = "<absolute>"; };
-		C370679C1D6B465F007B18A8 /* libUMessage_Sdk_1.3.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMessage_Sdk_1.3.0.a; sourceTree = "<group>"; };
-		C370679D1D6B465F007B18A8 /* UMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMessage.h; sourceTree = "<group>"; };
 		C370679F1D6B465F007B18A8 /* UMMobClick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMMobClick.framework; sourceTree = "<group>"; };
 		C37067C31D6B48E5007B18A8 /* UMComDataStorage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMComDataStorage.framework; sourceTree = "<group>"; };
 		C37067C41D6B48E5007B18A8 /* UMComFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMComFoundation.framework; sourceTree = "<group>"; };
@@ -509,7 +513,7 @@
 		C3BE99F81BCBFB45000102A1 /* ZWOldDownloadInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWOldDownloadInfoCell.h; sourceTree = "<group>"; };
 		C3BE99F91BCBFB45000102A1 /* ZWOldDownloadInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWOldDownloadInfoCell.m; sourceTree = "<group>"; };
 		C3BE99FA1BCBFB45000102A1 /* ZWOldDownloadInfoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZWOldDownloadInfoCell.xib; sourceTree = "<group>"; };
-		C3C44DE91BC687B0004B30BF /* Qimokaolas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Qimokaolas.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C3C44DE91BC687B0004B30BF /* Qimokaola.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Qimokaola.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3C44DED1BC687B0004B30BF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C3C44DEF1BC687B0004B30BF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		C3C44DF01BC687B0004B30BF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -522,6 +526,15 @@
 		C3C44E131BC687B0004B30BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C3C44E431BC6BBEF004B30BF /* ZWRootPathViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWRootPathViewController.h; sourceTree = "<group>"; };
 		C3C44E441BC6BBEF004B30BF /* ZWRootPathViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWRootPathViewController.m; sourceTree = "<group>"; };
+		C3C531061DB363C8000C3562 /* libUMessage_Sdk_1.4.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMessage_Sdk_1.4.0.a; sourceTree = "<group>"; };
+		C3C531071DB363C8000C3562 /* UMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMessage.h; sourceTree = "<group>"; };
+		C3C531091DB36409000C3562 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
+		C3C531171DB37881000C3562 /* UTI-Image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UTI-Image.png"; sourceTree = "<group>"; };
+		C3C5311E1DB3874B000C3562 /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = System/Library/Frameworks/QuickLook.framework; sourceTree = SDKROOT; };
+		C3C531211DB3EF2C000C3562 /* ZWUploadMethodViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWUploadMethodViewController.h; sourceTree = "<group>"; };
+		C3C531221DB3EF2C000C3562 /* ZWUploadMethodViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWUploadMethodViewController.m; sourceTree = "<group>"; };
+		C3C531251DB3F161000C3562 /* pic_upload_method_computer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pic_upload_method_computer.png; sourceTree = "<group>"; };
+		C3C531261DB3F161000C3562 /* pic_upload_method_phone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pic_upload_method_phone.png; sourceTree = "<group>"; };
 		C3D1F2671CB3E18B0017723B /* ZWFileFolderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWFileFolderViewController.h; sourceTree = "<group>"; };
 		C3D1F2681CB3E18B0017723B /* ZWFileFolderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWFileFolderViewController.m; sourceTree = "<group>"; };
 		C3D1F26D1CB3E33F0017723B /* ZWOldFileCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWOldFileCell.h; sourceTree = "<group>"; };
@@ -624,6 +637,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C3C5311F1DB3874B000C3562 /* QuickLook.framework in Frameworks */,
+				C3C5310A1DB36409000C3562 /* UserNotifications.framework in Frameworks */,
 				C33EECE61BCD5C0F00BB4B74 /* AssetsLibrary.framework in Frameworks */,
 				C37067B91D6B465F007B18A8 /* UMMobClick.framework in Frameworks */,
 				C33EECDE1BCD5BBE00BB4B74 /* ImageIO.framework in Frameworks */,
@@ -642,13 +657,13 @@
 				C37067CA1D6B48E5007B18A8 /* UMComNetwork.framework in Frameworks */,
 				C37067A11D6B465F007B18A8 /* libUMSocial_Sdk_5.2.1.a in Frameworks */,
 				C33EECE21BCD5BE300BB4B74 /* CoreLocation.framework in Frameworks */,
+				C3C531081DB363C8000C3562 /* libUMessage_Sdk_1.4.0.a in Frameworks */,
 				C33EECE01BCD5BDB00BB4B74 /* CoreMotion.framework in Frameworks */,
 				C37067B21D6B465F007B18A8 /* libWeChatSDK.a in Frameworks */,
 				C33EECAA1BCD502D00BB4B74 /* libicucore.A.dylib in Frameworks */,
 				C37067C81D6B48E5007B18A8 /* UMComFoundation.framework in Frameworks */,
 				C3528FC71D4CEA3400105027 /* JSPatch.framework in Frameworks */,
 				C37067B11D6B465F007B18A8 /* libSocialWechat.a in Frameworks */,
-				C37067B81D6B465F007B18A8 /* libUMessage_Sdk_1.3.0.a in Frameworks */,
 				C33EECA61BCD4FE800BB4B74 /* libstdc++.6.0.9.dylib in Frameworks */,
 				C33EECA41BCD4FC500BB4B74 /* libiconv.2.dylib in Frameworks */,
 				C33EECA31BCD4F9700BB4B74 /* libsqlite3.dylib in Frameworks */,
@@ -693,6 +708,8 @@
 		79CEA8A29FC47B6F43FD33B3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C3C5311E1DB3874B000C3562 /* QuickLook.framework */,
+				C3C531091DB36409000C3562 /* UserNotifications.framework */,
 				C367ADD91CB693A5002184DF /* UIKit.framework */,
 				C367ADD71CB69394002184DF /* Foundation.framework */,
 				C367ADD51CB6935E002184DF /* CoreFoundation.framework */,
@@ -1359,15 +1376,6 @@
 			path = Wechat;
 			sourceTree = "<group>";
 		};
-		C370679B1D6B465F007B18A8 /* UMPushSDK_1.3.0 */ = {
-			isa = PBXGroup;
-			children = (
-				C370679C1D6B465F007B18A8 /* libUMessage_Sdk_1.3.0.a */,
-				C370679D1D6B465F007B18A8 /* UMessage.h */,
-			);
-			path = UMPushSDK_1.3.0;
-			sourceTree = "<group>";
-		};
 		C370679E1D6B465F007B18A8 /* UMAnalyicsSDK_4.1.1 */ = {
 			isa = PBXGroup;
 			children = (
@@ -1640,7 +1648,7 @@
 		C3C44DEA1BC687B0004B30BF /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C3C44DE91BC687B0004B30BF /* Qimokaolas.app */,
+				C3C44DE91BC687B0004B30BF /* Qimokaola.app */,
 				C3C44E021BC687B0004B30BF /* Qimokaolas.xctest */,
 				C3C44E0D1BC687B0004B30BF /* Qimokaola.xctest */,
 			);
@@ -1667,10 +1675,7 @@
 		C3C44DEC1BC687B0004B30BF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				C3DE5B971DAE8B6400E93C05 /* pic1.png */,
-				C3DE5B881DAE617A00E93C05 /* pic3.png */,
-				C3DE5B891DAE617A00E93C05 /* pic2.png */,
-				C3DE5B8A1DAE617A00E93C05 /* pic4.png */,
+				C3C531241DB3F146000C3562 /* Images */,
 				C33AC5FC1DA3A0DA00A96AB7 /* File&Folder.xcassets */,
 				C34832761CB2D8C1009EA4D7 /* Assets.xcassets */,
 				C33AC5FA1DA3A0C100A96AB7 /* StudentCircle.xcassets */,
@@ -1755,12 +1760,44 @@
 		C3C44E241BC68988004B30BF /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				C3C531051DB363C8000C3562 /* UMPushSDK_1.4.0 */,
 				C37067C21D6B48E5007B18A8 /* UMCommunitySDK_2.7 */,
 				C370675C1D6B465F007B18A8 /* UMSocialSDK_5.2.1 */,
-				C370679B1D6B465F007B18A8 /* UMPushSDK_1.3.0 */,
 				C370679E1D6B465F007B18A8 /* UMAnalyicsSDK_4.1.1 */,
 			);
 			name = Modules;
+			sourceTree = "<group>";
+		};
+		C3C531051DB363C8000C3562 /* UMPushSDK_1.4.0 */ = {
+			isa = PBXGroup;
+			children = (
+				C3C531061DB363C8000C3562 /* libUMessage_Sdk_1.4.0.a */,
+				C3C531071DB363C8000C3562 /* UMessage.h */,
+			);
+			path = UMPushSDK_1.4.0;
+			sourceTree = "<group>";
+		};
+		C3C531201DB3EF15000C3562 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+				C3C531211DB3EF2C000C3562 /* ZWUploadMethodViewController.h */,
+				C3C531221DB3EF2C000C3562 /* ZWUploadMethodViewController.m */,
+			);
+			name = "New Group";
+			sourceTree = "<group>";
+		};
+		C3C531241DB3F146000C3562 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				C3C531251DB3F161000C3562 /* pic_upload_method_computer.png */,
+				C3C531261DB3F161000C3562 /* pic_upload_method_phone.png */,
+				C3DE5B971DAE8B6400E93C05 /* pic1.png */,
+				C3DE5B881DAE617A00E93C05 /* pic3.png */,
+				C3DE5B891DAE617A00E93C05 /* pic2.png */,
+				C3DE5B8A1DAE617A00E93C05 /* pic4.png */,
+				C3C531171DB37881000C3562 /* UTI-Image.png */,
+			);
+			name = Images;
 			sourceTree = "<group>";
 		};
 		C3C8C1301D92CC6E00771C61 /* Modifier */ = {
@@ -1825,6 +1862,7 @@
 		C3C8C1371D92CD4200771C61 /* FileAndFolder */ = {
 			isa = PBXGroup;
 			children = (
+				C3C531201DB3EF15000C3562 /* New Group */,
 				C3DE5BAC1DAFC14400E93C05 /* ZWSwitchSchollViewController */,
 				C30BBA871DA78A660090EB4A /* ZWDownloadedViewController */,
 				C35771161D85763D00E9B166 /* ZWFileDetailViewController */,
@@ -2112,7 +2150,7 @@
 			);
 			name = Qimokaola;
 			productName = Paper;
-			productReference = C3C44DE91BC687B0004B30BF /* Qimokaolas.app */;
+			productReference = C3C44DE91BC687B0004B30BF /* Qimokaola.app */;
 			productType = "com.apple.product-type.application";
 		};
 		C3C44E011BC687B0004B30BF /* QimokaolaTests */ = {
@@ -2235,9 +2273,11 @@
 				C37067A01D6B465F007B18A8 /* UMSocialLocalizable.strings in Resources */,
 				C3DE5B931DAE644B00E93C05 /* ZWUMUserFeedHeader.xib in Resources */,
 				C3DE5B7C1DAD2F6400E93C05 /* ZWAppUserInfoCell.xib in Resources */,
+				C3C531271DB3F161000C3562 /* pic_upload_method_computer.png in Resources */,
 				C3DE5B8D1DAE617A00E93C05 /* pic2.png in Resources */,
 				C37067A61D6B465F007B18A8 /* UMShareEditViewControlleriPad.xib in Resources */,
 				C37067A51D6B465F007B18A8 /* UMShareEditViewController.xib in Resources */,
+				C3C531181DB37881000C3562 /* UTI-Image.png in Resources */,
 				C3DE5B981DAE8B6400E93C05 /* pic1.png in Resources */,
 				C38EACAA1CB535C600EA6448 /* ZWOldFolderCell.xib in Resources */,
 				C369BD8D1C7D9968001A44AB /* ZWServiceCollectionViewCell.xib in Resources */,
@@ -2245,6 +2285,7 @@
 				C33AC5FB1DA3A0C100A96AB7 /* StudentCircle.xcassets in Resources */,
 				C3D1F2961CB401BE0017723B /* ZWOldFileCell.xib in Resources */,
 				C34EF18A1D36529400B6449B /* LoginAndRegister.storyboard in Resources */,
+				C3C531281DB3F161000C3562 /* pic_upload_method_phone.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2359,6 +2400,7 @@
 				C3493C171D8D8108007C7144 /* ZWModifyGenderViewController.m in Sources */,
 				C3792AD01D6F39130079FCF5 /* ZWFeedCell.m in Sources */,
 				C39004A41D5B67F90097358E /* ZWAdvertisement.m in Sources */,
+				C3C531231DB3EF2C000C3562 /* ZWUploadMethodViewController.m in Sources */,
 				C3019E871D96E0C700CC2F55 /* ZWSettingsViewController.m in Sources */,
 				C32811F41DB29AAC00BE499C /* ZWBrowserTool.m in Sources */,
 				C3561A231D37743F0032C97B /* ZWRegisterViewCotroller.m in Sources */,
@@ -2602,7 +2644,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: ZhangWei Chen (82QA43422G)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = WWTKV2BMWP;
 				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = NO;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2621,14 +2663,14 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/Qimokaola",
-					"$(PROJECT_DIR)/Qimokaola/UMPushSDK_1.3.0",
 					"$(PROJECT_DIR)/Qimokaola/UMSocialSDK_5.2.1/UMSocial_Sdk_5.2.1",
 					"$(PROJECT_DIR)/Qimokaola/UMSocialSDK_5.2.1/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
 					"$(PROJECT_DIR)/Qimokaola/UMSocialSDK_5.2.1/UMSocial_Sdk_Extra_Frameworks/Wechat",
+					"$(PROJECT_DIR)/Qimokaola/UMPushSDK_1.4.0",
 				);
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.vma.paperapp;
-				PRODUCT_NAME = Qimokaolas;
+				PRODUCT_NAME = Qimokaola;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Qimokaola/Qimokaola-Bridging-Header.h";
@@ -2646,10 +2688,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = Qimokaola/Qimokaola.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: ZhangWei Chen (WWTKV2BMWP)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: ZhangWei Chen (82QA43422G)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = WWTKV2BMWP;
 				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = NO;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2667,14 +2709,14 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/Qimokaola",
-					"$(PROJECT_DIR)/Qimokaola/UMPushSDK_1.3.0",
 					"$(PROJECT_DIR)/Qimokaola/UMSocialSDK_5.2.1/UMSocial_Sdk_5.2.1",
 					"$(PROJECT_DIR)/Qimokaola/UMSocialSDK_5.2.1/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
 					"$(PROJECT_DIR)/Qimokaola/UMSocialSDK_5.2.1/UMSocial_Sdk_Extra_Frameworks/Wechat",
+					"$(PROJECT_DIR)/Qimokaola/UMPushSDK_1.4.0",
 				);
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.vma.paperapp;
-				PRODUCT_NAME = Qimokaolas;
+				PRODUCT_NAME = Qimokaola;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Qimokaola/Qimokaola-Bridging-Header.h";

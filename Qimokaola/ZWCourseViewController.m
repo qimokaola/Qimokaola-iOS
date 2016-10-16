@@ -13,8 +13,10 @@
 #import "ZWFileAndFolderViewController.h"
 #import "ZWCourseCell.h"
 #import "ZWPathTool.h"
-
+#import "ZWUploadMethodViewController.h"
 #import "ZWSwitchSchollViewController.h"
+
+#import "ZWHUDTool.h"
 
 #import "ZWPopViewController.h"
 
@@ -52,6 +54,9 @@ static NSString *const kCourseCellIdentifier = @"kCourseCellIdentifier";
     __weak __typeof(self) weakSelf = self;
     
     self.hidesBottomBarWhenPushed = NO;
+    
+    self.tableView.emptyDataSetSource = nil;
+    self.tableView.emptyDataSetDelegate = nil;
     
     [self.tableView registerClass:[ZWCourseCell class] forCellReuseIdentifier:kCourseCellIdentifier];
     self.tableView.rowHeight = 50;
@@ -111,7 +116,26 @@ static NSString *const kCourseCellIdentifier = @"kCourseCellIdentifier";
 #pragma mark - Normal Method
 
 - (void)tapUpload {
-    
+    __weak __typeof(self) weakSelf = self;
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"请选择上传方式" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction *cancleAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *uploadByComputer = [UIAlertAction actionWithTitle:@"电脑上传" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [weakSelf openUploadMethodViewWithTitle:action.title assetName:@"pic_upload_method_computer"];
+    }];
+    UIAlertAction *uploadByPhone = [UIAlertAction actionWithTitle:@"手机上传" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [weakSelf openUploadMethodViewWithTitle:action.title assetName:@"pic_upload_method_phone"];
+    }];
+    [alertController addAction:cancleAction];
+    [alertController addAction:uploadByComputer];
+    [alertController addAction:uploadByPhone];
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void)openUploadMethodViewWithTitle:(NSString *)title assetName:(NSString *)assetName {
+    ZWUploadMethodViewController *uploader = [[ZWUploadMethodViewController alloc] init];
+    uploader.title = title;
+    uploader.assetName = assetName;
+    [self.navigationController pushViewController:uploader animated:YES];
 }
 
 - (void)checkAppUpdate {
@@ -190,7 +214,13 @@ static NSString *const kCourseCellIdentifier = @"kCourseCellIdentifier";
                                                    if (success && [[response objectForKey:kHTTPResponseCodeKey] intValue] == 0) {
                                                        [weakSelf loadRemoteData:[response objectForKey:kHTTPResponseResKey]];
                                                    } else {
-                                                       NSLog(@"%@", response);
+                                                       NSString *errDesc = nil;
+                                                       if ([(NSError *)response code] == -1001) {
+                                                           errDesc = @"呀，连接不上服务器了";
+                                                       } else {
+                                                           errDesc = @"出现错误，获取失败";
+                                                       }
+                                                       [ZWHUDTool showHUDInView:weakSelf.navigationController.view withTitle:errDesc message:nil duration:kShowHUDMid];
                                                    }
                                                    
                                                }];
@@ -244,9 +274,19 @@ static NSString *const kCourseCellIdentifier = @"kCourseCellIdentifier";
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
     [self.filteredArray removeAllObjects];
-    NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"name like[c] %@", searchController.searchBar.text];
+    NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"name CONTAINS[c] %@", searchController.searchBar.text];
     self.filteredArray = [[self.dataArray filteredArrayUsingPredicate:searchPredicate] mutableCopy];
     [self.tableView reloadData];
+}
+
+#pragma mark - UISearchControllerDelegate
+
+- (void)willPresentSearchController:(UISearchController *)searchController {
+    searchController.searchBar.searchBarStyle = UIBarStyleDefault;
+    //[UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
+    if (self.tableView.mj_header.isRefreshing) {
+        [self.tableView.mj_header endRefreshing];
+    }
 }
 
 #pragma mark - UIPopoverPresentationControllerDelegate

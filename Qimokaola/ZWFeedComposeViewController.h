@@ -19,7 +19,6 @@
 
 typedef NS_ENUM(NSUInteger, ZWFeedComposeType) {
     ZWFeedComposeTypeNewFeed = 0, // 新Feed
-    ZWFeedComposeTypeReplyFeed,  // 回复Feed
     ZWFeedComposeTypeReplyComment // 回复评论
 };
 
@@ -31,9 +30,10 @@ typedef NS_ENUM(NSUInteger, ZWFeedComposeType) {
 @property (nonatomic, assign) ZWFeedComposeType composeType;
 // 若创建新Feed，则topicID应该有值
 @property (nonatomic, strong) NSString *topicID;
-// 若回复Feed，则feddID应该有值
-@property (nonatomic, strong) NSString *feedID;
-// 若回复评论 则commentID应该有值
-@property (nonatomic, strong) NSString *commentID;
+
+// 若回复评论 则commentID, replyUserID应该有值
+@property (nonatomic, strong) NSString *replyFeedID;
+@property (nonatomic, strong) NSString *replyCommentID;
+@property (nonatomic, strong) NSString *replyUserID;
 
 @end

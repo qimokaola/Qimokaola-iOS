@@ -23,7 +23,7 @@ static ZWNetworkingManager *_manager = nil;
     self = [super init];
     if (self) {
         self.sessionManager = [AFHTTPSessionManager manager];
-        self.sessionManager.requestSerializer.timeoutInterval = 5.0;
+        self.sessionManager.requestSerializer.timeoutInterval = 10.0;
         
 //        AFSecurityPolicy *securityPolicy = [AFSecurityPolicy policyWithPinningMode: AFSSLPinningModeCertificate];
 //        NSString *certificatePath = [[NSBundle mainBundle] pathForResource:@"qimokaola" ofType:@"cer"];

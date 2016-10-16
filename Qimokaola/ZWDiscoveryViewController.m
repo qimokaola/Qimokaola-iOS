@@ -74,6 +74,18 @@
     [[[NSNotificationCenter defaultCenter] rac_addObserverForName:kUserLogoutSuccessNotification object:nil] subscribeNext:^(id x) {
         [weakSelf updateUserInfo];
     }];
+    
+    [RACObserve([ZWUserManager sharedInstance], unreadCommentCount) subscribeNext:^(id x) {
+        if (weakSelf.isViewLoaded && weakSelf.view.window) {
+            [weakSelf.tableView reloadRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0] withRowAnimation:UITableViewRowAnimationNone];
+        }
+    }];
+    
+    [RACObserve([ZWUserManager sharedInstance], unreadLikeCount) subscribeNext:^(id x) {
+        if (weakSelf.isViewLoaded && weakSelf.view.window) {
+            [weakSelf.tableView reloadRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:0] withRowAnimation:UITableViewRowAnimationNone];
+        }
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -92,16 +104,16 @@
     if (_channels == nil) {
         _channels = @[
                       @[
-                          @{@"icon" : @"radio_button_checked", @"title" : @"我的动态", @"detail" : @"我发的学生圈", @"image" : @"icon_discovery_feeds"},
-                          @{@"icon" : @"radio_button_checked", @"title" : @"我的收藏", @"detail" : @"收藏的帖子", @"image" : @"icon_discovery_colllections"},
-                          @{@"icon" : @"radio_button_checked", @"title" : @"评论", @"detail" : @"我的评论", @"image" : @"icon_discovery_comments"},
-                          @{@"icon" : @"radio_button_checked", @"title" : @"赞我的", @"detail" : @"你说得好", @"image" : @"icon_discovery_liked"}
+                          @{@"icon" : @"radio_button_checked", @"title" : @"我的动态", @"image" : @"icon_discovery_feeds"},
+                          @{@"icon" : @"radio_button_checked", @"title" : @"我的收藏", @"image" : @"icon_discovery_colllections"},
+                          @{@"icon" : @"radio_button_checked", @"title" : @"评论", @"image" : @"icon_discovery_comments"},
+                          @{@"icon" : @"radio_button_checked", @"title" : @"赞我的", @"image" : @"icon_discovery_liked"}
                         ],
                       
                       @[
-                          @{@"icon" : @"radio_button_checked", @"title" : @"意见反馈", @"detail" : @"说出你的想法", @"image" : @"icon_discovery_advice"},
-                          @{@"icon" : @"radio_button_checked", @"title" : @"加入我们", @"detail" : @"志愿者及版主", @"image" : @"icon_discovery_join_us"},
-                          @{@"icon" : @"radio_button_checked", @"title" : @"退出登录", @"detail" : @"", @"image" : @""}
+                          @{@"icon" : @"radio_button_checked", @"title" : @"意见反馈", @"image" : @"icon_discovery_advice"},
+                          @{@"icon" : @"radio_button_checked", @"title" : @"加入我们", @"image" : @"icon_discovery_join_us"},
+                          @{@"icon" : @"radio_button_checked", @"title" : @"退出登录"}
                           
                         ]
                       
@@ -275,9 +287,56 @@
     NSDictionary *dict = [self.channels[indexPath.section] objectAtIndex:indexPath.row];
     cell.imageView.image = [UIImage imageNamed:dict[@"icon"]];
     cell.textLabel.text = dict[@"title"];
-    cell.detailTextLabel.text = dict[@"detail"];
     cell.imageView.image = [UIImage imageNamed:dict[@"image"]];
+    
+    if (indexPath.section == 0) {
+        if (indexPath.row == 2) {
+            [self updateTableViewCell:cell forCount:[ZWUserManager sharedInstance].unreadCommentCount];
+        } else if (indexPath.row == 3) {
+            [self updateTableViewCell:cell forCount:[ZWUserManager sharedInstance].unreadLikeCount];
+        }
+    }
+    
     return cell;
+}
+
+- (void)updateTableViewCell:(UITableViewCell *)cell forCount:(NSUInteger)count
+{
+    // Count > 0, show count
+    if (count > 0) {
+        
+        // Create label
+        CGFloat fontSize = 14;
+        UILabel *label = [[UILabel alloc] init];
+        label.font = [UIFont systemFontOfSize:fontSize];
+        label.textAlignment = NSTextAlignmentCenter;
+        label.textColor = [UIColor whiteColor];
+        label.backgroundColor = [UIColor redColor];
+        
+        // Add count to label and size to fit
+        label.text = [NSString stringWithFormat:@"%@", @(count)];
+        [label sizeToFit];
+        
+        // Adjust frame to be square for single digits or elliptical for numbers > 9
+        CGRect frame = label.frame;
+        frame.size.height += (int)(0.4*fontSize);
+        frame.size.width = (count <= 9) ? frame.size.height : frame.size.width + (int)fontSize;
+        label.frame = frame;
+        
+        // Set radius and clip to bounds
+        label.layer.cornerRadius = frame.size.height/2.0;
+        label.clipsToBounds = true;
+        
+        // Show label in accessory view and remove disclosure
+        cell.accessoryView = label;
+        cell.accessoryType = UITableViewCellAccessoryNone;
+    }
+    
+    // Count = 0, show disclosure
+    else {
+        cell.accessoryView = nil;
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    }
 }
 
 #pragma mark - UITableViewDelegate
@@ -308,12 +367,16 @@
             case 2: {
                 ZWUserCommentsViewController *commentsViewController = [[ZWUserCommentsViewController alloc] init];
                 [self.navigationController pushViewController:commentsViewController animated:YES];
+                [ZWUserManager sharedInstance].unreadCommentCount = 0;
+                [tableView reloadRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationNone];
             }
                 break;
                 
             case 3: {
                 ZWUserLikesViewController *likeViewController = [[ZWUserLikesViewController alloc] init];
                 [self.navigationController pushViewController:likeViewController animated:YES];
+                [ZWUserManager sharedInstance].unreadLikeCount = 0;
+                [tableView reloadRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationNone];
             }
                 break;
             default:

@@ -9,11 +9,13 @@
 #import "ZWUserManager.h"
 #import "ZWAPITool.h"
 
+#import <YYKit/YYKit.h>
 #import <UMCommunitySDK/UMComDataRequestManager.h>
 #import <UMCommunitySDK/UMComSession.h>
 @interface ZWUserManager ()
 
 @property (nonatomic, strong) YYCache *cache;
+
 
 @end
 
@@ -39,7 +41,6 @@ NSString *const kLoginedUserKey = @"kLoginedUserKey";
         if (self.loginUser) {
             [[NSNotificationCenter defaultCenter] postNotificationName:kLocalUserLoginStateGuranteedNotification object:nil];
         }
-        
     }
     return self;
 }
@@ -68,6 +69,7 @@ NSString *const kLoginedUserKey = @"kLoginedUserKey";
                                                                                   NSLog(@"登录学生圈成功，登录用户: %@, 自定义字段: %@", user.name, user.custom);
                                                                                   [UMComSession sharedInstance].loginUser = user;
                                                                                   [[UMComDataBaseManager shareManager] saveRelatedIDTableWithType:UMComRelatedRegisterUserID withUsers:@[user]];
+                                                                                  [weakSelf startFetchCommunityUnreadDataTimer];
                                                                                   // 若自定义字段为null，则更新用户信息确保自定义字段存在
                                                                                   if (!user.custom) {
                                                                                       [[UMComDataRequestManager defaultManager]
@@ -88,7 +90,26 @@ NSString *const kLoginedUserKey = @"kLoginedUserKey";
                                                                           }
                                                                       }
                                                                   }];
+}
 
+- (void)startFetchCommunityUnreadDataTimer {
+    __weak __typeof(self) weakSelf = self;
+    // 进入时先获取一遍未读数据
+    [self fetchCommunityUnreadData];
+    [NSTimer scheduledTimerWithTimeInterval:30 block:^(NSTimer * _Nonnull timer) {
+        [weakSelf fetchCommunityUnreadData];
+    } repeats:YES];
+}
+
+- (void)fetchCommunityUnreadData {
+    __weak __typeof(self) weakSelf = self;
+    [[UMComDataRequestManager defaultManager] fetchConfigDataWithCompletion:^(NSDictionary *responseObject, NSError *error) {
+        if (responseObject) {
+            NSDictionary *msgBox = [responseObject objectForKey:@"msg_box"];
+            weakSelf.unreadCommentCount = [[msgBox objectForKey:@"comment"] integerValue];
+            weakSelf.unreadLikeCount = [[msgBox objectForKey:@"like"] integerValue];
+        }
+    }];
 }
 
 - (void)logoutStudentCircle {

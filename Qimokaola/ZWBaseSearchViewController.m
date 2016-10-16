@@ -42,7 +42,6 @@
     self.searchController.searchResultsUpdater = self;
     self.searchController.delegate = self;
     self.searchController.dimsBackgroundDuringPresentation = NO;
-    self.searchController.hidesNavigationBarDuringPresentation = YES;
     [self.searchController.searchBar sizeToFit];
     self.searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
     

@@ -8,6 +8,7 @@
 
 #import "ZWLikeCell.h"
 #import "ZWReplytPaddingLabel.h"
+#import "ZWHUDTool.h"
 
 #import "UMComResouceDefines.h"
 
@@ -134,6 +135,10 @@
 }
 
 - (void)clickReplyLabel {
+    if (_like.feed.status.intValue >= 2) {
+        [ZWHUDTool showHUDWithTitle:@"该动态已被删除，试试别的吧" message:nil duration:kShowHUDShort];
+        return;
+    }
     if (self.delegate && [self.delegate respondsToSelector:@selector(cell:didClickFeed:)]) {
         [self.delegate cell:self didClickFeed:_like.feed];
     }

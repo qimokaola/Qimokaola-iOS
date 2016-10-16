@@ -59,13 +59,13 @@
 - (void)freshHeaderStartFreshing {
     __weak __typeof(self) weakSelf = self;
     if (_userCommentsType == ZWUserCommentsTypeReceived) {
-        [[UMComDataRequestManager defaultManager] fetchCommentsUserReceivedWithCount:5
+        [[UMComDataRequestManager defaultManager] fetchCommentsUserReceivedWithCount:999
                                                                           completion:^(NSDictionary *responseObject, NSError *error) {
                                                                               [weakSelf.tableView.mj_header endRefreshing];
                                                                               [weakSelf dealWithResult:responseObject error:error];
                                                                           }];
     } else {
-        [[UMComDataRequestManager defaultManager] fetchCommentsUserSentWithCount:5
+        [[UMComDataRequestManager defaultManager] fetchCommentsUserSentWithCount:999
                                                                       completion:^(NSDictionary *responseObject, NSError *error) {
                                                                           [weakSelf.tableView.mj_header endRefreshing];
                                                                           [weakSelf dealWithResult:responseObject error:error];
@@ -130,7 +130,9 @@
 - (void)cell:(ZWRSCommentCell *)cell didClickCommentButton:(UMComComment *)comment {
     ZWFeedComposeViewController *composeViewController = [[ZWFeedComposeViewController alloc] init];
     composeViewController.composeType = ZWFeedComposeTypeReplyComment;
-    composeViewController.commentID = comment.commentID;
+    composeViewController.replyFeedID = comment.feed.feedID;
+    composeViewController.replyCommentID = comment.commentID;
+    composeViewController.replyUserID = comment.creator.uid;
     UINavigationController *navc = [[UINavigationController alloc] initWithRootViewController:composeViewController];
     [self presentViewController:navc animated:YES completion:nil];
 }

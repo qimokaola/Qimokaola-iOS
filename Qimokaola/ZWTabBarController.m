@@ -14,6 +14,7 @@
 #import "ZWNavigationController.h"
 
 #import <ReactiveCocoa/ReactiveCocoa.h>
+#import "ZWUserManager.h"
 
 
 @interface ZWTabBarController ()
@@ -52,6 +53,17 @@
     self.tabBar.layer.shadowOpacity = 0.05;
     self.tabBar.layer.shadowOffset = CGSizeMake(0, -1.5);
     self.tabBar.layer.shadowPath = [UIBezierPath bezierPathWithRect:self.tabBar.bounds].CGPath;
+    
+    // 此处观察用户管理器中未读消息数量 已设置相应视图
+    RAC(self.viewControllers[3].tabBarItem, badgeValue) = [RACSignal combineLatest:@[RACObserve([ZWUserManager sharedInstance], unreadCommentCount), RACObserve([ZWUserManager sharedInstance], unreadLikeCount)]
+                                         reduce:^id(NSNumber *unreadCommentNumber, NSNumber *unreadLikeNumber){
+                                             int unreadCount = unreadCommentNumber.intValue + unreadLikeNumber.intValue;
+                                             if (unreadCount > 0) {
+                                                 return @(unreadCount).stringValue;
+                                             } else {
+                                                 return nil;
+                                             }
+                                         }];
 }
 
 - (void)didReceiveMemoryWarning {

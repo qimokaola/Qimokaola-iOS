@@ -19,6 +19,9 @@
 // 登录状态
 @property (nonatomic, assign) BOOL isLogin;
 
+@property (nonatomic, assign) NSInteger unreadCommentCount;
+@property (nonatomic, assign) NSInteger unreadLikeCount;
+
 + (instancetype)sharedInstance;
 
 - (void)loginStudentCircle;

@@ -121,7 +121,7 @@
         }
             break;
         case ZWFeedComposeTypeReplyComment:
-        case ZWFeedComposeTypeReplyFeed: {
+        {
             placeholderPlainText = @"写评论...";
         }
             break;
@@ -442,10 +442,10 @@
                                             }];
     } else {
         // 回复 Feed 或者回复评论
-        [[UMComDataRequestManager defaultManager] commentFeedWithFeedID:_feedID
+        [[UMComDataRequestManager defaultManager] commentFeedWithFeedID:_replyFeedID
                                                          commentContent:_textView.text
-                                                         replyCommentID:_composeType == ZWFeedComposeTypeReplyComment ? _commentID : nil
-                                                            replyUserID:nil
+                                                         replyCommentID:_replyCommentID
+                                                            replyUserID:_replyUserID
                                                    commentCustomContent:anonyousString
                                                                  images:nil
                                                              completion:^(NSDictionary *responseObject, NSError *error) {

@@ -31,11 +31,12 @@
 #import "JSPatch/JSPatch.h"
 #import "UMMobClick/MobClick.h"
 #import <UMCommunitySDK/UMCommunitySDK.h>
-#import "UMPushSDK_1.3.0/UMessage.h"
+#import "UMPushSDK_1.4.0/UMessage.h"
 #import "ReactiveCocoa.h"
 #import <YYKit/YYKit.h>
 
-@interface AppDelegate () {
+@interface AppDelegate () <UNUserNotificationCenterDelegate>
+{
     // 记录是否第一次进入，用以决定是否显示网络变化提示 若第一次进入且无网络才显示网络情况
     BOOL firstEnter;
 }
@@ -47,15 +48,14 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     __weak __typeof(self) weakSelf = self;
-    
+
     firstEnter = YES;
     
     application.applicationIconBadgeNumber = 0;
     
     //JSPatch
     [JSPatch startWithAppKey:@"c0e20e35c39ad9b8"];
-#ifdef DEBUG
-    NSLog(@"DEBUG MODE");
+#ifdef DEBU
     [JSPatch setupDevelopment];
 #endif
     [JSPatch sync];
@@ -63,8 +63,24 @@
     // 初始化友盟推送
     //设置 AppKey 及 LaunchOptions
     [UMessage startWithAppkey:@"57b447c6e0f55af52e000e0b" launchOptions:launchOptions];
+    
     //1.3.0版本开始简化初始化过程。如不需要交互式的通知，下面用下面一句话注册通知即可。
     [UMessage registerForRemoteNotifications];
+    
+    //iOS10必须加下面这段代码。
+    UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+    center.delegate = self;
+    UNAuthorizationOptions types10 = UNAuthorizationOptionBadge | UNAuthorizationOptionAlert | UNAuthorizationOptionSound;
+    [center requestAuthorizationWithOptions:types10 completionHandler:^(BOOL granted, NSError * _Nullable error) {
+        if (granted) {
+            //点击允许
+            //这里可以添加一些自己的逻辑
+        } else {
+            //点击不允许
+            //这里可以添加一些自己的逻辑
+        }
+    }];
+    
     [UMessage setLogEnabled:YES];
 
     // 初始化友盟微社区SDK
@@ -139,11 +155,11 @@
         [self setWindowRootControllerWithClass:[ZWLoginAndRegisterViewController class]];
     }
     
-#ifdef DEBUG
-    YYFPSLabel *fpsLabel = [[YYFPSLabel alloc] initWithFrame:CGRectMake(0, kScreenHeight - 100, 0, 0)];
-    [fpsLabel sizeToFit];
-    [self.window addSubview:fpsLabel];
-#endif
+//#ifdef DEBUG
+//    YYFPSLabel *fpsLabel = [[YYFPSLabel alloc] initWithFrame:CGRectMake(0, kScreenHeight - 100, 0, 0)];
+//    [fpsLabel sizeToFit];
+//    [self.window addSubview:fpsLabel];
+//#endif
     
     return YES;
 }
@@ -218,42 +234,115 @@
 }
 
 
-
-
-
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    NSLog(@"didRegisterForRemoteNotificationsWithDeviceToken");
+    NSLog(@"%@",[[[[deviceToken description] stringByReplacingOccurrencesOfString: @"<" withString: @""]
+                  stringByReplacingOccurrencesOfString: @">" withString: @""]
+                 stringByReplacingOccurrencesOfString: @" " withString: @""]);
+    // 1.2.7版本开始不需要用户再手动注册devicetoken，SDK会自动注册
+    //[UMessage registerDeviceToken:deviceToken];
+}
+
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
     
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+    NSLog(@"%@", userInfo);
+    //关闭友盟自带的弹出框
+    [UMessage setAutoAlert:YES];
+    [UMessage didReceiveRemoteNotification:userInfo];
+    completionHandler(UIBackgroundFetchResultNoData);
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    NSLog(@"%@ no completion", userInfo);
+    //关闭友盟自带的弹出框
+    [UMessage setAutoAlert:NO];
     [UMessage didReceiveRemoteNotification:userInfo];
+}
+
+//iOS10新增：处理前台收到通知的代理方法
+-(void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler{
+    NSDictionary * userInfo = notification.request.content.userInfo;
+    if([notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
+        //应用处于前台时的远程推送接受
+        //关闭友盟自带的弹出框
+        [UMessage setAutoAlert:NO];
+        //必须加这句代码
+        [UMessage didReceiveRemoteNotification:userInfo];
+        
+    }else{
+        //应用处于前台时的本地推送接受
+    }
+    //当应用处于前台时提示设置，需要哪个可以设置哪一个
+    completionHandler(UNNotificationPresentationOptionSound | UNNotificationPresentationOptionBadge | UNNotificationPresentationOptionAlert);
+}
+
+//iOS10新增：处理后台点击通知的代理方法
+-(void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)())completionHandler{
+    NSDictionary * userInfo = response.notification.request.content.userInfo;
+    if([response.notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
+        //应用处于后台时的远程推送接受
+        //必须加这句代码
+        [UMessage didReceiveRemoteNotification:userInfo];
+        
+    }else{
+        //应用处于后台时的本地推送接受
+    }
     
 }
 
-
-
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
-
+    NSLog(@"didFailToRegisterForRemoteNotificationsWithError");
 }
 
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(nullable NSString *)sourceApplication annotation:(id)annotation
+{
+    NSLog(@"ios 8");
+    
+    NSLog(@"%@ %@ %@", url, sourceApplication, annotation);
+    
+    [self presentUploadViewWithFileName:[url lastPathComponent]];
+    
+    return  [UMSocialSnsService handleOpenURL:url];
+}
+
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(nonnull NSDictionary<NSString *,id> *)options
+{
+//    ZWUploadFileViewController *uploader = [[ZWUploadFileViewController alloc] initWithNibName:@"ZWUploadFileViewController" bundle:nil];
+//    uploader.fileURL = url;
+//    uploader.text = [options objectForKey:UIApplicationOpenURLOptionsSourceApplicationKey];
+//    UINavigationController *navc = [[UINavigationController alloc] initWithRootViewController:uploader];
+//    
+//    [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:navc animated:YES completion:nil];
+    NSLog(@"%@ %@", url, options);
+    [self presentUploadViewWithFileName:[url lastPathComponent]];
+    return  [UMSocialSnsService handleOpenURL:url];
+}
+
+- (void)presentUploadViewWithFileName:(NSString *)filename {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"上传文件" message:filename preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancleAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *uploadAction = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        MBProgressHUD *hud = [ZWHUDTool excutingHudInView:[UIApplication sharedApplication].keyWindow title:@"正在上传"];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            hud.mode = MBProgressHUDModeText;
+            hud.label.text = @"上传成功,感谢您的贡献";
+            [hud hideAnimated:YES afterDelay:kShowHUDMid];
+        });
+    }];
+    [alertController addAction:cancleAction];
+    [alertController addAction:uploadAction];
+    [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alertController animated:YES completion:nil];
+}
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
     return  [UMSocialSnsService handleOpenURL:url];
 }
 
-- (BOOL)application:(UIApplication *)application
-            openURL:(NSURL *)url
-  sourceApplication:(NSString *)sourceApplication
-         annotation:(id)annotation {
-    
-    
-  return  [UMSocialSnsService handleOpenURL:url];
-
-}
-
-- (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)())completionHandler {
-
-}
 
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -276,12 +365,6 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-    NSLog(@"App Terminate");
-    
-//    [self.DBQueue close];
-    
-    //退出应用前保存所有未完成的任务
-    //[[ZWDownloadCenter sharedDownloadCenter] saveAllDownloadTasksWhenAppTerminate];
 }
 
 @end
