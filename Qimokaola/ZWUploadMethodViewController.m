@@ -34,11 +34,10 @@
     NSData *assetData = [NSData dataWithContentsOfFile:assetPath];
     UIImage *demoImage = [UIImage imageWithData:assetData];
     _methodDemoView = [[UIImageView alloc] initWithImage:demoImage];
-    _methodDemoView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_methodDemoView];
     
     CGFloat maxWidth = kScreenW;
-    CGFloat maxHeight = kScreenH - 64;
+    CGFloat maxHeight = kScreenH;
     CGFloat width = demoImage.size.width;
     CGFloat height = demoImage.size.height;
 
@@ -58,7 +57,7 @@
         width = maxWidth;
         height = width * ratio;
     }
-    _methodDemoView.frame = CGRectMake((maxWidth-width) / 2, (maxHeight-height) /2, width, height);
+    _methodDemoView.frame = CGRectMake((maxWidth-width) / 2, (maxHeight-height) /2 + 32 , width, height);
 
 }
 

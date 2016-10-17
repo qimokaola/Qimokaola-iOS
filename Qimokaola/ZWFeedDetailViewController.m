@@ -441,6 +441,7 @@
     
     _schoolLabel = [[UILabel alloc] init];
     _schoolLabel.font = [UIFont systemFontOfSize:smallFontSize];
+    _schoolLabel.textColor = [UIColor lightGrayColor];
     _schoolLabel.numberOfLines = 1;
     
     _contentLabel = [[UILabel alloc] init];
@@ -668,12 +669,12 @@
     if (DecodeAnonyousCode(_feed.custom) == 0) {
         [_avatarView setImageWithURL:[NSURL URLWithString:_feed.creator.icon_url.small_url_string] placeholder:[UIImage imageNamed:@"avatar"]];
         _nameLabel.text = _feed.creator.name;
-        _genderView.image = _feed.creator.gender.intValue == 0 ? [UIImage imageNamed:@"icon_gender_female"] : [UIImage imageNamed:@"icon_gender_male"];
     } else {
         _avatarView.image = _feed.creator.gender.intValue == 0 ? [UIImage imageNamed:@"icon_anonymous_female"] : [UIImage imageNamed:@"icon_anonymous_male"];
         _nameLabel.text = kStudentCircleAnonyousName;
-        _genderView.image = [UIImage imageNamed:@"icon_gender_female"];
     }
+    
+    _genderView.image = _feed.creator.gender.intValue == 0 ? [UIImage imageNamed:@"icon_gender_female"] : [UIImage imageNamed:@"icon_gender_male"];
     
     _schoolLabel.text = createSchoolName(_feed.creator.custom);
     

@@ -154,6 +154,10 @@
     return [[ZWAPITool dbfsInUnknowSchool] stringByAppendingString:@"/downloadurl"];;
 }
 
++ (NSString *)uploadFileAPI {
+    return [[ZWAPITool dbfsInUnknowSchool] stringByAppendingString:@"/upload"];
+}
+
 + (NSString *)infoByNameAPI {
     return [[ZWAPITool user] infobyname];
 }

@@ -54,4 +54,6 @@
 
 + (NSString *)appInfoAPI;
 
++ (NSString *)uploadFileAPI;
+
 @end

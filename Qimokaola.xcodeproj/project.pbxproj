@@ -163,6 +163,9 @@
 		C3C531231DB3EF2C000C3562 /* ZWUploadMethodViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3C531221DB3EF2C000C3562 /* ZWUploadMethodViewController.m */; };
 		C3C531271DB3F161000C3562 /* pic_upload_method_computer.png in Resources */ = {isa = PBXBuildFile; fileRef = C3C531251DB3F161000C3562 /* pic_upload_method_computer.png */; };
 		C3C531281DB3F161000C3562 /* pic_upload_method_phone.png in Resources */ = {isa = PBXBuildFile; fileRef = C3C531261DB3F161000C3562 /* pic_upload_method_phone.png */; };
+		C3C531361DB518AC000C3562 /* ZWUploadFileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3C531341DB518AC000C3562 /* ZWUploadFileViewController.m */; };
+		C3C531371DB518AC000C3562 /* ZWUploadFileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3C531351DB518AC000C3562 /* ZWUploadFileViewController.xib */; };
+		C3C5313A1DB52543000C3562 /* ZWChooseCourseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3C531391DB52543000C3562 /* ZWChooseCourseViewController.m */; };
 		C3D1F2691CB3E18B0017723B /* ZWFileFolderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D1F2681CB3E18B0017723B /* ZWFileFolderViewController.m */; };
 		C3D1F2701CB3E33F0017723B /* ZWOldFileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D1F26E1CB3E33F0017723B /* ZWOldFileCell.m */; };
 		C3D1F2961CB401BE0017723B /* ZWOldFileCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3D1F2951CB401BE0017723B /* ZWOldFileCell.xib */; };
@@ -535,6 +538,11 @@
 		C3C531221DB3EF2C000C3562 /* ZWUploadMethodViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWUploadMethodViewController.m; sourceTree = "<group>"; };
 		C3C531251DB3F161000C3562 /* pic_upload_method_computer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pic_upload_method_computer.png; sourceTree = "<group>"; };
 		C3C531261DB3F161000C3562 /* pic_upload_method_phone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pic_upload_method_phone.png; sourceTree = "<group>"; };
+		C3C531331DB518AC000C3562 /* ZWUploadFileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWUploadFileViewController.h; sourceTree = "<group>"; };
+		C3C531341DB518AC000C3562 /* ZWUploadFileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWUploadFileViewController.m; sourceTree = "<group>"; };
+		C3C531351DB518AC000C3562 /* ZWUploadFileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZWUploadFileViewController.xib; sourceTree = "<group>"; };
+		C3C531381DB52543000C3562 /* ZWChooseCourseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWChooseCourseViewController.h; sourceTree = "<group>"; };
+		C3C531391DB52543000C3562 /* ZWChooseCourseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWChooseCourseViewController.m; sourceTree = "<group>"; };
 		C3D1F2671CB3E18B0017723B /* ZWFileFolderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWFileFolderViewController.h; sourceTree = "<group>"; };
 		C3D1F2681CB3E18B0017723B /* ZWFileFolderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWFileFolderViewController.m; sourceTree = "<group>"; };
 		C3D1F26D1CB3E33F0017723B /* ZWOldFileCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWOldFileCell.h; sourceTree = "<group>"; };
@@ -1777,13 +1785,13 @@
 			path = UMPushSDK_1.4.0;
 			sourceTree = "<group>";
 		};
-		C3C531201DB3EF15000C3562 /* New Group */ = {
+		C3C531201DB3EF15000C3562 /* ZWUploadMethodViewController */ = {
 			isa = PBXGroup;
 			children = (
 				C3C531211DB3EF2C000C3562 /* ZWUploadMethodViewController.h */,
 				C3C531221DB3EF2C000C3562 /* ZWUploadMethodViewController.m */,
 			);
-			name = "New Group";
+			name = ZWUploadMethodViewController;
 			sourceTree = "<group>";
 		};
 		C3C531241DB3F146000C3562 /* Images */ = {
@@ -1798,6 +1806,18 @@
 				C3C531171DB37881000C3562 /* UTI-Image.png */,
 			);
 			name = Images;
+			sourceTree = "<group>";
+		};
+		C3C5312F1DB51871000C3562 /* ZWUploadFileViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C3C531331DB518AC000C3562 /* ZWUploadFileViewController.h */,
+				C3C531341DB518AC000C3562 /* ZWUploadFileViewController.m */,
+				C3C531351DB518AC000C3562 /* ZWUploadFileViewController.xib */,
+				C3C531381DB52543000C3562 /* ZWChooseCourseViewController.h */,
+				C3C531391DB52543000C3562 /* ZWChooseCourseViewController.m */,
+			);
+			name = ZWUploadFileViewController;
 			sourceTree = "<group>";
 		};
 		C3C8C1301D92CC6E00771C61 /* Modifier */ = {
@@ -1862,7 +1882,8 @@
 		C3C8C1371D92CD4200771C61 /* FileAndFolder */ = {
 			isa = PBXGroup;
 			children = (
-				C3C531201DB3EF15000C3562 /* New Group */,
+				C3C5312F1DB51871000C3562 /* ZWUploadFileViewController */,
+				C3C531201DB3EF15000C3562 /* ZWUploadMethodViewController */,
 				C3DE5BAC1DAFC14400E93C05 /* ZWSwitchSchollViewController */,
 				C30BBA871DA78A660090EB4A /* ZWDownloadedViewController */,
 				C35771161D85763D00E9B166 /* ZWFileDetailViewController */,
@@ -2283,6 +2304,7 @@
 				C369BD8D1C7D9968001A44AB /* ZWServiceCollectionViewCell.xib in Resources */,
 				C3DE5B8C1DAE617A00E93C05 /* pic3.png in Resources */,
 				C33AC5FB1DA3A0C100A96AB7 /* StudentCircle.xcassets in Resources */,
+				C3C531371DB518AC000C3562 /* ZWUploadFileViewController.xib in Resources */,
 				C3D1F2961CB401BE0017723B /* ZWOldFileCell.xib in Resources */,
 				C34EF18A1D36529400B6449B /* LoginAndRegister.storyboard in Resources */,
 				C3C531281DB3F161000C3562 /* pic_upload_method_phone.png in Resources */,
@@ -2473,7 +2495,9 @@
 				C35771191D8576A600E9B166 /* ZWFileDetailViewController.m in Sources */,
 				C3DE5BB91DAFF3A500E93C05 /* ZWBaseTableViewHeaderFooter.m in Sources */,
 				C3019E7F1D965B2800CC2F55 /* ZWCommentCell.m in Sources */,
+				C3C5313A1DB52543000C3562 /* ZWChooseCourseViewController.m in Sources */,
 				C3561A261D3774560032C97B /* ZWLoginViewController.m in Sources */,
+				C3C531361DB518AC000C3562 /* ZWUploadFileViewController.m in Sources */,
 				C365996A1DB2B2E900A0403D /* SDPhotoBrowser.m in Sources */,
 				C30BBA8E1DA80ED90090EB4A /* ZWDownloadedInfo.m in Sources */,
 				C32666601D9533C4008C6B24 /* UMComResourceManager.m in Sources */,

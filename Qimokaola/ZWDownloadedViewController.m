@@ -135,6 +135,16 @@
     return YES;
 }
 
+#pragma mark - UISearchResultUpdating
+
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
+    [self.filteredArray removeAllObjects];
+    NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"file.name CONTAINS[c] %@", searchController.searchBar.text];
+    self.filteredArray = [[self.dataArray filteredArrayUsingPredicate:searchPredicate] mutableCopy];
+    [self.tableView reloadData];
+}
+
+
 #pragma mark - UISearchControllerDelegate
 
 - (void)willPresentSearchController:(UISearchController *)searchController {

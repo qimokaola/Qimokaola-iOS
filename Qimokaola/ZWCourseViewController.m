@@ -7,22 +7,7 @@
 //
 
 #import "ZWCourseViewController.h"
-#import "ZWFolder.h"
-#import "ZWAPIRequestTool.h"
-#import "ZWUserManager.h"
-#import "ZWFileAndFolderViewController.h"
-#import "ZWCourseCell.h"
-#import "ZWPathTool.h"
-#import "ZWUploadMethodViewController.h"
-#import "ZWSwitchSchollViewController.h"
 
-#import "ZWHUDTool.h"
-
-#import "ZWPopViewController.h"
-
-#import "LinqToObjectiveC.h"
-#import <ReactiveCocoa/ReactiveCocoa.h>
-#import <Masonry/Masonry.h>
 
 @interface ZWCourseViewController ()
 
@@ -60,6 +45,8 @@ static NSString *const kCourseCellIdentifier = @"kCourseCellIdentifier";
     
     [self.tableView registerClass:[ZWCourseCell class] forCellReuseIdentifier:kCourseCellIdentifier];
     self.tableView.rowHeight = 50;
+    
+    ((UISearchBar *)self.tableView.tableHeaderView).placeholder = @"搜索课程";
     
     _schoolNameView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenW, 44)];
     _schoolNameView.backgroundColor = [UIColor clearColor];
@@ -203,15 +190,14 @@ static NSString *const kCourseCellIdentifier = @"kCourseCellIdentifier";
 
 #pragma mark 重写覆盖下拉刷新方法
 - (void)freshHeaderStartFreshing {
-    
     __weak __typeof(self) weakSelf = self;
     ZWUser *user = [ZWUserManager sharedInstance].loginUser;
     [ZWAPIRequestTool requstFileAndFolderListInSchool:user.currentCollegeId
                                                  path:ROOT
-                                           needDetail:YES
+                                           needDetail:NO
                                                result:^(id response, BOOL success) {
                                                    [weakSelf.tableView.mj_header endRefreshing];
-                                                   if (success && [[response objectForKey:kHTTPResponseCodeKey] intValue] == 0) {
+                                                   if (success) {
                                                        [weakSelf loadRemoteData:[response objectForKey:kHTTPResponseResKey]];
                                                    } else {
                                                        NSString *errDesc = nil;
@@ -231,7 +217,6 @@ static NSString *const kCourseCellIdentifier = @"kCourseCellIdentifier";
     self.dataArray = [[[data objectForKey:@"folders"] linq_select:^id(NSDictionary *item) {
         return [ZWFolder modelWithDictionary:item];
     }] mutableCopy];
-    
     [self.tableView reloadData];
 }
 
@@ -283,10 +268,15 @@ static NSString *const kCourseCellIdentifier = @"kCourseCellIdentifier";
 
 - (void)willPresentSearchController:(UISearchController *)searchController {
     searchController.searchBar.searchBarStyle = UIBarStyleDefault;
-    //[UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
     if (self.tableView.mj_header.isRefreshing) {
         [self.tableView.mj_header endRefreshing];
     }
+    self.tabBarController.tabBar.hidden = YES;
+}
+
+- (void)willDismissSearchController:(UISearchController *)searchController {
+    searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
+    self.tabBarController.tabBar.hidden = NO;
 }
 
 #pragma mark - UIPopoverPresentationControllerDelegate

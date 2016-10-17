@@ -82,6 +82,7 @@
     
     _schoolLabel = [[UILabel alloc] init];
     _schoolLabel.font = [UIFont systemFontOfSize:smallFontSize];
+    _schoolLabel.textColor = [UIColor lightGrayColor];
     _schoolLabel.numberOfLines = 1;
     
     _contentLabel = [[UILabel alloc] init];

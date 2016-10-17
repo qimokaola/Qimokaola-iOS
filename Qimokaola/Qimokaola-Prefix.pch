@@ -52,7 +52,7 @@
 
 #define kShowAdNotification @"kShowAdNotification"
 
-#define kStudentCircleAnonyousName @"某同学"
+#define kStudentCircleAnonyousName @"匿名同学"
 
 #define universalGrayColor RGB(242, 242, 242)
 

@@ -49,6 +49,8 @@ typedef NS_ENUM(NSInteger, ZWFetchedDataSource) {
     self.cycleScrollView.autoScroll = YES;
     [self.cycleScrollView adjustWhenControllerViewWillAppera];
     
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
+    
     self.navigationController.navigationBar.barTintColor = RGB(246,248,247);
     [self.navigationController.navigationBar setBackgroundImage:[[UIColor whiteColor] parseToImage] forBarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];
     [self.navigationController.navigationBar setShadowImage:[UIImage new]];
@@ -61,6 +63,8 @@ typedef NS_ENUM(NSInteger, ZWFetchedDataSource) {
     [super viewWillDisappear:animated];
     
     self.cycleScrollView.autoScroll = NO;
+    
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     
     self.navigationController.navigationBar.barTintColor = defaultBlueColor;
     [self.navigationController.navigationBar setBackgroundImage:nil forBarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];

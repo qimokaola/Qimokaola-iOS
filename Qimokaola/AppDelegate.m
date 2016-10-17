@@ -21,7 +21,7 @@
 #import "ZWUserManager.h"
 #import "UIColor+Extension.h"
 #import "ZWBrowserViewController.h"
-
+#import "ZWUploadFileViewController.h"
 #import "ZWBrowserTool.h"
 
 #import <AXWebViewController/AXWebViewController.h>
@@ -235,10 +235,10 @@
 
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-    NSLog(@"didRegisterForRemoteNotificationsWithDeviceToken");
-    NSLog(@"%@",[[[[deviceToken description] stringByReplacingOccurrencesOfString: @"<" withString: @""]
-                  stringByReplacingOccurrencesOfString: @">" withString: @""]
-                 stringByReplacingOccurrencesOfString: @" " withString: @""]);
+//    NSLog(@"didRegisterForRemoteNotificationsWithDeviceToken");
+//    NSLog(@"%@",[[[[deviceToken description] stringByReplacingOccurrencesOfString: @"<" withString: @""]
+//                  stringByReplacingOccurrencesOfString: @">" withString: @""]
+//                 stringByReplacingOccurrencesOfString: @" " withString: @""]);
     // 1.2.7版本开始不需要用户再手动注册devicetoken，SDK会自动注册
     //[UMessage registerDeviceToken:deviceToken];
 }
@@ -300,43 +300,45 @@
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(nullable NSString *)sourceApplication annotation:(id)annotation
 {
-    NSLog(@"ios 8");
-    
-    NSLog(@"%@ %@ %@", url, sourceApplication, annotation);
-    
-    [self presentUploadViewWithFileName:[url lastPathComponent]];
-    
+    if (![ZWUserManager sharedInstance].isLogin) {
+        [[NSFileManager defaultManager] removeItemAtURL:url error:NULL];
+        [ZWHUDTool showHUDWithTitle:@"只有在登录状态下才能上传文件哦" message:nil duration:kShowHUDMid];
+    } else {
+        [self presentUploadViewWithFileName:url];
+    }
     return  [UMSocialSnsService handleOpenURL:url];
 }
 
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(nonnull NSDictionary<NSString *,id> *)options
 {
-//    ZWUploadFileViewController *uploader = [[ZWUploadFileViewController alloc] initWithNibName:@"ZWUploadFileViewController" bundle:nil];
-//    uploader.fileURL = url;
-//    uploader.text = [options objectForKey:UIApplicationOpenURLOptionsSourceApplicationKey];
-//    UINavigationController *navc = [[UINavigationController alloc] initWithRootViewController:uploader];
-//    
-//    [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:navc animated:YES completion:nil];
-    NSLog(@"%@ %@", url, options);
-    [self presentUploadViewWithFileName:[url lastPathComponent]];
+    if (![ZWUserManager sharedInstance].isLogin) {
+        [[NSFileManager defaultManager] removeItemAtURL:url error:NULL];
+        [ZWHUDTool showHUDWithTitle:@"只有在登录状态下才能上传文件哦" message:nil duration:kShowHUDMid];
+    } else {
+        [self presentUploadViewWithFileName:url];
+    }
     return  [UMSocialSnsService handleOpenURL:url];
 }
 
-- (void)presentUploadViewWithFileName:(NSString *)filename {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"上传文件" message:filename preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *cancleAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
-    UIAlertAction *uploadAction = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        MBProgressHUD *hud = [ZWHUDTool excutingHudInView:[UIApplication sharedApplication].keyWindow title:@"正在上传"];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            hud.mode = MBProgressHUDModeText;
-            hud.label.text = @"上传成功,感谢您的贡献";
-            [hud hideAnimated:YES afterDelay:kShowHUDMid];
-        });
-    }];
-    [alertController addAction:cancleAction];
-    [alertController addAction:uploadAction];
-    [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alertController animated:YES completion:nil];
+- (void)presentUploadViewWithFileName:(NSURL *)url {
+//    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"上传文件" message:filename preferredStyle:UIAlertControllerStyleAlert];
+//    UIAlertAction *cancleAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+//    UIAlertAction *uploadAction = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//        MBProgressHUD *hud = [ZWHUDTool excutingHudInView:[UIApplication sharedApplication].keyWindow title:@"正在上传"];
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//            hud.mode = MBProgressHUDModeText;
+//            hud.label.text = @"上传成功,感谢您的贡献";
+//            [hud hideAnimated:YES afterDelay:kShowHUDMid];
+//        });
+//    }];
+//    [alertController addAction:cancleAction];
+//    [alertController addAction:uploadAction];
+//    [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alertController animated:YES completion:nil];
+
+    ZWUploadFileViewController *uploader = [[ZWUploadFileViewController alloc] init];
+    uploader.fileUrl = url;
+    [(UINavigationController *)[(UITabBarController *)[UIApplication sharedApplication].keyWindow.rootViewController selectedViewController] pushViewController:uploader animated:YES];
 }
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {

@@ -61,6 +61,7 @@
     
     _schoolLabel = [[UILabel alloc] init];
     _schoolLabel.font = [UIFont systemFontOfSize:smallFontSize];
+    _schoolLabel.textColor = [UIColor lightGrayColor];
     _schoolLabel.numberOfLines = 1;
     
     _contentLabel = [[UILabel alloc] init];
@@ -129,7 +130,7 @@
         [_avatarView setImageWithURL:[NSURL URLWithString:_comment.creator.icon_url.small_url_string] placeholder:[UIImage imageNamed:@"avatar"]];
         _nameLabel.text = _comment.creator.name;
     } else {
-        _avatarView.image = [UIImage imageNamed:@"avatar"];
+        _avatarView.image = _comment.creator.gender.intValue == 0 ? [UIImage imageNamed:@"icon_anonymous_female"] : [UIImage imageNamed:@"icon_anonymous_male"];
         _nameLabel.text = kStudentCircleAnonyousName;
     }
     

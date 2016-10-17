@@ -23,6 +23,7 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         [self createSubViews];
+        self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     return self;
 }
@@ -32,7 +33,6 @@
     _circleLabel.numberOfLines = 1;
     _circleLabel.backgroundColor = [UIColor orangeColor];
     _circleLabel.font = ZWFont(20);
-    _circleLabel.text = @"数";
     _circleLabel.textColor = [UIColor whiteColor];
     _circleLabel.textAlignment = NSTextAlignmentCenter;
     
@@ -70,6 +70,11 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    _circleLabel.backgroundColor = [UIColor orangeColor];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

@@ -16,4 +16,5 @@ target "Qimokaola" do
     pod 'YYKit'
     pod 'AXWebViewController'
     pod 'DZNEmptyDataSet'
+    pod 'ESPictureBrowser'
 end
