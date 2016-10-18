@@ -46,7 +46,7 @@
 }
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView   {
-    return [UIImage imageNamed:@"none_hint"];
+    return [UIImage imageNamed:@"pic_none_hint_gray"];
 }
 
 - (BOOL)emptyDataSetShouldDisplay:(UIScrollView *)scrollView

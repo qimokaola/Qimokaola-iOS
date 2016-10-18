@@ -21,9 +21,6 @@ PODS:
     - AXNavigationBackItemInjection
     - NJKWebViewProgress
   - DZNEmptyDataSet (1.8.1)
-  - ESPictureBrowser (0.2.1):
-    - PINRemoteImage (~> 3.0.0-beta.3)
-  - FLAnimatedImage (1.0.12)
   - FMDB (2.6.2):
     - FMDB/standard (= 2.6.2)
   - FMDB/standard (2.6.2)
@@ -37,14 +34,6 @@ PODS:
     - NJKWebViewProgress/ProgressView (= 0.2.3)
   - NJKWebViewProgress/Core (0.2.3)
   - NJKWebViewProgress/ProgressView (0.2.3)
-  - PINCache (3.0.1-beta)
-  - PINRemoteImage (3.0.0-beta.3):
-    - PINRemoteImage/FLAnimatedImage (= 3.0.0-beta.3)
-  - PINRemoteImage/Core (3.0.0-beta.3):
-    - PINCache (>= 3.0.0-beta)
-  - PINRemoteImage/FLAnimatedImage (3.0.0-beta.3):
-    - FLAnimatedImage (>= 1.0)
-    - PINRemoteImage/Core
   - ReactiveCocoa (2.5):
     - ReactiveCocoa/UI (= 2.5)
   - ReactiveCocoa/Core (2.5):
@@ -66,7 +55,6 @@ DEPENDENCIES:
   - AFNetworking
   - AXWebViewController
   - DZNEmptyDataSet
-  - ESPictureBrowser (~> 0.2.1)
   - FMDB
   - IQKeyboardManager
   - LinqToObjectiveC
@@ -85,8 +73,6 @@ SPEC CHECKSUMS:
   AXNavigationBackItemInjection: 0ab0742fafd9ec37e44b8767c96cbbc77ec13575
   AXWebViewController: d6d9920c2a0cf4456f3641b2a78da11a8ad80c06
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
-  ESPictureBrowser: 3694ad1462dd712739abfeee2c9bf521c65cb37a
-  FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
   IQKeyboardManager: c52debb1967799ae7addb98eab0cf328083a874f
   LinqToObjectiveC: f0e40c137a458b6b9725c4c7b6a575c0c72e3aec
@@ -94,14 +80,12 @@ SPEC CHECKSUMS:
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
   NJKWebViewProgress: f481fd424cb5ecc27eacae11b5397db92fba9a4d
-  PINCache: 6911fe422a633e18b3d3ddf2bd4f0e55e36e2892
-  PINRemoteImage: 308731aa6534500e58fc211b9cc2bb7252df25ba
   ReactiveCocoa: e2db045570aa97c695e7aa97c2bcab222ae51f4a
   SDAutoLayout: e9b36d04b8c0b504762a04d76fbbe5108944297a
   SDCycleScrollView: f72904c77698a7f93a41bcbbc2d78b073bf7326c
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   YYKit: 7cda43304a8dc3696c449041e2cb3107b4e236e7
 
-PODFILE CHECKSUM: 79d4caeb0879f5f495876e73c9faed8ec5546c4b
+PODFILE CHECKSUM: a6585a5a561d4ef0b64c49159b5cb0b57e97e9fe
 
 COCOAPODS: 1.0.1

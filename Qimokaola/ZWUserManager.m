@@ -46,6 +46,9 @@ NSString *const kLoginedUserKey = @"kLoginedUserKey";
 }
 
 - (void)loginStudentCircle {
+    if ([UMComSession sharedInstance].isLogin) {
+        return;
+    }
     __weak __typeof(self) weakSelf = self;
     [[UMComDataRequestManager defaultManager] userCustomAccountLoginWithName:_loginUser.nickname
                                                                     sourceId:_loginUser.uid

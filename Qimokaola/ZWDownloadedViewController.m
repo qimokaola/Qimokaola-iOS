@@ -43,6 +43,8 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.hidesBottomBarWhenPushed = NO;
     
+    
+    
     //编辑按钮
     UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithTitle:@"编辑" style:UIBarButtonItemStyleDone target:self action:@selector(edit:)];
     self.navigationItem.rightBarButtonItem = editButton;
@@ -150,11 +152,17 @@
 - (void)willPresentSearchController:(UISearchController *)searchController {
     searchController.searchBar.searchBarStyle = UIBarStyleDefault;
     //[UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
+    self.tabBarController.tabBar.hidden = YES;
+    self.tableView.emptyDataSetSource = nil;
+    self.tableView.emptyDataSetDelegate = nil;
 }
 
 - (void)willDismissSearchController:(UISearchController *)searchController {
     searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
    // [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+    self.tabBarController.tabBar.hidden = NO;
+    self.tableView.emptyDataSetSource = self;
+    self.tableView.emptyDataSetDelegate = self;
 }
 
 

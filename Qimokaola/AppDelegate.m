@@ -36,10 +36,6 @@
 #import <YYKit/YYKit.h>
 
 @interface AppDelegate () <UNUserNotificationCenterDelegate>
-{
-    // 记录是否第一次进入，用以决定是否显示网络变化提示 若第一次进入且无网络才显示网络情况
-    BOOL firstEnter;
-}
 
 @end
 
@@ -48,8 +44,6 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     __weak __typeof(self) weakSelf = self;
-
-    firstEnter = YES;
     
     application.applicationIconBadgeNumber = 0;
     
@@ -208,25 +202,30 @@
 
     [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
         
-        // 若是首次进入且网络可用则不显示网络状态 非可用才提示
-        if (firstEnter && status != AFNetworkReachabilityStatusNotReachable) {
-            firstEnter = NO;
-            return;
-        }
+//        NSString *networkCondition;
+//        if (status == AFNetworkReachabilityStatusNotReachable) {
+//            networkCondition = @"网络连接已断开";
+//        } else if (status == AFNetworkReachabilityStatusReachableViaWWAN) {
+//            networkCondition=  @"使用蜂窝数据流量";
+//        } else if (status == AFNetworkReachabilityStatusReachableViaWiFi) {
+//            networkCondition = @"使用Wi-Fi连接";
+//        } else {
+//            networkCondition = @"未知的网络连接";
+//        }
+//        
+//        [ZWHUDTool showHUDWithTitle:networkCondition message:nil duration:kShowHUDShort];
+//        
+//        if (status != AFNetworkReachabilityStatusNotReachable) {
+//            NSLog(@"change");
+//            [[ZWUserManager sharedInstance] loginStudentCircle];
+//        }
         
-        NSString *networkCondition;
         if (status == AFNetworkReachabilityStatusNotReachable) {
-            networkCondition = @"网络连接已断开";
-        } else if (status == AFNetworkReachabilityStatusReachableViaWWAN) {
-            networkCondition=  @"使用蜂窝数据流量";
-        } else if (status == AFNetworkReachabilityStatusReachableViaWiFi) {
-            networkCondition = @"使用Wi-Fi连接";
+            [ZWHUDTool showHUDWithTitle:@"网络连接已断开" message:nil duration:kShowHUDShort];
         } else {
-            networkCondition = @"未知的网络连接";
+            //网络改变之后且有网的情况下重新登录学生圈
+            [[ZWUserManager sharedInstance] loginStudentCircle];
         }
-        
-        [ZWHUDTool showHUDWithTitle:networkCondition message:nil duration:kShowHUDShort];
-        
     }];
     
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];

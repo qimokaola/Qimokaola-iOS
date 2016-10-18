@@ -40,9 +40,6 @@ static NSString *const kCourseCellIdentifier = @"kCourseCellIdentifier";
     
     self.hidesBottomBarWhenPushed = NO;
     
-    self.tableView.emptyDataSetSource = nil;
-    self.tableView.emptyDataSetDelegate = nil;
-    
     [self.tableView registerClass:[ZWCourseCell class] forCellReuseIdentifier:kCourseCellIdentifier];
     self.tableView.rowHeight = 50;
     
@@ -272,11 +269,15 @@ static NSString *const kCourseCellIdentifier = @"kCourseCellIdentifier";
         [self.tableView.mj_header endRefreshing];
     }
     self.tabBarController.tabBar.hidden = YES;
+    self.tableView.emptyDataSetSource = nil;
+    self.tableView.emptyDataSetDelegate = nil;
 }
 
 - (void)willDismissSearchController:(UISearchController *)searchController {
     searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
     self.tabBarController.tabBar.hidden = NO;
+    self.tableView.emptyDataSetSource = self;
+    self.tableView.emptyDataSetDelegate = self;
 }
 
 #pragma mark - UIPopoverPresentationControllerDelegate

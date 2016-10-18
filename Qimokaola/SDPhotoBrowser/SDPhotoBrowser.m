@@ -129,6 +129,7 @@
     _scrollView.showsHorizontalScrollIndicator = NO;
     _scrollView.showsVerticalScrollIndicator = NO;
     _scrollView.pagingEnabled = YES;
+    _scrollView.maximumZoomScale = 5;
     [self addSubview:_scrollView];
     
     for (int i = 0; i < self.imageCount; i++) {
@@ -221,7 +222,7 @@
     if (imageView.isScaled) {
         scale = 1.0;
     } else {
-        scale = 2.0;
+        scale = 5.0;
     }
     
     SDBrowserImageView *view = (SDBrowserImageView *)recognizer.view;
@@ -314,6 +315,8 @@
         [tempView removeFromSuperview];
         _scrollView.hidden = NO;
     }];
+    
+    _indexLabel.text = [NSString stringWithFormat:@"1/%ld",(long)self.imageCount];
 }
 
 - (UIImage *)placeholderImageForIndex:(NSInteger)index

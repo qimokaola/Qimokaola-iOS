@@ -29,11 +29,13 @@ typedef NS_ENUM(NSInteger, ZWFetchedDataSource) {
 @property (nonatomic, strong) NSMutableArray<UMComTopic *> *topics;
 @property (nonatomic, strong) SDCycleScrollView *cycleScrollView;
 @property (nonatomic, strong) UIImage *placeholderImage;
-@property (nonatomic, copy) NSString *nextPageURL;
+@property (nonatomic, strong) UIView *footerView;
 
 @end
 
 @implementation ZWStudentCircleViewController
+
+#pragma mark - Life Cycle
 
 - (instancetype)init
 {
@@ -105,20 +107,8 @@ typedef NS_ENUM(NSInteger, ZWFetchedDataSource) {
     self.cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, kScreenW, kScreenW / 1.599) shouldInfiniteLoop:YES imageNamesGroup:imgs];
     self.cycleScrollView.delegate = self;
     self.cycleScrollView.autoScrollTimeInterval = 5;
+    
     self.tableView.tableHeaderView = self.cycleScrollView;
-    
-    UIView *footerView = [[UIView alloc] initWithFrame:CGRectZero];
-    self.tableView.tableFooterView = footerView;
-    
-    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(fetchTopicData)];
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        
-        [self.tableView.mj_header beginRefreshing];
-        
-    });
-    
-    self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(fetchNextPageTopicData)];
     
     [[[NSNotificationCenter defaultCenter] rac_addObserverForName:UIApplicationDidEnterBackgroundNotification object:nil] subscribeNext:^(id x) {
         self.cycleScrollView.autoScroll = NO;
@@ -133,68 +123,38 @@ typedef NS_ENUM(NSInteger, ZWFetchedDataSource) {
     // Dispose of any resources that can be recreated.
 }
 
-- (void)fetchTopicData {
-    [[UMComDataRequestManager defaultManager] fetchTopicsAllWithCount:5 completion:^(NSDictionary *responseObject, NSError *error) {
-        
-        [self fetchedNewData:responseObject sourceType:ZWFetchedDataSourceFromHeader];
-        
-    }];
+#pragma mark - Common Methods
+
+- (UIView *)footerView {
+    if (_footerView == nil) {
+        _footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 1, kScreenW, 50)];
+        _footerView.backgroundColor = [UIColor whiteColor];
+        UILabel *hintLabel = [[UILabel alloc] initWithFrame:_footerView.bounds];
+        hintLabel.numberOfLines = 1;
+        hintLabel.textAlignment = NSTextAlignmentCenter;
+        hintLabel.font = ZWFont(15);
+        hintLabel.text = @"更多频道敬请期待";
+        [_footerView addSubview:hintLabel];
+    }
+    return _footerView;
 }
 
-- (void)fetchNextPageTopicData {
-    
-    if (!self.nextPageURL) {
-        
-        [ZWHUDTool showHUDInView:self.navigationController.view withTitle:@"已经到底了..." message:nil duration:1.0];
-        
-        [self.tableView.mj_footer endRefreshing];
-        
-        return;
-    }
-    
-    [[UMComDataRequestManager defaultManager] fetchNextPageWithNextPageUrl:self.nextPageURL pageRequestType:UMComRequestType_AllTopic completion:^(NSDictionary *responseObject, NSError *error) {
-        
-       [self fetchedNewData:responseObject sourceType:ZWFetchedDataSourceFromFooter];
-        
-    }];
-    
-}
-
-- (void)fetchedNewData:(NSDictionary *)data sourceType:(ZWFetchedDataSource)source {
-    
-    NSArray<UMComTopic *> *tmp = [data objectForKey:@"data"];
-    
-    NSMutableArray<UMComTopic *> *fetchedTopics = [NSMutableArray array];
-    
-    for (UMComTopic *topic in tmp) {
-        
-        NSLog(@"%@", topic.custom);
-        [fetchedTopics addObject:topic];
-        
-    }
-    
-    NSLog(@"Fetched %ld group data. next page url: %@", (unsigned long)fetchedTopics.count, [data objectForKey:@"next_page_url"]);
-    
-    if (source == ZWFetchedDataSourceFromHeader) {
-        
-        [self.tableView.mj_header endRefreshing];
-        
-        if ([[NSSet setWithArray:fetchedTopics] isSubsetOfSet:[NSSet setWithArray:self.topics]]) {
+- (void)freshHeaderStartFreshing {
+    __weak __typeof(self) weakSelf = self;
+    [[UMComDataRequestManager defaultManager] fetchTopicsAllWithCount:100 completion:^(NSDictionary *responseObject, NSError *error) {
+        [weakSelf.tableView.mj_header endRefreshing];
+        if (responseObject) {
+            [weakSelf.topics removeAllObjects];
+            [weakSelf.topics addObjectsFromArray:responseObject[@"data"]];
+            [weakSelf.tableView reloadData];
             
-            NSLog(@"无新数据");
-            
-            return;
+            if (weakSelf.topics.count > 0 && weakSelf.tableView.tableFooterView != weakSelf.footerView) {
+                weakSelf.tableView.tableFooterView = weakSelf.footerView;
+            }
+        } else {
+            [ZWHUDTool showHUDInView:weakSelf.navigationController.view withTitle:@"出错了，获取数据失败" message:nil duration:kShowHUDMid];
         }
-    } else {
-        
-        [self.tableView.mj_footer endRefreshing];
-        
-    }
-    
-    self.nextPageURL = [data objectForKey:@"next_page_url"];
-    
-    [self.topics addObjectsFromArray:fetchedTopics];
-    [self.tableView reloadData];
+    }];
 }
 
 #pragma mark SDCycleScrollViewDelegate

@@ -34,6 +34,8 @@
 #define defaultBackgroundColor RGB(239, 239, 244)
 #define defaultBlueColor RGB(80,140,238)
 
+#define defaultPlaceHolderColor RGB(245, 245, 245)
+
 #define kUserNotLoginInfo @"尚未登录"
 
 #define DecodeAnonyousCode(custom) [[[custom jsonValueDecoded] objectForKey:@"a"] intValue]

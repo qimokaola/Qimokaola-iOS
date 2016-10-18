@@ -345,7 +345,9 @@
 
 #pragma mark - DTEmptySetDelegate
 
-
+- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+    return [UIImage imageNamed:@"pic_none_hint_gray"];
+}
 
 /*
 // Override to support conditional editing of the table view.
