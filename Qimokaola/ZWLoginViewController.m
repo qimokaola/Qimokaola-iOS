@@ -148,11 +148,7 @@
     
     self.passwordLine = [self commonLine];
     [self.view addSubview:self.passwordLine];
-    
-    //FIXME: 未调试用设置默认账户 - 发布时删除
-    self.accountField.text = @"13067340323";
-    self.passwordField.text = @"1234567";
-    
+
     self.nextBtn = ({
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         [btn setBackgroundImage:[RGB(80., 140., 238.) parseToImage] forState:UIControlStateNormal];

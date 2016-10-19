@@ -71,7 +71,7 @@
     [self.view addSubview:self.btnContainer];
     
     self.loginBtn = [UIButton buttonWithType:UIButtonTypeSystem];
-    [self.loginBtn setBackgroundColor:RGB(108., 211., 61.)];
+    [self.loginBtn setBackgroundColor:defaultBlueColor];
     [self.loginBtn setTitle:@"登录" forState:UIControlStateNormal];
     [self.loginBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     self.loginBtn.layer.cornerRadius = btnCornerRadius;

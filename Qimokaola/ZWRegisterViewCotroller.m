@@ -236,8 +236,6 @@
     self.phoneNumberField.clearButtonMode = UITextFieldViewModeWhileEditing;
     [self.view addSubview:self.phoneNumberField];
     
-    self.phoneNumberField.text = @"13067340323";
-    
     self.phoneNumberLine = [[UIView alloc] init];
     self.phoneNumberLine.backgroundColor = lineColor;
     [self.view addSubview:self.phoneNumberLine];
@@ -270,8 +268,6 @@
     self.passwordField.secureTextEntry = YES;
     self.passwordField.clearButtonMode = UITextFieldViewModeWhileEditing;
     [self.view addSubview:self.passwordField];
-    
-    self.passwordField.text = @"1234567";
     
     self.passwordLine = [[UIView alloc] init];
     self.passwordLine.backgroundColor = lineColor;

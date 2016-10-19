@@ -8,6 +8,7 @@
 
 #import "ZWCourseViewController.h"
 
+#import <YYKit/YYKit.h>
 
 @interface ZWCourseViewController ()
 
@@ -15,12 +16,17 @@
 @property (nonatomic, strong) UILabel *schoolNameLabel;
 @property (nonatomic, strong) UIImageView *arrowView;
 
+@property (nonatomic, strong) YYCache *cache;
+
 @end
 
 @implementation ZWCourseViewController
 
 static NSString *const ROOT = @"/";
 static NSString *const kCourseCellIdentifier = @"kCourseCellIdentifier";
+
+#define kCourseCacheName @"CourseCache"
+#define kCourseCacheKeyPrefix @"CourseCache-"
 
 #pragma mark - Life Cycle
 
@@ -39,6 +45,9 @@ static NSString *const kCourseCellIdentifier = @"kCourseCellIdentifier";
     __weak __typeof(self) weakSelf = self;
     
     self.hidesBottomBarWhenPushed = NO;
+    
+    self.cache = [[YYCache alloc] initWithName:kCourseCacheName];
+    self.dataArray = (NSMutableArray *)[self.cache objectForKey:[kCourseCacheKeyPrefix stringByAppendingString:[ZWUserManager sharedInstance].loginUser.currentCollegeId.stringValue]];
     
     [self.tableView registerClass:[ZWCourseCell class] forCellReuseIdentifier:kCourseCellIdentifier];
     self.tableView.rowHeight = 50;
@@ -149,11 +158,16 @@ static NSString *const kCourseCellIdentifier = @"kCourseCellIdentifier";
 - (void)showUpdateAlertWithReleaseNotes:(NSString *)releaseNotes {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"发现新版本" message:releaseNotes preferredStyle:UIAlertControllerStyleAlert];
     // 添加按钮
-    [alert addAction:[UIAlertAction actionWithTitle:@"稍后再说" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+    [alert addAction:[UIAlertAction actionWithTitle:@"稍后再说" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         
     }]];
-    [alert addAction:[UIAlertAction actionWithTitle:@"立即更新" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/app/id1054613325"]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"立即更新" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        if ([UIDevice systemVersion] < 10.0) {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/app/id1054613325"]];
+        } else {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/app/id1054613325"] options:@{} completionHandler:^(BOOL success) {
+           }];
+        }
     }]];
     
     [self presentViewController:alert animated:YES completion:nil];
@@ -215,6 +229,7 @@ static NSString *const kCourseCellIdentifier = @"kCourseCellIdentifier";
         return [ZWFolder modelWithDictionary:item];
     }] mutableCopy];
     [self.tableView reloadData];
+    [self.cache setObject:self.dataArray forKey:[kCourseCacheKeyPrefix stringByAppendingString:[ZWUserManager sharedInstance].loginUser.currentCollegeId.stringValue]];
 }
 
 #pragma mark - UITableViewDataSource

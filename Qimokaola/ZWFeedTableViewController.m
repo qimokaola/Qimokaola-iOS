@@ -28,9 +28,14 @@
 
 #define kFeedTableViewCellID @"kFeedTableViewCellID"
 
+#define kFeedCacheName @"StudentCircle-Feed"
+#define kFeedCacheKey @"FeedCacheKey"
+
 @interface ZWFeedTableViewController () <ZWFeedCellDelegate>
 
 @property (nonatomic, strong) NSMutableArray<UMComFeed *> *feeds;
+@property (nonatomic, strong) NSString *nextPageUrl;
+@property (nonatomic, strong) YYCache *cache;
 
 @end
 
@@ -60,10 +65,10 @@
     
     self.feeds = [NSMutableArray array];
     
+    
     if (_feedType == ZWFeedTableViewTypeAboutTopic) {
         self.title = self.topic.name;
         UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon_compose_feed"] style:UIBarButtonItemStylePlain target:self action:@selector(presendNewFeedViewController)];
-//        rightItem.tintColor = UIColorHex(fd8224);
         self.navigationItem.rightBarButtonItem = rightItem;
     } else if (_feedType == ZWFeedTableViewTypeAboutUser || _feedType == ZWFeedTableViewTypeAboutOthers) {
         self.title = @"动态";
@@ -75,6 +80,8 @@
     self.tableView.scrollIndicatorInsets = self.tableView.contentInset;
     [self.tableView registerClass:[ZWFeedCell class] forCellReuseIdentifier:kFeedTableViewCellID];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+ 
+    self.tableView.mj_footer = [MJRefreshBackStateFooter footerWithRefreshingTarget:self refreshingAction:@selector(refreshFooterStartRefreshing)];
 }
 
 
@@ -87,6 +94,7 @@
 - (void)dealloc
 {
     NSLog(@"dealloc table list");
+    
 }
 
 #pragma mark - Normal Methods
@@ -129,42 +137,80 @@
         [[UMComDataRequestManager defaultManager] fetchFeedsTopicRelatedWithTopicId:self.topic.topicID
                                                                            sortType:UMComTopicFeedSortType_default
                                                                           isReverse:NO
-                                                                              count:99999
+                                                                              count:kStudentCircleFetchDataCount
                                                                          completion:^(NSDictionary *responseObject, NSError *error) {
                                                                              
-                                                                             [weakSelf dealWithFetchFeedResult:responseObject error:error];
+                                                                             [weakSelf dealWithFetchFeedResult:responseObject error:error fromHeader:YES];
                                                                          }];
     } else if (self.feedType == ZWFeedTableViewTypeAboutUser) {
         // 获取有关于用户的feed流
         [[UMComDataRequestManager defaultManager] fetchFeedsTimelineWithUid:weakSelf.user.uid
                                                                    sortType:UMComUserTimeLineFeedType_Default
-                                                                      count:999999
+                                                                      count:kStudentCircleFetchDataCount
                                                                  completion:^(NSDictionary *responseObject, NSError *error) {
-                                                                     [weakSelf dealWithFetchFeedResult:responseObject error:error];
+                                                                     [weakSelf dealWithFetchFeedResult:responseObject error:error fromHeader:YES];
                                                                  }];
         
     } else if (self.feedType == ZWFeedTableViewTypeAboutCollection) {
         // 获取有关于用户收藏的feed流
-        [[UMComDataRequestManager defaultManager] fetchFeedsUserFavouriteWithCount:99999
+        [[UMComDataRequestManager defaultManager] fetchFeedsUserFavouriteWithCount:kStudentCircleFetchDataCount
                                                                         completion:^(NSDictionary *responseObject, NSError *error) {
-                                                                            [weakSelf dealWithFetchFeedResult:responseObject error:error];
+                                                                            [weakSelf dealWithFetchFeedResult:responseObject error:error fromHeader:YES];
                                                                         }];
     } else if (self.feedType == ZWFeedTableViewTypeAboutOthers) {
         // 获取有关于用户的feed流
         [[UMComDataRequestManager defaultManager] fetchFeedsTimelineWithUid:weakSelf.user.uid
                                                                    sortType:UMComUserTimeLineFeedType_Default
-                                                                      count:999999
+                                                                      count:kStudentCircleFetchDataCount
                                                                  completion:^(NSDictionary *responseObject, NSError *error) {
-                                                                     [weakSelf dealWithFetchFeedResult:responseObject error:error];
+                                                                     [weakSelf dealWithFetchFeedResult:responseObject error:error fromHeader:YES];
                                                                  }];
     }
 
 }
 
-- (void)dealWithFetchFeedResult:(NSDictionary *)responseObject error:(NSError *)error {
-    [self.tableView.mj_header endRefreshing];
+- (void)refreshFooterStartRefreshing {
+    if (!self.nextPageUrl) {
+        [ZWHUDTool showHUDInView:self.navigationController.view withTitle:@"没有更多了" message:nil duration:kShowHUDShort];
+        [self.tableView.mj_footer endRefreshing];
+        return;
+    }
+    UMComPageRequestType type;
+    switch (self.feedType) {
+        case ZWFeedTableViewTypeAboutTopic:
+            type = UMComRequestType_FeedWithTopicID;
+            break;
+            
+        case ZWFeedTableViewTypeAboutCollection:
+            type = UMComRequestType_UserFavoriteFeed;
+            break;
+            
+        case ZWFeedTableViewTypeAboutUser:
+        case ZWFeedTableViewTypeAboutOthers:
+            type = UMComRequestType_UserTimeLineFeed;
+            break;
+        
+        default:
+            break;
+    }
+    __weak __typeof(self) weakSelf = self;
+    [[UMComDataRequestManager defaultManager] fetchNextPageWithNextPageUrl:self.nextPageUrl
+                                                           pageRequestType:type
+                                                                completion:^(NSDictionary *responseObject, NSError *error) {
+                                                                    [weakSelf dealWithFetchFeedResult:responseObject error:error fromHeader:NO];
+                                                                }];
+}
+
+- (void)dealWithFetchFeedResult:(NSDictionary *)responseObject error:(NSError *)error fromHeader:(BOOL)isFromeHeader {
+    if (isFromeHeader) {
+        [self.tableView.mj_header endRefreshing];
+    } else {
+        [self.tableView.mj_footer endRefreshing];
+    }
     if (responseObject) {
-        [self.feeds removeAllObjects];
+        if (isFromeHeader) {
+            [self.feeds removeAllObjects];
+        }
         if (self.feedType != ZWFeedTableViewTypeAboutOthers) {
             [self.feeds addObjectsFromArray:[responseObject objectForKey:@"data"]];
         } else {
@@ -173,8 +219,16 @@
             }]];
         }
         [self.tableView reloadData];
+        self.nextPageUrl = responseObject[@"next_page_url"];
+        if (isFromeHeader) {
+            if (self.tableView.cellsTotalHeight < kScreenH - 64) {
+                self.tableView.mj_footer.hidden = YES;
+            } else {
+                self.tableView.mj_footer.hidden = NO;
+            }
+        }
     } else {
-        [ZWHUDTool showHUDInView:self.navigationController.view withTitle:@"出错了，获取失败" message:nil duration:kShowHUDMid];
+        [ZWHUDTool showHUDInView:self.navigationController.view withTitle:@"出现错误，获取失败" message:nil duration:kShowHUDMid];
     }
 }
 
@@ -232,7 +286,6 @@
     cell.feed = feed;
     cell.indexPath = indexPath;
     cell.delegate = self;
-    
     return cell;
 }
 

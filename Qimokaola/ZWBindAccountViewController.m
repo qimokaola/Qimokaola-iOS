@@ -436,12 +436,6 @@
     _indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     [_nextBtn addSubview:_indicator];
     
-    //FIXME: 发布时需要删除
-    // 预先设置数据 方便调试
-    
-    self.accountField.text = @"3136309003";
-    self.passwordField.text = @"L243216!!";
-    
     //设置视图约束
     
     __weak __typeof(self) weakSelf = self;

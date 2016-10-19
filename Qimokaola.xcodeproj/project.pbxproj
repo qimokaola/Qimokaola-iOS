@@ -89,9 +89,6 @@
 		C35AA0B81C88500800D17A99 /* ZWAboutUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C35AA0B71C88500800D17A99 /* ZWAboutUsViewController.m */; };
 		C35B674C1D995F5800303D62 /* ZWUserDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C35B674B1D995F5800303D62 /* ZWUserDetailViewController.m */; };
 		C35FD9BB1D707E160066DE68 /* SDWeiXinPhotoContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C35FD9BA1D707E160066DE68 /* SDWeiXinPhotoContainerView.m */; };
-		C36599691DB2B2E900A0403D /* SDBrowserImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = C36599631DB2B2E900A0403D /* SDBrowserImageView.m */; };
-		C365996A1DB2B2E900A0403D /* SDPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = C36599651DB2B2E900A0403D /* SDPhotoBrowser.m */; };
-		C365996B1DB2B2E900A0403D /* SDWaitingView.m in Sources */ = {isa = PBXBuildFile; fileRef = C36599681DB2B2E900A0403D /* SDWaitingView.m */; };
 		C367ADD41CB6934A002184DF /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C367ADD31CB6934A002184DF /* CFNetwork.framework */; };
 		C367ADD61CB6935E002184DF /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C367ADD51CB6935E002184DF /* CoreFoundation.framework */; };
 		C367ADD81CB69394002184DF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C367ADD71CB69394002184DF /* Foundation.framework */; };
@@ -166,6 +163,9 @@
 		C3C531361DB518AC000C3562 /* ZWUploadFileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3C531341DB518AC000C3562 /* ZWUploadFileViewController.m */; };
 		C3C531371DB518AC000C3562 /* ZWUploadFileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3C531351DB518AC000C3562 /* ZWUploadFileViewController.xib */; };
 		C3C5313A1DB52543000C3562 /* ZWChooseCourseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3C531391DB52543000C3562 /* ZWChooseCourseViewController.m */; };
+		C3C531591DB79663000C3562 /* ESPictureBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = C3C531541DB79663000C3562 /* ESPictureBrowser.m */; };
+		C3C5315A1DB79663000C3562 /* ESPictureProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = C3C531561DB79663000C3562 /* ESPictureProgressView.m */; };
+		C3C5315B1DB79663000C3562 /* ESPictureView.m in Sources */ = {isa = PBXBuildFile; fileRef = C3C531581DB79663000C3562 /* ESPictureView.m */; };
 		C3D1F2691CB3E18B0017723B /* ZWFileFolderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D1F2681CB3E18B0017723B /* ZWFileFolderViewController.m */; };
 		C3D1F2701CB3E33F0017723B /* ZWOldFileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D1F26E1CB3E33F0017723B /* ZWOldFileCell.m */; };
 		C3D1F2961CB401BE0017723B /* ZWOldFileCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3D1F2951CB401BE0017723B /* ZWOldFileCell.xib */; };
@@ -406,13 +406,6 @@
 		C35B674B1D995F5800303D62 /* ZWUserDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWUserDetailViewController.m; sourceTree = "<group>"; };
 		C35FD9B91D707E160066DE68 /* SDWeiXinPhotoContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWeiXinPhotoContainerView.h; sourceTree = "<group>"; };
 		C35FD9BA1D707E160066DE68 /* SDWeiXinPhotoContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWeiXinPhotoContainerView.m; sourceTree = "<group>"; };
-		C36599621DB2B2E900A0403D /* SDBrowserImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDBrowserImageView.h; sourceTree = "<group>"; };
-		C36599631DB2B2E900A0403D /* SDBrowserImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDBrowserImageView.m; sourceTree = "<group>"; };
-		C36599641DB2B2E900A0403D /* SDPhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDPhotoBrowser.h; sourceTree = "<group>"; };
-		C36599651DB2B2E900A0403D /* SDPhotoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDPhotoBrowser.m; sourceTree = "<group>"; };
-		C36599661DB2B2E900A0403D /* SDPhotoBrowserConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDPhotoBrowserConfig.h; sourceTree = "<group>"; };
-		C36599671DB2B2E900A0403D /* SDWaitingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWaitingView.h; sourceTree = "<group>"; };
-		C36599681DB2B2E900A0403D /* SDWaitingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWaitingView.m; sourceTree = "<group>"; };
 		C367ADC91CB681DA002184DF /* JSPatch.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = JSPatch.framework; sourceTree = "<group>"; };
 		C367ADD31CB6934A002184DF /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		C367ADD51CB6935E002184DF /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
@@ -543,6 +536,12 @@
 		C3C531351DB518AC000C3562 /* ZWUploadFileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZWUploadFileViewController.xib; sourceTree = "<group>"; };
 		C3C531381DB52543000C3562 /* ZWChooseCourseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWChooseCourseViewController.h; sourceTree = "<group>"; };
 		C3C531391DB52543000C3562 /* ZWChooseCourseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWChooseCourseViewController.m; sourceTree = "<group>"; };
+		C3C531531DB79663000C3562 /* ESPictureBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESPictureBrowser.h; sourceTree = "<group>"; };
+		C3C531541DB79663000C3562 /* ESPictureBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESPictureBrowser.m; sourceTree = "<group>"; };
+		C3C531551DB79663000C3562 /* ESPictureProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESPictureProgressView.h; sourceTree = "<group>"; };
+		C3C531561DB79663000C3562 /* ESPictureProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESPictureProgressView.m; sourceTree = "<group>"; };
+		C3C531571DB79663000C3562 /* ESPictureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESPictureView.h; sourceTree = "<group>"; };
+		C3C531581DB79663000C3562 /* ESPictureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESPictureView.m; sourceTree = "<group>"; };
 		C3D1F2671CB3E18B0017723B /* ZWFileFolderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWFileFolderViewController.h; sourceTree = "<group>"; };
 		C3D1F2681CB3E18B0017723B /* ZWFileFolderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWFileFolderViewController.m; sourceTree = "<group>"; };
 		C3D1F26D1CB3E33F0017723B /* ZWOldFileCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWOldFileCell.h; sourceTree = "<group>"; };
@@ -1273,20 +1272,6 @@
 			name = SDWeiXinPhotoContainerView;
 			sourceTree = "<group>";
 		};
-		C36599611DB2B2E900A0403D /* SDPhotoBrowser */ = {
-			isa = PBXGroup;
-			children = (
-				C36599621DB2B2E900A0403D /* SDBrowserImageView.h */,
-				C36599631DB2B2E900A0403D /* SDBrowserImageView.m */,
-				C36599641DB2B2E900A0403D /* SDPhotoBrowser.h */,
-				C36599651DB2B2E900A0403D /* SDPhotoBrowser.m */,
-				C36599661DB2B2E900A0403D /* SDPhotoBrowserConfig.h */,
-				C36599671DB2B2E900A0403D /* SDWaitingView.h */,
-				C36599681DB2B2E900A0403D /* SDWaitingView.m */,
-			);
-			path = SDPhotoBrowser;
-			sourceTree = "<group>";
-		};
 		C36D67E01DA932EF00442FD4 /* ZWDownloadedInfoCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -1457,7 +1442,7 @@
 		C3792AD31D6F395F0079FCF5 /* Custom */ = {
 			isa = PBXGroup;
 			children = (
-				C36599611DB2B2E900A0403D /* SDPhotoBrowser */,
+				C3C531521DB79663000C3562 /* ESPictureBrowser */,
 				C3DE5BBD1DB221FC00E93C05 /* SelectView */,
 				C33B6D3B1D9D68B200710D75 /* ZWReplytPaddingLabel */,
 				C3DA11FE1D9D45C700758BAC /* DLSlideView */,
@@ -1818,6 +1803,19 @@
 				C3C531391DB52543000C3562 /* ZWChooseCourseViewController.m */,
 			);
 			name = ZWUploadFileViewController;
+			sourceTree = "<group>";
+		};
+		C3C531521DB79663000C3562 /* ESPictureBrowser */ = {
+			isa = PBXGroup;
+			children = (
+				C3C531531DB79663000C3562 /* ESPictureBrowser.h */,
+				C3C531541DB79663000C3562 /* ESPictureBrowser.m */,
+				C3C531551DB79663000C3562 /* ESPictureProgressView.h */,
+				C3C531561DB79663000C3562 /* ESPictureProgressView.m */,
+				C3C531571DB79663000C3562 /* ESPictureView.h */,
+				C3C531581DB79663000C3562 /* ESPictureView.m */,
+			);
+			path = ESPictureBrowser;
 			sourceTree = "<group>";
 		};
 		C3C8C1301D92CC6E00771C61 /* Modifier */ = {
@@ -2384,7 +2382,6 @@
 				C32666561D953125008C6B24 /* UMAssetsCollectionOverlayView.m in Sources */,
 				C38EACA91CB535C600EA6448 /* ZWOldFolderCell.m in Sources */,
 				C33AC6021DA3C3CD00A96AB7 /* ZWUserLikesViewController.m in Sources */,
-				C36599691DB2B2E900A0403D /* SDBrowserImageView.m in Sources */,
 				C3DE5B7B1DAD2F6400E93C05 /* ZWAppUserInfoCell.m in Sources */,
 				C326666C1D9534DE008C6B24 /* UMComButton.m in Sources */,
 				C337B9C51D7334AF0060BDD6 /* ZWAPIRequestTool.m in Sources */,
@@ -2410,10 +2407,12 @@
 				C347782B1CB263E700D26FA8 /* ZWChild.m in Sources */,
 				C3EDA91C1D830E79009FF851 /* ZWFolder.m in Sources */,
 				C3DE5B961DAE658200E93C05 /* ZWUMUserFeedHeader.m in Sources */,
+				C3C5315B1DB79663000C3562 /* ESPictureView.m in Sources */,
 				C347782C1CB263E700D26FA8 /* ZWFileModel.m in Sources */,
 				C3561A201D3770530032C97B /* ZWFilloutInformationViewController.m in Sources */,
 				C3D1F2691CB3E18B0017723B /* ZWFileFolderViewController.m in Sources */,
 				C35FD9BB1D707E160066DE68 /* SDWeiXinPhotoContainerView.m in Sources */,
+				C3C5315A1DB79663000C3562 /* ESPictureProgressView.m in Sources */,
 				C32666591D953125008C6B24 /* UMImagePickerThumbnailView.m in Sources */,
 				C3BE99FB1BCBFB45000102A1 /* ZWOldDownloadInfoCell.m in Sources */,
 				C36D67E31DA9331900442FD4 /* ZWDownloadedInfoCell.m in Sources */,
@@ -2441,7 +2440,6 @@
 				C3DA12161D9D45C700758BAC /* DLTabedSlideView.m in Sources */,
 				C3C44E461BC6BBEF004B30BF /* ZWRootPathViewController.m in Sources */,
 				C31BB10C1CB7EDC000EE1E37 /* ZWAppCache.m in Sources */,
-				C365996B1DB2B2E900A0403D /* SDWaitingView.m in Sources */,
 				C3C44DEE1BC687B0004B30BF /* main.m in Sources */,
 				C35771081D843E5700E9B166 /* ZWCourseViewController.m in Sources */,
 				C37C038F1D3E77FF00B22868 /* ZWDiscoveryViewController.m in Sources */,
@@ -2476,6 +2474,7 @@
 				C3DE5BAF1DAFC16900E93C05 /* ZWSwitchSchollViewController.m in Sources */,
 				C3DE5BC61DB221FC00E93C05 /* SelectViewCell.m in Sources */,
 				C35AA0B81C88500800D17A99 /* ZWAboutUsViewController.m in Sources */,
+				C3C531591DB79663000C3562 /* ESPictureBrowser.m in Sources */,
 				C3FC44B11D8154F100896CDB /* ZWBaseSearchViewController.m in Sources */,
 				C3DA12111D9D45C700758BAC /* DLLRUCache.m in Sources */,
 				C32666531D953125008C6B24 /* UMAssetsCollectionCheckMarkView.m in Sources */,
@@ -2498,7 +2497,6 @@
 				C3C5313A1DB52543000C3562 /* ZWChooseCourseViewController.m in Sources */,
 				C3561A261D3774560032C97B /* ZWLoginViewController.m in Sources */,
 				C3C531361DB518AC000C3562 /* ZWUploadFileViewController.m in Sources */,
-				C365996A1DB2B2E900A0403D /* SDPhotoBrowser.m in Sources */,
 				C30BBA8E1DA80ED90090EB4A /* ZWDownloadedInfo.m in Sources */,
 				C32666601D9533C4008C6B24 /* UMComResourceManager.m in Sources */,
 				C3F78BE61D537CC400E9C2AB /* ZWLoginAndRegisterViewController.m in Sources */,

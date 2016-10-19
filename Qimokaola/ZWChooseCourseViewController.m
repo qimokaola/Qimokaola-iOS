@@ -50,7 +50,7 @@
                                                        } else {
                                                            errDesc = @"出现错误，获取失败";
                                                        }
-                                                       [ZWHUDTool showHUDInView:weakSelf.navigationController.view withTitle:errDesc message:nil duration:kShowHUDMid];
+                                                       [ZWHUDTool showHUDInView:[UIApplication sharedApplication].keyWindow withTitle:errDesc message:nil duration:kShowHUDMid];
                                                    }
                                                    
                                                }];

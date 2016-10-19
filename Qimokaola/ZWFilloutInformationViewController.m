@@ -318,10 +318,6 @@
         btn;
     });
     
-    //FIXME: 发布时删除
-    // 预先绑定数据 方便调试
-    self.nicknameField.text = @"凌子文";
-    
     //添加视图约束
     
     [self.avatarImageView mas_makeConstraints:^(MASConstraintMaker *make) {

@@ -24,12 +24,17 @@ typedef NS_ENUM(NSInteger, ZWFetchedDataSource) {
     ZWFetchedDataSourceFromFooter
 };
 
+#define kTopCacheName @"StudentCircleTop"
+#define kTopicCacheKey @"TopicCache"
+
 @interface ZWStudentCircleViewController () <SDCycleScrollViewDelegate>
 
 @property (nonatomic, strong) NSMutableArray<UMComTopic *> *topics;
 @property (nonatomic, strong) SDCycleScrollView *cycleScrollView;
 @property (nonatomic, strong) UIImage *placeholderImage;
 @property (nonatomic, strong) UIView *footerView;
+
+@property (nonatomic, strong) YYCache *cache;
 
 @end
 
@@ -96,6 +101,10 @@ typedef NS_ENUM(NSInteger, ZWFetchedDataSource) {
     
     self.topics = [NSMutableArray array];
     
+    self.cache = [[YYCache alloc] initWithName:kTopCacheName];
+    [self.topics addObjectsFromArray:(NSArray *)[self.cache objectForKey:kTopicCacheKey]];
+    NSLog(@"%@", self.topics);
+    
     NSArray *imgs = @[
                       @"pic1.png",
                       @"pic2.png",
@@ -134,7 +143,12 @@ typedef NS_ENUM(NSInteger, ZWFetchedDataSource) {
         hintLabel.textAlignment = NSTextAlignmentCenter;
         hintLabel.font = ZWFont(15);
         hintLabel.text = @"更多频道敬请期待";
+        
         [_footerView addSubview:hintLabel];
+        
+        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, 71, kScreenW - 71, 0.5)];
+        line.backgroundColor = [UIColor blackColor];
+        [_footerView addSubview:line];
     }
     return _footerView;
 }
@@ -147,7 +161,7 @@ typedef NS_ENUM(NSInteger, ZWFetchedDataSource) {
             [weakSelf.topics removeAllObjects];
             [weakSelf.topics addObjectsFromArray:responseObject[@"data"]];
             [weakSelf.tableView reloadData];
-            
+            [weakSelf.cache setObject:weakSelf.topics forKey:kTopicCacheKey];
             if (weakSelf.topics.count > 0 && weakSelf.tableView.tableFooterView != weakSelf.footerView) {
                 weakSelf.tableView.tableFooterView = weakSelf.footerView;
             }
@@ -189,11 +203,10 @@ typedef NS_ENUM(NSInteger, ZWFetchedDataSource) {
     
     
     UMComTopic *topic = [self.topics objectAtIndex:indexPath.row];
-    
+
     cell.textLabel.text = topic.name;
     cell.detailTextLabel.text = topic.descriptor;
     [cell.imageView setImageWithURL:[NSURL URLWithString:topic.icon_url] placeholder:self.placeholderImage];
-    
     return cell;
 }
 
@@ -203,7 +216,6 @@ typedef NS_ENUM(NSInteger, ZWFetchedDataSource) {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     });
-    
     ZWFeedTableViewController *feedListViewController = [[ZWFeedTableViewController alloc] init];
     feedListViewController.feedType = ZWFeedTableViewTypeAboutTopic;
     feedListViewController.topic = self.topics[indexPath.row];

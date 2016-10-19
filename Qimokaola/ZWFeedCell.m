@@ -724,11 +724,11 @@
     self.isLiked = _feed.liked.boolValue;
     self.isCollected = _feed.has_collected.boolValue;
     
-    _picContainerView.picPathStringsArray = [_feed.image_urls linq_select:^id(UMComImageUrl *item) {
+    _picContainerView.thumbnailPicUrlStringArray = [_feed.image_urls linq_select:^id(UMComImageUrl *item) {
         return item.small_url_string;
     }];
     
-    _picContainerView.highQuantityPicArray = [_feed.image_urls linq_select:^id(UMComImageUrl *item) {
+    _picContainerView.highQuantityPicUrlStringArray = [_feed.image_urls linq_select:^id(UMComImageUrl *item) {
         return item.large_url_string;
     }];
     

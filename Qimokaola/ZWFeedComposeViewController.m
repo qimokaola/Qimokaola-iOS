@@ -419,8 +419,8 @@
  */
 - (void)postNewFeed {
     [_textView resignFirstResponder];
-    if (_textView.text.length == 0 || _textView.text.length > 300) {
-        [ZWHUDTool showHUDInView:self.navigationController.view withTitle:@"内容长度必须在1-300" message:nil duration:kShowHUDMid];
+    if (_textView.text.length == 0 || _textView.text.length > 140) {
+        [ZWHUDTool showHUDInView:self.navigationController.view withTitle:@"内容长度必须在1-140之间" message:nil duration:kShowHUDMid];
         return;
     }
     __weak __typeof(self) weakSelf = self;

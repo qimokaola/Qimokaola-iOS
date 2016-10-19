@@ -31,8 +31,8 @@
 
 @interface SDWeiXinPhotoContainerView : UIView
 
-@property (nonatomic, strong) NSArray *picPathStringsArray;
+@property (nonatomic, strong) NSArray *thumbnailPicUrlStringArray;
 
-@property (nonatomic, strong) NSArray *highQuantityPicArray;
+@property (nonatomic, strong) NSArray *highQuantityPicUrlStringArray;
 
 @end

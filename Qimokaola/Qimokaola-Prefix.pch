@@ -26,6 +26,8 @@
 
 #define kRequestWaitingTime 0.5
 
+#define kStudentCircleFetchDataCount 5
+
 #define ZWFont(fontSize) [UIFont systemFontOfSize:fontSize]
 
 #define RGB(r, g, b) [UIColor colorWithRed:r / 255.0f green:g / 255.0f blue:b / 255.0f alpha:1.0f]

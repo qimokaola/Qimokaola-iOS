@@ -68,18 +68,12 @@ static inline NSRange umGetRangeForIndex(NSInteger index,NSInteger allcount)
         // Custom initialization
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         
-//        self.doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done:)];
-//        [self.navigationItem setRightBarButtonItem:self.doneButton animated:NO];
-        if ([[UIDevice currentDevice].systemVersion floatValue] < 7) {
-            [self.navigationController.navigationBar setBackgroundColor:UMComColorWithHexString(@"#f7f7f8")];
-            [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc]init] forBarMetrics:UIBarMetricsDefault];
-        }else{
-            [self.navigationController.navigationBar setBarTintColor:UMComColorWithHexString(@"#f7f7f8")];
-        }
+
+        [self.navigationController.navigationBar setBarTintColor:UMComColorWithHexString(@"#f7f7f8")];
+
         [self setRightButtonWithTitle:UMComLocalizedString(@"um_com_finish",@"完成") action:@selector(done:)];
-       // [self setForumUIBackButton];
-       // [self setBackButtonWithTitle:UMComLocalizedString(@"Back", @"返回")];
-        [self setTitleViewWithTitle:UMComLocalizedString(@"Photo", @"相机胶卷")];
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStyleDone target:self action:@selector(done:)];
+//        [self setTitleViewWithTitle:UMComLocalizedString(@"Photo", @"相机胶卷")];
         [self.tableView registerClass:[UMAssetsCollectionCell class] forCellReuseIdentifier:@"CollectionCell"];
     }
     return self;

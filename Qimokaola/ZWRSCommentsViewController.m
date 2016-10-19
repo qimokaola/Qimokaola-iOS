@@ -23,6 +23,8 @@
  */
 @property (nonatomic, strong) NSMutableArray *comments;
 
+@property (nonatomic, strong) NSString *nextPageUrl;
+
 @end
 
 @implementation ZWRSCommentsViewController
@@ -45,6 +47,8 @@
     } else {
         [self.tableView registerClass:[ZWSentCommentCell class] forCellReuseIdentifier:kUserCommentsSentIdentifier];
     }
+    
+    self.tableView.mj_footer = [MJRefreshBackStateFooter footerWithRefreshingTarget:self refreshingAction:@selector(refreshFooterStartRefreshing)];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -59,30 +63,66 @@
 - (void)freshHeaderStartFreshing {
     __weak __typeof(self) weakSelf = self;
     if (_userCommentsType == ZWUserCommentsTypeReceived) {
-        [[UMComDataRequestManager defaultManager] fetchCommentsUserReceivedWithCount:999
+        [[UMComDataRequestManager defaultManager] fetchCommentsUserReceivedWithCount:kStudentCircleFetchDataCount
                                                                           completion:^(NSDictionary *responseObject, NSError *error) {
-                                                                              [weakSelf.tableView.mj_header endRefreshing];
-                                                                              [weakSelf dealWithResult:responseObject error:error];
+                                                                              [weakSelf dealWithFetchFeedResult:responseObject error:error fromHeader:YES];
                                                                           }];
     } else {
-        [[UMComDataRequestManager defaultManager] fetchCommentsUserSentWithCount:999
+        [[UMComDataRequestManager defaultManager] fetchCommentsUserSentWithCount:kStudentCircleFetchDataCount
                                                                       completion:^(NSDictionary *responseObject, NSError *error) {
-                                                                          [weakSelf.tableView.mj_header endRefreshing];
-                                                                          [weakSelf dealWithResult:responseObject error:error];
+                                                                          [weakSelf dealWithFetchFeedResult:responseObject error:error fromHeader:YES];
                                                                       }];
     }
 
 }
 
-- (void)dealWithResult:(NSDictionary *)responseObject error:(NSError *)error {
-    if (responseObject) {
-        [self.comments removeAllObjects];
-        [self.comments addObjectsFromArray:responseObject[@"data"]];
-        [self.tableView reloadData];
+- (void)refreshFooterStartRefreshing {
+    if (!self.nextPageUrl) {
+        [ZWHUDTool showHUDInView:self.navigationController.view withTitle:@"没有更多了" message:nil duration:kShowHUDShort];
+        [self.tableView.mj_footer endRefreshing];
+        return;
+    }
+    __weak __typeof(self) weakSelf = self;
+    UMComPageRequestType type = self.userCommentsType == ZWUserCommentsTypeReceived ? UMComRequestType_UserReceiveComment : UMComRequestType_UserSendComment;
+    [[UMComDataRequestManager defaultManager] fetchNextPageWithNextPageUrl:self.nextPageUrl
+                                                           pageRequestType:type
+                                                                completion:^(NSDictionary *responseObject, NSError *error) {
+                                                                    [weakSelf dealWithFetchFeedResult:responseObject error:error fromHeader:NO];
+                                                                }];
+}
+
+/**
+ 处理获取来的数据
+ 
+ @param responseObject 响应对象
+ @param error          错误
+ @param isFromeHeader  是否来自头部刷新控件
+ */
+- (void)dealWithFetchFeedResult:(NSDictionary *)responseObject error:(NSError *)error fromHeader:(BOOL)isFromeHeader {
+    if (isFromeHeader) {
+        [self.tableView.mj_header endRefreshing];
     } else {
-        [ZWHUDTool showHUDInView:self.navigationController.view withTitle:@"获取数据失败" message:nil duration:kShowHUDShort];
+        [self.tableView.mj_footer endRefreshing];
+    }
+    if (responseObject) {
+        if (isFromeHeader) {
+            [self.comments removeAllObjects];
+        }
+        [self.comments addObjectsFromArray:[responseObject objectForKey:@"data"]];
+        [self.tableView reloadData];
+        self.nextPageUrl = responseObject[@"next_page_url"];
+        if (isFromeHeader) {
+            if (self.tableView.cellsTotalHeight < kScreenH - 64 - 40) {
+                self.tableView.mj_footer.hidden = YES;
+            } else {
+                self.tableView.mj_footer.hidden = NO;
+            }
+        }
+    } else {
+        [ZWHUDTool showHUDInView:self.navigationController.view withTitle:@"出现错误，获取失败" message:nil duration:kShowHUDMid];
     }
 }
+
 
 #pragma mark - Table view data source
 

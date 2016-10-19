@@ -46,13 +46,13 @@ NSString *const kLoginedUserKey = @"kLoginedUserKey";
 }
 
 - (void)loginStudentCircle {
-    if ([UMComSession sharedInstance].isLogin) {
+    if (!self.loginUser) {
         return;
     }
     __weak __typeof(self) weakSelf = self;
     [[UMComDataRequestManager defaultManager] userCustomAccountLoginWithName:_loginUser.nickname
                                                                     sourceId:_loginUser.uid
-                                                                    icon_url:[[[ZWAPITool base] stringByAppendingString:@"/"] stringByAppendingString:_loginUser.avatar_url]
+                                                                    icon_url:[[[ZWAPITool base] stringByAppendingString:@"/"] stringByAppendingString:self.loginUser.avatar_url]
                                                                       gender:[_loginUser.gender isEqualToString:@"男"] ? 1 : 0
                                                                          age:0
                                                                       custom:_loginUser.collegeName
