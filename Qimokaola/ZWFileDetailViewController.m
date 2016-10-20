@@ -22,10 +22,10 @@
 
 #import <AFNetworking/AFNetworking.h>
 #import "Masonry.h"
-#import "UMSocial.h"
+#import <UMSocialCore/UMSocialCore.h>
 #import <ReactiveCocoa/ReactiveCocoa.h>
 
-@interface ZWFileDetailViewController () <UMSocialUIDelegate, UIDocumentInteractionControllerDelegate>
+@interface ZWFileDetailViewController () <UIDocumentInteractionControllerDelegate>
 
 
 
@@ -436,12 +436,26 @@
 #pragma mark - 分享至QQ QQ空间
 - (void)shareToComputer{
     NSString *shareUrl = [NSString stringWithFormat:@"%@：%@", self.file.name, [NSString stringWithFormat:[ZWAPITool shareFileAPI], self.file.md5, [self.file.name URLEncodedString]]];
-    [UMSocialSnsService presentSnsIconSheetView:self
-                                         appKey:nil
-                                      shareText:shareUrl
-                                     shareImage:nil
-                                shareToSnsNames:@[UMShareToQQ]
-                                       delegate:self];
+    
+//    [UMSocialSnsService presentSnsIconSheetView:self
+//                                         appKey:nil
+//                                      shareText:shareUrl
+//                                     shareImage:nil
+//                                shareToSnsNames:@[UMShareToQQ]
+//                                       delegate:self];
+    
+    UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
+    messageObject.text = shareUrl;
+    [[UMSocialManager defaultManager] shareToPlatform:UMSocialPlatformType_QQ messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {
+        NSString *message = nil;
+        if (!error) {
+            message = [NSString stringWithFormat:@"分享成功"];
+        } else {
+            message = [NSString stringWithFormat:@"失败原因Code: %d\n",(int)error.code];
+            
+        }
+        NSLog(@"%@", message);
+    }];
     
 }
 
@@ -510,15 +524,6 @@
 //弹出列表方法presentSnsIconSheetView需要设置delegate为self
 -(BOOL)isDirectShareInIconActionSheet {
     return YES;
-}
-
--(void)didFinishGetUMSocialDataInViewController:(UMSocialResponseEntity *)response {
-    //根据`responseCode`得到发送结果,如果分享成功
-    if(response.responseCode == UMSResponseCodeSuccess)
-    {
-        //得到分享到的微博平台名
-        NSLog(@"share to sns name is %@",[[response.data allKeys] objectAtIndex:0]);
-    }
 }
 
 @end

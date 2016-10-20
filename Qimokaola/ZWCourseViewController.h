@@ -19,8 +19,6 @@
 
 #import "ZWHUDTool.h"
 
-#import "ZWPopViewController.h"
-
 #import "LinqToObjectiveC.h"
 #import <ReactiveCocoa/ReactiveCocoa.h>
 #import <Masonry/Masonry.h>

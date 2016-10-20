@@ -8,7 +8,6 @@
 
 #import "UIViewController+Extension.h"
 #import <objc/runtime.h>
-#import <UMMobClick/MobClick.h>
 
 @implementation UIViewController (Extension)
 

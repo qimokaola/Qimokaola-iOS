@@ -13,6 +13,8 @@
 #import "ZWUser.h"
 #import "ZWFeedTableViewController.h"
 
+#import "ZWUserManager.h"
+
 #import "ZWUMUserFeedCell.h"
 #import "ZWAppUserInfoCell.h"
 #import "ZWUMUserFeedHeader.h"
@@ -294,7 +296,7 @@
     
     if (indexPath.section == 0) {
         ZWUMUserFeedCell *cell = [tableView dequeueReusableCellWithIdentifier:kUMUserFeedCellIdentifier];
-        if (DecodeAnonyousCode(self.feed.custom) == 0) {
+        if (DecodeAnonyousCode(self.feed.custom) == 0 || [self.umUser.uid isEqualToString:[ZWUserManager sharedInstance].loginUser.uid]) {
             cell.contentLabel.text= self.feed.text;
             cell.timeLabel.text = self.feed.create_time;
         } else {
@@ -343,7 +345,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         ZWFeedTableViewController *feedListController = [[ZWFeedTableViewController alloc] init];
-        feedListController.feedType = ZWFeedTableViewTypeAboutOthers;
+        feedListController.feedType = [self.umUser.uid isEqualToString:[ZWUserManager sharedInstance].loginUser.uid] ? ZWFeedTableViewTypeAboutUser : ZWFeedTableViewTypeAboutOthers;
         feedListController.user = self.umUser;
         [self.navigationController pushViewController:feedListController animated:YES];
     }

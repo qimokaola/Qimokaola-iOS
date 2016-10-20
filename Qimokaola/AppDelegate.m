@@ -8,9 +8,7 @@
 
 #import "AppDelegate.h"
 #import "ZWPathTool.h"
-#import "ZWDownloadCenter.h"
 #import "ZWAdvertisementView.h"
-#import "YYFPSLabel.h"
 #import "ZWLoginAndRegisterViewController.h"
 #import "ZWTabBarController.h"
 #import "ZWNetworkingManager.h"
@@ -20,15 +18,13 @@
 #import "ZWAPITool.h"
 #import "ZWUserManager.h"
 #import "UIColor+Extension.h"
-#import "ZWBrowserViewController.h"
 #import "ZWUploadFileViewController.h"
 #import "ZWBrowserTool.h"
 
 #import <AXWebViewController/AXWebViewController.h>
 
-#import "UMSocial.h"
-#import "UMSocialQQHandler.h"
-#import "JSPatch/JSPatch.h"
+#import <UMSocialCore/UMSocialCore.h>
+#import <JSPatchPlatform/JSPatch.h>
 #import "UMMobClick/MobClick.h"
 #import <UMCommunitySDK/UMCommunitySDK.h>
 #import "UMPushSDK_1.4.0/UMessage.h"
@@ -84,10 +80,17 @@
     UMConfigInstance.appKey = @"561e48d167e58e12fd001243";
     UMConfigInstance.channelId = @"App Store";
     [MobClick startWithConfigure:UMConfigInstance];//配置以上参数后调用此方法初始化SDK！
+    
+    //打开调试日志
+    [[UMSocialManager defaultManager] openLog:YES];
+    //设置友盟appkey
+    [[UMSocialManager defaultManager] setUmSocialAppkey:@"57b447c6e0f55af52e000e0b"];
+    //设置分享到QQ互联的appKey和appSecret
+    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_QQ appKey:@"1104906908"  appSecret:@"F3gD6ULgbrpPSqqF" redirectURL:@"http://mobile.umeng.com/social"];
 
-    //初始化QQ分享SDK
-    [UMSocialData setAppKey:@"57b447c6e0f55af52e000e0b"];
-    [UMSocialQQHandler setQQWithAppId:@"1104906908" appKey:@"F3gD6ULgbrpPSqqF" url:@"http://www.baidu.com"];
+//    //初始化QQ分享SDK
+//    [UMSocialData setAppKey:@"57b447c6e0f55af52e000e0b"];
+//    [UMSocialQQHandler setQQWithAppId:@"1104906908" appKey:@"F3gD6ULgbrpPSqqF" url:@"http://www.baidu.com"];
     
     //0.5秒后开始监听网络变化
     [self performSelector:@selector(monitorNetworkStatus) withObject:nil afterDelay:0.5f];
@@ -148,13 +151,6 @@
         //显示登录，注册视图
         [self setWindowRootControllerWithClass:[ZWLoginAndRegisterViewController class]];
     }
-    
-//#ifdef DEBUG
-//    YYFPSLabel *fpsLabel = [[YYFPSLabel alloc] initWithFrame:CGRectMake(0, kScreenHeight - 100, 0, 0)];
-//    [fpsLabel sizeToFit];
-//    [self.window addSubview:fpsLabel];
-//#endif
-    
     return YES;
 }
 
@@ -249,7 +245,7 @@
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
     NSLog(@"%@", userInfo);
     //关闭友盟自带的弹出框
-    [UMessage setAutoAlert:YES];
+    [UMessage setAutoAlert:NO];
     [UMessage didReceiveRemoteNotification:userInfo];
     completionHandler(UIBackgroundFetchResultNoData);
 }
@@ -299,41 +295,35 @@
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(nullable NSString *)sourceApplication annotation:(id)annotation
 {
-    if (![ZWUserManager sharedInstance].isLogin) {
-        [[NSFileManager defaultManager] removeItemAtURL:url error:NULL];
-        [ZWHUDTool showHUDWithTitle:@"只有在登录状态下才能上传文件哦" message:nil duration:kShowHUDMid];
-    } else {
-        [self presentUploadViewWithFileName:url];
+    NSLog(@"ios 8");
+    NSLog(@"openURL:%@ sourceApplication:%@ annotation:%@", url, sourceApplication, annotation);
+    if ([[NSFileManager defaultManager] fileExistsAtPath:url.path]) {
+        if (![ZWUserManager sharedInstance].isLogin) {
+            [[NSFileManager defaultManager] removeItemAtURL:url error:NULL];
+            [ZWHUDTool showHUDWithTitle:@"只有在登录状态下才能上传文件哦" message:nil duration:kShowHUDMid];
+        } else {
+            [self presentUploadViewWithFileName:url];
+        }
     }
-    return  [UMSocialSnsService handleOpenURL:url];
+    return  [[UMSocialManager defaultManager] handleOpenURL:url];
 }
 
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(nonnull NSDictionary<NSString *,id> *)options
 {
-    if (![ZWUserManager sharedInstance].isLogin) {
-        [[NSFileManager defaultManager] removeItemAtURL:url error:NULL];
-        [ZWHUDTool showHUDWithTitle:@"只有在登录状态下才能上传文件哦" message:nil duration:kShowHUDMid];
-    } else {
-        [self presentUploadViewWithFileName:url];
+    NSLog(@"openURL:%@ options:%@", url, options);
+    if ([[NSFileManager defaultManager] fileExistsAtPath:url.path]) {
+        if (![ZWUserManager sharedInstance].isLogin) {
+            [[NSFileManager defaultManager] removeItemAtURL:url error:NULL];
+            [ZWHUDTool showHUDWithTitle:@"只有在登录状态下才能上传文件哦" message:nil duration:kShowHUDMid];
+        } else {
+            [self presentUploadViewWithFileName:url];
+        }
     }
-    return  [UMSocialSnsService handleOpenURL:url];
+    return  [[UMSocialManager defaultManager] handleOpenURL:url];
 }
 
 - (void)presentUploadViewWithFileName:(NSURL *)url {
-//    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"上传文件" message:filename preferredStyle:UIAlertControllerStyleAlert];
-//    UIAlertAction *cancleAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
-//    UIAlertAction *uploadAction = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-//        MBProgressHUD *hud = [ZWHUDTool excutingHudInView:[UIApplication sharedApplication].keyWindow title:@"正在上传"];
-//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//            hud.mode = MBProgressHUDModeText;
-//            hud.label.text = @"上传成功,感谢您的贡献";
-//            [hud hideAnimated:YES afterDelay:kShowHUDMid];
-//        });
-//    }];
-//    [alertController addAction:cancleAction];
-//    [alertController addAction:uploadAction];
-//    [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alertController animated:YES completion:nil];
 
     ZWUploadFileViewController *uploader = [[ZWUploadFileViewController alloc] init];
     uploader.fileUrl = url;
@@ -341,7 +331,8 @@
 }
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
-    return  [UMSocialSnsService handleOpenURL:url];
+    NSLog(@"handleOpenURL: %@", url);
+    return  [[UMSocialManager defaultManager] handleOpenURL:url];
 }
 
 

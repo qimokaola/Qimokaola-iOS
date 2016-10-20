@@ -14,7 +14,6 @@
 
 #import "ZWFeedTableViewController.h"
 #import "ZWUserCommentsViewController.h"
-#import "ZWSettingsViewController.h"
 #import "ZWUserLikesViewController.h"
 
 #import "ZWBrowserTool.h"

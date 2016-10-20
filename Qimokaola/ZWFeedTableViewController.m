@@ -142,7 +142,7 @@
                                                                              
                                                                              [weakSelf dealWithFetchFeedResult:responseObject error:error fromHeader:YES];
                                                                          }];
-    } else if (self.feedType == ZWFeedTableViewTypeAboutUser) {
+    } else if (self.feedType == ZWFeedTableViewTypeAboutUser || self.feedType == ZWFeedTableViewTypeAboutOthers) {
         // 获取有关于用户的feed流
         [[UMComDataRequestManager defaultManager] fetchFeedsTimelineWithUid:weakSelf.user.uid
                                                                    sortType:UMComUserTimeLineFeedType_Default
@@ -157,15 +157,16 @@
                                                                         completion:^(NSDictionary *responseObject, NSError *error) {
                                                                             [weakSelf dealWithFetchFeedResult:responseObject error:error fromHeader:YES];
                                                                         }];
-    } else if (self.feedType == ZWFeedTableViewTypeAboutOthers) {
-        // 获取有关于用户的feed流
-        [[UMComDataRequestManager defaultManager] fetchFeedsTimelineWithUid:weakSelf.user.uid
-                                                                   sortType:UMComUserTimeLineFeedType_Default
-                                                                      count:kStudentCircleFetchDataCount
-                                                                 completion:^(NSDictionary *responseObject, NSError *error) {
-                                                                     [weakSelf dealWithFetchFeedResult:responseObject error:error fromHeader:YES];
-                                                                 }];
     }
+//    else if (self.feedType == ZWFeedTableViewTypeAboutOthers) {
+//        // 获取有关于用户的feed流
+//        [[UMComDataRequestManager defaultManager] fetchFeedsTimelineWithUid:weakSelf.user.uid
+//                                                                   sortType:UMComUserTimeLineFeedType_Default
+//                                                                      count:kStudentCircleFetchDataCount
+//                                                                 completion:^(NSDictionary *responseObject, NSError *error) {
+//                                                                     [weakSelf dealWithFetchFeedResult:responseObject error:error fromHeader:YES];
+//                                                                 }];
+//    }
 
 }
 

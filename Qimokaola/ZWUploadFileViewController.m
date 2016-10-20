@@ -78,9 +78,9 @@
     
     RAC(self.chooseCourseButton.titleLabel, text) = [uploadCourseValidSignal map:^id(NSNumber *value) {
         if (value.boolValue) {
-            return @"切换上传课程";
+            return @"重选文件所属课程";
         } else {
-            return @"选择上传课程";
+            return @"选择文件所属课程";
         }
     }];
     

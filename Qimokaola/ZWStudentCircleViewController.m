@@ -103,7 +103,6 @@ typedef NS_ENUM(NSInteger, ZWFetchedDataSource) {
     
     self.cache = [[YYCache alloc] initWithName:kTopCacheName];
     [self.topics addObjectsFromArray:(NSArray *)[self.cache objectForKey:kTopicCacheKey]];
-    NSLog(@"%@", self.topics);
     
     NSArray *imgs = @[
                       @"pic1.png",
@@ -146,8 +145,8 @@ typedef NS_ENUM(NSInteger, ZWFetchedDataSource) {
         
         [_footerView addSubview:hintLabel];
         
-        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, 71, kScreenW - 71, 0.5)];
-        line.backgroundColor = [UIColor blackColor];
+        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(71, 0, kScreenW - 71, 0.5)];
+        line.backgroundColor = RGB(200, 199, 204);
         [_footerView addSubview:line];
     }
     return _footerView;

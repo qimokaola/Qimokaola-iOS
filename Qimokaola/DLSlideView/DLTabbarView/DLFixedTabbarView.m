@@ -32,6 +32,7 @@
     [self addSubview:backgroudView_];
     
     scrollView_ = [[UIScrollView alloc] initWithFrame:self.bounds];
+    scrollView_.scrollsToTop = NO;
     [self addSubview:scrollView_];
     
     trackView_ = [[UIImageView alloc] initWithFrame:CGRectMake(0, self.bounds.size.height-kTrackViewHeight-1, self.bounds.size.width, kTrackViewHeight)];
