@@ -17,7 +17,7 @@
     if (array == nil) {
         array = @[@"7z", @"doc", @"docx", @"jpg", @"pdf", @"png",
                   @"ppt", @"pptx", @"rar", @"txt", @"video",
-                  @"xls", @"zip", @"rtf", @"wps", @"dps", @"et", @"xlt"];
+                  @"xls", @"zip", @"rtf", @"wps", @"dps", @"et", @"xlt", @"xlsx"];
     }
     
     if ([array containsObject:type]) {
