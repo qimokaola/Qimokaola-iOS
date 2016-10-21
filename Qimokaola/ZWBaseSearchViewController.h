@@ -15,6 +15,7 @@
 #import <UIKit/UIKit.h>
 #import "ZWBaseTableViewController.h"
 #import "UIView+Extension.h"
+#import "ZWSearchTool.h"
 
 #import "MJRefresh.h"
 

@@ -163,6 +163,7 @@
 		C3EEE0721DB9D4370096B6DE /* ESPictureProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = C3EEE06E1DB9D4370096B6DE /* ESPictureProgressView.m */; };
 		C3EEE0731DB9D4370096B6DE /* ESPictureView.m in Sources */ = {isa = PBXBuildFile; fileRef = C3EEE0701DB9D4370096B6DE /* ESPictureView.m */; };
 		C3EEE0771DBA1DAC0096B6DE /* ZWPotoTool.m in Sources */ = {isa = PBXBuildFile; fileRef = C3EEE0761DBA1DAC0096B6DE /* ZWPotoTool.m */; };
+		C3EEE07B1DBA5E7B0096B6DE /* ZWSearchTool.m in Sources */ = {isa = PBXBuildFile; fileRef = C3EEE07A1DBA5E7B0096B6DE /* ZWSearchTool.m */; };
 		C3F78BE61D537CC400E9C2AB /* ZWLoginAndRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F78BE51D537CC400E9C2AB /* ZWLoginAndRegisterViewController.m */; };
 		C3F7910D1BCD28AF003793B1 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3F7910C1BCD28AF003793B1 /* MessageUI.framework */; };
 		C3F7910F1BCD28B7003793B1 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3F7910E1BCD28B7003793B1 /* JavaScriptCore.framework */; };
@@ -485,6 +486,8 @@
 		C3EEE0701DB9D4370096B6DE /* ESPictureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESPictureView.m; sourceTree = "<group>"; };
 		C3EEE0751DBA1DAC0096B6DE /* ZWPotoTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWPotoTool.h; sourceTree = "<group>"; };
 		C3EEE0761DBA1DAC0096B6DE /* ZWPotoTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWPotoTool.m; sourceTree = "<group>"; };
+		C3EEE0791DBA5E7B0096B6DE /* ZWSearchTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWSearchTool.h; sourceTree = "<group>"; };
+		C3EEE07A1DBA5E7B0096B6DE /* ZWSearchTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWSearchTool.m; sourceTree = "<group>"; };
 		C3F78BE41D537CC400E9C2AB /* ZWLoginAndRegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWLoginAndRegisterViewController.h; sourceTree = "<group>"; };
 		C3F78BE51D537CC400E9C2AB /* ZWLoginAndRegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWLoginAndRegisterViewController.m; sourceTree = "<group>"; };
 		C3F791081BCD286F003793B1 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
@@ -696,6 +699,7 @@
 		C31BB1091CB7ED8D00EE1E37 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				C3EEE0781DBA5E690096B6DE /* ZWSearchTool */,
 				C3EEE0741DBA1D960096B6DE /* ZWPotoTool */,
 				C32811F11DB29A6E00BE499C /* ZWBrowserTool */,
 				C39804061D91779E006D1471 /* ZWDataBaseTool */,
@@ -1673,6 +1677,15 @@
 			name = ZWPotoTool;
 			sourceTree = "<group>";
 		};
+		C3EEE0781DBA5E690096B6DE /* ZWSearchTool */ = {
+			isa = PBXGroup;
+			children = (
+				C3EEE0791DBA5E7B0096B6DE /* ZWSearchTool.h */,
+				C3EEE07A1DBA5E7B0096B6DE /* ZWSearchTool.m */,
+			);
+			name = ZWSearchTool;
+			sourceTree = "<group>";
+		};
 		C3F78BE31D537C9900E9C2AB /* ZWLoginAndRegisterViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -2026,6 +2039,7 @@
 				C3019E7F1D965B2800CC2F55 /* ZWCommentCell.m in Sources */,
 				C3C5313A1DB52543000C3562 /* ZWChooseCourseViewController.m in Sources */,
 				C3561A261D3774560032C97B /* ZWLoginViewController.m in Sources */,
+				C3EEE07B1DBA5E7B0096B6DE /* ZWSearchTool.m in Sources */,
 				C3C531361DB518AC000C3562 /* ZWUploadFileViewController.m in Sources */,
 				C30BBA8E1DA80ED90090EB4A /* ZWDownloadedInfo.m in Sources */,
 				C32666601D9533C4008C6B24 /* UMComResourceManager.m in Sources */,

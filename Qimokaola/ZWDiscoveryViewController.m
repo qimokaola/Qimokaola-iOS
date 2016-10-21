@@ -366,7 +366,11 @@
             case 2: {
                 ZWUserCommentsViewController *commentsViewController = [[ZWUserCommentsViewController alloc] init];
                 [self.navigationController pushViewController:commentsViewController animated:YES];
-                [ZWUserManager sharedInstance].unreadCommentCount = 0;
+                if ([ZWUserManager sharedInstance].unreadCommentCount > kStudentCircleFetchDataCount) {
+                    [ZWUserManager sharedInstance].unreadCommentCount -= kStudentCircleFetchDataCount;
+                } else {
+                    [ZWUserManager sharedInstance].unreadCommentCount = 0;
+                }
                 [tableView reloadRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationNone];
             }
                 break;
@@ -374,7 +378,11 @@
             case 3: {
                 ZWUserLikesViewController *likeViewController = [[ZWUserLikesViewController alloc] init];
                 [self.navigationController pushViewController:likeViewController animated:YES];
-                [ZWUserManager sharedInstance].unreadLikeCount = 0;
+                if ([ZWUserManager sharedInstance].unreadLikeCount > kStudentCircleFetchDataCount) {
+                    [ZWUserManager sharedInstance].unreadLikeCount -= kStudentCircleFetchDataCount;
+                } else {
+                    [ZWUserManager sharedInstance].unreadLikeCount = 0;
+                }
                 [tableView reloadRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationNone];
             }
                 break;

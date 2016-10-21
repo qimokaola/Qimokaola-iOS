@@ -271,8 +271,7 @@ static NSString *const kCourseCellIdentifier = @"kCourseCellIdentifier";
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
     [self.filteredArray removeAllObjects];
-    NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"name CONTAINS[c] %@", searchController.searchBar.text];
-    self.filteredArray = [[self.dataArray filteredArrayUsingPredicate:searchPredicate] mutableCopy];
+    self.filteredArray = [ZWSearchTool searchFromArray:self.dataArray withSearchText:searchController.searchBar.text withSearhPredicateString:@"name CONTAINS[c] %@"];
     [self.tableView reloadData];
 }
 
