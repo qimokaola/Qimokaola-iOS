@@ -24,7 +24,9 @@ PODS:
   - FMDB (2.6.2):
     - FMDB/standard (= 2.6.2)
   - FMDB/standard (2.6.2)
-  - IQKeyboardManager (4.0.6)
+  - IQKeyboardManager (4.0.7)
+  - LCActionSheet (2.5.2):
+    - Masonry (~> 1.0.1)
   - LinqToObjectiveC (2.1.0)
   - Masonry (1.0.2)
   - MBProgressHUD (1.0.0)
@@ -57,6 +59,7 @@ DEPENDENCIES:
   - DZNEmptyDataSet
   - FMDB
   - IQKeyboardManager
+  - LCActionSheet
   - LinqToObjectiveC
   - Masonry
   - MBProgressHUD
@@ -74,7 +77,8 @@ SPEC CHECKSUMS:
   AXWebViewController: d6d9920c2a0cf4456f3641b2a78da11a8ad80c06
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
-  IQKeyboardManager: c52debb1967799ae7addb98eab0cf328083a874f
+  IQKeyboardManager: 69002bb4fea60596b710e57d426abc00e5063630
+  LCActionSheet: 92aa29e2c0a12e771e334193a5129288817e69e8
   LinqToObjectiveC: f0e40c137a458b6b9725c4c7b6a575c0c72e3aec
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
@@ -86,6 +90,6 @@ SPEC CHECKSUMS:
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   YYKit: 7cda43304a8dc3696c449041e2cb3107b4e236e7
 
-PODFILE CHECKSUM: a6585a5a561d4ef0b64c49159b5cb0b57e97e9fe
+PODFILE CHECKSUM: 15d982ec1c3bc9b5b708149a4aed6e22c549ebd6
 
-COCOAPODS: 1.0.1
+COCOAPODS: 1.1.1

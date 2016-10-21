@@ -23,6 +23,11 @@
 
 #import "ESPictureBrowser.h"
 #import "ESPictureView.h"
+#import "ZWHUDTool.h"
+#import "ZWPotoTool.h"
+
+#import "LCActionSheet.h"
+
 #import <YYKit/YYKit.h>
 
 @interface ESPictureBrowser()<UIScrollViewDelegate, ESPictureViewDelegate>
@@ -144,7 +149,7 @@
     }
     
     for (ESPictureView *pictureView in _readyToUsePictureViews) {
-        [pictureView.imageView cancelCurrentImageRequest];
+        [pictureView.imageView   cancelCurrentImageRequest];
     }
     __weak __typeof(self) weakSelf = self;
     // 执行关闭动画
@@ -162,11 +167,28 @@
     [self dismiss];
 }
 
+//- (void)longPress:(UILongPressGestureRecognizer *)ges {
+//    if (ges.state == UIGestureRecognizerStateEnded) {
+//        if (self.longPressBlock) {
+//            self.longPressBlock(_currentPage);
+//        }
+//        
+//    }
+//}
+
 - (void)longPress:(UILongPressGestureRecognizer *)ges {
-    if (ges.state == UIGestureRecognizerStateEnded) {
-        if (self.longPressBlock) {
-            self.longPressBlock(_currentPage);
-        }
+    if (ges.state == UIGestureRecognizerStateBegan) {
+        __weak __typeof(self) weakSelf = self;
+        LCActionSheet *actionSheet = [LCActionSheet sheetWithTitle:@"请选择操作" cancelButtonTitle:@"取消" clicked:^(LCActionSheet *actionSheet, NSInteger buttonIndex) {
+            if (buttonIndex == 0) {
+                return;
+            }
+            ESPictureView *pictureView = [[weakSelf.pictureViews filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"index == %d", weakSelf.currentPage]] firstObject];
+            [ZWPotoTool writeImageToAlbumWithImage:pictureView.imageView.image];
+        } otherButtonTitles:@"保存至相册", nil];
+        actionSheet.unBlur = YES;
+        [actionSheet show];
+        
     }
 }
 

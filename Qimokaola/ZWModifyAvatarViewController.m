@@ -11,6 +11,7 @@
 #import "ZWUserManager.h"
 #import "ZWHUDTool.h"
 #import "ZWPathTool.h"
+#import "ZWPotoTool.h"
 #import <UMCommunitySDK/UMComDataRequestManager.h>
 
 #import <ReactiveCocoa/ReactiveCocoa.h>
@@ -113,16 +114,11 @@
         [alertController addAction:fromPickerAction];
     }
     UIAlertAction *saveToAlbumAction = [UIAlertAction actionWithTitle:@"保存至相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        UIImageWriteToSavedPhotosAlbum(weakSelf.avatarView.image, self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
+        [ZWPotoTool writeImageToAlbumWithImage:weakSelf.avatarView.image];
     }];
     [alertController addAction:saveToAlbumAction];
     [alertController addAction:cancelAction];
     [self presentViewController:alertController animated:YES completion:nil];
-}
-
-- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo{
-    NSString *result = error ? @"保存失败" : @"已存入手机相册";
-    [ZWHUDTool showHUDInView:self.navigationController.view withTitle:result message:nil duration:kShowHUDShort];
 }
 
 /**

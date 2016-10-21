@@ -23,6 +23,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import <YYKit/YYKit.h>
+
 
 @class ESPictureView;
 @protocol ESPictureViewDelegate <NSObject>

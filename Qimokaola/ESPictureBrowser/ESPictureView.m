@@ -23,7 +23,6 @@
 
 #import "ESPictureView.h"
 #import "ESPictureProgressView.h"
-#import <YYKit/YYKit.h>
 
 @interface ESPictureView()<UIScrollViewDelegate>
 
@@ -45,8 +44,6 @@
 
 @implementation ESPictureView
 
-#define kAnimationTime 0.3
-
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -65,7 +62,7 @@
     self.maximumZoomScale = 2;
     
     // 添加 imageView
-    UIImageView *imageView = [[UIImageView alloc] init];
+    YYAnimatedImageView *imageView = [[YYAnimatedImageView alloc] init];
     imageView.clipsToBounds = true;
     imageView.contentMode = UIViewContentModeScaleAspectFill;
     imageView.frame = self.bounds;
@@ -91,7 +88,7 @@
     self.showAnim = true;
     [self.progressView setHidden:true];
     __weak __typeof(self) weakSelf = self;
-    [UIView animateWithDuration:kAnimationTime animations:^{
+    [UIView animateWithDuration:0.25 animations:^{
         if (animationBlock != nil) {
             animationBlock();
         }
@@ -107,10 +104,11 @@
 }
 
 - (void)animationDismissWithToRect:(CGRect)rect animationBlock:(void (^)())animationBlock completionBlock:(void (^)())completionBlock {
-    __weak __typeof(self) weakSelf = self;
+    
     // 隐藏进度视图
     self.progressView.hidden = true;
-    [UIView animateWithDuration:kAnimationTime animations:^{
+    __weak __typeof(self) weakSelf = self;
+    [UIView animateWithDuration:0.25 animations:^{
         if (animationBlock) {
             animationBlock();
         }
@@ -182,8 +180,8 @@
 }
 
 - (void)setContentSize:(CGSize)contentSize {
-    __weak __typeof(self) weakSelf = self;
     [super setContentSize:contentSize];
+    __weak __typeof(self) weakSelf = self;
     if (self.zoomScale == 1) {
         [UIView animateWithDuration:0.25 animations:^{
             CGPoint center = weakSelf.imageView.center;

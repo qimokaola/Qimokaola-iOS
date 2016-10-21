@@ -16,7 +16,7 @@
 
 #import "ZWHUDTool.h"
 
-#import "JNSelectView.h"
+#import <LCActionSheet/LCActionSheet.h>
 
 #import <YYKit/YYKit.h>
 
@@ -192,39 +192,6 @@
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     });
     __weak __typeof(self) weakSelf = self;
-//    if (indexPath.section == 0) {
-//        if (indexPath.row == 0) {
-//            ZWModifyAvatarViewController *modifyAvatar = [[ZWModifyAvatarViewController alloc] init];
-//            modifyAvatar.avatarUrl = [[[ZWAPITool base] stringByAppendingString:@"/"] stringByAppendingString:[ZWUserManager sharedInstance].loginUser.avatar_url];
-//            modifyAvatar.avatarViewType = ZWAvatarViewControllerTypeSelf;
-//            modifyAvatar.completion = ^() {
-//                [weakSelf.tableView reloadRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationNone];
-//            };
-//            [self.navigationController pushViewController:modifyAvatar animated:YES];
-//        } else if (indexPath.row == 1) {
-//            ZWModifyNicknameViewController *modifyNickname = [[ZWModifyNicknameViewController alloc] init];
-//            modifyNickname.completion = ^() {
-//                [weakSelf.tableView reloadRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationNone];
-//            };
-//            [self.navigationController pushViewController:modifyNickname animated:YES];
-//        }
-//    } else {
-//        if (indexPath.row == 1) {
-//            ZWModifiAcademyViewController *modifyAcademy = [[ZWModifiAcademyViewController alloc] init];
-//            modifyAcademy.completion = ^() {
-//                [weakSelf.tableView reloadRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationNone];
-//            };
-//            [self.navigationController pushViewController:modifyAcademy animated:YES];
-//        } else if (indexPath.row == 2) {
-//        } else if (indexPath.row == 3) {
-//            ZWModifyGenderViewController *modifyGender = [[ZWModifyGenderViewController alloc] init];
-//            modifyGender.comletion = ^() {
-//                [weakSelf.tableView reloadRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationNone];
-//            };
-//            [self.navigationController pushViewController:modifyGender animated:YES];
-//        }
-//    }
-    
     if (indexPath.section == 0) {
         switch (indexPath.row) {
             case 0:
@@ -266,8 +233,11 @@
                 
             case 2:
             {
-                [JNSelectView presentSingleSelectViewWithList:self.enterYearArray title:@"选择入学年份" completionHandler:^(NSInteger index) {
-                    NSString *selectedEnteryear = weakSelf.enterYearArray[index];
+                LCActionSheet *actionSheet = [LCActionSheet sheetWithTitle:@"请选择入学年份" cancelButtonTitle:@"取消" clicked:^(LCActionSheet *actionSheet, NSInteger buttonIndex) {
+                    if (buttonIndex == 0) {
+                        return;
+                    }
+                    NSString *selectedEnteryear = weakSelf.enterYearArray[buttonIndex - 1];
                     if ([selectedEnteryear isEqualToString:[ZWUserManager sharedInstance].loginUser.enterYear]) {
                         return;
                     } else {
@@ -276,11 +246,15 @@
                                 [[ZWUserManager sharedInstance] updateEnterYear:selectedEnteryear];
                                 [weakSelf.tableView reloadRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationNone];
                             } else {
-                                [ZWHUDTool showHUDInView:weakSelf.navigationController.view withTitle:@"出现了，修改失败" message:nil duration:kShowHUDShort];
+                                [ZWHUDTool showHUDInView:weakSelf.navigationController.view withTitle:@"出现错误，修改失败" message:nil duration:kShowHUDShort];
                             }
                         }];
                     }
-                }];
+                } otherButtonTitles:weakSelf.enterYearArray[0], weakSelf.enterYearArray[1], weakSelf.enterYearArray[2], weakSelf.enterYearArray[3], weakSelf.enterYearArray[4], nil];
+                actionSheet.unBlur = YES;
+                actionSheet.visibleButtonCount = 5;
+                [actionSheet show];
+                
             }
                 break;
                 

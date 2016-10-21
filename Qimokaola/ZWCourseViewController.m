@@ -286,6 +286,8 @@ static NSString *const kCourseCellIdentifier = @"kCourseCellIdentifier";
     self.tabBarController.tabBar.hidden = YES;
     self.tableView.emptyDataSetSource = nil;
     self.tableView.emptyDataSetDelegate = nil;
+    
+    self.tableView.mj_header.hidden = YES;
 }
 
 - (void)willDismissSearchController:(UISearchController *)searchController {
@@ -293,6 +295,8 @@ static NSString *const kCourseCellIdentifier = @"kCourseCellIdentifier";
     self.tabBarController.tabBar.hidden = NO;
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
+    
+    self.tableView.mj_header.hidden = NO;
 }
 
 #pragma mark - UIPopoverPresentationControllerDelegate
