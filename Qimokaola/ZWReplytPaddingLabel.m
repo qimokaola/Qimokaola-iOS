@@ -74,7 +74,7 @@
     
     NSString *replyContent = nil;
     if (_replyComment.status.intValue == 0) {
-        NSString *creator = DecodeAnonyousCode(_replyComment.custom) == 0 ? _replyComment.creator.name : kStudentCircleAnonyousName;
+        NSString *creator = DecodeAnonyousCode(_replyComment.custom) ? _replyComment.creator.name : kStudentCircleAnonyousName;
         replyContent = [NSString stringWithFormat:@"回复@%@的评论：%@", creator, _replyComment.content];
     } else {
         replyContent = @"该评论已被删除";
@@ -95,12 +95,12 @@
     NSString *feedContent = nil;
     if (_replyFeed.status.intValue < 2) {
         if (_paddingLabelType == ZWReplyPaddingLabelTypeReceivedComment) {
-            feedContent = DecodeAnonyousCode(_replyFeed.custom) == 0 ? [NSString stringWithFormat:@"回复我的主题: %@", _replyFeed.text] : [NSString stringWithFormat:@"回复我的匿名主题: %@", _replyFeed.text];
+            feedContent = DecodeAnonyousCode(_replyFeed.custom) ? [NSString stringWithFormat:@"回复我的主题: %@", _replyFeed.text] : [NSString stringWithFormat:@"回复我的匿名主题: %@", _replyFeed.text];
         } else if (_paddingLabelType == ZWReplyPaddingLabelTypeSentComment) {
-            NSString *creator = DecodeAnonyousCode(_replyFeed.custom) == 0 ? _replyFeed.creator.name : kStudentCircleAnonyousName;
+            NSString *creator = DecodeAnonyousCode(_replyFeed.custom) ? _replyFeed.creator.name : kStudentCircleAnonyousName;
             feedContent = [NSString stringWithFormat:@"回复@%@的主题：%@", creator, _replyFeed.text];
         } else if (_paddingLabelType == ZWReplyPaddingLabelTypeUserLike) {
-            NSString *creator = DecodeAnonyousCode(_replyFeed.custom) == 0 ? _replyFeed.creator.name : kStudentCircleAnonyousName;
+            NSString *creator = DecodeAnonyousCode(_replyFeed.custom) ? _replyFeed.creator.name : kStudentCircleAnonyousName;
             feedContent = [NSString stringWithFormat:@"@%@: %@", creator, _replyFeed.text];
         }
     } else {

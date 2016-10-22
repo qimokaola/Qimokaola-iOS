@@ -216,7 +216,7 @@
             [self.feeds addObjectsFromArray:[responseObject objectForKey:@"data"]];
         } else {
             [self.feeds addObjectsFromArray:[[responseObject objectForKey:@"data"] linq_where:^BOOL(UMComFeed *item) {
-                return DecodeAnonyousCode(item.custom) == 0;
+                return DecodeAnonyousCode(item.custom);
             }]];
         }
         [self.tableView reloadData];

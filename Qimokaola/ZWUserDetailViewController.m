@@ -151,7 +151,6 @@
         
         [hud hideAnimated:YES];
         [weakSelf.tableView reloadData];
-        
         [weakSelf.avatarView setImageURL:[NSURL URLWithString:[[[ZWAPITool base] stringByAppendingString:@"/"] stringByAppendingString:weakSelf.appUser.avatar_url]]];
         weakSelf.collegeLabel.text = weakSelf.appUser.collegeName;
         weakSelf.academyLabel.text = weakSelf.appUser.academyName;
@@ -296,7 +295,7 @@
     
     if (indexPath.section == 0) {
         ZWUMUserFeedCell *cell = [tableView dequeueReusableCellWithIdentifier:kUMUserFeedCellIdentifier];
-        if (DecodeAnonyousCode(self.feed.custom) == 0 || [self.umUser.uid isEqualToString:[ZWUserManager sharedInstance].loginUser.uid]) {
+        if (DecodeAnonyousCode(self.feed.custom) || [self.umUser.source_uid isEqualToString:[ZWUserManager sharedInstance].loginUser.uid]) {
             cell.contentLabel.text= self.feed.text;
             cell.timeLabel.text = self.feed.create_time;
         } else {
@@ -345,7 +344,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         ZWFeedTableViewController *feedListController = [[ZWFeedTableViewController alloc] init];
-        feedListController.feedType = [self.umUser.uid isEqualToString:[ZWUserManager sharedInstance].loginUser.uid] ? ZWFeedTableViewTypeAboutUser : ZWFeedTableViewTypeAboutOthers;
+        feedListController.feedType = [self.umUser.source_uid isEqualToString:[ZWUserManager sharedInstance].loginUser.uid] ? ZWFeedTableViewTypeAboutUser : ZWFeedTableViewTypeAboutOthers;
         feedListController.user = self.umUser;
         [self.navigationController pushViewController:feedListController animated:YES];
     }

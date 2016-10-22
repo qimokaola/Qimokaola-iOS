@@ -99,10 +99,10 @@ NSString *const kLoginedUserKey = @"kLoginedUserKey";
     __weak __typeof(self) weakSelf = self;
     // 进入时先获取一遍未读数据
     [self fetchCommunityUnreadData];
-    [NSTimer scheduledTimerWithTimeInterval:30 block:^(NSTimer * _Nonnull timer) {
+    [NSTimer scheduledTimerWithTimeInterval:120 block:^(NSTimer * _Nonnull timer) {
         [weakSelf fetchCommunityUnreadData];
     } repeats:YES];
-}
+}  
 
 - (void)fetchCommunityUnreadData {
     __weak __typeof(self) weakSelf = self;

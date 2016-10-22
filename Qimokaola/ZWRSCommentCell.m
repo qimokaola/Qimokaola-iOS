@@ -126,7 +126,7 @@
 - (void)setComment:(UMComComment *)comment {
     _comment = comment;
     // 自定义字段 0为不匿名 1为匿名
-    if (DecodeAnonyousCode(_comment.custom) == 0) {
+    if (DecodeAnonyousCode(_comment.custom)) {
         [_avatarView setImageWithURL:[NSURL URLWithString:_comment.creator.icon_url.small_url_string] placeholder:[UIImage imageNamed:@"avatar"]];
         _nameLabel.text = _comment.creator.name;
     } else {
@@ -156,7 +156,7 @@
 }
 
 - (void)clickToUser {
-    if (DecodeAnonyousCode(_comment.custom) == 1) {
+    if (!DecodeAnonyousCode(_comment.custom)) {
         return;
     }
     if (self.delegate && [self.delegate respondsToSelector:@selector(cell:didClickToUser:)]) {

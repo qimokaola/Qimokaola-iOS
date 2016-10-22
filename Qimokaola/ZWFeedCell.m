@@ -702,7 +702,7 @@
     _creator = feed.creator;
     
     // 自定义字段 0为不匿名 1为匿名
-    if (DecodeAnonyousCode(_feed.custom) == 0) {
+    if (DecodeAnonyousCode(_feed.custom)) {
         [_avatarView setImageWithURL:[NSURL URLWithString:_creator.icon_url.small_url_string] placeholder:[UIImage imageNamed:@"avatar"]];
         _nameLabel.text = _creator.name;
     } else {
@@ -794,7 +794,7 @@
 }
 
 - (void)clickToUser {
-    if (DecodeAnonyousCode(_feed.custom) == 1) {
+    if (!DecodeAnonyousCode(_feed.custom)) {
         return;
     }
     if (self.delegate && [self.delegate respondsToSelector:@selector(cell:didClickUser:atIndexPath:)]) {

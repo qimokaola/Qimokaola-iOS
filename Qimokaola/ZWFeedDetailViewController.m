@@ -199,7 +199,7 @@
     [RACObserve(self, commentToCommentWith) subscribeNext:^(UMComComment *comment) {
         NSString *placeholderPlainText = nil;
         if (comment) {
-            if (DecodeAnonyousCode(comment.custom) == 0) {
+            if (DecodeAnonyousCode(comment.custom)) {
                 placeholderPlainText = [NSString stringWithFormat:@"回复 %@", comment.creator.name];
             } else {
                 placeholderPlainText = @"回复 某同学";
@@ -670,7 +670,7 @@
         [self fetchCommentsData];
     }
     
-    if (DecodeAnonyousCode(_feed.custom) == 0) {
+    if (DecodeAnonyousCode(_feed.custom)) {
         [_avatarView setImageWithURL:[NSURL URLWithString:_feed.creator.icon_url.small_url_string] placeholder:[UIImage imageNamed:@"avatar"]];
         _nameLabel.text = _feed.creator.name;
     } else {
@@ -991,7 +991,7 @@
 
 
 - (void)clickToUser {
-    if (DecodeAnonyousCode(_feed.custom) == 1) {
+    if (!DecodeAnonyousCode(_feed.custom)) {
         return;
     }
     [self gotoUserDetailViewController:_feed.creator];
