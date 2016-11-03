@@ -172,7 +172,6 @@
 		C3F7911C1BCD3142003793B1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3F7911B1BCD3142003793B1 /* CoreGraphics.framework */; };
 		C3F791201BCD317B003793B1 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3F7911F1BCD317B003793B1 /* CoreTelephony.framework */; };
 		C3F791301BCD3C37003793B1 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3F7912F1BCD3C37003793B1 /* QuartzCore.framework */; };
-		C3F854241D7709E800E51013 /* ZWBindAccountViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F854231D7709E800E51013 /* ZWBindAccountViewModel.m */; };
 		C3FC44AD1D7DBA8100896CDB /* ZWFeedComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3FC44AC1D7DBA8100896CDB /* ZWFeedComposeViewController.m */; };
 		C3FC44B11D8154F100896CDB /* ZWBaseSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3FC44B01D8154F100896CDB /* ZWBaseSearchViewController.m */; };
 		C3FC44B91D82EECA00896CDB /* ZWFileAndFolderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3FC44B81D82EECA00896CDB /* ZWFileAndFolderViewController.m */; };
@@ -502,8 +501,6 @@
 		C3F7911D1BCD316E003793B1 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		C3F7911F1BCD317B003793B1 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		C3F7912F1BCD3C37003793B1 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		C3F854221D7709E800E51013 /* ZWBindAccountViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWBindAccountViewModel.h; sourceTree = "<group>"; };
-		C3F854231D7709E800E51013 /* ZWBindAccountViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWBindAccountViewModel.m; sourceTree = "<group>"; };
 		C3FC44AB1D7DBA8100896CDB /* ZWFeedComposeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWFeedComposeViewController.h; sourceTree = "<group>"; };
 		C3FC44AC1D7DBA8100896CDB /* ZWFeedComposeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWFeedComposeViewController.m; sourceTree = "<group>"; };
 		C3FC44AF1D8154F100896CDB /* ZWBaseSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWBaseSearchViewController.h; sourceTree = "<group>"; };
@@ -1181,6 +1178,15 @@
 			name = ZWNavigationController;
 			sourceTree = "<group>";
 		};
+		C391EB9C1DCB6D9000B7083D /* ZWLoginViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C3162C9D1D7B229100153EB9 /* ZWLoginViewModel.h */,
+				C3162C9E1D7B229100153EB9 /* ZWLoginViewModel.m */,
+			);
+			name = ZWLoginViewModel;
+			sourceTree = "<group>";
+		};
 		C39803FB1D903C33006D1471 /* ZWModifyAvatarViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -1698,10 +1704,7 @@
 		C3F854211D7709BF00E51013 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				C3F854221D7709E800E51013 /* ZWBindAccountViewModel.h */,
-				C3F854231D7709E800E51013 /* ZWBindAccountViewModel.m */,
-				C3162C9D1D7B229100153EB9 /* ZWLoginViewModel.h */,
-				C3162C9E1D7B229100153EB9 /* ZWLoginViewModel.m */,
+				C391EB9C1DCB6D9000B7083D /* ZWLoginViewModel */,
 			);
 			name = ViewModel;
 			sourceTree = "<group>";
@@ -2031,7 +2034,6 @@
 				C3792AC21D6C82A00079FCF5 /* ZWHUDTool.m in Sources */,
 				C3DA12151D9D45C700758BAC /* DLScrollTabbarView.m in Sources */,
 				C3DA121C1D9D488900758BAC /* ZWUserCommentsViewController.m in Sources */,
-				C3F854241D7709E800E51013 /* ZWBindAccountViewModel.m in Sources */,
 				C36512E91DB88532006A2969 /* UMShareMenuSelectionView.m in Sources */,
 				C32666BA1D9560C1008C6B24 /* UMComAddedImageCellView.m in Sources */,
 				C35771191D8576A600E9B166 /* ZWFileDetailViewController.m in Sources */,

@@ -91,11 +91,6 @@
     self.navigationItem.titleView.alpha = 0.5f;
 }
 
-- (void)dealloc
-{
-    NSLog(@"user detail dealloc");
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -109,52 +104,57 @@
     
     UILabel *titleLabel = [[UILabel alloc] init];
     titleLabel.text = @"个人资料";
-    titleLabel.font =ZWFont(17);
-    titleLabel.textColor = [UIColor blackColor];
+    titleLabel.font = [UIFont systemFontOfSize:17 weight:UIFontWeightBold];
+    titleLabel.textColor = [UIColor whiteColor];
     [titleLabel sizeToFit];
     self.navigationItem.titleView = titleLabel;
     
     [self zw_addSubViews];
     
     MBProgressHUD *hud = [ZWHUDTool excutingHudInView:self.navigationController.view title:nil];
+
+    RACSignal *appUserSignal = [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+        [ZWAPIRequestTool reuqestInfoByName:self.umUser.name result:^(id response, BOOL success) {
+            if (success && [[response objectForKey:kHTTPResponseCodeKey] intValue] == 0) {
+                weakSelf.appUser = [ZWUser modelWithDictionary:[response objectForKey:kHTTPResponseResKey]];
+                NSLog(@"获取App成功");
+                [subscriber sendCompleted];
+            } else {
+                NSLog(@"获取App失败");
+                [subscriber sendError:response];
+            }
+        }];
+        return nil;
+    }];
     
-    [ZWAPIRequestTool reuqestInfoByName:self.umUser.name result:^(id response, BOOL success) {
-        if (success && [[response objectForKey:kHTTPResponseCodeKey] intValue] == 0) {
-            weakSelf.appUser = [ZWUser modelWithDictionary:[response objectForKey:kHTTPResponseResKey]];
-        } else {
-            NSLog(@"获取失败");
+    RACSignal *feedSignal = [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+        [[UMComDataRequestManager defaultManager] fetchFeedsTimelineWithUid:self.umUser.uid
+                                                                   sortType:UMComUserTimeLineFeedType_Default
+                                                                      count:1
+                                                                 completion:^(NSDictionary *responseObject, NSError *error) {
+                                                                     if (responseObject) {
+                                                                         weakSelf.feed = [(NSArray *)responseObject[@"data"] objectAtIndex:0];
+                                                                         NSLog(@"获取UM成功");
+                                                                         NSLog(@"%@, %@", responseObject, weakSelf.feed);
+                                                                         [subscriber sendCompleted];
+                                                                     } else {
+                                                                         NSLog(@"获取UM失败");
+                                                                         [subscriber sendError:error];
+                                                                     }
+                                                                 }];
+        return nil;
+    }];
+    
+    [[RACSignal merge:@[appUserSignal, feedSignal]] subscribeError:^(NSError *error) {
+        [weakSelf dismissHUDAndPop];
+    } completed:^{
+        if (hud) {
+            [hud hideAnimated:YES];
         }
-    }];
-    
-    [[UMComDataRequestManager defaultManager] fetchFeedsTimelineWithUid:self.umUser.uid
-                                                               sortType:UMComUserTimeLineFeedType_Default
-                                                                  count:1
-                                                             completion:^(NSDictionary *responseObject, NSError *error) {
-                                                                 if (responseObject) {
-                                                                     weakSelf.feed = [(NSArray *)responseObject[@"data"] objectAtIndex:0];
-                                                                 }
-                                                             }];
-    
-    RACSignal *feedNotNilSignal = [RACObserve(self, feed) map:^id(id value) {
-        return @(value != nil);
-    }];
-    
-    RACSignal *appUserNotNilSignal = [RACObserve(self, appUser) map:^id(id value) {
-        return @(value != nil);
-    }];
-    
-    [[[RACSignal combineLatest:@[feedNotNilSignal, appUserNotNilSignal] reduce:^NSNumber *(NSNumber *feedValid, NSNumber * appUserValid){
-        return @([feedValid boolValue] & [appUserValid boolValue]);
-    }] filter:^BOOL(id value) {
-        return [value boolValue];
-    }] subscribeNext:^(id x) {
-        
-        [hud hideAnimated:YES];
         [weakSelf.tableView reloadData];
         [weakSelf.avatarView setImageURL:[NSURL URLWithString:[[[ZWAPITool base] stringByAppendingString:@"/"] stringByAppendingString:weakSelf.appUser.avatar_url]]];
         weakSelf.collegeLabel.text = weakSelf.appUser.collegeName;
         weakSelf.academyLabel.text = weakSelf.appUser.academyName;
-        
     }];
 }
 
@@ -272,12 +272,16 @@
 
 #pragma mark - Setters and Getters
 
-//- (void)setUser:(UMComUser *)user {
-//    _user = user;
-//
-//}
+
 
 #pragma mark - Common Methods
+
+- (void)dismissHUDAndPop {
+    MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
+    if (hud) {
+        [hud hideAnimated:YES];
+    }
+}
 
 #pragma mark - UITableViewDataSource
 
@@ -290,17 +294,19 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:indexPath.section == 0 ? kUMUserFeedCellIdentifier : kAppUserInfoCellIdentifier];
-//    return cell;
-    
     if (indexPath.section == 0) {
         ZWUMUserFeedCell *cell = [tableView dequeueReusableCellWithIdentifier:kUMUserFeedCellIdentifier];
-        if (DecodeAnonyousCode(self.feed.custom) || [self.umUser.source_uid isEqualToString:[ZWUserManager sharedInstance].loginUser.uid]) {
-            cell.contentLabel.text= self.feed.text;
-            cell.timeLabel.text = self.feed.create_time;
-        } else {
-            cell.contentLabel.text = @"\n点击以查看该用户的详细动态";
+        if (!self.feed) {
+            cell.contentLabel.text = self.appUser ? @"\n空空如也..." : nil;
             cell.timeLabel.text = nil;
+        } else {
+            if (DecodeAnonyousCode(self.feed.custom) || [self.umUser.source_uid isEqualToString:[ZWUserManager sharedInstance].loginUser.uid]) {
+                cell.contentLabel.text= self.feed.text;
+                cell.timeLabel.text = self.feed.create_time;
+            } else {
+                cell.contentLabel.text = @"\n点击以查看该用户的详细动态";
+                cell.timeLabel.text = nil;
+            }
         }
         return cell;
     } else {
@@ -343,6 +349,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
+        if (!self.feed) {
+            return;
+        }
         ZWFeedTableViewController *feedListController = [[ZWFeedTableViewController alloc] init];
         feedListController.feedType = [self.umUser.source_uid isEqualToString:[ZWUserManager sharedInstance].loginUser.uid] ? ZWFeedTableViewTypeAboutUser : ZWFeedTableViewTypeAboutOthers;
         feedListController.user = self.umUser;
