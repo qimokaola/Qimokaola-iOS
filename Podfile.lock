@@ -16,7 +16,7 @@ PODS:
     - AFNetworking/NSURLSession
   - Aspects (1.4.1)
   - AXNavigationBackItemInjection (0.0.1)
-  - AXWebViewController (0.3.4):
+  - AXWebViewController (0.3.5):
     - Aspects
     - AXNavigationBackItemInjection
     - NJKWebViewProgress
@@ -25,7 +25,7 @@ PODS:
     - FMDB/standard (= 2.6.2)
   - FMDB/standard (2.6.2)
   - IQKeyboardManager (4.0.7)
-  - LCActionSheet (2.5.2):
+  - LCActionSheet (2.6.2):
     - Masonry (~> 1.0.1)
   - LinqToObjectiveC (2.1.0)
   - Masonry (1.0.2)
@@ -74,11 +74,11 @@ SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   Aspects: 7595ba96a6727a58ebcbfc954497fc5d2fdde546
   AXNavigationBackItemInjection: 0ab0742fafd9ec37e44b8767c96cbbc77ec13575
-  AXWebViewController: d6d9920c2a0cf4456f3641b2a78da11a8ad80c06
+  AXWebViewController: 78f8ad10e9a72cc8a72acdb1f1fcc215a5101767
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
   IQKeyboardManager: 69002bb4fea60596b710e57d426abc00e5063630
-  LCActionSheet: 92aa29e2c0a12e771e334193a5129288817e69e8
+  LCActionSheet: d7a2ef01f6131b70d7466dab42c977dd8c744e8b
   LinqToObjectiveC: f0e40c137a458b6b9725c4c7b6a575c0c72e3aec
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a

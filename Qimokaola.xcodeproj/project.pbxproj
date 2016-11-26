@@ -116,6 +116,8 @@
 		C39804091D9177C2006D1471 /* ZWDataBaseTool.m in Sources */ = {isa = PBXBuildFile; fileRef = C39804081D9177C2006D1471 /* ZWDataBaseTool.m */; };
 		C3A14CA41D37D0FD0088E754 /* ZWSelectSchoolViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3A14CA31D37D0FD0088E754 /* ZWSelectSchoolViewController.m */; };
 		C3AF73E31BCBE3C60064C3F5 /* NSDate+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = C3AF73E21BCBE3C60064C3F5 /* NSDate+Extension.m */; };
+		C3C17D7F1DE861CD000F9BE5 /* ZWResetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3C17D7D1DE861CD000F9BE5 /* ZWResetPasswordViewController.m */; };
+		C3C17D801DE861CD000F9BE5 /* ZWResetPasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3C17D7E1DE861CD000F9BE5 /* ZWResetPasswordViewController.xib */; };
 		C3C44DEE1BC687B0004B30BF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C3C44DED1BC687B0004B30BF /* main.m */; };
 		C3C44DF11BC687B0004B30BF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C3C44DF01BC687B0004B30BF /* AppDelegate.m */; };
 		C3C44E071BC687B0004B30BF /* QimokaolaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C3C44E061BC687B0004B30BF /* QimokaolaTests.m */; };
@@ -399,6 +401,9 @@
 		C3A14CA31D37D0FD0088E754 /* ZWSelectSchoolViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWSelectSchoolViewController.m; sourceTree = "<group>"; };
 		C3AF73E11BCBE3C60064C3F5 /* NSDate+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Extension.h"; sourceTree = "<group>"; };
 		C3AF73E21BCBE3C60064C3F5 /* NSDate+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Extension.m"; sourceTree = "<group>"; };
+		C3C17D7C1DE861CD000F9BE5 /* ZWResetPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWResetPasswordViewController.h; sourceTree = "<group>"; };
+		C3C17D7D1DE861CD000F9BE5 /* ZWResetPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWResetPasswordViewController.m; sourceTree = "<group>"; };
+		C3C17D7E1DE861CD000F9BE5 /* ZWResetPasswordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZWResetPasswordViewController.xib; sourceTree = "<group>"; };
 		C3C44DE91BC687B0004B30BF /* Qimokaola.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Qimokaola.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3C44DED1BC687B0004B30BF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C3C44DEF1BC687B0004B30BF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -1268,6 +1273,16 @@
 			name = ZWSelectSchoolViewController;
 			sourceTree = "<group>";
 		};
+		C3C17D7B1DE86190000F9BE5 /* ZWResetPasswordViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C3C17D7C1DE861CD000F9BE5 /* ZWResetPasswordViewController.h */,
+				C3C17D7D1DE861CD000F9BE5 /* ZWResetPasswordViewController.m */,
+				C3C17D7E1DE861CD000F9BE5 /* ZWResetPasswordViewController.xib */,
+			);
+			name = ZWResetPasswordViewController;
+			sourceTree = "<group>";
+		};
 		C3C44DE01BC687B0004B30BF = {
 			isa = PBXGroup;
 			children = (
@@ -1445,6 +1460,7 @@
 		C3C8C1321D92CCB300771C61 /* RegisterAndLogin */ = {
 			isa = PBXGroup;
 			children = (
+				C3C17D7B1DE86190000F9BE5 /* ZWResetPasswordViewController */,
 				C3A14C9B1D37CF710088E754 /* ZWSelectSchoolViewController */,
 				C3E58AC51D54DFD300FDB384 /* ZWBindAccountViewController */,
 				C3561A1B1D36B0F80032C97B /* ZWFilloutInformationViewController */,
@@ -1866,6 +1882,7 @@
 				C3DE5B7C1DAD2F6400E93C05 /* ZWAppUserInfoCell.xib in Resources */,
 				C36512E41DB88532006A2969 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				C3C531271DB3F161000C3562 /* pic_upload_method_computer.png in Resources */,
+				C3C17D801DE861CD000F9BE5 /* ZWResetPasswordViewController.xib in Resources */,
 				C3DE5B8D1DAE617A00E93C05 /* pic2.png in Resources */,
 				C3C531181DB37881000C3562 /* UTI-Image.png in Resources */,
 				C3DE5B981DAE8B6400E93C05 /* pic1.png in Resources */,
@@ -2042,6 +2059,7 @@
 				C3C5313A1DB52543000C3562 /* ZWChooseCourseViewController.m in Sources */,
 				C3561A261D3774560032C97B /* ZWLoginViewController.m in Sources */,
 				C3EEE07B1DBA5E7B0096B6DE /* ZWSearchTool.m in Sources */,
+				C3C17D7F1DE861CD000F9BE5 /* ZWResetPasswordViewController.m in Sources */,
 				C3C531361DB518AC000C3562 /* ZWUploadFileViewController.m in Sources */,
 				C30BBA8E1DA80ED90090EB4A /* ZWDownloadedInfo.m in Sources */,
 				C32666601D9533C4008C6B24 /* UMComResourceManager.m in Sources */,

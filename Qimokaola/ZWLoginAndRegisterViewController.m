@@ -81,9 +81,9 @@
     self.registerBtn = [UIButton buttonWithType:UIButtonTypeSystem];
     [self.registerBtn setBackgroundColor:[UIColor whiteColor]];
     [self.registerBtn setTitle:@"注册" forState:UIControlStateNormal];
-    [self.registerBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [self.registerBtn setTitleColor:defaultBlueColor forState:UIControlStateNormal];
     self.registerBtn.layer.borderWidth = .5f;
-    self.registerBtn.layer.borderColor = RGB(170., 170., 170.).CGColor;
+    self.registerBtn.layer.borderColor = defaultBlueColor.CGColor;
     self.registerBtn.layer.cornerRadius = btnCornerRadius;
     self.registerBtn.layer.masksToBounds = YES;
     [self.btnContainer addSubview:self.registerBtn];

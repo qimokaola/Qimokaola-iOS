@@ -279,7 +279,14 @@
 - (void)dismissHUDAndPop {
     MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
     if (hud) {
-        [hud hideAnimated:YES];
+        hud.mode = MBProgressHUDModeText;
+        hud.label.text = @"出现错误，获取失败";
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kShowHUDShort * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [hud hideAnimated:YES];
+            [self.navigationController popViewControllerAnimated:YES];
+        });
+    } else {
+        [self.navigationController popViewControllerAnimated:YES];
     }
 }
 

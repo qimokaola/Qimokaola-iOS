@@ -14,6 +14,7 @@
 #import "ZWAPITool.h"
 #import "ZWAPIRequestTool.h"
 #import "ZWUserManager.h"
+#import "ZWResetPasswordViewController.h"
 
 #import "Masonry.h"
 #import "ReactiveCocoa.h"
@@ -26,6 +27,7 @@
 @property (nonatomic, strong) UITextField *passwordField;
 @property (nonatomic, strong) UIView *passwordLine;
 @property (nonatomic, strong) UIButton *nextBtn;
+@property (nonatomic, strong) UIButton *forgetPwdButton;
 
 @property (nonatomic, strong) ZWLoginViewModel *viewModel;
 @property (nonatomic, strong) MBProgressHUD *hud;
@@ -51,6 +53,11 @@
     [self createSubViews];
     
     [self bindViewModel];
+}
+
+- (void)forgetPwdButtonClicked {
+    ZWResetPasswordViewController *resetPwdViewController = [[ZWResetPasswordViewController alloc] init];
+    [self.navigationController pushViewController:resetPwdViewController animated:YES];
 }
 
 - (void)bindViewModel {
@@ -163,6 +170,26 @@
         btn;
     });
     
+    self.forgetPwdButton = ({
+        UIButton *btn = [UIButton buttonWithType:UIButtonTypeSystem];
+        
+        NSString *titleString = @"忘记密码?";
+        NSRange range = NSMakeRange(0, titleString.length);
+        NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] initWithString:titleString];
+        [attString addAttribute:NSForegroundColorAttributeName value:RGB(80., 140., 238.) range:range];
+        [attString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:16] range:range];
+        [attString addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleSingle) range:range];
+        
+        [btn setAttributedTitle:attString forState:UIControlStateNormal];
+        
+        [btn addTarget:self action:@selector(forgetPwdButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+        
+        [btn sizeToFit];
+        [self.view addSubview:btn];
+        
+        btn;
+    });
+    
     [@[self.accountField, self.accountLine, self.passwordField, self.passwordLine, self.nextBtn] mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.view).with.offset(margin);
         make.right.equalTo(weakSelf.view).with.offset( -margin);
@@ -196,6 +223,11 @@
     [self.nextBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(weakSelf.passwordLine.mas_bottom).with.offset(largeMargin);
         make.height.mas_equalTo(45.f);
+    }];
+    
+    [self.forgetPwdButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(weakSelf.view);
+        make.top.equalTo(weakSelf.nextBtn.mas_bottom).with.offset(10);
     }];
 }
 
