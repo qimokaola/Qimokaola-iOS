@@ -112,7 +112,7 @@
                       @[
                           @{@"icon" : @"radio_button_checked", @"title" : @"意见反馈", @"image" : @"icon_discovery_advice"},
                           @{@"icon" : @"radio_button_checked", @"title" : @"加入我们", @"image" : @"icon_discovery_join_us"},
-                          @{@"icon" : @"radio_button_checked", @"title" : @"退出登录"}
+                          @{@"title" : @"退出登录"}
                           
                         ]
                       
@@ -284,10 +284,15 @@
         }
     }
     NSDictionary *dict = [self.channels[indexPath.section] objectAtIndex:indexPath.row];
-    cell.imageView.image = [UIImage imageNamed:dict[@"icon"]];
+    NSString *iconAssetName = dict[@"icon"];
+    if (iconAssetName) {
+        cell.imageView.image = [UIImage imageNamed:iconAssetName];
+    }
     cell.textLabel.text = dict[@"title"];
-    cell.imageView.image = [UIImage imageNamed:dict[@"image"]];
-    
+    NSString *imageAssetName = dict[@"image"];
+    if (imageAssetName) {
+        cell.imageView.image = [UIImage imageNamed:imageAssetName];
+    }
     if (indexPath.section == 0) {
         if (indexPath.row == 2) {
             [self updateTableViewCell:cell forCount:[ZWUserManager sharedInstance].unreadCommentCount];

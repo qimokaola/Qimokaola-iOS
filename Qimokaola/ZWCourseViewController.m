@@ -7,6 +7,7 @@
 //
 
 #import "ZWCourseViewController.h"
+#import "NSString+Extension.h"
 
 #import <YYKit/YYKit.h>
 
@@ -15,6 +16,10 @@
 @property (nonatomic, strong) UIView *schoolNameView;
 @property (nonatomic, strong) UILabel *schoolNameLabel;
 @property (nonatomic, strong) UIImageView *arrowView;
+
+@property (nonatomic, strong) NSMutableArray *titleArray;
+
+@property (nonatomic, strong) NSArray *rawDataArray;
 
 @property (nonatomic, strong) YYCache *cache;
 
@@ -47,8 +52,14 @@ static NSString *const kCourseCellIdentifier = @"kCourseCellIdentifier";
     self.hidesBottomBarWhenPushed = NO;
     
     self.cache = [[YYCache alloc] initWithName:kCourseCacheName];
-    self.dataArray = (NSMutableArray *)[self.cache objectForKey:[kCourseCacheKeyPrefix stringByAppendingString:[ZWUserManager sharedInstance].loginUser.currentCollegeId.stringValue]];
+//    self.dataArray = (NSMutableArray *)[self.cache objectForKey:[kCourseCacheKeyPrefix stringByAppendingString:[ZWUserManager sharedInstance].loginUser.currentCollegeId.stringValue]];
     
+    self.dataArray = [NSMutableArray array];
+    self.titleArray = [NSMutableArray array];
+    
+    // 设置索引背景为透明
+    self.tableView.mj_header.backgroundColor = defaultBackgroundColor;
+    self.tableView.sectionIndexBackgroundColor = [UIColor clearColor];
     [self.tableView registerClass:[ZWCourseCell class] forCellReuseIdentifier:kCourseCellIdentifier];
     self.tableView.rowHeight = 50;
     
@@ -225,14 +236,82 @@ static NSString *const kCourseCellIdentifier = @"kCourseCellIdentifier";
 
 #pragma mark 处理接收到数据
 - (void)loadRemoteData:(NSDictionary *)data {
-    self.dataArray = [[[data objectForKey:@"folders"] linq_select:^id(NSDictionary *item) {
+    self.rawDataArray = [[data objectForKey:@"folders"] linq_select:^id(NSDictionary *item) {
         return [ZWFolder modelWithDictionary:item];
-    }] mutableCopy];
+    }];
+    [self dealDataWithArray:self.rawDataArray];
     [self.tableView reloadData];
     [self.cache setObject:self.dataArray forKey:[kCourseCacheKeyPrefix stringByAppendingString:[ZWUserManager sharedInstance].loginUser.currentCollegeId.stringValue]];
 }
 
+- (void)dealDataWithArray:(NSArray *)array
+{
+    [self.dataArray removeAllObjects];
+    [self.titleArray removeAllObjects];
+    NSMutableArray * tmpArray = [[NSMutableArray alloc]init];
+    for (NSInteger i =0; i <27; i++) {
+        //给临时数组创建27个数组作为元素，用来存放A-Z和#开头的联系人
+        NSMutableArray * array = [[NSMutableArray alloc]init];
+        [tmpArray addObject:array];
+    }
+    
+    for (ZWFolder *folder in array) {
+        //转化为首拼音并取首字母
+        NSString * firstWord = [folder.name firstWord];
+        int intValueOfCharacter = [firstWord characterAtIndex:0];
+        //把字典放到对应的数组中去
+        if (intValueOfCharacter >= 65 && intValueOfCharacter <= 90) {
+            //如果首字母是A-Z，直接放到对应数组
+            NSMutableArray * array = tmpArray[intValueOfCharacter - 65];
+            [array addObject:folder];
+        } else {
+            //如果不是，就放到最后一个代表#的数组
+            NSMutableArray * array =[tmpArray lastObject];
+            [array addObject:folder];
+        }
+    }
+    
+    //此时数据已按首字母排序并分组
+    //遍历数组，删掉空数组
+    for (NSMutableArray * mutArr in tmpArray) {
+        //如果数组不为空就添加到数据源当中
+        if (mutArr.count != 0) {
+            [self.dataArray addObject:mutArr];
+            ZWFolder *folder = mutArr[0];
+            NSString *firstWord = [folder.name firstWord];
+            int intValueOfCharacter = [firstWord characterAtIndex:0];
+            //取出其中的首字母放入到标题数组，暂时考虑A-Z的情况
+            if (intValueOfCharacter >= 65 && intValueOfCharacter <= 90) {
+                [self.titleArray addObject:firstWord];
+            }
+        }
+    }
+    //便利结束后，两个数组数目不相等说明有除大写字母外的其他首字母
+    if (!(self.titleArray.count == self.dataArray.count)) {
+        [self.titleArray addObject:@"#"];
+    }
+    
+    //刷新tableView
+    [self.tableView reloadData];
+}
+
 #pragma mark - UITableViewDataSource
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    if (self.searchController.active) {
+        return 1;
+    } else {
+        return self.dataArray.count;
+    }
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (self.searchController.active) {
+        return self.filteredArray.count;
+    } else {
+        return [[self.dataArray objectAtIndex:section] count];
+    }
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ZWCourseCell *cell = [tableView dequeueReusableCellWithIdentifier:kCourseCellIdentifier];
@@ -240,13 +319,34 @@ static NSString *const kCourseCellIdentifier = @"kCourseCellIdentifier";
     if (self.searchController.active) {
         folder = [self.filteredArray objectAtIndex:indexPath.row];
     } else {
-        folder = [self.dataArray objectAtIndex:indexPath.row];
+        folder = [[self.dataArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     }
     cell.folderName = folder.name;
     return cell;
 }
 
 #pragma mark - UITableViewDelegate
+
+- (NSArray<NSString *> *)sectionIndexTitlesForTableView:(UITableView *)tableView {
+    if (self.searchController.active) {
+        return nil;
+    } else {
+        return self.titleArray;
+    }
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    if (self.searchController.active) {
+        return nil;
+    } else {
+        return [self.titleArray objectAtIndex:section];
+    }
+    
+}
+
+- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index {
+    return index;
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -258,7 +358,7 @@ static NSString *const kCourseCellIdentifier = @"kCourseCellIdentifier";
     if (self.searchController.active) {
         folder = [self.filteredArray objectAtIndex:indexPath.row];
     } else {
-        folder = [self.dataArray objectAtIndex:indexPath.row];
+        folder = [[self.dataArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     }
     path = [[ROOT stringByAppendingPathComponent:folder.name] stringByAppendingString:@"/"];
     ZWFileAndFolderViewController *fileAndFolder = [[ZWFileAndFolderViewController alloc] init];
@@ -271,7 +371,7 @@ static NSString *const kCourseCellIdentifier = @"kCourseCellIdentifier";
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
     [self.filteredArray removeAllObjects];
-    self.filteredArray = [ZWSearchTool searchFromArray:self.dataArray withSearchText:searchController.searchBar.text withSearhPredicateString:@"name CONTAINS[c] %@"];
+    self.filteredArray = [ZWSearchTool searchFromArray:self.rawDataArray withSearchText:searchController.searchBar.text withSearhPredicateString:@"name CONTAINS[c] %@"];
     [self.tableView reloadData];
 }
 

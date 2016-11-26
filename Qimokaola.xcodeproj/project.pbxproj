@@ -74,9 +74,7 @@
 		C36512201DB7DF76006A2969 /* UMMobClick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C36512021DB7DF76006A2969 /* UMMobClick.framework */; };
 		C36512241DB7DF76006A2969 /* UMComNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C36512071DB7DF76006A2969 /* UMComNetwork.framework */; };
 		C36512251DB7DF76006A2969 /* libUMessage_Sdk_1.4.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C36512091DB7DF76006A2969 /* libUMessage_Sdk_1.4.0.a */; };
-		C36512301DB7E69A006A2969 /* UMComDataStorage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C36512041DB7DF76006A2969 /* UMComDataStorage.framework */; };
 		C36512321DB7E69B006A2969 /* UMComFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C36512051DB7DF76006A2969 /* UMComFoundation.framework */; };
-		C36512341DB7E69B006A2969 /* UMCommunitySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C36512061DB7DF76006A2969 /* UMCommunitySDK.framework */; };
 		C365123C1DB7EB02006A2969 /* JSPatchPlatform.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C365123B1DB7EB02006A2969 /* JSPatchPlatform.framework */; };
 		C36512881DB7F576006A2969 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C365123F1DB7EDD8006A2969 /* libc++.tbd */; };
 		C36512E21DB88532006A2969 /* libSocialQQ.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C36512D01DB88532006A2969 /* libSocialQQ.a */; };
@@ -95,6 +93,7 @@
 		C367ADDA1CB693A5002184DF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C367ADD91CB693A5002184DF /* UIKit.framework */; };
 		C367ADDB1CB693C4002184DF /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C3F7910A1BCD288C003793B1 /* libz.tbd */; };
 		C36D67E31DA9331900442FD4 /* ZWDownloadedInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C36D67E21DA9331900442FD4 /* ZWDownloadedInfoCell.m */; };
+		C37027451DE97E0D00C902AF /* ZWRegisterViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C37027441DE97E0D00C902AF /* ZWRegisterViewModel.m */; };
 		C3792ABF1D6C824D0079FCF5 /* ZWPathTool.m in Sources */ = {isa = PBXBuildFile; fileRef = C3792ABE1D6C824D0079FCF5 /* ZWPathTool.m */; };
 		C3792AC21D6C82A00079FCF5 /* ZWHUDTool.m in Sources */ = {isa = PBXBuildFile; fileRef = C3792AC11D6C82A00079FCF5 /* ZWHUDTool.m */; };
 		C3792AC51D6C83A70079FCF5 /* ZWFileTool.m in Sources */ = {isa = PBXBuildFile; fileRef = C3792AC41D6C83A70079FCF5 /* ZWFileTool.m */; };
@@ -106,9 +105,7 @@
 		C37C03961D3F8C6000B22868 /* ZWStudentCircleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C37C03951D3F8C5F00B22868 /* ZWStudentCircleViewController.m */; };
 		C3827B971D72DDBB002F6E5B /* ZWFeedDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3827B961D72DDBB002F6E5B /* ZWFeedDetailViewController.m */; };
 		C386A3D21DB8950000FC5D36 /* UMComDataStorage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C386A3CE1DB8950000FC5D36 /* UMComDataStorage.framework */; };
-		C386A3D31DB8950000FC5D36 /* UMComFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C386A3CF1DB8950000FC5D36 /* UMComFoundation.framework */; };
 		C386A3D41DB8950000FC5D36 /* UMCommunitySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C386A3D01DB8950000FC5D36 /* UMCommunitySDK.framework */; };
-		C386A3D51DB8950000FC5D36 /* UMComNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C386A3D11DB8950000FC5D36 /* UMComNetwork.framework */; };
 		C39004A41D5B67F90097358E /* ZWAdvertisement.m in Sources */ = {isa = PBXBuildFile; fileRef = C39004A31D5B67F90097358E /* ZWAdvertisement.m */; };
 		C39004AE1D5C5F360097358E /* ZWTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = C39004AD1D5C5F360097358E /* ZWTabBarController.m */; };
 		C39004B21D5C61900097358E /* ZWNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C39004B11D5C61900097358E /* ZWNavigationController.m */; };
@@ -330,9 +327,7 @@
 		C35FD9B91D707E160066DE68 /* SDWeiXinPhotoContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWeiXinPhotoContainerView.h; sourceTree = "<group>"; };
 		C35FD9BA1D707E160066DE68 /* SDWeiXinPhotoContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWeiXinPhotoContainerView.m; sourceTree = "<group>"; };
 		C36512021DB7DF76006A2969 /* UMMobClick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMMobClick.framework; sourceTree = "<group>"; };
-		C36512041DB7DF76006A2969 /* UMComDataStorage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UMComDataStorage.framework; path = "/Users/Administrator/Desktop/Works/iOS/Qimokaola-iOS/Qimokaola/UMCommunitySDK_2.7.1/UMComDataStorage.framework"; sourceTree = "<absolute>"; };
 		C36512051DB7DF76006A2969 /* UMComFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UMComFoundation.framework; path = "/Users/Administrator/Desktop/Works/iOS/Qimokaola-iOS/Qimokaola/UMCommunitySDK_2.7.1/UMComFoundation.framework"; sourceTree = "<absolute>"; };
-		C36512061DB7DF76006A2969 /* UMCommunitySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UMCommunitySDK.framework; path = "/Users/Administrator/Desktop/Works/iOS/Qimokaola-iOS/Qimokaola/UMCommunitySDK_2.7.1/UMCommunitySDK.framework"; sourceTree = "<absolute>"; };
 		C36512071DB7DF76006A2969 /* UMComNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UMComNetwork.framework; path = "/Users/Administrator/Desktop/Works/iOS/Qimokaola-iOS/Qimokaola/UMCommunitySDK_2.7.1/UMComNetwork.framework"; sourceTree = "<absolute>"; };
 		C36512091DB7DF76006A2969 /* libUMessage_Sdk_1.4.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMessage_Sdk_1.4.0.a; sourceTree = "<group>"; };
 		C365120A1DB7DF76006A2969 /* UMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMessage.h; sourceTree = "<group>"; };
@@ -362,6 +357,8 @@
 		C367ADD91CB693A5002184DF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		C36D67E11DA9331900442FD4 /* ZWDownloadedInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWDownloadedInfoCell.h; sourceTree = "<group>"; };
 		C36D67E21DA9331900442FD4 /* ZWDownloadedInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWDownloadedInfoCell.m; sourceTree = "<group>"; };
+		C37027431DE97E0D00C902AF /* ZWRegisterViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWRegisterViewModel.h; sourceTree = "<group>"; };
+		C37027441DE97E0D00C902AF /* ZWRegisterViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWRegisterViewModel.m; sourceTree = "<group>"; };
 		C370675A1D6B45CF007B18A8 /* Qimokaola.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Qimokaola.entitlements; sourceTree = "<group>"; };
 		C3792ABD1D6C824D0079FCF5 /* ZWPathTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWPathTool.h; sourceTree = "<group>"; };
 		C3792ABE1D6C824D0079FCF5 /* ZWPathTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWPathTool.m; sourceTree = "<group>"; };
@@ -477,7 +474,6 @@
 		C3DE5BB81DAFF3A500E93C05 /* ZWBaseTableViewHeaderFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWBaseTableViewHeaderFooter.m; sourceTree = "<group>"; };
 		C3E58AC61D54DFE600FDB384 /* ZWBindAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWBindAccountViewController.h; sourceTree = "<group>"; };
 		C3E58AC71D54DFE600FDB384 /* ZWBindAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWBindAccountViewController.m; sourceTree = "<group>"; };
-		C3EAA7231D3FB79F009FCC0E /* Qimokaola-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Qimokaola-Bridging-Header.h"; sourceTree = "<group>"; };
 		C3EDA9161D830CA0009FF851 /* ZWFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWFile.h; sourceTree = "<group>"; };
 		C3EDA9171D830CA0009FF851 /* ZWFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWFile.m; sourceTree = "<group>"; };
 		C3EDA91A1D830E79009FF851 /* ZWFolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWFolder.h; sourceTree = "<group>"; };
@@ -528,7 +524,6 @@
 				C3C5310A1DB36409000C3562 /* UserNotifications.framework in Frameworks */,
 				C386A3D41DB8950000FC5D36 /* UMCommunitySDK.framework in Frameworks */,
 				C36512E31DB88532006A2969 /* TencentOpenAPI.framework in Frameworks */,
-				C386A3D51DB8950000FC5D36 /* UMComNetwork.framework in Frameworks */,
 				C386A3D21DB8950000FC5D36 /* UMComDataStorage.framework in Frameworks */,
 				C33EECE61BCD5C0F00BB4B74 /* AssetsLibrary.framework in Frameworks */,
 				C33EECDE1BCD5BBE00BB4B74 /* ImageIO.framework in Frameworks */,
@@ -536,11 +531,9 @@
 				C3F791151BCD308E003793B1 /* Security.framework in Frameworks */,
 				C36512321DB7E69B006A2969 /* UMComFoundation.framework in Frameworks */,
 				C365123C1DB7EB02006A2969 /* JSPatchPlatform.framework in Frameworks */,
-				C36512341DB7E69B006A2969 /* UMCommunitySDK.framework in Frameworks */,
 				C367ADDA1CB693A5002184DF /* UIKit.framework in Frameworks */,
 				C36512251DB7DF76006A2969 /* libUMessage_Sdk_1.4.0.a in Frameworks */,
 				C367ADD81CB69394002184DF /* Foundation.framework in Frameworks */,
-				C386A3D31DB8950000FC5D36 /* UMComFoundation.framework in Frameworks */,
 				C3F7911C1BCD3142003793B1 /* CoreGraphics.framework in Frameworks */,
 				C367ADD61CB6935E002184DF /* CoreFoundation.framework in Frameworks */,
 				C367ADD41CB6934A002184DF /* CFNetwork.framework in Frameworks */,
@@ -554,7 +547,6 @@
 				C36512201DB7DF76006A2969 /* UMMobClick.framework in Frameworks */,
 				C33EECA61BCD4FE800BB4B74 /* libstdc++.6.0.9.dylib in Frameworks */,
 				C33EECA41BCD4FC500BB4B74 /* libiconv.2.dylib in Frameworks */,
-				C36512301DB7E69A006A2969 /* UMComDataStorage.framework in Frameworks */,
 				C33EECA31BCD4F9700BB4B74 /* libsqlite3.dylib in Frameworks */,
 				C36512E21DB88532006A2969 /* libSocialQQ.a in Frameworks */,
 				C3F791301BCD3C37003793B1 /* QuartzCore.framework in Frameworks */,
@@ -900,13 +892,13 @@
 			name = ZWFilloutInformationViewController;
 			sourceTree = "<group>";
 		};
-		C35771021D842C1A00E9B166 /* ZWAcademyCell */ = {
+		C35771021D842C1A00E9B166 /* ZWCourseCell */ = {
 			isa = PBXGroup;
 			children = (
 				C35771031D842C4600E9B166 /* ZWCourseCell.h */,
 				C35771041D842C4600E9B166 /* ZWCourseCell.m */,
 			);
-			name = ZWAcademyCell;
+			name = ZWCourseCell;
 			sourceTree = "<group>";
 		};
 		C35771091D843E6300E9B166 /* ZWCourseViewController */ = {
@@ -1060,6 +1052,15 @@
 			name = ZWDownloadedInfoCell;
 			sourceTree = "<group>";
 		};
+		C37027401DE97C9B00C902AF /* ZWRegisterViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C37027431DE97E0D00C902AF /* ZWRegisterViewModel.h */,
+				C37027441DE97E0D00C902AF /* ZWRegisterViewModel.m */,
+			);
+			name = ZWRegisterViewModel;
+			sourceTree = "<group>";
+		};
 		C3792ACC1D6DE9F30079FCF5 /* ZWFeedTableViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -1089,7 +1090,7 @@
 				C3019E7C1D965B0500CC2F55 /* ZWCommentCell */,
 				C35771151D8541CE00E9B166 /* ZWFolderCell */,
 				C357710E1D85418600E9B166 /* ZWFileCell */,
-				C35771021D842C1A00E9B166 /* ZWAcademyCell */,
+				C35771021D842C1A00E9B166 /* ZWCourseCell */,
 				C3792ACD1D6F38D40079FCF5 /* ZWFeedCell */,
 			);
 			name = TableViewCell;
@@ -1331,7 +1332,6 @@
 				C33AC5FA1DA3A0C100A96AB7 /* StudentCircle.xcassets */,
 				C3C44DFD1BC687B0004B30BF /* Info.plist */,
 				C3C44DED1BC687B0004B30BF /* main.m */,
-				C3EAA7231D3FB79F009FCC0E /* Qimokaola-Bridging-Header.h */,
 				C35AA0B51C874CAE00D17A99 /* Qimokaola-Prefix.pch */,
 			);
 			name = "Supporting Files";
@@ -1720,6 +1720,7 @@
 		C3F854211D7709BF00E51013 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				C37027401DE97C9B00C902AF /* ZWRegisterViewModel */,
 				C391EB9C1DCB6D9000B7083D /* ZWLoginViewModel */,
 			);
 			name = ViewModel;
@@ -1820,7 +1821,7 @@
 			attributes = {
 				CLASSPREFIX = ZW;
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = Administrator;
 				TargetAttributes = {
 					C3C44DE81BC687B0004B30BF = {
@@ -1964,6 +1965,7 @@
 			files = (
 				C32666581D953125008C6B24 /* UMImagePickerGroupCell.m in Sources */,
 				C32666561D953125008C6B24 /* UMAssetsCollectionOverlayView.m in Sources */,
+				C37027451DE97E0D00C902AF /* ZWRegisterViewModel.m in Sources */,
 				C33AC6021DA3C3CD00A96AB7 /* ZWUserLikesViewController.m in Sources */,
 				C3DE5B7B1DAD2F6400E93C05 /* ZWAppUserInfoCell.m in Sources */,
 				C326666C1D9534DE008C6B24 /* UMComButton.m in Sources */,
@@ -2247,7 +2249,7 @@
 				PRODUCT_NAME = Qimokaola;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "Qimokaola/Qimokaola-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
@@ -2294,7 +2296,7 @@
 				PRODUCT_NAME = Qimokaola;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "Qimokaola/Qimokaola-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Release;

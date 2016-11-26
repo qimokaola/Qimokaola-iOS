@@ -10,6 +10,6 @@
 
 @interface ZWSearchTool : NSObject
 
-+ (NSMutableArray *)searchFromArray:(NSMutableArray *)array withSearchText:(NSString *)searchText withSearhPredicateString:(NSString *)searchPredicateString;
++ (NSMutableArray *)searchFromArray:(NSArray *)array withSearchText:(NSString *)searchText withSearhPredicateString:(NSString *)searchPredicateString;
 
 @end

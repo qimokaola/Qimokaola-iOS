@@ -42,4 +42,16 @@
     
     return decodedString;
 }
+
+- (NSString *)firstWord {
+    NSMutableString *muStr = [NSMutableString stringWithString:self];
+    CFStringTransform((CFMutableStringRef)muStr, NULL, kCFStringTransformMandarinLatin, NO);
+    CFStringTransform((CFMutableStringRef)muStr, NULL, kCFStringTransformStripCombiningMarks, NO);
+    if (muStr.length > 0) {
+        NSString *res = [[muStr uppercaseString] substringToIndex:1];
+        return res;
+    }
+    return @"";
+}
+
 @end

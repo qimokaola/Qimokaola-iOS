@@ -10,7 +10,7 @@
 
 @implementation ZWSearchTool
 
-+ (NSMutableArray *)searchFromArray:(NSMutableArray *)array withSearchText:(NSString *)searchText withSearhPredicateString:(NSString *)searchPredicateString {
++ (NSMutableArray *)searchFromArray:(NSArray *)array withSearchText:(NSString *)searchText withSearhPredicateString:(NSString *)searchPredicateString {
     NSMutableSet *resultsSet = [NSMutableSet set];
     BOOL resultsSetInit = YES;
     for (NSInteger i = 0; i < searchText.length; i ++) {

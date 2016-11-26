@@ -14,6 +14,7 @@
 #import "ZWFilloutInformationViewController.h"
 #import "ZWAPIRequestTool.h"
 #import "ZWHUDTool.h"
+#import "ZWRegisterViewModel.h"
 
 @interface ZWRegisterViewCotroller () {
     int timeLeft;
@@ -77,6 +78,8 @@
 
 // 计数器
 @property (nonatomic, weak) NSTimer *timer;
+
+@property (nonatomic, strong) ZWRegisterViewModel *viewModel;
 
 @end
 
@@ -185,6 +188,20 @@
     }];
 }
 
+- (void)bindViewModel {
+    _viewModel = [[ZWRegisterViewModel alloc] init];
+    
+    RAC(_viewModel, phoneNumer) = self.phoneNumberField.rac_textSignal;
+    RAC(_viewModel, verifyCode) = self.verifyField.rac_textSignal;
+    RAC(_viewModel, password) = self.passwordField.rac_textSignal;
+    RAC(_viewModel, confirmPwd) = self.confirmPwdField.rac_textSignal;
+    
+    _sendCodeButton.rac_command = _viewModel.verifyCommand;
+    _nextBtn.rac_command = _viewModel.registerCommand;
+    
+    RAC(_distinctPwdLabel, hidden) = _viewModel.distinctLabelHiddenSignal;
+}
+
 - (void)loadView {
     UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:[UIScreen mainScreen].applicationFrame];
     self.view = scrollView;
@@ -210,8 +227,57 @@
     
 }
 
+- (BOOL)isPhoneNumberValid:(NSString *)phoneNumber {
+    return phoneNumber.length == 11;
+}
+
+- (BOOL)isPasswordValid:(NSString *)password {
+    return password.length >= 6;
+}
+
+- (BOOL)isVeifyCodeValid:(NSString *)vrification {
+    if (vrification.length < 4) {
+        return NO;
+    }
+    NSScanner *scanner = [NSScanner scannerWithString:vrification];
+    int var;
+    return [scanner scanInt:&var] && [scanner isAtEnd];
+}
+
+- (void)exit {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+int TimeInterval = 60;
+
+- (void)tappedSendCodeButton {
+    [self.phoneNumberField resignFirstResponder];
+    timeLeft = TimeInterval;
+    [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+    [ZWAPIRequestTool requestSendCodeWithParameter:@{@"phone": self.phoneNumberField.text} result:^(id response, BOOL success) {
+        NSString *msg = nil;
+        if (success) {
+            msg = [[response objectForKey:kHTTPResponseCodeKey] intValue] == 113 ? @"该手机号已被注册" : [response objectForKey:kHTTPResponseInfoKey];
+        } else {
+            msg = @"获取验证码失败";
+        }
+        [ZWHUDTool showHUDInView:self.navigationController.view withTitle:msg message:nil duration:1.0];
+    }];
+}
+
+- (void)countDown {
+    if (-- timeLeft > 0) {
+        [self.sendCodeButton setTitle:[NSString stringWithFormat:@"%d秒后重发", timeLeft] forState:UIControlStateDisabled];
+    } else {
+        self.sendCodeButton.enabled = YES;
+        [self.sendCodeButton setTitle:[NSString stringWithFormat:@"%d秒后重发", TimeInterval] forState:UIControlStateDisabled];
+        [self.timer invalidate];
+        self.timer = nil;
+    }
+}
+
+
 - (void)createSubViews {
-   // __weak __typeof(self) weakSelf = self;
     
     CGFloat margin = 10.f;
     CGFloat midMargin = 20.f;
@@ -220,8 +286,6 @@
     CGFloat lineHeight = .5f;
     
     UIFont *fieldFont = ZWFont(17);
-    
-    UIColor *lineColor = RGB(240., 240., 240.);
     
     //初始化并添加视图
     
@@ -415,64 +479,6 @@
     return separatorLine;
 }
 
-- (BOOL)isPhoneNumberValid:(NSString *)phoneNumber {
-    return phoneNumber.length == 11;
-}
-
-- (BOOL)isPasswordValid:(NSString *)password {
-    return password.length >= 6;
-}
-
-- (BOOL)isVeifyCodeValid:(NSString *)vrification {
-    if (vrification.length < 4) {
-        return NO;
-    }
-    NSScanner *scanner = [NSScanner scannerWithString:vrification];
-    int var;
-    return [scanner scanInt:&var] && [scanner isAtEnd];
-}
-
-- (void)exit {
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-int TimeInterval = 60;
-
-- (void)tappedSendCodeButton {
-    
-    [self.phoneNumberField resignFirstResponder];
-    
-    timeLeft = TimeInterval;
-    [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
-    
-    [ZWAPIRequestTool requestSendCodeWithParameter:@{@"phone": self.phoneNumberField.text} result:^(id response, BOOL success) {
-        
-        NSString *msg = nil;
-        if (success) {
-            msg = [[response objectForKey:kHTTPResponseCodeKey] intValue] == 113 ? @"该手机号已被注册" : [response objectForKey:kHTTPResponseInfoKey];
-        } else {
-            msg = @"获取验证码失败";
-        }
-        [ZWHUDTool showHUDInView:self.navigationController.view withTitle:msg message:nil duration:1.0];
-        
-    }];
-}
-
-- (void)countDown {
-    if (-- timeLeft > 0) {
-        
-        [self.sendCodeButton setTitle:[NSString stringWithFormat:@"%d秒后重发", timeLeft] forState:UIControlStateDisabled];
-        
-    } else {
-        self.sendCodeButton.enabled = YES;
-        
-        [self.sendCodeButton setTitle:[NSString stringWithFormat:@"%d秒后重发", TimeInterval] forState:UIControlStateDisabled];
-        
-        [self.timer invalidate];
-        self.timer = nil;
-        
-    }
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
