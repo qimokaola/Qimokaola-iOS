@@ -76,7 +76,7 @@
 
 /**
  时间标签
- */
+ */ 
 @property (nonatomic, strong) UILabel *timeLabel;
 
 /**
@@ -97,7 +97,7 @@
 /**
  喜欢按钮
  */
-@property (nonatomic, strong) UIButton *likeButton;
+@property (nonatomic, strong) UIButton *favoriteButton;
 
 /**
  喜欢标签
@@ -454,11 +454,11 @@
     
     _picContainerView = [[SDWeiXinPhotoContainerView alloc] init];
     
-    _likeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    _likeButton.adjustsImageWhenDisabled = NO;
-    [_likeButton setImage:[[UIImage imageNamed:@"icon_detail_unlike"] imageByResizeToSize:imageSize] forState:UIControlStateNormal];
-    [_likeButton setImage:[[UIImage imageNamed:@"icon_detail_liked"] imageByResizeToSize:imageSize]forState:UIControlStateHighlighted];
-    [_likeButton addTarget:self action:@selector(likeButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    _favoriteButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    _favoriteButton.adjustsImageWhenDisabled = NO;
+    [_favoriteButton setImage:[[UIImage imageNamed:@"icon_detail_unlike"] imageByResizeToSize:imageSize] forState:UIControlStateNormal];
+    [_favoriteButton setImage:[[UIImage imageNamed:@"icon_detail_liked"] imageByResizeToSize:imageSize]forState:UIControlStateHighlighted];
+    [_favoriteButton addTarget:self action:@selector(favoriteButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     
     _likeLabel = [[UILabel alloc] init];
     _likeLabel.textColor = [UIColor brownColor];
@@ -478,7 +478,7 @@
     _collectLabel.numberOfLines = 1;
     _collectLabel.textAlignment = NSTextAlignmentCenter;
     
-    NSArray *views = @[_avatarView, _nameLabel, _genderView, _timeLabel, _schoolLabel, _contentLabel, _picContainerView, _topSeparatorView, _bottomSeparatorView, _likeButton, _likeLabel, _collectButton, _collectLabel];
+    NSArray *views = @[_avatarView, _nameLabel, _genderView, _timeLabel, _schoolLabel, _contentLabel, _picContainerView, _topSeparatorView, _bottomSeparatorView, _favoriteButton, _likeLabel, _collectButton, _collectLabel];
     
     [_headerView sd_addSubviews:views];
     
@@ -527,20 +527,20 @@
     _picContainerView.sd_layout
     .leftEqualToView(_contentLabel);
     
-    _likeButton.sd_layout
+    _favoriteButton.sd_layout
     .heightIs(buttonHieght)
     .widthEqualToHeight()
     .centerXIs(_headerView.centerX_sd - margin * 4);
     
     _likeLabel.sd_layout
-    .centerXEqualToView(_likeButton)
-    .topSpaceToView(_likeButton, margin)
+    .centerXEqualToView(_favoriteButton)
+    .topSpaceToView(_favoriteButton, margin)
     .heightIs(20)
     .widthIs(100);
     
     _collectButton.sd_layout
-    .topEqualToView(_likeButton)
-    .heightRatioToView(_likeButton, 1.0)
+    .topEqualToView(_favoriteButton)
+    .heightRatioToView(_favoriteButton, 1.0)
     .widthEqualToHeight()
     .centerXIs(_headerView.centerX_sd + margin * 4);
     
@@ -600,7 +600,7 @@
     
     __weak __typeof(self) weakSelf = self;
     
-    [self animateButtonWithButton:self.likeButton completion:^{
+    [self animateButtonWithButton:self.favoriteButton completion:^{
         if (weakSelf.isLiked) {
             weakSelf.likeLabel.text = @"已喜欢";
         } else {
@@ -624,20 +624,7 @@
 }
 
 - (void)animateButtonWithButton:(UIButton *)button completion:(void (^)(void))completion {
-//    button.transform = CGAffineTransformIdentity;
-//    [UIView animateWithDuration:kButtonSizeAnimationTime animations:^{
-//        button.transform = CGAffineTransformMakeScale(1.3, 1.3);
-//        button.userInteractionEnabled = NO;
-//    } completion:^(BOOL finished) {
-//        [UIView animateWithDuration:kButtonSizeAnimationTime animations:^{
-//            button.transform = CGAffineTransformMakeScale(1.0, 1.0);
-//        } completion:^(BOOL finished) {
-//            button.userInteractionEnabled = YES;
-//            if (completion) {
-//                completion();
-//            }
-//        }];
-//    }];
+
     
     button.enabled = NO;
     CABasicAnimation *zoominAnimation = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
@@ -705,9 +692,9 @@
     CGFloat picContainerViewTopMargin = 0.f;
     if (_feed.image_urls && _feed.image_urls.count > 0) {
         picContainerViewTopMargin = 10;
-        _likeButton.sd_layout.topSpaceToView(_picContainerView, margin);
+        _favoriteButton.sd_layout.topSpaceToView(_picContainerView, margin);
     } else {
-        _likeButton.sd_layout.topSpaceToView(_contentLabel, margin);
+        _favoriteButton.sd_layout.topSpaceToView(_contentLabel, margin);
     }
     
     _picContainerView.sd_layout.topSpaceToView(_contentLabel, picContainerViewTopMargin);
@@ -954,36 +941,40 @@
 
 #pragma mark - Actions
 
-- (void)likeButtonClicked {
+- (void)favoriteButtonClicked {
+    self.isLiked = !self.isLiked;
     __weak __typeof(self) weakSelf = self;
     [[UMComDataRequestManager defaultManager] feedLikeWithFeedID:_feed.feedID
-                                                          isLike:!_isLiked
+                                                          isLike:self.isLiked
                                                       completion:^(NSDictionary *responseObject, NSError *error) {
                                                           if (responseObject) {
-                                                              weakSelf.isLiked = !weakSelf.isLiked;
                                                               // 执行回调更新feed流页面数据
                                                               if (weakSelf.isLikedChangedCompletion) {
                                                                   weakSelf.isLikedChangedCompletion(weakSelf.isLiked);
                                                               }
                                                           } else {
-                                                              [ZWHUDTool showHUDInView:weakSelf.navigationController.view withTitle:@"呀,出错了！" message:nil duration:kShowHUDMid];
+                                                              dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                                                  weakSelf.isLiked = !weakSelf.isLiked;
+                                                              });
                                                           }
                                                       }];
 }
 
 
 - (void)collectButtonClicked {
+    self.isCollected = !self.isCollected;
     __weak __typeof(self) weakSelf = self;
     [[UMComDataRequestManager defaultManager] feedFavouriteWithFeedId:_feed.feedID
-                                                          isFavourite:!_isCollected
+                                                          isFavourite:self.isCollected
                                                       completionBlock:^(NSDictionary *responseObject, NSError *error) {
                                                           if (!error) {
-                                                              weakSelf.isCollected = !weakSelf.isCollected;
                                                               if (weakSelf.isCollectedChangedCompletion) {
                                                                   weakSelf.isCollectedChangedCompletion(weakSelf.isCollected);
                                                               }
                                                           } else {
-                                                              [ZWHUDTool showHUDInView:weakSelf.navigationController.view withTitle:@"呀,出错了！" message:nil duration:kShowHUDMid];
+                                                              dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * kButtonSizeAnimationTime * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                                                  weakSelf.isCollected = !weakSelf.isCollected;
+                                                              });
                                                           }
                                                       }];
 }

@@ -57,15 +57,6 @@
 }
 
 
-#pragma mark 处理接收到数据
-- (void)loadRemoteData:(NSDictionary *)data {
-    self.dataArray = [[[data objectForKey:@"folders"] linq_select:^id(NSDictionary *item) {
-        return [ZWFolder modelWithDictionary:item];
-    }] mutableCopy];
-    [self.tableView reloadData];
-}
-
-
 #pragma mark - UITableViewDataDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -78,7 +69,7 @@
         folder = [self.filteredArray objectAtIndex:indexPath.row];
         [self.searchController setActive:NO];
     } else {
-        folder = [self.dataArray objectAtIndex:indexPath.row];
+        folder = [[self.dataArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     }
     self.chooseCourseCompletion(folder.name);
     [self dismissViewControllerAnimated:YES completion:nil];

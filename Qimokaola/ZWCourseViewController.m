@@ -7,9 +7,13 @@
 //
 
 #import "ZWCourseViewController.h"
-#import "NSString+Extension.h"
 
-#import <YYKit/YYKit.h>
+
+#define ROOT @"/"
+#define kCourseCellIdentifier @"kCourseCellIdentifier"
+#define KCourseHeaderIdentifier @"KCourseHeaderIdentifier"
+#define kCourseCacheName @"CourseCache"
+#define kCourseCacheKeyPrefix @"CourseCache-"
 
 @interface ZWCourseViewController ()
 
@@ -26,12 +30,6 @@
 @end
 
 @implementation ZWCourseViewController
-
-static NSString *const ROOT = @"/";
-static NSString *const kCourseCellIdentifier = @"kCourseCellIdentifier";
-
-#define kCourseCacheName @"CourseCache"
-#define kCourseCacheKeyPrefix @"CourseCache-"
 
 #pragma mark - Life Cycle
 
@@ -61,6 +59,7 @@ static NSString *const kCourseCellIdentifier = @"kCourseCellIdentifier";
     self.tableView.mj_header.backgroundColor = defaultBackgroundColor;
     self.tableView.sectionIndexBackgroundColor = [UIColor clearColor];
     [self.tableView registerClass:[ZWCourseCell class] forCellReuseIdentifier:kCourseCellIdentifier];
+    [self.tableView registerNib:[UINib nibWithNibName:@"ZWCourseHeader" bundle:nil] forHeaderFooterViewReuseIdentifier:KCourseHeaderIdentifier];
     self.tableView.rowHeight = 50;
     
     ((UISearchBar *)self.tableView.tableHeaderView).placeholder = @"搜索课程";
@@ -198,6 +197,7 @@ static NSString *const kCourseCellIdentifier = @"kCourseCellIdentifier";
         }
         weakSelf.shouldEmptyViewShow = NO;
         [weakSelf.dataArray removeAllObjects];
+        [weakSelf.titleArray removeAllObjects];
         [weakSelf.tableView reloadData];
         [[ZWUserManager sharedInstance] updateCurrentCollegeId:@(collegeID.intValue) collegeName:collegeName];
         [weakSelf setSchoolNameLabelData];
@@ -218,7 +218,7 @@ static NSString *const kCourseCellIdentifier = @"kCourseCellIdentifier";
                                                  path:ROOT
                                            needDetail:NO
                                                result:^(id response, BOOL success) {
-                                                   [weakSelf.tableView.mj_header endRefreshing];
+                                                   
                                                    if (success) {
                                                        [weakSelf loadRemoteData:[response objectForKey:kHTTPResponseResKey]];
                                                    } else {
@@ -231,6 +231,8 @@ static NSString *const kCourseCellIdentifier = @"kCourseCellIdentifier";
                                                        [ZWHUDTool showHUDInView:weakSelf.navigationController.view withTitle:errDesc message:nil duration:kShowHUDMid];
                                                    }
                                                    
+                                                   [weakSelf.tableView.mj_header endRefreshing];
+                                                   
                                                }];
 }
 
@@ -241,7 +243,8 @@ static NSString *const kCourseCellIdentifier = @"kCourseCellIdentifier";
     }];
     [self dealDataWithArray:self.rawDataArray];
     [self.tableView reloadData];
-    [self.cache setObject:self.dataArray forKey:[kCourseCacheKeyPrefix stringByAppendingString:[ZWUserManager sharedInstance].loginUser.currentCollegeId.stringValue]];
+    
+    //[self.cache setObject:self.dataArray forKey:[kCourseCacheKeyPrefix stringByAppendingString:[ZWUserManager sharedInstance].loginUser.currentCollegeId.stringValue]];
 }
 
 - (void)dealDataWithArray:(NSArray *)array
@@ -255,18 +258,22 @@ static NSString *const kCourseCellIdentifier = @"kCourseCellIdentifier";
         [tmpArray addObject:array];
     }
     
+    NSMutableDictionary *firstWordDict = [NSMutableDictionary dictionary];
     for (ZWFolder *folder in array) {
         //转化为首拼音并取首字母
-        NSString * firstWord = [folder.name firstWord];
+        NSString * firstWord = [folder.name getFirstLetter];
         int intValueOfCharacter = [firstWord characterAtIndex:0];
         //把字典放到对应的数组中去
         if (intValueOfCharacter >= 65 && intValueOfCharacter <= 90) {
             //如果首字母是A-Z，直接放到对应数组
             NSMutableArray * array = tmpArray[intValueOfCharacter - 65];
+            if (array.count == 0) {
+                [firstWordDict setObject:firstWord forKey:folder.name];
+            }
             [array addObject:folder];
         } else {
             //如果不是，就放到最后一个代表#的数组
-            NSMutableArray * array =[tmpArray lastObject];
+            NSMutableArray * array = [tmpArray lastObject];
             [array addObject:folder];
         }
     }
@@ -278,7 +285,7 @@ static NSString *const kCourseCellIdentifier = @"kCourseCellIdentifier";
         if (mutArr.count != 0) {
             [self.dataArray addObject:mutArr];
             ZWFolder *folder = mutArr[0];
-            NSString *firstWord = [folder.name firstWord];
+            NSString *firstWord = [firstWordDict objectForKey:folder.name];
             int intValueOfCharacter = [firstWord characterAtIndex:0];
             //取出其中的首字母放入到标题数组，暂时考虑A-Z的情况
             if (intValueOfCharacter >= 65 && intValueOfCharacter <= 90) {
@@ -287,7 +294,7 @@ static NSString *const kCourseCellIdentifier = @"kCourseCellIdentifier";
         }
     }
     //便利结束后，两个数组数目不相等说明有除大写字母外的其他首字母
-    if (!(self.titleArray.count == self.dataArray.count)) {
+    if (self.titleArray.count != self.dataArray.count) {
         [self.titleArray addObject:@"#"];
     }
     
@@ -331,21 +338,56 @@ static NSString *const kCourseCellIdentifier = @"kCourseCellIdentifier";
     if (self.searchController.active) {
         return nil;
     } else {
-        return self.titleArray;
+        if (self.titleArray.count == 0) {
+            return nil;
+        }
+        NSMutableArray *titles = [NSMutableArray arrayWithObject:UITableViewIndexSearch];
+        [titles addObjectsFromArray:self.titleArray];
+        return titles;
     }
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+//    if (self.searchController.active) {
+//        return nil;
+//    } else {
+//        return [self.titleArray objectAtIndex:section];
+//    }
+//    
+//}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     if (self.searchController.active) {
         return nil;
     } else {
-        return [self.titleArray objectAtIndex:section];
+        ZWCourseHeader *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:KCourseHeaderIdentifier];
+        header.titleLabel.text = [self.titleArray objectAtIndex:section];
+        return header;
     }
-    
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (self.searchController.active) {
+        return 0;
+    } else {
+        return 20;
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index {
-    return index;
+//    return index;
+    //这里是为了指定索引index对应的是哪个section的，默认的话直接返回index就好。其他需要定制的就针对性处理
+    if ([title isEqualToString:UITableViewIndexSearch])
+    {
+       // [tableView setContentOffset:CGPointZero animated:NO];//tabview移至顶部
+        [tableView scrollToTopAnimated:NO];
+        return NSNotFound;
+    }
+    else
+    {
+        //return [[UILocalizedIndexedCollation currentCollation] sectionForSectionIndexTitleAtIndex:index] - 1; // -1 添加了搜索标识
+        return index - 1;
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

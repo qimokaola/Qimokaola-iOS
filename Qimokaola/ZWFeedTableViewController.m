@@ -310,18 +310,23 @@
 
 // 点赞
 - (void)cell:(ZWFeedCell *)cell didClickLikeButtonInLikeState:(BOOL)isLiked atIndexPath:(NSIndexPath *)indexPath {
+    /// 先改变视图再执行操作
+    cell.feed.liked = @(!isLiked);
+    int likeCount = cell.feed.likes_count.intValue;
+    cell.feed.likes_count = !isLiked ? @(likeCount + 1) : @(likeCount - 1);
+    [self.tableView reloadRow:[self.feeds indexOfObject:cell.feed] inSection:0 withRowAnimation:UITableViewRowAnimationNone];
+    
     __weak __typeof(self) weakSelf = self;
     [[UMComDataRequestManager defaultManager] feedLikeWithFeedID:cell.feed.feedID
                                                           isLike:!isLiked
                                                       completion:^(NSDictionary *responseObject, NSError *error) {
-                                                          if (responseObject) {
-                                                              cell.feed.liked = @(!isLiked);
+                                                          if (!responseObject) {
+                                                              cell.feed.liked = @(isLiked);
                                                               int likeCount = cell.feed.likes_count.intValue;
-                                                              cell.feed.likes_count = !isLiked ? @(likeCount + 1) : @(likeCount - 1);
-                                                              [weakSelf.tableView reloadRow:[weakSelf.feeds indexOfObject:cell.feed] inSection:0 withRowAnimation:UITableViewRowAnimationNone];
-                                                              
-                                                          } else {
-                                                              [ZWHUDTool showHUDInView:weakSelf.navigationController.view withTitle:@"呀,出错了！" message:nil duration:kShowHUDMid];
+                                                              cell.feed.likes_count = !isLiked ? @(likeCount - 1) : @(likeCount + 1);
+                                                              dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                                                  [weakSelf.tableView reloadRow:[weakSelf.feeds indexOfObject:cell.feed] inSection:0 withRowAnimation:UITableViewRowAnimationNone];
+                                                              });
                                                           }
                                                       }];
     
@@ -329,15 +334,18 @@
 
 // 收藏
 - (void)cell:(ZWFeedCell *)cell didClickCollectButtonInCollectState:(BOOL)isCollected atIndexPath:(NSIndexPath *)indexPath {
+    cell.feed.has_collected = @(!isCollected);
+    [self.tableView reloadRow:[self.feeds indexOfObject:cell.feed] inSection:0 withRowAnimation:UITableViewRowAnimationNone];
+
     __weak __typeof(self) weakSelf = self;
     [[UMComDataRequestManager defaultManager] feedFavouriteWithFeedId:cell.feed.feedID
                                                           isFavourite:!isCollected
                                                       completionBlock:^(NSDictionary *responseObject, NSError *error) {
-                                                          if (!error) {
-                                                              cell.feed.has_collected = @(!isCollected);
-                                                              [weakSelf.tableView reloadRow:[weakSelf.feeds indexOfObject:cell.feed] inSection:0 withRowAnimation:UITableViewRowAnimationNone];
-                                                          } else {
-                                                              [ZWHUDTool showHUDInView:weakSelf.navigationController.view withTitle:@"呀,出错了！" message:nil duration:kShowHUDMid];
+                                                          if (error) {
+                                                              cell.feed.has_collected = @(isCollected);
+                                                              dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                                                  [weakSelf.tableView reloadRow:[weakSelf.feeds indexOfObject:cell.feed] inSection:0 withRowAnimation:UITableViewRowAnimationNone];
+                                                              });
                                                           }
                                                       }];
 }

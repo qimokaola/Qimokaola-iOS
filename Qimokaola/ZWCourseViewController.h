@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ZWBaseSearchViewController.h"
+#import "NSString+Extension.h"
 #import "ZWFolder.h"
 #import "ZWAPIRequestTool.h"
 #import "ZWUserManager.h"
@@ -19,9 +20,13 @@
 
 #import "ZWHUDTool.h"
 
+
+#import "ZWCourseHeader.h"
 #import "LinqToObjectiveC.h"
 #import <ReactiveCocoa/ReactiveCocoa.h>
 #import <Masonry/Masonry.h>
+
+#import <YYKit/YYKit.h>
 
 /**
  *  @author Administrator, 16-09-10 21:09:47
@@ -30,5 +35,7 @@
  */
 
 @interface ZWCourseViewController : ZWBaseSearchViewController
+
+- (void)loadRemoteData:(NSDictionary *)data;
 
 @end

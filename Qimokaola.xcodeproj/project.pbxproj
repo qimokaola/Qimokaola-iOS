@@ -94,6 +94,8 @@
 		C367ADDB1CB693C4002184DF /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C3F7910A1BCD288C003793B1 /* libz.tbd */; };
 		C36D67E31DA9331900442FD4 /* ZWDownloadedInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C36D67E21DA9331900442FD4 /* ZWDownloadedInfoCell.m */; };
 		C37027451DE97E0D00C902AF /* ZWRegisterViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C37027441DE97E0D00C902AF /* ZWRegisterViewModel.m */; };
+		C370274D1DEABA0B00C902AF /* ZWCourseHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = C370274C1DEABA0B00C902AF /* ZWCourseHeader.m */; };
+		C370274F1DEABAA200C902AF /* ZWCourseHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = C370274E1DEABAA200C902AF /* ZWCourseHeader.xib */; };
 		C3792ABF1D6C824D0079FCF5 /* ZWPathTool.m in Sources */ = {isa = PBXBuildFile; fileRef = C3792ABE1D6C824D0079FCF5 /* ZWPathTool.m */; };
 		C3792AC21D6C82A00079FCF5 /* ZWHUDTool.m in Sources */ = {isa = PBXBuildFile; fileRef = C3792AC11D6C82A00079FCF5 /* ZWHUDTool.m */; };
 		C3792AC51D6C83A70079FCF5 /* ZWFileTool.m in Sources */ = {isa = PBXBuildFile; fileRef = C3792AC41D6C83A70079FCF5 /* ZWFileTool.m */; };
@@ -359,6 +361,9 @@
 		C36D67E21DA9331900442FD4 /* ZWDownloadedInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWDownloadedInfoCell.m; sourceTree = "<group>"; };
 		C37027431DE97E0D00C902AF /* ZWRegisterViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWRegisterViewModel.h; sourceTree = "<group>"; };
 		C37027441DE97E0D00C902AF /* ZWRegisterViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWRegisterViewModel.m; sourceTree = "<group>"; };
+		C370274B1DEABA0B00C902AF /* ZWCourseHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWCourseHeader.h; sourceTree = "<group>"; };
+		C370274C1DEABA0B00C902AF /* ZWCourseHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWCourseHeader.m; sourceTree = "<group>"; };
+		C370274E1DEABAA200C902AF /* ZWCourseHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZWCourseHeader.xib; sourceTree = "<group>"; };
 		C370675A1D6B45CF007B18A8 /* Qimokaola.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Qimokaola.entitlements; sourceTree = "<group>"; };
 		C3792ABD1D6C824D0079FCF5 /* ZWPathTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWPathTool.h; sourceTree = "<group>"; };
 		C3792ABE1D6C824D0079FCF5 /* ZWPathTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWPathTool.m; sourceTree = "<group>"; };
@@ -1061,6 +1066,16 @@
 			name = ZWRegisterViewModel;
 			sourceTree = "<group>";
 		};
+		C370274A1DEAB9BF00C902AF /* ZWCourseHeader */ = {
+			isa = PBXGroup;
+			children = (
+				C370274B1DEABA0B00C902AF /* ZWCourseHeader.h */,
+				C370274C1DEABA0B00C902AF /* ZWCourseHeader.m */,
+				C370274E1DEABAA200C902AF /* ZWCourseHeader.xib */,
+			);
+			name = ZWCourseHeader;
+			sourceTree = "<group>";
+		};
 		C3792ACC1D6DE9F30079FCF5 /* ZWFeedTableViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -1099,6 +1114,7 @@
 		C3792AD21D6F39470079FCF5 /* TableViewHeader */ = {
 			isa = PBXGroup;
 			children = (
+				C370274A1DEAB9BF00C902AF /* ZWCourseHeader */,
 				C3DE5BB61DAFF38500E93C05 /* ZWBaseTableViewHeaderFooter */,
 				C3DE5BB01DAFEE3B00E93C05 /* ZWFeedDetailCommentsHeader */,
 				C3DE5B861DAE5E4800E93C05 /* ZWUMUserFeedHeader */,
@@ -1880,6 +1896,7 @@
 				C34832771CB2D8C1009EA4D7 /* Assets.xcassets in Resources */,
 				C3DE5B931DAE644B00E93C05 /* ZWUMUserFeedHeader.xib in Resources */,
 				C36512E71DB88532006A2969 /* UMSocialSDKResources.bundle in Resources */,
+				C370274F1DEABAA200C902AF /* ZWCourseHeader.xib in Resources */,
 				C3DE5B7C1DAD2F6400E93C05 /* ZWAppUserInfoCell.xib in Resources */,
 				C36512E41DB88532006A2969 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				C3C531271DB3F161000C3562 /* pic_upload_method_computer.png in Resources */,
@@ -2053,6 +2070,7 @@
 				C3792AC21D6C82A00079FCF5 /* ZWHUDTool.m in Sources */,
 				C3DA12151D9D45C700758BAC /* DLScrollTabbarView.m in Sources */,
 				C3DA121C1D9D488900758BAC /* ZWUserCommentsViewController.m in Sources */,
+				C370274D1DEABA0B00C902AF /* ZWCourseHeader.m in Sources */,
 				C36512E91DB88532006A2969 /* UMShareMenuSelectionView.m in Sources */,
 				C32666BA1D9560C1008C6B24 /* UMComAddedImageCellView.m in Sources */,
 				C35771191D8576A600E9B166 /* ZWFileDetailViewController.m in Sources */,

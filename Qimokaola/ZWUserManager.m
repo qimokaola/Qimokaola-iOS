@@ -9,6 +9,7 @@
 #import "ZWUserManager.h"
 #import "ZWAPITool.h"
 
+#import "UMPushSDK_1.4.0/UMessage.h"
 #import <YYKit/YYKit.h>
 #import <UMCommunitySDK/UMComDataRequestManager.h>
 #import <UMCommunitySDK/UMComSession.h>
@@ -140,6 +141,12 @@ NSString *const kLoginedUserKey = @"kLoginedUserKey";
             }
         }
     }
+    [UMessage addTag:_loginUser.collegeName response:^(id  _Nonnull responseObject, NSInteger remain, NSError * _Nonnull error) {
+        
+    }];
+    [UMessage addTag:_loginUser.gender response:^(id  _Nonnull responseObject, NSInteger remain, NSError * _Nonnull error) {
+        
+    }];
     _isLogin = loginUser != nil;
     [[NSUserDefaults standardUserDefaults] setBool:_isLogin forKey:@"LoginState"];
     [_cache setObject:_loginUser forKey:kLoginedUserKey];
