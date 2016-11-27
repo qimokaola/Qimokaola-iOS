@@ -24,7 +24,7 @@ typedef NS_ENUM(NSInteger, ZWFetchedDataSource) {
     ZWFetchedDataSourceFromFooter
 };
 
-#define kTopCacheName @"StudentCircleTop"
+#define kTopCacheName @"StudentCircleTopic"
 #define kTopicCacheKey @"TopicCache"
 
 @interface ZWStudentCircleViewController () <SDCycleScrollViewDelegate>

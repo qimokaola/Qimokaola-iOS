@@ -38,4 +38,10 @@
 
 - (void)loadRemoteData:(NSDictionary *)data;
 
+
+/**
+ 标记是否是处于上传文件页面的选择上传科目页
+ */
+@property (nonatomic, assign) BOOL isChooseCourseViewController;
+
 @end

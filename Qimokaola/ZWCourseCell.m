@@ -16,8 +16,6 @@
 // 文件名标签
 @property (nonatomic, strong) UILabel *nameLabel;
 
-@property (nonatomic, strong) UIButton *stickButton;
-
 @end
 
 @implementation ZWCourseCell
@@ -44,13 +42,13 @@
     _nameLabel.font = ZWFont(18);
     _nameLabel.textColor = [UIColor blackColor];
     
-    _stickButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_stickButton setBackgroundImage:[UIImage imageNamed:@"icon_course_unstick"] forState:UIControlStateNormal];
-    [_stickButton setBackgroundImage:[UIImage imageNamed:@"icon_course_sticked"] forState:UIControlStateSelected];
+    _collectButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_collectButton setBackgroundImage:[UIImage imageNamed:@"icon_course_unstick"] forState:UIControlStateNormal];
+    [_collectButton setBackgroundImage:[UIImage imageNamed:@"icon_course_sticked"] forState:UIControlStateSelected];
     
-    [_stickButton addTarget:self action:@selector(stickButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    [_collectButton addTarget:self action:@selector(collectButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     
-    [self.contentView sd_addSubviews:@[_circleLabel, _nameLabel, _stickButton]];
+    [self.contentView sd_addSubviews:@[_circleLabel, _nameLabel, _collectButton]];
     
     UIView *contentView = self.contentView;
     
@@ -63,21 +61,26 @@
     .widthEqualToHeight();
     _circleLabel.sd_cornerRadiusFromHeightRatio = @(0.5);
     
-    _stickButton.sd_layout
-    .rightEqualToView(contentView)
+    _collectButton.sd_layout
+    .rightSpaceToView(contentView, margin / 2)
     .centerYEqualToView(contentView)
-    .widthIs(30)
+    .widthIs(35)
     .heightEqualToWidth();
     
     _nameLabel.sd_layout
     .leftSpaceToView(_circleLabel, margin)
     .centerYEqualToView(contentView)
-    .rightSpaceToView(_stickButton, 5)
+    .rightSpaceToView(_collectButton, 5)
     .heightIs(20);
 }
 
-- (void)stickButtonClicked {
-    _stickButton.selected = !_stickButton.selected;
+- (void)collectButtonClicked {
+    _collectButton.selected = !_collectButton.selected;
+    if (self.collectBlock) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.collectBlock(_collectButton.selected);
+        });
+    }
 }
 
 - (void)setFolderName:(NSString *)folderName {

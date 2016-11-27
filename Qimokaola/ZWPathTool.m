@@ -40,6 +40,11 @@
     return [self checkDirExistence:cachaDirectory];
 }
 
++ (NSString *)collectedCourseDirectory {
+    NSString *collectedCoursesDirectory = [[self documentDirectory] stringByAppendingPathComponent:@"CollectedCourse"];
+    return [self checkDirExistence:collectedCoursesDirectory];
+}
+
 + (NSString *)otherDataDirectory {
     NSString *otherDataDirectory = [[ZWPathTool cacheDirectory] stringByAppendingPathComponent:@"OtherData"];
     return [self checkDirExistence:otherDataDirectory];

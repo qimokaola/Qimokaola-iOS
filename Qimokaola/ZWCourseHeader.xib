@@ -15,10 +15,10 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="20"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="★" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hys-M0-Uvv">
-                    <rect key="frame" x="10" y="0.0" width="50" height="20"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="★ 收藏的课程" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hys-M0-Uvv">
+                    <rect key="frame" x="10" y="0.0" width="334" height="20"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -28,7 +28,7 @@
             <connections>
                 <outlet property="titleLabel" destination="hys-M0-Uvv" id="04P-gu-5dq"/>
             </connections>
-            <point key="canvasLocation" x="34.5" y="52.5"/>
+            <point key="canvasLocation" x="34.5" y="52"/>
         </view>
     </objects>
 </document>

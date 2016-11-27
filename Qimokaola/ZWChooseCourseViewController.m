@@ -14,6 +14,15 @@
 
 @implementation ZWChooseCourseViewController
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.isChooseCourseViewController = YES;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -30,30 +39,6 @@
 
 - (void)exit {
     [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-#pragma mark 重写覆盖下拉刷新方法
-- (void)freshHeaderStartFreshing {
-    __weak __typeof(self) weakSelf = self;
-    ZWUser *user = [ZWUserManager sharedInstance].loginUser;
-    [ZWAPIRequestTool requstFileAndFolderListInSchool:user.collegeId
-                                                 path:@"/"
-                                           needDetail:NO
-                                               result:^(id response, BOOL success) {
-                                                   [weakSelf.tableView.mj_header endRefreshing];
-                                                   if (success) {
-                                                       [weakSelf loadRemoteData:[response objectForKey:kHTTPResponseResKey]];
-                                                   } else {
-                                                       NSString *errDesc = nil;
-                                                       if ([(NSError *)response code] == -1001) {
-                                                           errDesc = @"呀，连接不上服务器了";
-                                                       } else {
-                                                           errDesc = @"出现错误，获取失败";
-                                                       }
-                                                       [ZWHUDTool showHUDInView:[UIApplication sharedApplication].keyWindow withTitle:errDesc message:nil duration:kShowHUDMid];
-                                                   }
-                                                   
-                                               }];
 }
 
 

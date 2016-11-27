@@ -16,6 +16,10 @@
 
 @interface ZWCourseCell : UITableViewCell
 
+@property (nonatomic, strong) UIButton *collectButton;
+
 @property (nonatomic, strong) NSString *folderName;
+
+@property (nonatomic, copy) void(^collectBlock)(BOOL newCollectStatus);
 
 @end

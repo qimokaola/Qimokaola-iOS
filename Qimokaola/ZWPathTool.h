@@ -22,6 +22,9 @@
 // 数据库路径
 + (NSString *)dbDirectory;
 
+// 收藏的课程路径
++ (NSString *)collectedCourseDirectory;
+
 // 存放写轻量级数据
 + (NSString *)otherDataDirectory;
 
