@@ -15,6 +15,7 @@
 #import "ZWAPIRequestTool.h"
 #import "ZWUserManager.h"
 #import "ZWResetPasswordViewController.h"
+#import "ZWPasswordField.h"
 
 #import "Masonry.h"
 #import "ReactiveCocoa.h"
@@ -144,7 +145,10 @@
     [self.view addSubview:self.accountLine];
     
     self.passwordField = ({
-        UITextField *field = [self commonTextField];
+        
+        UITextField *field = [[ZWPasswordField alloc] init];
+        field.font = ZWFont(17);
+        field.borderStyle = UITextBorderStyleNone;
         field.secureTextEntry = YES;
         field.placeholder = @"输入密码";
         

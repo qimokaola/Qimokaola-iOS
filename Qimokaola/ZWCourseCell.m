@@ -32,7 +32,7 @@
 - (void)createSubViews {
     _circleLabel = [[UILabel alloc] init];
     _circleLabel.numberOfLines = 1;
-    _circleLabel.backgroundColor = [UIColor orangeColor];
+    _circleLabel.backgroundColor = defaultBlueColor;
     _circleLabel.font = ZWFont(20);
     _circleLabel.textColor = [UIColor whiteColor];
     _circleLabel.textAlignment = NSTextAlignmentCenter;
@@ -62,7 +62,7 @@
     _circleLabel.sd_cornerRadiusFromHeightRatio = @(0.5);
     
     _collectButton.sd_layout
-    .rightSpaceToView(contentView, margin / 2)
+    .rightSpaceToView(contentView, margin / 2 + 2)
     .centerYEqualToView(contentView)
     .widthIs(35)
     .heightEqualToWidth();
@@ -96,7 +96,7 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    _circleLabel.backgroundColor = [UIColor orangeColor];
+    _circleLabel.backgroundColor = defaultBlueColor;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

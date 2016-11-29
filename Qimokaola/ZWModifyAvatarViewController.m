@@ -201,7 +201,7 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
     __weak __typeof(self) weakSelf = self;
-    UIImage *selectedImage = [info[UIImagePickerControllerEditedImage] imageByResizeToSize:CGSizeMake(320, 320)];
+    UIImage *selectedImage = [info[UIImagePickerControllerEditedImage] imageByResizeToSize:CGSizeMake(640, 640)];
     // 将所选图片写进文件，以便上传使用
     NSString *avatarFileName = @"avatar.jpeg";
     NSData *imageData = UIImageJPEGRepresentation(selectedImage, 0.3);

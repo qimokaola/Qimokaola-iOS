@@ -14,9 +14,17 @@
 @property (nonatomic, strong) NSString *phoneNumer;
 @property (nonatomic, strong) NSString *verifyCode;
 @property (nonatomic, strong) NSString *password;
-@property (nonatomic, strong) NSString *confirmPwd;
 
-@property (nonatomic, strong) RACSignal *distinctLabelHiddenSignal;
+
+/**
+ 额外控制按钮的变量
+ */
+@property (nonatomic, assign) BOOL verifyButtonEnable;
+
+///**
+// 额外控制按钮的信号
+// */
+//@property (nonatomic, strong) RACSignal *extraEnableSignal;
 
 @property (nonatomic, strong) RACCommand *verifyCommand;
 @property (nonatomic, strong) RACCommand *registerCommand;

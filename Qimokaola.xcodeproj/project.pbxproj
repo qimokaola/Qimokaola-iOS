@@ -46,6 +46,7 @@
 		C33AC6021DA3C3CD00A96AB7 /* ZWUserLikesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C33AC6011DA3C3CD00A96AB7 /* ZWUserLikesViewController.m */; };
 		C33AC6061DA3C63900A96AB7 /* ZWLikeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C33AC6051DA3C63900A96AB7 /* ZWLikeCell.m */; };
 		C33B6D3E1D9D68DC00710D75 /* ZWReplytPaddingLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = C33B6D3D1D9D68DC00710D75 /* ZWReplytPaddingLabel.m */; };
+		C33E99451DED9F52004CC173 /* ZWPasswordField.m in Sources */ = {isa = PBXBuildFile; fileRef = C33E99441DED9F52004CC173 /* ZWPasswordField.m */; };
 		C33EECA31BCD4F9700BB4B74 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C33EECA21BCD4F9700BB4B74 /* libsqlite3.dylib */; };
 		C33EECA41BCD4FC500BB4B74 /* libiconv.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C3F791161BCD30F2003793B1 /* libiconv.2.dylib */; };
 		C33EECA61BCD4FE800BB4B74 /* libstdc++.6.0.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C33EECA51BCD4FE800BB4B74 /* libstdc++.6.0.9.dylib */; };
@@ -288,6 +289,8 @@
 		C33AC6051DA3C63900A96AB7 /* ZWLikeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWLikeCell.m; sourceTree = "<group>"; };
 		C33B6D3C1D9D68DC00710D75 /* ZWReplytPaddingLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWReplytPaddingLabel.h; sourceTree = "<group>"; };
 		C33B6D3D1D9D68DC00710D75 /* ZWReplytPaddingLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWReplytPaddingLabel.m; sourceTree = "<group>"; };
+		C33E99431DED9F52004CC173 /* ZWPasswordField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWPasswordField.h; sourceTree = "<group>"; };
+		C33E99441DED9F52004CC173 /* ZWPasswordField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWPasswordField.m; sourceTree = "<group>"; };
 		C33EECA21BCD4F9700BB4B74 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = ../../../../../../usr/lib/libsqlite3.dylib; sourceTree = "<group>"; };
 		C33EECA51BCD4FE800BB4B74 /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "../../../../../../usr/lib/libstdc++.6.0.9.dylib"; sourceTree = "<group>"; };
 		C33EECA71BCD500E00BB4B74 /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = ../../../../../../usr/lib/libz.1.dylib; sourceTree = "<group>"; };
@@ -835,6 +838,15 @@
 			name = ZWReplytPaddingLabel;
 			sourceTree = "<group>";
 		};
+		C33E99421DED9F24004CC173 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+				C33E99431DED9F52004CC173 /* ZWPasswordField.h */,
+				C33E99441DED9F52004CC173 /* ZWPasswordField.m */,
+			);
+			name = "New Group";
+			sourceTree = "<group>";
+		};
 		C3493C0F1D8D8034007C7144 /* ZWModifyGenderViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -1125,6 +1137,7 @@
 		C3792AD31D6F395F0079FCF5 /* Custom */ = {
 			isa = PBXGroup;
 			children = (
+				C33E99421DED9F24004CC173 /* New Group */,
 				C3EEE06A1DB9D4370096B6DE /* ESPictureBrowser */,
 				C33B6D3B1D9D68B200710D75 /* ZWReplytPaddingLabel */,
 				C3DA11FE1D9D45C700758BAC /* DLSlideView */,
@@ -1984,6 +1997,7 @@
 				C32666561D953125008C6B24 /* UMAssetsCollectionOverlayView.m in Sources */,
 				C37027451DE97E0D00C902AF /* ZWRegisterViewModel.m in Sources */,
 				C33AC6021DA3C3CD00A96AB7 /* ZWUserLikesViewController.m in Sources */,
+				C33E99451DED9F52004CC173 /* ZWPasswordField.m in Sources */,
 				C3DE5B7B1DAD2F6400E93C05 /* ZWAppUserInfoCell.m in Sources */,
 				C326666C1D9534DE008C6B24 /* UMComButton.m in Sources */,
 				C337B9C51D7334AF0060BDD6 /* ZWAPIRequestTool.m in Sources */,

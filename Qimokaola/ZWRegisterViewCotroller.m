@@ -16,6 +16,8 @@
 #import "ZWHUDTool.h"
 #import "ZWRegisterViewModel.h"
 
+#import "ZWPasswordField.h"
+
 @interface ZWRegisterViewCotroller () {
     int timeLeft;
 }
@@ -49,15 +51,6 @@
 // 密码输入框
 @property (nonatomic, strong) UITextField *passwordField;
 
-// 确认密码框
-@property (nonatomic, strong) UITextField *confirmPwdField;
-
-// 确认密码框下划线
-@property (nonatomic, strong) UIView *confirmPwdLine;
-
-// 两次密码输入不一致的提示
-@property (nonatomic, strong) UILabel *distinctPwdLabel;
-
 // 密码输入框下的线
 @property (nonatomic, strong) UIView *passwordLine;
 
@@ -67,14 +60,8 @@
 // 下一步按钮上的运行提示 - UIActivityIndicatorView
 @property (nonatomic, strong) UIActivityIndicatorView *indicator;
 
-//// 底部几个有关于协议的控件的容器
-//@property (nonatomic, strong) UIView *protocolView;
-//
-//// 底部协议标签
-//@property (nonatomic, strong) UILabel *protocolLabel;
-//
-//// 底部协议按钮
-//@property (nonatomic, strong) UIButton *protocolBtn;
+// 设置是否可用
+@property (nonatomic, assign) BOOL verifyButtonDisable;
 
 // 计数器
 @property (nonatomic, weak) NSTimer *timer;
@@ -110,29 +97,22 @@
     //创建并布局子视图
     [self createSubViews];
     
-    //事件处理
-    RACSignal *phoneNumberValidSignal = [self.phoneNumberField.rac_textSignal map:^id(NSString *value) {
-        return @([self isPhoneNumberValid:value]);
-    }];
+    [self bindViewModel];
     
-    RACSignal *verficationValidSignal = [self.verifyField.rac_textSignal map:^id(NSString *value) {
-        return @([self isVeifyCodeValid:value]);
-    }];
+}
+
+- (void)bindViewModel {
+    _viewModel = [[ZWRegisterViewModel alloc] init];
     
-    RACSignal *passwordValidSignal = [self.passwordField.rac_textSignal map:^id(NSString *value) {
-        return @([self isPasswordValid:value]);
-    }];
+    RAC(_viewModel, phoneNumer) = self.phoneNumberField.rac_textSignal;
+    RAC(_viewModel, verifyCode) = self.verifyField.rac_textSignal;
+    RAC(_viewModel, password) = self.passwordField.rac_textSignal;
+    RAC(_viewModel, verifyButtonEnable) = [RACObserve(self, verifyButtonDisable) not];
     
-    RACSignal *nextButtonEnableSignal = [RACSignal combineLatest:@[phoneNumberValidSignal, verficationValidSignal, passwordValidSignal] reduce:^id(NSNumber *phoneNumberValid, NSNumber *verficationValid, NSNumber *passwordValid){
-        return @([phoneNumberValid boolValue] && [passwordValid boolValue] && [verficationValid boolValue]);
-    }];
+    _sendCodeButton.rac_command = _viewModel.verifyCommand;
+    _nextBtn.rac_command = _viewModel.registerCommand;
     
     @weakify(self)
-    self.nextBtn.rac_command = [[RACCommand alloc] initWithEnabled:nextButtonEnableSignal signalBlock:^RACSignal *(id input) {
-        return [self verifyCodeSignal];
-        
-    }];
-    
     [[[self.nextBtn.rac_command.executionSignals doNext:^(id x) {
         
         @strongify(self)
@@ -171,77 +151,42 @@
         
     }];
     
-    //    [[self.protocolBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
-    //
-    //    }];
+//    [[[self.sendCodeButton rac_signalForControlEvents:UIControlEventTouchUpInside] doNext:^(id x) {
+//        
+//        @strongify(self)
+//        self.sendCodeButton.enabled = NO;
+//        
+//    }] subscribeNext:^(id x) {
+//        
+//        @strongify(self)
+//        [self tappedSendCodeButton];
+//        
+//    }];
     
-    [[[self.sendCodeButton rac_signalForControlEvents:UIControlEventTouchUpInside] doNext:^(id x) {
-        
-        @strongify(self)
-        self.sendCodeButton.enabled = NO;
-        
-    }] subscribeNext:^(id x) {
-        
+    [self.sendCodeButton.rac_command.executionSignals subscribeNext:^(id x) {
         @strongify(self)
         [self tappedSendCodeButton];
-        
     }];
-}
 
-- (void)bindViewModel {
-    _viewModel = [[ZWRegisterViewModel alloc] init];
+    [[self.sendCodeButton.rac_command.executionSignals switchToLatest] subscribeNext:^(NSDictionary *response) {
+        @strongify(self)
+        int responseCode = [[response objectForKey:kHTTPResponseCodeKey] intValue];
+        if (responseCode == 0) {
+            self.verifyButtonDisable = YES;
+        }
+        NSString *msg = responseCode == 113 ? @"该手机号已被注册" : [response objectForKey:kHTTPResponseInfoKey];
+        [ZWHUDTool showHUDInView:self.navigationController.view withTitle:msg message:nil duration:1.0];
+    }];
     
-    RAC(_viewModel, phoneNumer) = self.phoneNumberField.rac_textSignal;
-    RAC(_viewModel, verifyCode) = self.verifyField.rac_textSignal;
-    RAC(_viewModel, password) = self.passwordField.rac_textSignal;
-    RAC(_viewModel, confirmPwd) = self.confirmPwdField.rac_textSignal;
-    
-    _sendCodeButton.rac_command = _viewModel.verifyCommand;
-    _nextBtn.rac_command = _viewModel.registerCommand;
-    
-    RAC(_distinctPwdLabel, hidden) = _viewModel.distinctLabelHiddenSignal;
+    [self.sendCodeButton.rac_command.errors subscribeNext:^(id x) {
+        @strongify(self)
+        [ZWHUDTool showHUDInView:self.navigationController.view withTitle:@"获取验证码失败" message:nil duration:kShowHUDShort];
+    }];                                                                                                                                                          
 }
 
 - (void)loadView {
     UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:[UIScreen mainScreen].applicationFrame];
     self.view = scrollView;
-}
-
-- (RACSignal *)verifyCodeSignal {
-    
-    @weakify(self)
-    return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-        @strongify(self)
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [ZWAPIRequestTool requestVerifyCodeWithParameter:@{@"code": self.verifyField.text} result:^(id response, BOOL success) {
-                if (success) {
-                    [subscriber sendNext:response];
-                    [subscriber sendCompleted];
-                } else {
-                    [subscriber sendError:response];
-                }
-            }];
-        });
-        return nil;
-    }] ;
-    
-}
-
-- (BOOL)isPhoneNumberValid:(NSString *)phoneNumber {
-    return phoneNumber.length == 11;
-}
-
-- (BOOL)isPasswordValid:(NSString *)password {
-    return password.length >= 6;
-}
-
-- (BOOL)isVeifyCodeValid:(NSString *)vrification {
-    if (vrification.length < 4) {
-        return NO;
-    }
-    NSScanner *scanner = [NSScanner scannerWithString:vrification];
-    int var;
-    return [scanner scanInt:&var] && [scanner isAtEnd];
 }
 
 - (void)exit {
@@ -251,25 +196,20 @@
 int TimeInterval = 60;
 
 - (void)tappedSendCodeButton {
+    if (self.timer) {
+        [self.timer invalidate];
+        self.timer = nil;
+    }
     [self.phoneNumberField resignFirstResponder];
     timeLeft = TimeInterval;
     [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
-    [ZWAPIRequestTool requestSendCodeWithParameter:@{@"phone": self.phoneNumberField.text} result:^(id response, BOOL success) {
-        NSString *msg = nil;
-        if (success) {
-            msg = [[response objectForKey:kHTTPResponseCodeKey] intValue] == 113 ? @"该手机号已被注册" : [response objectForKey:kHTTPResponseInfoKey];
-        } else {
-            msg = @"获取验证码失败";
-        }
-        [ZWHUDTool showHUDInView:self.navigationController.view withTitle:msg message:nil duration:1.0];
-    }];
 }
 
 - (void)countDown {
     if (-- timeLeft > 0) {
         [self.sendCodeButton setTitle:[NSString stringWithFormat:@"%d秒后重发", timeLeft] forState:UIControlStateDisabled];
     } else {
-        self.sendCodeButton.enabled = YES;
+        self.verifyButtonDisable = NO;
         [self.sendCodeButton setTitle:[NSString stringWithFormat:@"%d秒后重发", TimeInterval] forState:UIControlStateDisabled];
         [self.timer invalidate];
         self.timer = nil;
@@ -339,7 +279,7 @@ int TimeInterval = 60;
     
     self.verifyLine = [self commonSeparatorLine];
     
-    self.passwordField = [[UITextField alloc] init];
+    self.passwordField = [[ZWPasswordField alloc] init];
     self.passwordField.font = fieldFont;
     self.passwordField.placeholder = @"输入密码，长度不小于6位";
     self.phoneNumberField.borderStyle = UITextBorderStyleNone;
@@ -348,25 +288,6 @@ int TimeInterval = 60;
     [self.view addSubview:self.passwordField];
     
     self.passwordLine = [self commonSeparatorLine];
-    
-    self.confirmPwdField = [[UITextField alloc] init];
-    self.confirmPwdField.font = fieldFont;
-    self.confirmPwdField.placeholder = @"验证密码";
-    self.confirmPwdField.borderStyle = UITextBorderStyleNone;
-    self.confirmPwdField.secureTextEntry = YES;
-    self.confirmPwdField.clearButtonMode = UITextFieldViewModeWhileEditing;
-    [self.view addSubview:self.confirmPwdField];
-    
-    self.confirmPwdLine = [self commonSeparatorLine];
-    
-    self.distinctPwdLabel = [[UILabel alloc] init];
-    self.distinctPwdLabel.numberOfLines = 1;
-    self.distinctPwdLabel.font = ZWFont(12);
-    self.distinctPwdLabel.textColor = [UIColor redColor];
-    self.distinctPwdLabel.textAlignment = NSTextAlignmentLeft;
-    self.distinctPwdLabel.text = @"两次输入的密码不一致";
-    [self.distinctPwdLabel sizeToFit];
-    [self.view addSubview:self.distinctPwdLabel];
     
     self.nextBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.nextBtn setBackgroundImage:[RGB(80., 140., 238.) parseToImage] forState:UIControlStateNormal];
@@ -397,16 +318,16 @@ int TimeInterval = 60;
     }];
     
     //几个控件距父视图左右距离均为margin
-    [@[self.phoneNumberField, self.phoneNumberLine, self.passwordField, self.passwordLine, self.confirmPwdField, self.confirmPwdLine, self.nextBtn, self.verifyLine, self.distinctPwdLabel] mas_makeConstraints:^(MASConstraintMaker *make) {
+    [@[self.phoneNumberField, self.phoneNumberLine, self.passwordField, self.passwordLine,  self.nextBtn, self.verifyLine] mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.containerView).with.offset(margin);
         make.right.equalTo(self.containerView).with.offset(- margin);
     }];
     
-    [@[self.phoneNumberLine, self.verifyLine, self.passwordLine, self.confirmPwdLine] mas_makeConstraints:^(MASConstraintMaker *make) {
+    [@[self.phoneNumberLine, self.verifyLine, self.passwordLine] mas_makeConstraints:^(MASConstraintMaker *make) {
         make.height.mas_equalTo(lineHeight);
     }];
     
-    [@[self.phoneNumberField, self.passwordField, self.verifyField, self.confirmPwdField] mas_makeConstraints:^(MASConstraintMaker *make) {
+    [@[self.phoneNumberField, self.passwordField, self.verifyField] mas_makeConstraints:^(MASConstraintMaker *make) {
         make.height.mas_equalTo(textFieldHeight);
     }];
     
@@ -444,21 +365,9 @@ int TimeInterval = 60;
         make.top.equalTo(self.passwordField.mas_bottom);
     }];
     
-    [self.confirmPwdField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.passwordLine.mas_bottom).with.offset(midMargin);
-    }];
-    
-    [self.confirmPwdLine mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.confirmPwdField.mas_bottom);
-    }];
-    
-    [self.distinctPwdLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.confirmPwdLine.mas_bottom).with.offset(margin);
-    }];
-    
     [self.nextBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.height.mas_equalTo(45.f);
-        make.top.equalTo(self.distinctPwdLabel.mas_bottom).with.offset(largeMargin);
+        make.top.equalTo(self.passwordLine.mas_bottom).with.offset(largeMargin);
     }];
     
     [_indicator mas_makeConstraints:^(MASConstraintMaker *make) {
