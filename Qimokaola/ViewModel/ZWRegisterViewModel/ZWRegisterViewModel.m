@@ -78,7 +78,7 @@
 }
 
 - (BOOL)isPhoneNumberValid:(NSString *)phoneNumber {
-    return phoneNumber.length == 11;
+    return phoneNumber.length == kPhoneNumberLength;
 }
 
 - (BOOL)isPasswordValid:(NSString *)password {

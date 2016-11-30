@@ -118,6 +118,7 @@
         @strongify(self)
         [self.indicator startAnimating];
         [self.nextBtn setTitle:@"正在验证" forState:UIControlStateNormal];
+        [self.view endEditing:YES];
         
     }] switchToLatest] subscribeNext:^(NSDictionary *result) {
         
@@ -150,29 +151,16 @@
         [ZWHUDTool showHUDInView:self.navigationController.view withTitle:@"请求错误" message:@"请检查网络连接" duration:kShowHUDLong];
         
     }];
-    
-//    [[[self.sendCodeButton rac_signalForControlEvents:UIControlEventTouchUpInside] doNext:^(id x) {
-//        
-//        @strongify(self)
-//        self.sendCodeButton.enabled = NO;
-//        
-//    }] subscribeNext:^(id x) {
-//        
-//        @strongify(self)
-//        [self tappedSendCodeButton];
-//        
-//    }];
-    
-    [self.sendCodeButton.rac_command.executionSignals subscribeNext:^(id x) {
-        @strongify(self)
-        [self tappedSendCodeButton];
-    }];
 
-    [[self.sendCodeButton.rac_command.executionSignals switchToLatest] subscribeNext:^(NSDictionary *response) {
+    [[[self.sendCodeButton.rac_command.executionSignals doNext:^(id x) {
+        @strongify(self)
+        [self.view endEditing:YES];
+    }] switchToLatest] subscribeNext:^(NSDictionary *response) {
         @strongify(self)
         int responseCode = [[response objectForKey:kHTTPResponseCodeKey] intValue];
         if (responseCode == 0) {
             self.verifyButtonDisable = YES;
+            [self tappedSendCodeButton];
         }
         NSString *msg = responseCode == 113 ? @"该手机号已被注册" : [response objectForKey:kHTTPResponseInfoKey];
         [ZWHUDTool showHUDInView:self.navigationController.view withTitle:msg message:nil duration:1.0];
@@ -193,15 +181,14 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-int TimeInterval = 60;
-
 - (void)tappedSendCodeButton {
     if (self.timer) {
         [self.timer invalidate];
         self.timer = nil;
+        timeLeft = kSendCodeTimeInterval;
     }
     [self.phoneNumberField resignFirstResponder];
-    timeLeft = TimeInterval;
+    timeLeft = kSendCodeTimeInterval;
     [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
 }
 
@@ -210,9 +197,10 @@ int TimeInterval = 60;
         [self.sendCodeButton setTitle:[NSString stringWithFormat:@"%d秒后重发", timeLeft] forState:UIControlStateDisabled];
     } else {
         self.verifyButtonDisable = NO;
-        [self.sendCodeButton setTitle:[NSString stringWithFormat:@"%d秒后重发", TimeInterval] forState:UIControlStateDisabled];
+        [self.sendCodeButton setTitle:[NSString stringWithFormat:@"%d秒后重发", kSendCodeTimeInterval] forState:UIControlStateDisabled];
         [self.timer invalidate];
         self.timer = nil;
+        timeLeft = kSendCodeTimeInterval;
     }
 }
 
@@ -270,7 +258,7 @@ int TimeInterval = 60;
     
     self.sendCodeButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.sendCodeButton setTitle:@"获取验证码" forState:UIControlStateNormal];
-    [self.sendCodeButton setTitle:[NSString stringWithFormat:@"%d秒后重发", TimeInterval] forState:UIControlStateDisabled];
+    [self.sendCodeButton setTitle:[NSString stringWithFormat:@"%d秒后重发", kSendCodeTimeInterval] forState:UIControlStateDisabled];
     [self.sendCodeButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.sendCodeButton setBackgroundImage:[RGB(80., 140., 238.) parseToImage] forState:UIControlStateNormal];
     [self.sendCodeButton setBackgroundImage:[[UIColor lightGrayColor] parseToImage] forState:UIControlStateDisabled];
@@ -827,7 +815,7 @@ int TimeInterval = 60;
 //}
 //
 //- (BOOL)isPhoneNumberValid:(NSString *)phoneNumber {
-//    return phoneNumber.length == 11;
+//    return phoneNumber.length == kPhoneNumberLength;
 //}
 //
 //- (BOOL)isPasswordValid:(NSString *)password {

@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ZWDiscoveryViewController : UIViewController
+@interface ZWDiscoveryViewController : UITableViewController
 
 @end

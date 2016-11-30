@@ -19,10 +19,24 @@
     
 }
 
++ (void)requestSmsSendCodeWithPhoneNumber:(NSString *)phoneNumber result:(APIRequestResult)result {
+    [ZWAPIRequestTool requestWithAPI:[ZWAPITool smsSendCodeAPI]
+                          parameters:@{@"phone" : phoneNumber}
+                              result:result];
+}
+
 + (void)requestVerifyCodeWithParameter:(id)param result:(APIRequestResult)result {
     
     [ZWAPIRequestTool requestWithAPI:[ZWAPITool verifyCodeAPI]
                           parameters:param
+                              result:result];
+    
+}
+
++ (void)requestSmsVerifyCodeWithCode:(NSString *)code result:(APIRequestResult)result {
+    
+    [ZWAPIRequestTool requestWithAPI:[ZWAPITool smsVerifyCodeAPI]
+                          parameters:@{@"code": code}
                               result:result];
     
 }
@@ -108,6 +122,12 @@
 + (void)reuqestInfoByName:(NSString *)username result:(APIRequestResult)result {
     [ZWAPIRequestTool requestWithAPI:[ZWAPITool infoByNameAPI]
                           parameters:@{@"nickname" : username}
+                              result:result];
+}
+
++ (void)requestResetPasswordWithUserName:(NSString *)userName newPassword:(NSString *)newPassword result:(APIRequestResult)result {
+    [ZWAPIRequestTool requestWithAPI:[ZWAPITool resetPwdAPI]
+                          parameters:@{@"username" : userName, @"password" : newPassword}
                               result:result];
 }
 

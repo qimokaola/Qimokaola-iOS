@@ -12,11 +12,15 @@
 #import "ZWUserInfoViewController.h"
 #import "ZWHUDTool.h"
 
+#import "ZWResetPasswordViewController.h"
+
 #import "ZWFeedTableViewController.h"
 #import "ZWUserCommentsViewController.h"
 #import "ZWUserLikesViewController.h"
 
 #import "ZWBrowserTool.h"
+
+#import "ZWAccount.h"
 
 #import <UMCommunitySDK/UMComSession.h>
 
@@ -26,9 +30,7 @@
 #import <YYKit/YYKit.h>
 
 
-@interface ZWDiscoveryViewController () <UITableViewDelegate, UITableViewDataSource>
-
-@property (nonatomic, strong) UITableView *tableView;
+@interface ZWDiscoveryViewController ()
 
 // 头像 用户名等父控件
 @property (strong, nonatomic) UIView *userInfoView;
@@ -55,9 +57,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    if ([self respondsToSelector:@selector(automaticallyAdjustsScrollViewInsets)]) {
-        self.automaticallyAdjustsScrollViewInsets = NO;
-    }
+
     self.view.backgroundColor = universalGrayColor;
     self.title = @"发现";
     __weak __typeof(self) weakSelf = self;
@@ -69,6 +69,8 @@
     self.tableView.mj_header = refreshHeader;
     // 进入视图时刷新用户信息
     [self.tableView.mj_header beginRefreshing];
+    
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
     [[[NSNotificationCenter defaultCenter] rac_addObserverForName:kUserLogoutSuccessNotification object:nil] subscribeNext:^(id x) {
         [weakSelf updateUserInfo];
@@ -92,6 +94,13 @@
     [self updateUserInfo];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    [self.tableView reloadRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0] withRowAnimation:UITableViewRowAnimationNone];
+    [self.tableView reloadRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:0] withRowAnimation:UITableViewRowAnimationNone];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -103,17 +112,20 @@
     if (_channels == nil) {
         _channels = @[
                       @[
-                          @{@"icon" : @"radio_button_checked", @"title" : @"我的动态", @"image" : @"icon_discovery_feeds"},
-                          @{@"icon" : @"radio_button_checked", @"title" : @"我的收藏", @"image" : @"icon_discovery_colllections"},
-                          @{@"icon" : @"radio_button_checked", @"title" : @"评论", @"image" : @"icon_discovery_comments"},
-                          @{@"icon" : @"radio_button_checked", @"title" : @"赞我的", @"image" : @"icon_discovery_liked"}
+                          @{@"title" : @"我的动态", @"image" : @"icon_discovery_feeds"},
+                          @{@"title" : @"我的收藏", @"image" : @"icon_discovery_colllections"},
+                          @{@"title" : @"评论", @"image" : @"icon_discovery_comments"},
+                          @{@"title" : @"赞我的", @"image" : @"icon_discovery_liked"}
                         ],
                       
                       @[
-                          @{@"icon" : @"radio_button_checked", @"title" : @"意见反馈", @"image" : @"icon_discovery_advice"},
-                          @{@"icon" : @"radio_button_checked", @"title" : @"加入我们", @"image" : @"icon_discovery_join_us"},
+                          @{@"title" : @"意见反馈", @"image" : @"icon_discovery_advice"},
+                          @{@"title" : @"加入我们", @"image" : @"icon_discovery_join_us"},
+                        ],
+                      
+                      @[
+                          @{@"title" : @"修改密码", @"image" : @"icon_discovery_pwd"},
                           @{@"title" : @"退出登录"}
-                          
                         ]
                       
                       ];
@@ -121,19 +133,6 @@
     return _channels;
 }
 
-- (UITableView *)tableView {
-    if (_tableView == nil) {
-        _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-        _tableView.contentInset = UIEdgeInsetsMake(kNavigationBarHeight, 0, 0, 0);
-        _tableView.scrollIndicatorInsets = _tableView.contentInset;
-        _tableView.backgroundColor = [UIColor clearColor];
-        _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-        _tableView.delegate = self;
-        _tableView.dataSource = self;
-        [self.view addSubview:_tableView];
-    }
-    return _tableView;
-}
 
 #pragma mark - Common Methods
 
@@ -146,7 +145,7 @@
         weakSelf.tableView.userInteractionEnabled = YES;
         if (success && [[response objectForKey:kHTTPResponseCodeKey] intValue] == 0) {
             ZWUser *user = [ZWUser modelWithDictionary:[response objectForKey:kHTTPResponseResKey]];
-            if (![user isEqual:[ZWUserManager sharedInstance].loginUser]) {
+            if (user) {
                 [ZWUserManager sharedInstance].loginUser = user;
                 [weakSelf updateUserInfo];
             }
@@ -164,8 +163,6 @@
         self.schoolLabel.text = loginUser.collegeName;
         NSString *genderImageName = [loginUser.gender isEqualToString:@"男"] ? @"icon_gender_male" : @"icon_gender_female";
         self.genderView.image = [UIImage imageNamed:genderImageName];
-    } else {
-        
     }
 }
 
@@ -259,7 +256,7 @@
 #pragma mark - UITabelViewDataSource 
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return self.channels.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -269,30 +266,22 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellID = @"cellID";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
-    if (!cell) {
-        if (!(indexPath.section == 1 && indexPath.row == 2)) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellID];
-            cell.detailTextLabel.font = [UIFont systemFontOfSize:12];
-            cell.backgroundColor = [UIColor whiteColor];
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        } else {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
-            cell.textLabel.textColor = [UIColor redColor];
-            cell.textLabel.textAlignment = NSTextAlignmentCenter;
-            cell.accessoryType = UITableViewCellAccessoryNone;
-        }
+    UITableViewCell *cell = nil;
+    if (!(indexPath.section == 2 && indexPath.row == 1)) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellID];
+        cell.textLabel.textAlignment = NSTextAlignmentLeft;
+        cell.backgroundColor = [UIColor whiteColor];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    } else {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+        cell.textLabel.textColor = [UIColor redColor];
+        cell.textLabel.textAlignment = NSTextAlignmentCenter;
+        cell.accessoryType = UITableViewCellAccessoryNone;
     }
     NSDictionary *dict = [self.channels[indexPath.section] objectAtIndex:indexPath.row];
-    NSString *iconAssetName = dict[@"icon"];
-    if (iconAssetName) {
-        cell.imageView.image = [UIImage imageNamed:iconAssetName];
-    }
     cell.textLabel.text = dict[@"title"];
-    NSString *imageAssetName = dict[@"image"];
-    if (imageAssetName) {
-        cell.imageView.image = [UIImage imageNamed:imageAssetName];
-    }
+    cell.imageView.image = [UIImage imageNamed:dict[@"image"]];
+
     if (indexPath.section == 0) {
         if (indexPath.row == 2) {
             [self updateTableViewCell:cell forCount:[ZWUserManager sharedInstance].unreadCommentCount];
@@ -310,7 +299,7 @@
     if (count > 0) {
         
         // Create label
-        CGFloat fontSize = 14;
+        CGFloat fontSize = 13;
         UILabel *label = [[UILabel alloc] init];
         label.font = [UIFont systemFontOfSize:fontSize];
         label.textAlignment = NSTextAlignmentCenter;
@@ -323,7 +312,7 @@
         
         // Adjust frame to be square for single digits or elliptical for numbers > 9
         CGRect frame = label.frame;
-        frame.size.height += (int)(0.4*fontSize);
+        frame.size.height += (int)(0.2*fontSize);
         frame.size.width = (count <= 9) ? frame.size.height : frame.size.width + (int)fontSize;
         label.frame = frame;
         
@@ -394,7 +383,7 @@
             default:
                 break;
         }
-    } else {
+    } else if (indexPath.section == 1) {
         switch (indexPath.row) {
             case 0: {
                 NSString *title = [[[self.channels objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] objectForKey:@"title"];
@@ -409,10 +398,29 @@
                 
                 break;
                 
-            case 2: {
+            default:
+                break;
+        }
+    } else {
+        switch (indexPath.row) {
+            case 0: {
+                ZWResetPasswordViewController *resetViewController = [[ZWResetPasswordViewController alloc] init];
+                resetViewController.enterPhoneNumber = [ZWUserManager sharedInstance].loginUser.username;
+                resetViewController.title = @"修改密码";
+                [self.navigationController pushViewController:resetViewController animated:YES];
+            }
+                break;
+                
+                
+            case 1: {
                 MBProgressHUD *hud = [ZWHUDTool excutingHudInView:self.navigationController.view title:@"正在退出登录"];
                 [[ZWUserManager sharedInstance] userLogout:^(id response, BOOL success) {
                     if (success && [[response objectForKey:kHTTPResponseCodeKey] intValue] == 0) {
+                        
+                        ZWAccount *account = [[ZWAccount alloc] init];
+                        account.account = [ZWUserManager sharedInstance].loginUser.username;
+                        [account writeData];
+                        
                         [ZWUserManager sharedInstance].loginUser = nil;
                         [hud hideAnimated:YES];
                         [[NSNotificationCenter defaultCenter] postNotificationName:kUserLogoutSuccessNotification object:nil];
@@ -424,7 +432,6 @@
                 }];
             }
                 break;
-                
             default:
                 break;
         }

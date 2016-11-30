@@ -105,6 +105,7 @@ typedef NS_ENUM(NSInteger, ZWFetchedDataSource) {
     [self.topics addObjectsFromArray:(NSArray *)[self.cache objectForKey:kTopicCacheKey]];
     
     NSArray *imgs = @[
+                      @"pic0.png",
                       @"pic1.png",
                       @"pic2.png",
                      @"pic3.png",

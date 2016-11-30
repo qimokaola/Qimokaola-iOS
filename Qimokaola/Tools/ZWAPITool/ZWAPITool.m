@@ -16,10 +16,13 @@
 - (NSString *)school;
 - (NSString *)sb;
 - (NSString *)dbfs;
+- (NSString *)sms;
 
 // 详细接口
 - (NSString *)sendCode;
+- (NSString *)smsSendCode;
 - (NSString *)verifyCode;
+- (NSString *)smsVerifyCode;
 - (NSString *)listSchool;
 - (NSString *)listAcademy;
 - (NSString *)register;
@@ -29,6 +32,7 @@
 - (NSString *)modifyUserInfo;
 - (NSString *)logout;
 - (NSString *)infobyname;
+- (NSString *)resetPwd;
 
 @end
 
@@ -50,12 +54,25 @@
     return [self stringByAppendingString:@"/sb"];
 }
 
+- (NSString *)sms {
+    return [self stringByAppendingString:@"/sms"];
+}
+
 - (NSString *)sendCode {
     return [self stringByAppendingString:@"/sendCode"];
 }
 
+- (NSString *)smsSendCode {
+    return [self stringByAppendingString:@"/send"];
+}
+
+
 - (NSString *)verifyCode {
     return [self stringByAppendingString:@"/verifyCode"];
+}
+
+- (NSString *)smsVerifyCode {
+    return [self stringByAppendingString:@"/verify"];
 }
 
 - (NSString *)listSchool {
@@ -98,6 +115,10 @@
     return [self stringByAppendingString:@"/infobyname"];
 }
 
+- (NSString *)resetPwd {
+    return [self stringByAppendingString:@"/resetpw"];
+}
+
 @end
 
 @implementation ZWAPITool
@@ -110,8 +131,16 @@
     return [[ZWAPITool user] sendCode];
 }
 
++ (NSString *)smsSendCodeAPI {
+    return [[ZWAPITool sms] smsSendCode];
+}
+
 + (NSString *)verifyCodeAPI {
     return [[ZWAPITool user] verifyCode];
+}
+
++ (NSString *)smsVerifyCodeAPI {
+    return [[ZWAPITool sms] smsVerifyCode];
 }
 
 + (NSString *)listSchoolAPI {
@@ -162,6 +191,10 @@
     return [[ZWAPITool user] infobyname];
 }
 
++ (NSString *)resetPwdAPI {
+    return [[ZWAPITool user] resetPwd];
+}
+
 + (NSString *)shareFileAPI {
     return [[ZWAPITool dbfs] stringByAppendingString:@"/md5/%@/%@"];
 }
@@ -173,6 +206,8 @@
 + (NSString *)appInfoAPI {
     return @"http://itunes.apple.com/lookup?id=1054613325";
 }
+
+
 
 + (NSString *)api {
     return [[ZWAPITool base] api];
@@ -188,6 +223,10 @@
 
 + (NSString *)dbfs {
     return [[ZWAPITool api] dbfs];
+}
+
++ (NSString *)sms {
+    return [[ZWAPITool api] sms];
 }
 
 + (NSString *)dbfsInUnknowSchool {

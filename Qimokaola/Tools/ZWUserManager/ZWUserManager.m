@@ -7,12 +7,15 @@
 //
 
 #import "ZWUserManager.h"
-#import "ZWAPITool.h"
+#import "ZWPathTool.h"
 
 #import "UMessage.h"
 #import <YYKit/YYKit.h>
 #import <UMCommunitySDK/UMComDataRequestManager.h>
 #import <UMCommunitySDK/UMComSession.h>
+
+#define kUserInfoFileName @"UserInfo.dat"
+
 @interface ZWUserManager ()
 
 @property (nonatomic, strong) YYCache *cache;
@@ -38,7 +41,20 @@ NSString *const kLoginedUserKey = @"kLoginedUserKey";
     self = [super init];
     if (self) {
         self.cache = [[YYCache alloc] initWithName:@"UserInfo"];
-        self.loginUser = (ZWUser *)[_cache objectForKey:kLoginedUserKey];
+        // 首先检查是否有持久化对象
+        self.loginUser = (ZWUser *)[NSKeyedUnarchiver unarchiveObjectWithFile:[[ZWPathTool accountDirectory] stringByAppendingPathComponent:kUserInfoFileName]];
+        // 为兼容旧版本 读取缓存中的数据
+        if (!self.loginUser) {
+            NSLog(@"读取旧版本内容");
+            self.loginUser = (ZWUser *)[_cache objectForKey:kLoginedUserKey];
+            if (self.loginUser) {
+                NSLog(@"读取旧版本内容成功");
+                // 移除旧版本对登录控制变量的依赖
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"LoginState"];
+                [_cache removeObjectForKey:kLoginedUserKey];
+                [self writeLoginUserData];
+            }
+        }
         if (self.loginUser) {
             [[NSNotificationCenter defaultCenter] postNotificationName:kLocalUserLoginStateGuranteedNotification object:nil];
         }
@@ -47,7 +63,7 @@ NSString *const kLoginedUserKey = @"kLoginedUserKey";
 }
 
 - (void)loginStudentCircle {
-    if (!self.loginUser) {
+    if (!self.loginUser || [UMComSession sharedInstance].isLogin) {
         return;
     }
     __weak __typeof(self) weakSelf = self;
@@ -100,7 +116,7 @@ NSString *const kLoginedUserKey = @"kLoginedUserKey";
     __weak __typeof(self) weakSelf = self;
     // 进入时先获取一遍未读数据
     [self fetchCommunityUnreadData];
-    [NSTimer scheduledTimerWithTimeInterval:120 block:^(NSTimer * _Nonnull timer) {
+    [NSTimer scheduledTimerWithTimeInterval:kFetchUnreadInfoInterval block:^(NSTimer * _Nonnull timer) {
         [weakSelf fetchCommunityUnreadData];
     } repeats:YES];
 }  
@@ -124,6 +140,7 @@ NSString *const kLoginedUserKey = @"kLoginedUserKey";
 }
 
 - (void)setLoginUser:(ZWUser *)loginUser {
+    NSLog(@"set user to %@", loginUser);
     if (_loginUser) {
         NSNumber *currentCollegeId = _loginUser.currentCollegeId;
         NSString *currentCollegeName = _loginUser.currentCollegeName;
@@ -141,15 +158,23 @@ NSString *const kLoginedUserKey = @"kLoginedUserKey";
             }
         }
     }
-    [UMessage addTag:_loginUser.collegeName response:^(id  _Nonnull responseObject, NSInteger remain, NSError * _Nonnull error) {
-        
-    }];
-    [UMessage addTag:_loginUser.gender response:^(id  _Nonnull responseObject, NSInteger remain, NSError * _Nonnull error) {
-        
-    }];
+    if (_loginUser) {
+        [UMessage addTag:_loginUser.collegeName response:^(id  _Nonnull responseObject, NSInteger remain, NSError * _Nonnull error) {
+            
+        }];
+        [UMessage addTag:_loginUser.gender response:^(id  _Nonnull responseObject, NSInteger remain, NSError * _Nonnull error) {
+            
+        }];
+    }
     _isLogin = loginUser != nil;
-    [[NSUserDefaults standardUserDefaults] setBool:_isLogin forKey:@"LoginState"];
-    [_cache setObject:_loginUser forKey:kLoginedUserKey];
+    [self writeLoginUserData];
+}
+
+- (void)writeLoginUserData {
+    [NSKeyedArchiver archiveRootObject:self.loginUser toFile:[[ZWPathTool accountDirectory] stringByAppendingPathComponent:kUserInfoFileName]];
+    if (!self.loginUser) {
+        [[NSFileManager defaultManager] removeItemAtPath:[[ZWPathTool accountDirectory] stringByAppendingPathComponent:kUserInfoFileName] error:NULL];
+    }
 }
 
 - (void)modifyUserNickname:(NSString *)nickname result:(APIRequestResult)result {
@@ -158,7 +183,7 @@ NSString *const kLoginedUserKey = @"kLoginedUserKey";
 
 - (void)updateNickname:(NSString *)nickname {
     _loginUser.nickname = nickname;
-    [_cache setObject:_loginUser forKey:kLoginedUserKey];
+    [self writeLoginUserData];
 }
 
 - (void)modifyUserGender:(NSString *)gender result:(APIRequestResult)result {
@@ -167,7 +192,7 @@ NSString *const kLoginedUserKey = @"kLoginedUserKey";
 
 - (void)updateGender:(NSString *)gender {
     _loginUser.gender = gender;
-    [_cache setObject:_loginUser forKey:kLoginedUserKey];
+    [self writeLoginUserData];
 }
 
 - (void)modifyUserAcademyId:(NSNumber *)academyId result:(APIRequestResult)result {
@@ -177,14 +202,14 @@ NSString *const kLoginedUserKey = @"kLoginedUserKey";
 - (void)updateAcademyId:(NSNumber *)academyId academyName:(NSString *)academyName {
     _loginUser.academyId = academyId;
     _loginUser.academyName = academyName;
-    [_cache setObject:_loginUser forKey:kLoginedUserKey];
+    [self writeLoginUserData];
 }
 
 
 - (void)updateCurrentCollegeId:(NSNumber *)collegeId collegeName:(NSString *)collegeName {
     _loginUser.currentCollegeId = collegeId;
     _loginUser.currentCollegeName = collegeName;
-    [_cache setObject:_loginUser forKey:kLoginedUserKey];
+    [self writeLoginUserData];
 }
 
 - (void)modifyUserEnterYear:(NSString *)enterYear result:(APIRequestResult)result {
@@ -193,12 +218,12 @@ NSString *const kLoginedUserKey = @"kLoginedUserKey";
 
 - (void)updateEnterYear:(NSString *)enterYear {
     _loginUser.enterYear = enterYear;
-    [_cache setObject:_loginUser forKey:kLoginedUserKey];
+    [self writeLoginUserData];
 }
 
 - (void)updateAvatarUrl:(NSString *)avatarUrl {
     _loginUser.avatar_url = avatarUrl;
-    [_cache setObject:_loginUser forKey:kLoginedUserKey];
+   [self writeLoginUserData];
 }
 
 - (void)modifyUserInfo:(id)params result:(APIRequestResult)result {

@@ -99,23 +99,23 @@
 
     [[[[NSNotificationCenter defaultCenter] rac_addObserverForName:kUserNeedLoginNotification object:nil] deliverOnMainThread] subscribeNext:^(id x) {
         [[ZWUserManager sharedInstance] logoutStudentCircle];
-        [weakSelf presentLoginViewController];
+        [weakSelf presentLoginViewControllerAndHint];
     }];
     
     // 在确认存在本地用户与用户登录成功之后执行登录学生圈
-    [[[[NSNotificationCenter defaultCenter] rac_addObserverForName:kLocalUserLoginStateGuranteedNotification object:nil] deliverOnMainThread] subscribeNext:^(id x) {
+    [[[NSNotificationCenter defaultCenter] rac_addObserverForName:kLocalUserLoginStateGuranteedNotification object:nil]subscribeNext:^(id x) {
         // 本地用户存在，执行学生圈登录流程"
         [weakSelf loginTheStudentCircle];
     }];
     
-    [[[[NSNotificationCenter defaultCenter] rac_addObserverForName:kUserLoginSuccessNotification object:nil] deliverOnMainThread] subscribeNext:^(id x) {
+    [[[NSNotificationCenter defaultCenter] rac_addObserverForName:kUserLoginSuccessNotification object:nil] subscribeNext:^(id x) {
         // 用户登录成功，执行学生圈登录流程
         [weakSelf loginTheStudentCircle];
     }];
     
     [[[NSNotificationCenter defaultCenter] rac_addObserverForName:kUserLogoutSuccessNotification object:nil] subscribeNext:^(id x) {
         [[ZWUserManager sharedInstance] logoutStudentCircle];
-        [weakSelf presentLoginViewController];
+        [weakSelf presentLoginViewController:YES];
         
     }];
     
@@ -136,22 +136,39 @@
     [[UITabBar appearance] setShadowImage:[UIImage new]];
     [[UITabBar appearance] setBackgroundImage:[[UIColor whiteColor] parseToImage]];
     
-    BOOL isLogin = [[NSUserDefaults standardUserDefaults] boolForKey:@"LoginState"];
     //检测是否已经登录
-    if (isLogin) {
-        [self setWindowRootControllerWithClass:[ZWTabBarController class]];
-        [[[[self fetchADSignal] timeout:5.0 onScheduler:[RACScheduler mainThreadScheduler]] deliverOnMainThread] subscribeNext:^(ZWAdvertisement *ad) {
-            if (ad.enabled) {
-                ZWAdvertisementView *adView = [[ZWAdvertisementView alloc] initWithWindow:weakSelf.window];
-                [adView showAdvertisement:ad];
-            }
-        } error:^(NSError *error) {
-        }];
+    if ([ZWUserManager sharedInstance].loginUser) {
+        
+        NSLog(@"user exist: %@", [ZWUserManager sharedInstance].loginUser);
+        [self gotoLoginedView];
     } else {
-        //显示登录，注册视图
-        [self setWindowRootControllerWithClass:[ZWLoginAndRegisterViewController class]];
+        
+        BOOL isLogin = [[NSUserDefaults standardUserDefaults] boolForKey:@"LoginState"];
+        if (isLogin) {
+            NSLog(@"old login");
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"LoginState"];
+            [self gotoLoginedView];
+        } else {
+            NSLog(@"not login");
+            //显示登录，注册视图
+            [self setWindowRootControllerWithClass:[ZWLoginAndRegisterViewController class]];
+        }
+        
+        
     }
     return YES;
+}
+
+- (void)gotoLoginedView  {
+    __weak __typeof(self) weakSelf = self;
+    [self setWindowRootControllerWithClass:[ZWTabBarController class]];
+    [[[[self fetchADSignal] timeout:5.0 onScheduler:[RACScheduler mainThreadScheduler]] deliverOnMainThread] subscribeNext:^(ZWAdvertisement *ad) {
+        if (ad.enabled) {
+            ZWAdvertisementView *adView = [[ZWAdvertisementView alloc] initWithWindow:weakSelf.window];
+            [adView showAdvertisement:ad];
+        }
+    } error:^(NSError *error) {
+    }];
 }
 
 - (void)setWindowRootControllerWithClass:(Class)clazz {
@@ -164,17 +181,22 @@
  执行登录学生圈流程
  */
 - (void)loginTheStudentCircle {
-    // 登录学生圈
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [[ZWUserManager sharedInstance] loginStudentCircle];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+       [[ZWUserManager sharedInstance] loginStudentCircle];  
     });
-    
 }
 
-- (void)presentLoginViewController {
+- (void)presentLoginViewController:(BOOL)goToLoginDirectly {
+    ZWLoginAndRegisterViewController *loginAndRegister = [[ZWLoginAndRegisterViewController alloc] init];
+    loginAndRegister.goToLoginDirectly = goToLoginDirectly ;
+    [UIApplication sharedApplication].keyWindow.rootViewController = loginAndRegister;
+
+}
+
+- (void)presentLoginViewControllerAndHint {
     [ZWHUDTool showHUDWithTitle:@"登录状态失效 请重新登录" message:nil duration:kShowHUDMid];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kShowHUDMid * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [UIApplication sharedApplication].keyWindow.rootViewController = [[ZWLoginAndRegisterViewController alloc] init];
+         [self presentLoginViewController:YES];
     });
 }
 
@@ -215,6 +237,7 @@
 //            NSLog(@"change");
 //            [[ZWUserManager sharedInstance] loginStudentCircle];
 //        }
+
         
         if (status == AFNetworkReachabilityStatusNotReachable) {
             [ZWHUDTool showHUDWithTitle:@"网络连接已断开" message:nil duration:kShowHUDShort];

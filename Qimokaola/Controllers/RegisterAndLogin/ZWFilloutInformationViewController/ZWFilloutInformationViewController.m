@@ -16,6 +16,8 @@
 #import "ZWUserManager.h"
 #import "ZWTabBarController.h"
 
+#import "ZWAccount.h"
+
 #import "Masonry.h"
 #import "ReactiveCocoa.h"
 #import <YYKit/YYKit.h>
@@ -46,6 +48,7 @@
 @property (nonatomic, strong) UIView *gendarLine;
 //下一步 按钮
 @property (nonatomic, strong) UIButton *nextBtn;
+
 
 @property (nonatomic, strong) AFHTTPSessionManager *manager;
 
@@ -187,6 +190,12 @@
         @strongify(self)
         int resultCode = [[result objectForKey:kHTTPResponseCodeKey] intValue];
         if (resultCode == 0) {
+            
+            ZWAccount *account = [[ZWAccount alloc] init];
+            account.account = [self.registerParam objectForKey:@"phone"];
+            account.pwd = [self.registerParam objectForKey:@"password"];
+            [account writeData];
+            
             NSLog(@"注册成功 上传头像图片");
             NSLog(@"%@", result);
             ZWUser *user = [ZWUser modelWithDictionary:[result objectForKey:kHTTPResponseResKey]];

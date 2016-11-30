@@ -10,4 +10,6 @@
 
 @interface ZWLoginAndRegisterViewController : UIViewController
 
+@property (nonatomic, assign) BOOL goToLoginDirectly;
+
 @end

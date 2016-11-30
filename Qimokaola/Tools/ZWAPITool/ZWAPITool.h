@@ -24,7 +24,11 @@
 
 + (NSString *)sendCodeAPI;
 
++ (NSString *)smsSendCodeAPI;
+
 + (NSString *)verifyCodeAPI;
+
++ (NSString *)smsVerifyCodeAPI;
 
 + (NSString *)listSchoolAPI;
 
@@ -55,5 +59,7 @@
 + (NSString *)appInfoAPI;
 
 + (NSString *)uploadFileAPI;
+
++ (NSString *)resetPwdAPI;
 
 @end

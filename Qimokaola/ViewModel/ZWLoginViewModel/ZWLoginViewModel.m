@@ -61,7 +61,7 @@
 }
 
 - (BOOL)isAccountValid:(NSString *)value {
-    return value.length == 11;
+    return value.length == kPhoneNumberLength;
 }
 
 - (BOOL)isPasswordValid:(NSString *)value {

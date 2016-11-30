@@ -47,6 +47,7 @@
 		C33AC6061DA3C63900A96AB7 /* ZWLikeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C33AC6051DA3C63900A96AB7 /* ZWLikeCell.m */; };
 		C33B6D3E1D9D68DC00710D75 /* ZWReplytPaddingLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = C33B6D3D1D9D68DC00710D75 /* ZWReplytPaddingLabel.m */; };
 		C33E99451DED9F52004CC173 /* ZWPasswordField.m in Sources */ = {isa = PBXBuildFile; fileRef = C33E99441DED9F52004CC173 /* ZWPasswordField.m */; };
+		C33E994C1DEE9D64004CC173 /* ZWResetPwdViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C33E994B1DEE9D64004CC173 /* ZWResetPwdViewModel.m */; };
 		C33EECA31BCD4F9700BB4B74 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C33EECA21BCD4F9700BB4B74 /* libsqlite3.dylib */; };
 		C33EECA41BCD4FC500BB4B74 /* libiconv.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C3F791161BCD30F2003793B1 /* libiconv.2.dylib */; };
 		C33EECA61BCD4FE800BB4B74 /* libstdc++.6.0.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C33EECA51BCD4FE800BB4B74 /* libstdc++.6.0.9.dylib */; };
@@ -158,6 +159,9 @@
 		C3DE5BB31DAFEE6500E93C05 /* ZWFeedDetailCommentsHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DE5BB21DAFEE6500E93C05 /* ZWFeedDetailCommentsHeader.m */; };
 		C3DE5BB51DAFEE9500E93C05 /* ZWFeedDetailCommentsHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3DE5BB41DAFEE9500E93C05 /* ZWFeedDetailCommentsHeader.xib */; };
 		C3DE5BB91DAFF3A500E93C05 /* ZWBaseTableViewHeaderFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DE5BB81DAFF3A500E93C05 /* ZWBaseTableViewHeaderFooter.m */; };
+		C3E32D311DEEFD7E00A0498D /* ZWSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3E32D2F1DEEFD7E00A0498D /* ZWSettingViewController.m */; };
+		C3E32D371DEF156B00A0498D /* ZWAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = C3E32D361DEF156B00A0498D /* ZWAccount.m */; };
+		C3E32D3B1DEF439B00A0498D /* pic0.png in Resources */ = {isa = PBXBuildFile; fileRef = C3E32D3A1DEF439B00A0498D /* pic0.png */; };
 		C3E58AC81D54DFE600FDB384 /* ZWBindAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3E58AC71D54DFE600FDB384 /* ZWBindAccountViewController.m */; };
 		C3EDA9181D830CA0009FF851 /* ZWFile.m in Sources */ = {isa = PBXBuildFile; fileRef = C3EDA9171D830CA0009FF851 /* ZWFile.m */; };
 		C3EDA91C1D830E79009FF851 /* ZWFolder.m in Sources */ = {isa = PBXBuildFile; fileRef = C3EDA91B1D830E79009FF851 /* ZWFolder.m */; };
@@ -230,7 +234,7 @@
 		C3162CB91D7C517600153EB9 /* ZWUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWUser.h; sourceTree = "<group>"; };
 		C3162CBA1D7C517600153EB9 /* ZWUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWUser.m; sourceTree = "<group>"; };
 		C3162CBC1D7C54D300153EB9 /* ZWUserManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWUserManager.h; sourceTree = "<group>"; };
-		C3162CBD1D7C54D300153EB9 /* ZWUserManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWUserManager.m; sourceTree = "<group>"; };
+		C3162CBD1D7C54D300153EB9 /* ZWUserManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWUserManager.m; sourceTree = "<group>"; wrapsLines = 1; };
 		C31FE3C61D8A712200732B02 /* UIView+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Extension.h"; sourceTree = "<group>"; };
 		C31FE3C71D8A712200732B02 /* UIView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Extension.m"; sourceTree = "<group>"; };
 		C3259ED61D351B09004DC58F /* ZWAdvertisementView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWAdvertisementView.h; sourceTree = "<group>"; };
@@ -291,6 +295,8 @@
 		C33B6D3D1D9D68DC00710D75 /* ZWReplytPaddingLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWReplytPaddingLabel.m; sourceTree = "<group>"; };
 		C33E99431DED9F52004CC173 /* ZWPasswordField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWPasswordField.h; sourceTree = "<group>"; };
 		C33E99441DED9F52004CC173 /* ZWPasswordField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWPasswordField.m; sourceTree = "<group>"; };
+		C33E994A1DEE9D64004CC173 /* ZWResetPwdViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWResetPwdViewModel.h; sourceTree = "<group>"; };
+		C33E994B1DEE9D64004CC173 /* ZWResetPwdViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWResetPwdViewModel.m; sourceTree = "<group>"; };
 		C33EECA21BCD4F9700BB4B74 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = ../../../../../../usr/lib/libsqlite3.dylib; sourceTree = "<group>"; };
 		C33EECA51BCD4FE800BB4B74 /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "../../../../../../usr/lib/libstdc++.6.0.9.dylib"; sourceTree = "<group>"; };
 		C33EECA71BCD500E00BB4B74 /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = ../../../../../../usr/lib/libz.1.dylib; sourceTree = "<group>"; };
@@ -480,6 +486,11 @@
 		C3DE5BB41DAFEE9500E93C05 /* ZWFeedDetailCommentsHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZWFeedDetailCommentsHeader.xib; sourceTree = "<group>"; };
 		C3DE5BB71DAFF3A500E93C05 /* ZWBaseTableViewHeaderFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWBaseTableViewHeaderFooter.h; sourceTree = "<group>"; };
 		C3DE5BB81DAFF3A500E93C05 /* ZWBaseTableViewHeaderFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWBaseTableViewHeaderFooter.m; sourceTree = "<group>"; };
+		C3E32D2E1DEEFD7E00A0498D /* ZWSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWSettingViewController.h; sourceTree = "<group>"; };
+		C3E32D2F1DEEFD7E00A0498D /* ZWSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWSettingViewController.m; sourceTree = "<group>"; };
+		C3E32D351DEF156B00A0498D /* ZWAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWAccount.h; sourceTree = "<group>"; };
+		C3E32D361DEF156B00A0498D /* ZWAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWAccount.m; sourceTree = "<group>"; };
+		C3E32D3A1DEF439B00A0498D /* pic0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pic0.png; sourceTree = "<group>"; };
 		C3E58AC61D54DFE600FDB384 /* ZWBindAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWBindAccountViewController.h; sourceTree = "<group>"; };
 		C3E58AC71D54DFE600FDB384 /* ZWBindAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWBindAccountViewController.m; sourceTree = "<group>"; };
 		C3EDA9161D830CA0009FF851 /* ZWFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWFile.h; sourceTree = "<group>"; };
@@ -685,6 +696,8 @@
 			children = (
 				C3162CB91D7C517600153EB9 /* ZWUser.h */,
 				C3162CBA1D7C517600153EB9 /* ZWUser.m */,
+				C3E32D351DEF156B00A0498D /* ZWAccount.h */,
+				C3E32D361DEF156B00A0498D /* ZWAccount.m */,
 			);
 			path = ZWUser;
 			sourceTree = "<group>";
@@ -845,6 +858,15 @@
 				C33E99441DED9F52004CC173 /* ZWPasswordField.m */,
 			);
 			path = "New Group";
+			sourceTree = "<group>";
+		};
+		C33E99491DEE9D64004CC173 /* ZWResetPwdViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C33E994A1DEE9D64004CC173 /* ZWResetPwdViewModel.h */,
+				C33E994B1DEE9D64004CC173 /* ZWResetPwdViewModel.m */,
+			);
+			path = ZWResetPwdViewModel;
 			sourceTree = "<group>";
 		};
 		C3493C0F1D8D8034007C7144 /* ZWModifyGenderViewController */ = {
@@ -1453,6 +1475,7 @@
 			isa = PBXGroup;
 			children = (
 				C3C531171DB37881000C3562 /* UTI-Image.png */,
+				C3E32D3A1DEF439B00A0498D /* pic0.png */,
 				C3DE5B971DAE8B6400E93C05 /* pic1.png */,
 				C3DE5B891DAE617A00E93C05 /* pic2.png */,
 				C3DE5B881DAE617A00E93C05 /* pic3.png */,
@@ -1529,6 +1552,7 @@
 		C3C8C1381D92CD6B00771C61 /* User */ = {
 			isa = PBXGroup;
 			children = (
+				C3E32D2A1DEEFD3B00A0498D /* ZWSettingViewController */,
 				C3C8C1301D92CC6E00771C61 /* Modifier */,
 				C37C038C1D3E77A000B22868 /* ZWDiscoveryViewController */,
 				C3DA122B1D9D5EDF00758BAC /* ZWRSCommentsViewController */,
@@ -1679,6 +1703,15 @@
 			path = ZWBaseTableViewHeaderFooter;
 			sourceTree = "<group>";
 		};
+		C3E32D2A1DEEFD3B00A0498D /* ZWSettingViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C3E32D2E1DEEFD7E00A0498D /* ZWSettingViewController.h */,
+				C3E32D2F1DEEFD7E00A0498D /* ZWSettingViewController.m */,
+			);
+			path = ZWSettingViewController;
+			sourceTree = "<group>";
+		};
 		C3E58AC51D54DFD300FDB384 /* ZWBindAccountViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -1749,6 +1782,7 @@
 		C3F854211D7709BF00E51013 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				C33E99491DEE9D64004CC173 /* ZWResetPwdViewModel */,
 				C391EB9C1DCB6D9000B7083D /* ZWLoginViewModel */,
 				C37027401DE97C9B00C902AF /* ZWRegisterViewModel */,
 			);
@@ -1913,6 +1947,7 @@
 				C3DE5B7C1DAD2F6400E93C05 /* ZWAppUserInfoCell.xib in Resources */,
 				C36512E41DB88532006A2969 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				C3C531271DB3F161000C3562 /* pic_upload_method_computer.png in Resources */,
+				C3E32D3B1DEF439B00A0498D /* pic0.png in Resources */,
 				C3C17D801DE861CD000F9BE5 /* ZWResetPasswordViewController.xib in Resources */,
 				C3DE5B8D1DAE617A00E93C05 /* pic2.png in Resources */,
 				C3C531181DB37881000C3562 /* UTI-Image.png in Resources */,
@@ -1999,6 +2034,7 @@
 				C33AC6021DA3C3CD00A96AB7 /* ZWUserLikesViewController.m in Sources */,
 				C33E99451DED9F52004CC173 /* ZWPasswordField.m in Sources */,
 				C3DE5B7B1DAD2F6400E93C05 /* ZWAppUserInfoCell.m in Sources */,
+				C33E994C1DEE9D64004CC173 /* ZWResetPwdViewModel.m in Sources */,
 				C326666C1D9534DE008C6B24 /* UMComButton.m in Sources */,
 				C337B9C51D7334AF0060BDD6 /* ZWAPIRequestTool.m in Sources */,
 				C3DA12321D9D667B00758BAC /* ZWRSCommentCell.m in Sources */,
@@ -2054,6 +2090,7 @@
 				C3EEE0771DBA1DAC0096B6DE /* ZWPotoTool.m in Sources */,
 				C3162CBB1D7C517600153EB9 /* ZWUser.m in Sources */,
 				C357710D1D844A0700E9B166 /* ZWFileBaseType.m in Sources */,
+				C3E32D311DEEFD7E00A0498D /* ZWSettingViewController.m in Sources */,
 				C3DB85621DA3F3B700213878 /* ZWReceivedCommentCell.m in Sources */,
 				C3EEE0721DB9D4370096B6DE /* ESPictureProgressView.m in Sources */,
 				C32666691D9534CB008C6B24 /* UMComBarButtonItem.m in Sources */,
@@ -2089,6 +2126,7 @@
 				C32666BA1D9560C1008C6B24 /* UMComAddedImageCellView.m in Sources */,
 				C35771191D8576A600E9B166 /* ZWFileDetailViewController.m in Sources */,
 				C3DE5BB91DAFF3A500E93C05 /* ZWBaseTableViewHeaderFooter.m in Sources */,
+				C3E32D371DEF156B00A0498D /* ZWAccount.m in Sources */,
 				C3019E7F1D965B2800CC2F55 /* ZWCommentCell.m in Sources */,
 				C3C5313A1DB52543000C3562 /* ZWChooseCourseViewController.m in Sources */,
 				C3561A261D3774560032C97B /* ZWLoginViewController.m in Sources */,

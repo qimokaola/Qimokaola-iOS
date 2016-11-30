@@ -16,6 +16,7 @@
 #import "ZWUserManager.h"
 #import "ZWResetPasswordViewController.h"
 #import "ZWPasswordField.h"
+#import "ZWAccount.h"
 
 #import "Masonry.h"
 #import "ReactiveCocoa.h"
@@ -39,6 +40,12 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    ZWAccount *account = [[ZWAccount alloc] init];
+    if ([account readData]) {
+        self.accountField.text = account.account;
+        self.passwordField.text = account.pwd;
+    }
 }
 
 - (void)viewDidLoad {
@@ -58,19 +65,28 @@
 
 - (void)forgetPwdButtonClicked {
     ZWResetPasswordViewController *resetPwdViewController = [[ZWResetPasswordViewController alloc] init];
+    if (self.accountField.text.length == kPhoneNumberLength) {
+        resetPwdViewController.enterPhoneNumber = self.accountField.text;
+    }
     [self.navigationController pushViewController:resetPwdViewController animated:YES];
 }
 
 - (void)bindViewModel {
     self.viewModel = [[ZWLoginViewModel alloc] init];
     
-    RAC(self.viewModel, account) = self.accountField.rac_textSignal;
-    RAC(self.viewModel, password) = self.passwordField.rac_textSignal;
+//    RAC(self.viewModel, account) = self.accountField.rac_textSignal;
+//    RAC(self.viewModel, password) = self.passwordField.rac_textSignal;
+    
+    RAC(self.viewModel, account) = RACObserve(self.accountField, text);
+    RAC(self.viewModel, password) = RACObserve(self.passwordField, text);
     
     self.nextBtn.rac_command = self.viewModel.loginCommand;
     
     @weakify(self)
-    [[self.nextBtn.rac_command.executionSignals switchToLatest] subscribeNext:^(NSDictionary *result) {
+    [[[self.nextBtn.rac_command.executionSignals doNext:^(id x) {
+        @strongify(self)
+        [self.view endEditing:YES];
+    }] switchToLatest] subscribeNext:^(NSDictionary *result) {
         @strongify(self)
         int resultCode = [[result objectForKey:kHTTPResponseCodeKey] intValue];
         if (resultCode == 0) {
@@ -78,13 +94,17 @@
             ZWUser *user = [ZWUser modelWithDictionary:[result objectForKey:kHTTPResponseResKey]];
             [ZWUserManager sharedInstance].loginUser = user;
             
+            ZWAccount *account = [[ZWAccount alloc] init];
+            account.account = self.accountField.text;
+            account.pwd = self.passwordField.text;
+            [account writeData];
+            
             // 发送用户登录成功通知
             [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoginSuccessNotification object:nil];
 
             MBProgressHUD *hud = [ZWHUDTool successHUDInView:self.navigationController.view withMessage:@"登录成功"];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kShowHUDMid * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [hud hideAnimated:YES];
-                
                 // 根据根视图类型决定跳转类型
                 if (![[UIApplication sharedApplication].keyWindow.rootViewController isKindOfClass:[ZWTabBarController class]]) {
                     // 若根视图的类型不为 ZWTabBarController ，表明当前位于登录注册视图，则需切换根视图

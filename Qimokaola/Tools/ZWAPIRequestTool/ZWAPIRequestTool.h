@@ -16,8 +16,10 @@ typedef void(^APIRequestResult)(id response, BOOL success);
 
 // 请求验证码
 + (void)requestSendCodeWithParameter:(id)param result:(APIRequestResult)result;
++ (void)requestSmsSendCodeWithPhoneNumber:(NSString *)phoneNumber result:(APIRequestResult)result;
 // 验证验证码
 + (void)requestVerifyCodeWithParameter:(id)param result:(APIRequestResult)result;
++ (void)requestSmsVerifyCodeWithCode:(NSString *)code result:(APIRequestResult)result;
 // 获得学校列表
 + (void)requestListSchool:(APIRequestResult)result;
 // 获得学院列表
@@ -35,6 +37,8 @@ typedef void(^APIRequestResult)(id response, BOOL success);
 + (void)requstFileAndFolderListInSchool:(NSNumber *)collegeId path:(NSString *)path needDetail:(BOOL)needDetail result:(APIRequestResult)result;
 // 修改用户信息
 + (void)requestModifyUserInfoWithParameters:(id)params result:(APIRequestResult)result;
+
++ (void)requestResetPasswordWithUserName:(NSString *)userName newPassword:(NSString *)newPassword result:(APIRequestResult)result;
 
 + (void)requestLogout:(APIRequestResult)result;
 

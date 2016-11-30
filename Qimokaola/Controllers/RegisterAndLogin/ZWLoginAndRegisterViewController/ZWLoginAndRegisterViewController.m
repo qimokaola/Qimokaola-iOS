@@ -37,13 +37,12 @@
     [super viewDidLoad];
     
     [self createSubViews];
-    
+
     //监听按钮按下动作
     @weakify(self)
     [[self.loginBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
         @strongify(self)
-        ZWLoginViewController *loginViewController = [[ZWLoginViewController alloc] init];
-        [self presentViewController:[self nextViewController:loginViewController] animated:YES completion:nil];
+        [self gotoLogin];
     }];
     
     [[self.registerBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
@@ -51,6 +50,19 @@
         ZWRegisterViewCotroller *registerViewController = [[ZWRegisterViewCotroller alloc] init];
         [self presentViewController:[self nextViewController:registerViewController] animated:YES completion:nil];
     }];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if (self.goToLoginDirectly) {
+        self.goToLoginDirectly = NO;
+        [self gotoLogin];
+    }
+}
+
+- (void)gotoLogin {
+    ZWLoginViewController *loginViewController = [[ZWLoginViewController alloc] init];
+    [self presentViewController:[self nextViewController:loginViewController] animated:YES completion:nil];
 }
 
 - (void)createSubViews {

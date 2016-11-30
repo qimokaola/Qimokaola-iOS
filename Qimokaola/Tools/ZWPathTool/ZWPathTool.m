@@ -45,6 +45,11 @@
     return [self checkDirExistence:collectedCoursesDirectory];
 }
 
++ (NSString *)accountDirectory {
+    NSString *accountDir = [[self documentDirectory] stringByAppendingPathComponent:@"Account"];
+    return [self checkDirExistence:accountDir];
+}
+
 + (NSString *)otherDataDirectory {
     NSString *otherDataDirectory = [[ZWPathTool cacheDirectory] stringByAppendingPathComponent:@"OtherData"];
     return [self checkDirExistence:otherDataDirectory];

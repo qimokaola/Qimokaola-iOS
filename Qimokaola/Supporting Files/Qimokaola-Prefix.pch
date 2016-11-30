@@ -28,6 +28,13 @@
 
 #define kStudentCircleFetchDataCount 30
 
+// 获取未读信息的时间间隔
+#define kFetchUnreadInfoInterval 120
+
+#define kSendCodeTimeInterval 60
+
+#define kPhoneNumberLength 11
+
 #define ZWFont(fontSize) [UIFont systemFontOfSize:fontSize]
 
 #define RGB(r, g, b) [UIColor colorWithRed:r / 255.0f green:g / 255.0f blue:b / 255.0f alpha:1.0f]
@@ -42,7 +49,7 @@
 
 #define kUserNotLoginInfo @"尚未登录"
 
-#define DecodeAnonyousCode(custom) ([[[custom jsonValueDecoded] objectForKey:@"a"] intValue] >= 0)
+#define DecodeAnonyousCode(custom) ([[[custom jsonValueDecoded] objectForKey:@"a"] intValue] == 0)
 
 #define kHTTPResponseCodeKey @"code"
 #define kHTTPResponseInfoKey @"info"

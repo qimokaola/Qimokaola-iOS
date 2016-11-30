@@ -10,6 +10,8 @@
 
 @interface ZWResetPasswordViewController : UIViewController
 
+@property (nonatomic, strong) NSString *enterPhoneNumber;
 
+@property (nonatomic, copy) void (^completion)(void);;
 
 @end
