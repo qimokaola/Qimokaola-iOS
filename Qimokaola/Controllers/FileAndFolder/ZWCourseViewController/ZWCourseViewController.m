@@ -512,7 +512,7 @@
     
     self.tableView.mj_header.hidden = YES;
     
-    searchController.searchBar.text = @"输入课程名";
+    searchController.searchBar.placeholder = @"输入课程名";
 }
 
 - (void)willDismissSearchController:(UISearchController *)searchController {
@@ -523,7 +523,7 @@
     
     self.tableView.mj_header.hidden = NO;
     
-    searchController.searchBar.text = @"直接搜索课程名";
+    searchController.searchBar.placeholder = @"直接搜索课程名";
 }
 
 

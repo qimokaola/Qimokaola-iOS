@@ -9,7 +9,7 @@
 #import "ZWUserManager.h"
 #import "ZWAPITool.h"
 
-#import "UMPushSDK_1.4.0/UMessage.h"
+#import "UMessage.h"
 #import <YYKit/YYKit.h>
 #import <UMCommunitySDK/UMComDataRequestManager.h>
 #import <UMCommunitySDK/UMComSession.h>

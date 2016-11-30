@@ -27,7 +27,7 @@
 #import <JSPatchPlatform/JSPatch.h>
 #import "UMMobClick/MobClick.h"
 #import <UMCommunitySDK/UMCommunitySDK.h>
-#import "UMPushSDK_1.4.0/UMessage.h"
+#import "UMessage.h"
 #import "ReactiveCocoa.h"
 #import <YYKit/YYKit.h>
 
