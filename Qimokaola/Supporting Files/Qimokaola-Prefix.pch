@@ -55,6 +55,10 @@
 #define kHTTPResponseInfoKey @"info"
 #define kHTTPResponseResKey @"res"
 
+#define kDownloadFileEventID @"Download_File"
+#define kShareFileEventID @"Share_File"
+#define kOpenFileEventID @"Open_File"
+
 /**
  有关用户登录的通知
  */

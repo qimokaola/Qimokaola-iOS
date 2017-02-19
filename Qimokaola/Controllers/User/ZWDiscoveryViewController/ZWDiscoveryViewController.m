@@ -87,6 +87,8 @@
             [weakSelf.tableView reloadRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:0] withRowAnimation:UITableViewRowAnimationNone];
         }
     }];
+    
+    //NSLog(@"%d", [[YYImageCache sharedCache].diskCache totalCost]);
 }
 
 - (void)viewWillAppear:(BOOL)animated {

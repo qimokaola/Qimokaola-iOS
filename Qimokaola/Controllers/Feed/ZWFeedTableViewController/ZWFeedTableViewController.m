@@ -240,7 +240,7 @@
     createNewFeedViewController.composeType = ZWFeedComposeTypeNewFeed;
     createNewFeedViewController.completion = ^(UMComFeed *newFeed) {
         [weakSelf.feeds insertObject:newFeed atIndex:0];
-        [weakSelf.tableView insertRow:0 inSection:0 withRowAnimation:UITableViewRowAnimationTop];
+        [weakSelf.tableView insertRow:0 inSection:0 withRowAnimation:UITableViewRowAnimationFade];
     };
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:createNewFeedViewController];
     [self presentViewController:nav animated:YES completion:nil];
@@ -249,7 +249,7 @@
 - (void)removeFeed:(UMComFeed *)feed {
     NSInteger index = [self.feeds indexOfObject:feed];
     [self.feeds removeObjectAtIndex:index];
-    [self.tableView deleteRow:index inSection:0 withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView deleteRow:index inSection:0 withRowAnimation:UITableViewRowAnimationLeft];
 }
 
 - (void)dealWiteSpamResult:(NSDictionary *)responseObject error:(NSError *)error {

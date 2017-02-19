@@ -16,7 +16,7 @@ PODS:
     - AFNetworking/NSURLSession
   - Aspects (1.4.1)
   - AXNavigationBackItemInjection (0.0.1)
-  - AXWebViewController (0.3.5):
+  - AXWebViewController (0.4.1):
     - Aspects
     - AXNavigationBackItemInjection
     - NJKWebViewProgress
@@ -24,8 +24,15 @@ PODS:
   - FMDB (2.6.2):
     - FMDB/standard (= 2.6.2)
   - FMDB/standard (2.6.2)
-  - IQKeyboardManager (4.0.7)
-  - LCActionSheet (2.6.2):
+  - IQKeyboardManager (4.0.8)
+  - JSPatch (1.1.2):
+    - JSPatch/Core (= 1.1.2)
+  - JSPatch/Core (1.1.2)
+  - JSPatchPlatform (1.6.6):
+    - JSPatchPlatform/Core (= 1.6.6)
+  - JSPatchPlatform/Core (1.6.6):
+    - JSPatch
+  - LCActionSheet (2.7.2):
     - Masonry (~> 1.0.1)
   - LinqToObjectiveC (2.1.0)
   - Masonry (1.0.2)
@@ -49,6 +56,7 @@ PODS:
   - SDWebImage (3.8.2):
     - SDWebImage/Core (= 3.8.2)
   - SDWebImage/Core (3.8.2)
+  - UMengAnalytics-NO-IDFA (4.2.5)
   - YYKit (1.0.9):
     - YYKit/no-arc (= 1.0.9)
   - YYKit/no-arc (1.0.9)
@@ -59,6 +67,7 @@ DEPENDENCIES:
   - DZNEmptyDataSet
   - FMDB
   - IQKeyboardManager
+  - JSPatchPlatform
   - LCActionSheet
   - LinqToObjectiveC
   - Masonry
@@ -68,17 +77,20 @@ DEPENDENCIES:
   - SDAutoLayout
   - SDCycleScrollView
   - SDWebImage
+  - UMengAnalytics-NO-IDFA
   - YYKit
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   Aspects: 7595ba96a6727a58ebcbfc954497fc5d2fdde546
   AXNavigationBackItemInjection: 0ab0742fafd9ec37e44b8767c96cbbc77ec13575
-  AXWebViewController: 78f8ad10e9a72cc8a72acdb1f1fcc215a5101767
+  AXWebViewController: 9774b08caf6917319d2246d0817032500e6a8fd5
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
-  IQKeyboardManager: 69002bb4fea60596b710e57d426abc00e5063630
-  LCActionSheet: d7a2ef01f6131b70d7466dab42c977dd8c744e8b
+  IQKeyboardManager: 1a8189fa153bf09044355ee0ad36826f6767e7f7
+  JSPatch: 741205ebb2e2238c223a436e4c8cf75cf40a345f
+  JSPatchPlatform: 8cc9aaebe21109d5fdfb4500384ddf38ed0990e9
+  LCActionSheet: 2071dfc1834585cd7f57a234890cd0a96e4b6682
   LinqToObjectiveC: f0e40c137a458b6b9725c4c7b6a575c0c72e3aec
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
@@ -88,8 +100,9 @@ SPEC CHECKSUMS:
   SDAutoLayout: e9b36d04b8c0b504762a04d76fbbe5108944297a
   SDCycleScrollView: f72904c77698a7f93a41bcbbc2d78b073bf7326c
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
+  UMengAnalytics-NO-IDFA: 16666e32edce5be44ae5b14aaaa7f3582e09d6ab
   YYKit: 7cda43304a8dc3696c449041e2cb3107b4e236e7
 
-PODFILE CHECKSUM: 15d982ec1c3bc9b5b708149a4aed6e22c549ebd6
+PODFILE CHECKSUM: 5f3aa2d0f7f039878042b45c1709db71eeaa57ac
 
-COCOAPODS: 1.1.1
+COCOAPODS: 1.2.0

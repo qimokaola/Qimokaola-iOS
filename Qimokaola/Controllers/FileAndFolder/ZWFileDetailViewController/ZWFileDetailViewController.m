@@ -22,6 +22,7 @@
 
 #import <AFNetworking/AFNetworking.h>
 #import "Masonry.h"
+#import "UMMobClick/MobClick.h"
 #import <UMSocialCore/UMSocialCore.h>
 #import <ReactiveCocoa/ReactiveCocoa.h>
 
@@ -366,6 +367,9 @@
 }
 
 - (void)downloadFile {
+    
+    [MobClick event:kDownloadFileEventID];
+    
     __weak __typeof(self) weakSelf = self;
     [self setDownloadState:YES];
     [ZWAPIRequestTool requestDownloadUrlInSchool:[ZWUserManager sharedInstance].loginUser.currentCollegeId
@@ -435,14 +439,10 @@
 
 #pragma mark - 分享至QQ QQ空间
 - (void)shareToComputer{
-    NSString *shareUrl = [NSString stringWithFormat:@"%@：%@", self.file.name, [NSString stringWithFormat:[ZWAPITool shareFileAPI], self.file.md5, [self.file.name URLEncodedString]]];
     
-//    [UMSocialSnsService presentSnsIconSheetView:self
-//                                         appKey:nil
-//                                      shareText:shareUrl
-//                                     shareImage:nil
-//                                shareToSnsNames:@[UMShareToQQ]
-//                                       delegate:self];
+    [MobClick event:kShareFileEventID];
+    
+    NSString *shareUrl = [NSString stringWithFormat:@"%@：%@", self.file.name, [NSString stringWithFormat:[ZWAPITool shareFileAPI], self.file.md5, [self.file.name URLEncodedString]]];
     
     UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
     messageObject.text = shareUrl;
@@ -461,6 +461,9 @@
 
 #pragma mark 打开已下载文件
 -(void)openDocumentInThirdPartyApp {
+    
+    [MobClick event:kOpenFileEventID];
+    
     NSString *filePath = [[ZWPathTool downloadDirectory] stringByAppendingPathComponent:self.storage_name];
     self.documentController.URL = [NSURL fileURLWithPath:filePath];
     [self.documentController presentOptionsMenuFromRect:self.view.bounds inView:self.view animated:YES];

@@ -19,7 +19,7 @@
 @interface ZWUserManager ()
 
 @property (nonatomic, strong) YYCache *cache;
-
+@property (nonatomic) dispatch_semaphore_t semaphore;
 
 @end
 
@@ -41,6 +41,7 @@ NSString *const kLoginedUserKey = @"kLoginedUserKey";
     self = [super init];
     if (self) {
         self.cache = [[YYCache alloc] initWithName:@"UserInfo"];
+        self.semaphore = dispatch_semaphore_create(1);
         // 首先检查是否有持久化对象
         self.loginUser = (ZWUser *)[NSKeyedUnarchiver unarchiveObjectWithFile:[[ZWPathTool accountDirectory] stringByAppendingPathComponent:kUserInfoFileName]];
         // 为兼容旧版本 读取缓存中的数据
@@ -63,7 +64,9 @@ NSString *const kLoginedUserKey = @"kLoginedUserKey";
 }
 
 - (void)loginStudentCircle {
-    if (!self.loginUser || [UMComSession sharedInstance].isLogin) {
+    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
+    if (!self.loginUser || [UMComSession sharedInstance].loginUser) {
+        dispatch_semaphore_signal(self.semaphore);
         return;
     }
     __weak __typeof(self) weakSelf = self;
@@ -109,6 +112,7 @@ NSString *const kLoginedUserKey = @"kLoginedUserKey";
                                                                               }
                                                                           }
                                                                       }
+                                                                      dispatch_semaphore_signal(weakSelf.semaphore);
                                                                   }];
 }
 
@@ -159,12 +163,8 @@ NSString *const kLoginedUserKey = @"kLoginedUserKey";
         }
     }
     if (_loginUser) {
-        [UMessage addTag:_loginUser.collegeName response:^(id  _Nonnull responseObject, NSInteger remain, NSError * _Nonnull error) {
-            
-        }];
-        [UMessage addTag:_loginUser.gender response:^(id  _Nonnull responseObject, NSInteger remain, NSError * _Nonnull error) {
-            
-        }];
+        [UMessage addTag:_loginUser.collegeName response:nil];
+        [UMessage addTag:_loginUser.gender response:nil];
     }
     _isLogin = loginUser != nil;
     [self writeLoginUserData];

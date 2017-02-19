@@ -52,7 +52,7 @@
     
     // 初始化友盟推送
     //设置 AppKey 及 LaunchOptions
-    [UMessage startWithAppkey:@"57b447c6e0f55af52e000e0b" launchOptions:launchOptions];
+    [UMessage startWithAppkey:@"57b447c6e0f55af52e000e0b" launchOptions:launchOptions httpsenable:YES];
     
     //1.3.0版本开始简化初始化过程。如不需要交互式的通知，下面用下面一句话注册通知即可。
     [UMessage registerForRemoteNotifications];
@@ -81,16 +81,13 @@
     UMConfigInstance.channelId = @"App Store";
     [MobClick startWithConfigure:UMConfigInstance];//配置以上参数后调用此方法初始化SDK！
     
+    //初始化友盟社会化分享SDK
     //打开调试日志
     [[UMSocialManager defaultManager] openLog:YES];
     //设置友盟appkey
     [[UMSocialManager defaultManager] setUmSocialAppkey:@"57b447c6e0f55af52e000e0b"];
     //设置分享到QQ互联的appKey和appSecret
-    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_QQ appKey:@"1104906908"  appSecret:@"F3gD6ULgbrpPSqqF" redirectURL:@"http://mobile.umeng.com/social"];
-
-//    //初始化QQ分享SDK
-//    [UMSocialData setAppKey:@"57b447c6e0f55af52e000e0b"];
-//    [UMSocialQQHandler setQQWithAppId:@"1104906908" appKey:@"F3gD6ULgbrpPSqqF" url:@"http://www.baidu.com"];
+    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_QQ appKey:@"101369980"  appSecret:nil redirectURL:@"http://mobile.umeng.com/social"];
     
     //0.5秒后开始监听网络变化
     [self performSelector:@selector(monitorNetworkStatus) withObject:nil afterDelay:0.5f];
@@ -138,8 +135,6 @@
     
     //检测是否已经登录
     if ([ZWUserManager sharedInstance].loginUser) {
-        
-        NSLog(@"user exist: %@", [ZWUserManager sharedInstance].loginUser);
         [self gotoLoginedView];
     } else {
         
@@ -219,31 +214,11 @@
 - (void)monitorNetworkStatus {
 
     [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
-        
-//        NSString *networkCondition;
-//        if (status == AFNetworkReachabilityStatusNotReachable) {
-//            networkCondition = @"网络连接已断开";
-//        } else if (status == AFNetworkReachabilityStatusReachableViaWWAN) {
-//            networkCondition=  @"使用蜂窝数据流量";
-//        } else if (status == AFNetworkReachabilityStatusReachableViaWiFi) {
-//            networkCondition = @"使用Wi-Fi连接";
-//        } else {
-//            networkCondition = @"未知的网络连接";
-//        }
-//        
-//        [ZWHUDTool showHUDWithTitle:networkCondition message:nil duration:kShowHUDShort];
-//        
-//        if (status != AFNetworkReachabilityStatusNotReachable) {
-//            NSLog(@"change");
-//            [[ZWUserManager sharedInstance] loginStudentCircle];
-//        }
-
-        
         if (status == AFNetworkReachabilityStatusNotReachable) {
             [ZWHUDTool showHUDWithTitle:@"网络连接已断开" message:nil duration:kShowHUDShort];
         } else {
             //网络改变之后且有网的情况下重新登录学生圈
-            [[ZWUserManager sharedInstance] loginStudentCircle];
+            [self loginTheStudentCircle];
         }
     }];
     
@@ -253,10 +228,6 @@
 
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-//    NSLog(@"didRegisterForRemoteNotificationsWithDeviceToken");
-//    NSLog(@"%@",[[[[deviceToken description] stringByReplacingOccurrencesOfString: @"<" withString: @""]
-//                  stringByReplacingOccurrencesOfString: @">" withString: @""]
-//                 stringByReplacingOccurrencesOfString: @" " withString: @""]);
     // 1.2.7版本开始不需要用户再手动注册devicetoken，SDK会自动注册
     //[UMessage registerDeviceToken:deviceToken];
 }
@@ -266,7 +237,6 @@
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-    NSLog(@"%@", userInfo);
     //关闭友盟自带的弹出框
     [UMessage setAutoAlert:NO];
     [UMessage didReceiveRemoteNotification:userInfo];
@@ -274,7 +244,6 @@
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-    NSLog(@"%@ no completion", userInfo);
     //关闭友盟自带的弹出框
     [UMessage setAutoAlert:NO];
     [UMessage didReceiveRemoteNotification:userInfo];
@@ -315,26 +284,29 @@
     NSLog(@"didFailToRegisterForRemoteNotificationsWithError");
 }
 
-
+// 支持所有iOS系统
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(nullable NSString *)sourceApplication annotation:(id)annotation
 {
-    NSLog(@"ios 8");
     NSLog(@"openURL:%@ sourceApplication:%@ annotation:%@", url, sourceApplication, annotation);
-    if ([[NSFileManager defaultManager] fileExistsAtPath:url.path]) {
-        if (![ZWUserManager sharedInstance].isLogin) {
-            [[NSFileManager defaultManager] removeItemAtURL:url error:NULL];
-            [ZWHUDTool showHUDWithTitle:@"只有在登录状态下才能上传文件哦" message:nil duration:kShowHUDMid];
-        } else {
-            [self presentUploadViewWithFileName:url];
-        }
-    }
-    return  [[UMSocialManager defaultManager] handleOpenURL:url];
+    return [self checkURL:url];
 }
 
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(nonnull NSDictionary<NSString *,id> *)options
 {
     NSLog(@"openURL:%@ options:%@", url, options);
+    [self checkURL:url];
+    return [self checkURL:url];
+}
+
+
+/**
+ 分析传入的url是否为文件 判断应用是否由分享文件调用
+
+ @param url url
+ @return 友盟判断结果
+ */
+- (BOOL)checkURL:(NSURL *)url {
     if ([[NSFileManager defaultManager] fileExistsAtPath:url.path]) {
         if (![ZWUserManager sharedInstance].isLogin) {
             [[NSFileManager defaultManager] removeItemAtURL:url error:NULL];
