@@ -12,6 +12,7 @@
 #import "ZWStudentCircleViewController.h"
 #import "ZWDiscoveryViewController.h"
 #import "ZWNavigationController.h"
+#import "ZWCountDownHolderViewController.h"
 
 #import <ReactiveCocoa/ReactiveCocoa.h>
 #import "ZWUserManager.h"
@@ -28,6 +29,7 @@
 - (NSArray *)viewControllersInfo {
     if (_viewControllersInfo == nil) {
         _viewControllersInfo = @[
+                                 @{@"class" : [ZWCountDownHolderViewController class], @"title" : @"资源", @"image" : @"icon_tab_resource", @"selected_image" : @"icon_tab_resource_selected"},
                                  @{@"class" : [ZWCourseViewController class], @"title" : @"资源", @"image" : @"icon_tab_resource", @"selected_image" : @"icon_tab_resource_selected"},
                                  @{@"class" : [ZWDownloadedViewController class], @"title" : @"已下载", @"image" : @"icon_tab_downloaded", @"selected_image" : @"icon_tab_downloaded_selected"},
                                  @{@"class" : [ZWStudentCircleViewController class], @"title" : @"学生圈", @"image" : @"icon_tab_circle", @"selected_image" : @"icon_tab_circle_selected"},
