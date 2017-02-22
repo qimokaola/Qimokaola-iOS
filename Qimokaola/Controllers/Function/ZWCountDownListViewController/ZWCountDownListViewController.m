@@ -8,6 +8,11 @@
 
 #import "ZWCountDownListViewController.h"
 
+#import "ZWCountDownCell.h"
+#import "ZWAddCountDownViewController.h"
+
+#define kCountDownCellReuseIdentifier @"kCountDownCellReuseIdentifier"
+
 @interface ZWCountDownListViewController ()
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -16,12 +21,16 @@
 
 @implementation ZWCountDownListViewController
 
+#pragma mark - Life Cycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.backgroundColor = defaultPlaceHolderColor;
+    self.tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
+    [self.tableView registerNib:[UINib nibWithNibName:@"ZWCountDownCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:kCountDownCellReuseIdentifier];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -33,6 +42,15 @@
     return NSStringFromClass([self class]);
 }
 
+#pragma mark - Common Methods
+
+- (IBAction)addCountDown:(id)sender {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+    ZWAddCountDownViewController *controller = (ZWAddCountDownViewController *)[storyboard instantiateViewControllerWithIdentifier:@"ZWAddCountDownViewController"];
+    [self.navigationController pushViewController:controller animated:YES];
+}
+
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -40,17 +58,24 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 0;
+    return 10;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return nil;
+    ZWCountDownCell *cell = [tableView dequeueReusableCellWithIdentifier:kCountDownCellReuseIdentifier];
+    return cell;
 }
 
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    });
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 101;
 }
 
 

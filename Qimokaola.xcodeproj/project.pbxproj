@@ -46,7 +46,6 @@
 		C33AC6021DA3C3CD00A96AB7 /* ZWUserLikesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C33AC6011DA3C3CD00A96AB7 /* ZWUserLikesViewController.m */; };
 		C33AC6061DA3C63900A96AB7 /* ZWLikeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C33AC6051DA3C63900A96AB7 /* ZWLikeCell.m */; };
 		C33B6D3E1D9D68DC00710D75 /* ZWReplytPaddingLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = C33B6D3D1D9D68DC00710D75 /* ZWReplytPaddingLabel.m */; };
-		C33E99451DED9F52004CC173 /* ZWPasswordField.m in Sources */ = {isa = PBXBuildFile; fileRef = C33E99441DED9F52004CC173 /* ZWPasswordField.m */; };
 		C33E994C1DEE9D64004CC173 /* ZWResetPwdViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C33E994B1DEE9D64004CC173 /* ZWResetPwdViewModel.m */; };
 		C33EECA31BCD4F9700BB4B74 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C33EECA21BCD4F9700BB4B74 /* libsqlite3.dylib */; };
 		C33EECA41BCD4FC500BB4B74 /* libiconv.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C3F791161BCD30F2003793B1 /* libiconv.2.dylib */; };
@@ -116,6 +115,10 @@
 		C39726741E543A4800B628BB /* libUMessage_Sdk_1.4.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C39726721E543A4800B628BB /* libUMessage_Sdk_1.4.0.a */; };
 		C39803FE1D903C45006D1471 /* ZWModifyAvatarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C39803FD1D903C45006D1471 /* ZWModifyAvatarViewController.m */; };
 		C39804091D9177C2006D1471 /* ZWDataBaseTool.m in Sources */ = {isa = PBXBuildFile; fileRef = C39804081D9177C2006D1471 /* ZWDataBaseTool.m */; };
+		C39B174A1E5AC77000ECAC6A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C39B17491E5AC77000ECAC6A /* Main.storyboard */; };
+		C39B174E1E5AC7E200ECAC6A /* ZWAddCountDownViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C39B174D1E5AC7E200ECAC6A /* ZWAddCountDownViewController.m */; };
+		C39B17571E5C84A600ECAC6A /* ZWPasswordField.m in Sources */ = {isa = PBXBuildFile; fileRef = C39B17561E5C84A600ECAC6A /* ZWPasswordField.m */; };
+		C39B175F1E5C89A700ECAC6A /* ZWCountDownPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C39B175E1E5C89A700ECAC6A /* ZWCountDownPickerView.m */; };
 		C3A14CA41D37D0FD0088E754 /* ZWSelectSchoolViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3A14CA31D37D0FD0088E754 /* ZWSelectSchoolViewController.m */; };
 		C3AF73E31BCBE3C60064C3F5 /* NSDate+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = C3AF73E21BCBE3C60064C3F5 /* NSDate+Extension.m */; };
 		C3C17D7F1DE861CD000F9BE5 /* ZWResetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3C17D7D1DE861CD000F9BE5 /* ZWResetPasswordViewController.m */; };
@@ -294,8 +297,6 @@
 		C33AC6051DA3C63900A96AB7 /* ZWLikeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWLikeCell.m; sourceTree = "<group>"; };
 		C33B6D3C1D9D68DC00710D75 /* ZWReplytPaddingLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWReplytPaddingLabel.h; sourceTree = "<group>"; };
 		C33B6D3D1D9D68DC00710D75 /* ZWReplytPaddingLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWReplytPaddingLabel.m; sourceTree = "<group>"; };
-		C33E99431DED9F52004CC173 /* ZWPasswordField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWPasswordField.h; sourceTree = "<group>"; };
-		C33E99441DED9F52004CC173 /* ZWPasswordField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWPasswordField.m; sourceTree = "<group>"; };
 		C33E994A1DEE9D64004CC173 /* ZWResetPwdViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWResetPwdViewModel.h; sourceTree = "<group>"; };
 		C33E994B1DEE9D64004CC173 /* ZWResetPwdViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWResetPwdViewModel.m; sourceTree = "<group>"; };
 		C33EECA21BCD4F9700BB4B74 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = ../../../../../../usr/lib/libsqlite3.dylib; sourceTree = "<group>"; };
@@ -407,6 +408,13 @@
 		C39803FD1D903C45006D1471 /* ZWModifyAvatarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWModifyAvatarViewController.m; sourceTree = "<group>"; };
 		C39804071D9177C2006D1471 /* ZWDataBaseTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWDataBaseTool.h; sourceTree = "<group>"; };
 		C39804081D9177C2006D1471 /* ZWDataBaseTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWDataBaseTool.m; sourceTree = "<group>"; };
+		C39B17491E5AC77000ECAC6A /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		C39B174C1E5AC7E200ECAC6A /* ZWAddCountDownViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWAddCountDownViewController.h; sourceTree = "<group>"; };
+		C39B174D1E5AC7E200ECAC6A /* ZWAddCountDownViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWAddCountDownViewController.m; sourceTree = "<group>"; };
+		C39B17551E5C84A600ECAC6A /* ZWPasswordField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWPasswordField.h; sourceTree = "<group>"; };
+		C39B17561E5C84A600ECAC6A /* ZWPasswordField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWPasswordField.m; sourceTree = "<group>"; };
+		C39B175D1E5C89A700ECAC6A /* ZWCountDownPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWCountDownPickerView.h; sourceTree = "<group>"; };
+		C39B175E1E5C89A700ECAC6A /* ZWCountDownPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWCountDownPickerView.m; sourceTree = "<group>"; };
 		C3A14CA21D37D0FD0088E754 /* ZWSelectSchoolViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWSelectSchoolViewController.h; sourceTree = "<group>"; };
 		C3A14CA31D37D0FD0088E754 /* ZWSelectSchoolViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWSelectSchoolViewController.m; sourceTree = "<group>"; };
 		C3AF73E11BCBE3C60064C3F5 /* NSDate+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Extension.h"; sourceTree = "<group>"; };
@@ -850,15 +858,6 @@
 			path = ZWReplytPaddingLabel;
 			sourceTree = "<group>";
 		};
-		C33E99421DED9F24004CC173 /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-				C33E99431DED9F52004CC173 /* ZWPasswordField.h */,
-				C33E99441DED9F52004CC173 /* ZWPasswordField.m */,
-			);
-			path = "New Group";
-			sourceTree = "<group>";
-		};
 		C33E99491DEE9D64004CC173 /* ZWResetPwdViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -909,6 +908,7 @@
 			isa = PBXGroup;
 			children = (
 				C331E6F01C887D39001CDACB /* Launch Screen.storyboard */,
+				C39B17491E5AC77000ECAC6A /* Main.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -1090,9 +1090,10 @@
 		C3792AD31D6F395F0079FCF5 /* Custom */ = {
 			isa = PBXGroup;
 			children = (
+				C39B175C1E5C898F00ECAC6A /* ZWCountDownPickerView */,
+				C39B17541E5C84A600ECAC6A /* ZWPasswordField */,
 				C3DA11FE1D9D45C700758BAC /* DLSlideView */,
 				C3EEE06A1DB9D4370096B6DE /* ESPictureBrowser */,
-				C33E99421DED9F24004CC173 /* New Group */,
 				C32666411D953115008C6B24 /* PhotoSelector */,
 				C35FD9B81D707E0E0066DE68 /* SDWeiXinPhotoContainerView */,
 				C34EF1911D36533000B6449B /* ZWAdvertisementView */,
@@ -1122,6 +1123,7 @@
 		C37E7F271E59CB4E00A3837E /* Function */ = {
 			isa = PBXGroup;
 			children = (
+				C39B174B1E5AC7D200ECAC6A /* ZWAddCountDownViewController */,
 				C37E7F2E1E59D07C00A3837E /* ZWCountDownHolderViewController */,
 				C37E7F281E59CB4E00A3837E /* ZWCountDownListViewController */,
 			);
@@ -1320,6 +1322,33 @@
 				C39804081D9177C2006D1471 /* ZWDataBaseTool.m */,
 			);
 			path = ZWDataBaseTool;
+			sourceTree = "<group>";
+		};
+		C39B174B1E5AC7D200ECAC6A /* ZWAddCountDownViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C39B174C1E5AC7E200ECAC6A /* ZWAddCountDownViewController.h */,
+				C39B174D1E5AC7E200ECAC6A /* ZWAddCountDownViewController.m */,
+			);
+			path = ZWAddCountDownViewController;
+			sourceTree = "<group>";
+		};
+		C39B17541E5C84A600ECAC6A /* ZWPasswordField */ = {
+			isa = PBXGroup;
+			children = (
+				C39B17551E5C84A600ECAC6A /* ZWPasswordField.h */,
+				C39B17561E5C84A600ECAC6A /* ZWPasswordField.m */,
+			);
+			path = ZWPasswordField;
+			sourceTree = "<group>";
+		};
+		C39B175C1E5C898F00ECAC6A /* ZWCountDownPickerView */ = {
+			isa = PBXGroup;
+			children = (
+				C39B175D1E5C89A700ECAC6A /* ZWCountDownPickerView.h */,
+				C39B175E1E5C89A700ECAC6A /* ZWCountDownPickerView.m */,
+			);
+			path = ZWCountDownPickerView;
 			sourceTree = "<group>";
 		};
 		C3A14C9B1D37CF710088E754 /* ZWSelectSchoolViewController */ = {
@@ -1953,6 +1982,7 @@
 				C3C531271DB3F161000C3562 /* pic_upload_method_computer.png in Resources */,
 				C346C7771E59F32500417F62 /* ZWCountDownCell.xib in Resources */,
 				C3E32D3B1DEF439B00A0498D /* pic0.png in Resources */,
+				C39B174A1E5AC77000ECAC6A /* Main.storyboard in Resources */,
 				C397266E1E54046500B628BB /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				C3C17D801DE861CD000F9BE5 /* ZWResetPasswordViewController.xib in Resources */,
 				C3DE5B8D1DAE617A00E93C05 /* pic2.png in Resources */,
@@ -2036,10 +2066,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				C32666581D953125008C6B24 /* UMImagePickerGroupCell.m in Sources */,
+				C39B175F1E5C89A700ECAC6A /* ZWCountDownPickerView.m in Sources */,
 				C32666561D953125008C6B24 /* UMAssetsCollectionOverlayView.m in Sources */,
 				C37027451DE97E0D00C902AF /* ZWRegisterViewModel.m in Sources */,
 				C33AC6021DA3C3CD00A96AB7 /* ZWUserLikesViewController.m in Sources */,
-				C33E99451DED9F52004CC173 /* ZWPasswordField.m in Sources */,
+				C39B174E1E5AC7E200ECAC6A /* ZWAddCountDownViewController.m in Sources */,
 				C3DE5B7B1DAD2F6400E93C05 /* ZWAppUserInfoCell.m in Sources */,
 				C33E994C1DEE9D64004CC173 /* ZWResetPwdViewModel.m in Sources */,
 				C326666C1D9534DE008C6B24 /* UMComButton.m in Sources */,
@@ -2065,6 +2096,7 @@
 				C3561A201D3770530032C97B /* ZWFilloutInformationViewController.m in Sources */,
 				C35FD9BB1D707E160066DE68 /* SDWeiXinPhotoContainerView.m in Sources */,
 				C32666591D953125008C6B24 /* UMImagePickerThumbnailView.m in Sources */,
+				C39B17571E5C84A600ECAC6A /* ZWPasswordField.m in Sources */,
 				C36D67E31DA9331900442FD4 /* ZWDownloadedInfoCell.m in Sources */,
 				C346C7701E59EDF800417F62 /* ZWCountDownListViewController.m in Sources */,
 				C3259ED81D351B09004DC58F /* ZWAdvertisementView.m in Sources */,
