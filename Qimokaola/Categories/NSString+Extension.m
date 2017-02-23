@@ -224,9 +224,18 @@ static char firstLetterArray[HANZI_COUNT] =
 
 @implementation NSString (Extension)
 
+- (NSString *)stringByTrim {
+    static NSCharacterSet *set;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        set = [NSCharacterSet whitespaceAndNewlineCharacterSet];
+    });
+    return [self stringByTrimmingCharactersInSet:set];
+}
+
 - (NSString *)getFirstLetter
 {
-    NSString *words = [self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *words = [self stringByTrim];
     if (words.length == 0) {
         return nil;
     }

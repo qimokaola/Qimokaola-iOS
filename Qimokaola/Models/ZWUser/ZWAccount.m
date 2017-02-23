@@ -36,7 +36,8 @@
     ZWAccount *account = (ZWAccount *)[NSKeyedUnarchiver unarchiveObjectWithData:decodedData];
     self.account = account.account;
     self.pwd = account.pwd;
-    return account != nil;
+    return account != nil;  
+
 }
 
 @end

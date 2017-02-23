@@ -14,6 +14,8 @@
 
 - (NSString *)URLDecodedString;
 
+- (NSString *)stringByTrim;
+
 
 /**
  返回第一个字母（若字符串为中文 则返回第一次字的拼音的第一个字母)

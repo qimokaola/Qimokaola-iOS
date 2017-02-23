@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ZWCountdown.h"
 
 @interface ZWAddCountDownViewController : UITableViewController
+
+@property (nonatomic, strong) ZWCountdown *countdown;
 
 @end

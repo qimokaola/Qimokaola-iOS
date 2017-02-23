@@ -8,13 +8,29 @@
 
 #import "NSDate+Extension.h"
 
+static NSDateFormatter *formatter;
+
+
 @implementation NSDate (Extension)
 
-+ (NSString *)current  {
-    NSString *formatterString = @"yyyy-MM-dd";
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:formatterString];
++ (NSString *)currentSimpleString  {
+    static NSDateFormatter *formatter;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"yyyy-MM-dd"];
+    });
     return [formatter stringFromDate:[NSDate date]];
+}
+
+- (NSString *)dateStringForCountdown {
+    static NSDateFormatter *formatter;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"yyyy-MM-dd EEEE HH:mm"];
+    });
+    return [formatter stringFromDate:self];
 }
 
 + (NSString *)secondsSince1970 {

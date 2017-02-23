@@ -42,7 +42,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="输入将要进行的考试科目" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vr3-uo-DUk">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="输入将要进行的考试科目" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="vr3-uo-DUk">
                                                     <rect key="frame" x="110" y="7" width="265" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="F1h-bW-ELU"/>
@@ -148,7 +148,7 @@
                                                         <constraint firstAttribute="height" constant="30" id="6pt-ue-bBJ"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <state key="normal" title="提前一小时">
+                                                    <state key="normal" title="提前1小时">
                                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <connections>

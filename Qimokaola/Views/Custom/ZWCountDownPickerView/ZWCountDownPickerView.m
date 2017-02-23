@@ -9,6 +9,7 @@
 #import "ZWCountDownPickerView.h"
 
 #import "ZWHUDTool.h"
+#import "NSDate+Extension.h"
 
 #define kDatePickerViewHeight 216
 #define kToolbarHeight 45
@@ -19,7 +20,6 @@
 
 @interface ZWCountDownPickerView ()
 
-@property (nonatomic, strong) NSDateFormatter *formatter;
 @property (nonatomic, strong) NSDate *date;
 @property (nonatomic, weak) UIView *topView;
 @property (nonatomic, weak) UIView *bottomView;
@@ -34,17 +34,10 @@
 
 - (instancetype)initWithTime:(NSDate *)date {
     if (self = [self initWithFrame:CGRectMake(0, 0, kScreenW, kScreenH)]) {
-        self.formatter = [[NSDateFormatter alloc] init];
-        [self.formatter setDateFormat:@"yyyy-MM-dd EEEE HH:mm"];
-        self.date = date;
+        self.date = date ? date : [NSDate date];
         [self setupViews];
     }
     return self;
-}
-
-- (instancetype)init
-{
-    return [self initWithTime:[NSDate date]];
 }
 
 - (void)dealloc
@@ -105,7 +98,7 @@
 }
 
 - (void)datePickerValueChanged:(UIDatePicker *)datePicker {
-    self.dateLabel.text = [self.formatter stringFromDate:datePicker.date];
+    self.dateLabel.text = [datePicker.date dateStringForCountdown];
 }
 
 - (void)finishPickDate {

@@ -88,6 +88,10 @@
 		C37027451DE97E0D00C902AF /* ZWRegisterViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C37027441DE97E0D00C902AF /* ZWRegisterViewModel.m */; };
 		C370274D1DEABA0B00C902AF /* ZWCourseHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = C370274C1DEABA0B00C902AF /* ZWCourseHeader.m */; };
 		C370274F1DEABAA200C902AF /* ZWCourseHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = C370274E1DEABAA200C902AF /* ZWCourseHeader.xib */; };
+		C37802BC1E5F3BB100FA9075 /* UMComDataStorage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C37802B81E5F3BB100FA9075 /* UMComDataStorage.framework */; };
+		C37802BD1E5F3BB100FA9075 /* UMComFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C37802B91E5F3BB100FA9075 /* UMComFoundation.framework */; };
+		C37802BE1E5F3BB100FA9075 /* UMCommunitySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C37802BA1E5F3BB100FA9075 /* UMCommunitySDK.framework */; };
+		C37802BF1E5F3BB100FA9075 /* UMComNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C37802BB1E5F3BB100FA9075 /* UMComNetwork.framework */; };
 		C3792ABF1D6C824D0079FCF5 /* ZWPathTool.m in Sources */ = {isa = PBXBuildFile; fileRef = C3792ABE1D6C824D0079FCF5 /* ZWPathTool.m */; };
 		C3792AC21D6C82A00079FCF5 /* ZWHUDTool.m in Sources */ = {isa = PBXBuildFile; fileRef = C3792AC11D6C82A00079FCF5 /* ZWHUDTool.m */; };
 		C3792AC51D6C83A70079FCF5 /* ZWFileTool.m in Sources */ = {isa = PBXBuildFile; fileRef = C3792AC41D6C83A70079FCF5 /* ZWFileTool.m */; };
@@ -100,10 +104,6 @@
 		C37E7F321E59D08C00A3837E /* ZWCountDownHolderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C37E7F301E59D08C00A3837E /* ZWCountDownHolderViewController.m */; };
 		C37E7F331E59D08C00A3837E /* ZWCountDownHolderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C37E7F311E59D08C00A3837E /* ZWCountDownHolderViewController.xib */; };
 		C3827B971D72DDBB002F6E5B /* ZWFeedDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3827B961D72DDBB002F6E5B /* ZWFeedDetailViewController.m */; };
-		C38CB6F91E54781400EABC72 /* UMComDataStorage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C38CB6F51E54781400EABC72 /* UMComDataStorage.framework */; };
-		C38CB6FA1E54781400EABC72 /* UMComFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C38CB6F61E54781400EABC72 /* UMComFoundation.framework */; };
-		C38CB6FB1E54781500EABC72 /* UMCommunitySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C38CB6F71E54781400EABC72 /* UMCommunitySDK.framework */; };
-		C38CB6FC1E54781500EABC72 /* UMComNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C38CB6F81E54781400EABC72 /* UMComNetwork.framework */; };
 		C39004A41D5B67F90097358E /* ZWAdvertisement.m in Sources */ = {isa = PBXBuildFile; fileRef = C39004A31D5B67F90097358E /* ZWAdvertisement.m */; };
 		C39004AE1D5C5F360097358E /* ZWTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = C39004AD1D5C5F360097358E /* ZWTabBarController.m */; };
 		C39004B21D5C61900097358E /* ZWNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C39004B11D5C61900097358E /* ZWNavigationController.m */; };
@@ -119,6 +119,8 @@
 		C39B174E1E5AC7E200ECAC6A /* ZWAddCountDownViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C39B174D1E5AC7E200ECAC6A /* ZWAddCountDownViewController.m */; };
 		C39B17571E5C84A600ECAC6A /* ZWPasswordField.m in Sources */ = {isa = PBXBuildFile; fileRef = C39B17561E5C84A600ECAC6A /* ZWPasswordField.m */; };
 		C39B175F1E5C89A700ECAC6A /* ZWCountDownPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C39B175E1E5C89A700ECAC6A /* ZWCountDownPickerView.m */; };
+		C39B17631E5EFBC900ECAC6A /* ZWCountdown.m in Sources */ = {isa = PBXBuildFile; fileRef = C39B17621E5EFBC900ECAC6A /* ZWCountdown.m */; };
+		C39B17671E5F31B600ECAC6A /* ZWCountdownDatabaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C39B17661E5F31B600ECAC6A /* ZWCountdownDatabaseManager.m */; };
 		C3A14CA41D37D0FD0088E754 /* ZWSelectSchoolViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3A14CA31D37D0FD0088E754 /* ZWSelectSchoolViewController.m */; };
 		C3AF73E31BCBE3C60064C3F5 /* NSDate+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = C3AF73E21BCBE3C60064C3F5 /* NSDate+Extension.m */; };
 		C3C17D7F1DE861CD000F9BE5 /* ZWResetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3C17D7D1DE861CD000F9BE5 /* ZWResetPasswordViewController.m */; };
@@ -363,6 +365,10 @@
 		C370274C1DEABA0B00C902AF /* ZWCourseHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWCourseHeader.m; sourceTree = "<group>"; };
 		C370274E1DEABAA200C902AF /* ZWCourseHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZWCourseHeader.xib; sourceTree = "<group>"; };
 		C370675A1D6B45CF007B18A8 /* Qimokaola.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Qimokaola.entitlements; sourceTree = "<group>"; };
+		C37802B81E5F3BB100FA9075 /* UMComDataStorage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMComDataStorage.framework; sourceTree = "<group>"; };
+		C37802B91E5F3BB100FA9075 /* UMComFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMComFoundation.framework; sourceTree = "<group>"; };
+		C37802BA1E5F3BB100FA9075 /* UMCommunitySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMCommunitySDK.framework; sourceTree = "<group>"; };
+		C37802BB1E5F3BB100FA9075 /* UMComNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMComNetwork.framework; sourceTree = "<group>"; };
 		C3792ABD1D6C824D0079FCF5 /* ZWPathTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWPathTool.h; sourceTree = "<group>"; };
 		C3792ABE1D6C824D0079FCF5 /* ZWPathTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWPathTool.m; sourceTree = "<group>"; };
 		C3792AC01D6C82A00079FCF5 /* ZWHUDTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWHUDTool.h; sourceTree = "<group>"; };
@@ -386,10 +392,6 @@
 		C37E7F311E59D08C00A3837E /* ZWCountDownHolderViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZWCountDownHolderViewController.xib; sourceTree = "<group>"; };
 		C3827B951D72DDBB002F6E5B /* ZWFeedDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWFeedDetailViewController.h; sourceTree = "<group>"; };
 		C3827B961D72DDBB002F6E5B /* ZWFeedDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWFeedDetailViewController.m; sourceTree = "<group>"; };
-		C38CB6F51E54781400EABC72 /* UMComDataStorage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMComDataStorage.framework; sourceTree = "<group>"; };
-		C38CB6F61E54781400EABC72 /* UMComFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMComFoundation.framework; sourceTree = "<group>"; };
-		C38CB6F71E54781400EABC72 /* UMCommunitySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMCommunitySDK.framework; sourceTree = "<group>"; };
-		C38CB6F81E54781400EABC72 /* UMComNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMComNetwork.framework; sourceTree = "<group>"; };
 		C39004A21D5B67F90097358E /* ZWAdvertisement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWAdvertisement.h; sourceTree = "<group>"; };
 		C39004A31D5B67F90097358E /* ZWAdvertisement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWAdvertisement.m; sourceTree = "<group>"; };
 		C39004AC1D5C5F360097358E /* ZWTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWTabBarController.h; sourceTree = "<group>"; };
@@ -415,6 +417,10 @@
 		C39B17561E5C84A600ECAC6A /* ZWPasswordField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWPasswordField.m; sourceTree = "<group>"; };
 		C39B175D1E5C89A700ECAC6A /* ZWCountDownPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWCountDownPickerView.h; sourceTree = "<group>"; };
 		C39B175E1E5C89A700ECAC6A /* ZWCountDownPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWCountDownPickerView.m; sourceTree = "<group>"; };
+		C39B17611E5EFBC900ECAC6A /* ZWCountdown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWCountdown.h; sourceTree = "<group>"; };
+		C39B17621E5EFBC900ECAC6A /* ZWCountdown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWCountdown.m; sourceTree = "<group>"; };
+		C39B17651E5F31B600ECAC6A /* ZWCountdownDatabaseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWCountdownDatabaseManager.h; sourceTree = "<group>"; };
+		C39B17661E5F31B600ECAC6A /* ZWCountdownDatabaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWCountdownDatabaseManager.m; sourceTree = "<group>"; };
 		C3A14CA21D37D0FD0088E754 /* ZWSelectSchoolViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWSelectSchoolViewController.h; sourceTree = "<group>"; };
 		C3A14CA31D37D0FD0088E754 /* ZWSelectSchoolViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWSelectSchoolViewController.m; sourceTree = "<group>"; };
 		C3AF73E11BCBE3C60064C3F5 /* NSDate+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Extension.h"; sourceTree = "<group>"; };
@@ -543,10 +549,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C38CB6F91E54781400EABC72 /* UMComDataStorage.framework in Frameworks */,
+				C37802BC1E5F3BB100FA9075 /* UMComDataStorage.framework in Frameworks */,
 				C397266F1E54046500B628BB /* UMSocialCore.framework in Frameworks */,
 				C36512881DB7F576006A2969 /* libc++.tbd in Frameworks */,
-				C38CB6FC1E54781500EABC72 /* UMComNetwork.framework in Frameworks */,
+				C37802BF1E5F3BB100FA9075 /* UMComNetwork.framework in Frameworks */,
 				C36512241DB7DF76006A2969 /* UMComNetwork.framework in Frameworks */,
 				C3C5311F1DB3874B000C3562 /* QuickLook.framework in Frameworks */,
 				C3C5310A1DB36409000C3562 /* UserNotifications.framework in Frameworks */,
@@ -557,7 +563,7 @@
 				C3F791151BCD308E003793B1 /* Security.framework in Frameworks */,
 				C36512321DB7E69B006A2969 /* UMComFoundation.framework in Frameworks */,
 				C367ADDA1CB693A5002184DF /* UIKit.framework in Frameworks */,
-				C38CB6FB1E54781500EABC72 /* UMCommunitySDK.framework in Frameworks */,
+				C37802BE1E5F3BB100FA9075 /* UMCommunitySDK.framework in Frameworks */,
 				C367ADD81CB69394002184DF /* Foundation.framework in Frameworks */,
 				C3F7911C1BCD3142003793B1 /* CoreGraphics.framework in Frameworks */,
 				C367ADD61CB6935E002184DF /* CoreFoundation.framework in Frameworks */,
@@ -576,7 +582,7 @@
 				C3F791301BCD3C37003793B1 /* QuartzCore.framework in Frameworks */,
 				C3F791201BCD317B003793B1 /* CoreTelephony.framework in Frameworks */,
 				C39726701E54046500B628BB /* UMSocialNetwork.framework in Frameworks */,
-				C38CB6FA1E54781400EABC72 /* UMComFoundation.framework in Frameworks */,
+				C37802BD1E5F3BB100FA9075 /* UMComFoundation.framework in Frameworks */,
 				C3F7911A1BCD3134003793B1 /* SystemConfiguration.framework in Frameworks */,
 				C3F7910D1BCD28AF003793B1 /* MessageUI.framework in Frameworks */,
 				4813320F633E088B03A6C7C5 /* Pods_Qimokaola.framework in Frameworks */,
@@ -721,6 +727,7 @@
 		C31BB1091CB7ED8D00EE1E37 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				C39B17641E5F31AA00ECAC6A /* ZWCountdownDatabaseManager */,
 				C39804051D917790006D1471 /* ZWAPIRequestTool */,
 				C39804041D917785006D1471 /* ZWAPITool */,
 				C32811F11DB29A6E00BE499C /* ZWBrowserTool */,
@@ -1040,6 +1047,17 @@
 			path = ZWCourseHeader;
 			sourceTree = "<group>";
 		};
+		C37802B71E5F3BB100FA9075 /* UMCommunitySDK_2_7_1.1 */ = {
+			isa = PBXGroup;
+			children = (
+				C37802B81E5F3BB100FA9075 /* UMComDataStorage.framework */,
+				C37802B91E5F3BB100FA9075 /* UMComFoundation.framework */,
+				C37802BA1E5F3BB100FA9075 /* UMCommunitySDK.framework */,
+				C37802BB1E5F3BB100FA9075 /* UMComNetwork.framework */,
+			);
+			path = UMCommunitySDK_2_7_1.1;
+			sourceTree = "<group>";
+		};
 		C3792ACC1D6DE9F30079FCF5 /* ZWFeedTableViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -1157,17 +1175,6 @@
 				C3827B961D72DDBB002F6E5B /* ZWFeedDetailViewController.m */,
 			);
 			path = ZWFeedDetailViewController;
-			sourceTree = "<group>";
-		};
-		C38CB6F41E54781400EABC72 /* UMCommunitySDK_2.7.1 */ = {
-			isa = PBXGroup;
-			children = (
-				C38CB6F51E54781400EABC72 /* UMComDataStorage.framework */,
-				C38CB6F61E54781400EABC72 /* UMComFoundation.framework */,
-				C38CB6F71E54781400EABC72 /* UMCommunitySDK.framework */,
-				C38CB6F81E54781400EABC72 /* UMComNetwork.framework */,
-			);
-			path = UMCommunitySDK_2.7.1;
 			sourceTree = "<group>";
 		};
 		C39004A51D5B69980097358E /* Advertisement */ = {
@@ -1351,6 +1358,24 @@
 			path = ZWCountDownPickerView;
 			sourceTree = "<group>";
 		};
+		C39B17601E5EFBB100ECAC6A /* ZWCountdown */ = {
+			isa = PBXGroup;
+			children = (
+				C39B17611E5EFBC900ECAC6A /* ZWCountdown.h */,
+				C39B17621E5EFBC900ECAC6A /* ZWCountdown.m */,
+			);
+			path = ZWCountdown;
+			sourceTree = "<group>";
+		};
+		C39B17641E5F31AA00ECAC6A /* ZWCountdownDatabaseManager */ = {
+			isa = PBXGroup;
+			children = (
+				C39B17651E5F31B600ECAC6A /* ZWCountdownDatabaseManager.h */,
+				C39B17661E5F31B600ECAC6A /* ZWCountdownDatabaseManager.m */,
+			);
+			path = ZWCountdownDatabaseManager;
+			sourceTree = "<group>";
+		};
 		C3A14C9B1D37CF710088E754 /* ZWSelectSchoolViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -1467,6 +1492,7 @@
 		C3C44E211BC688E8004B30BF /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				C39B17601E5EFBB100ECAC6A /* ZWCountdown */,
 				C39004A51D5B69980097358E /* Advertisement */,
 				C30BBA8B1DA80EC60090EB4A /* ZWDownloadedInfo */,
 				C3EDA9121D830B47009FF851 /* ZWFile */,
@@ -1489,7 +1515,7 @@
 		C3C44E241BC68988004B30BF /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				C38CB6F41E54781400EABC72 /* UMCommunitySDK_2.7.1 */,
+				C37802B71E5F3BB100FA9075 /* UMCommunitySDK_2_7_1.1 */,
 				C39726711E543A4800B628BB /* UMPushSDK_1.4.0 */,
 				C39726621E54046500B628BB /* UMShareSDK_6_2_2 */,
 			);
@@ -2082,6 +2108,7 @@
 				C32666B81D9560C1008C6B24 /* UMComActionDeleteView.m in Sources */,
 				C3EEE0731DB9D4370096B6DE /* ESPictureView.m in Sources */,
 				C3DA122E1D9D5F1E00758BAC /* ZWRSCommentsViewController.m in Sources */,
+				C39B17671E5F31B600ECAC6A /* ZWCountdownDatabaseManager.m in Sources */,
 				C3493C1B1D8D8E6E007C7144 /* ZWModifiAcademyViewController.m in Sources */,
 				C3162CBE1D7C54D300153EB9 /* ZWUserManager.m in Sources */,
 				C31FE3C81D8A712200732B02 /* UIView+Extension.m in Sources */,
@@ -2116,6 +2143,7 @@
 				C33AC6061DA3C63900A96AB7 /* ZWLikeCell.m in Sources */,
 				C3E58AC81D54DFE600FDB384 /* ZWBindAccountViewController.m in Sources */,
 				C3DA12121D9D45C700758BAC /* DLCustomSlideView.m in Sources */,
+				C39B17631E5EFBC900ECAC6A /* ZWCountdown.m in Sources */,
 				C3C44DF11BC687B0004B30BF /* AppDelegate.m in Sources */,
 				C3DA12171D9D45C700758BAC /* DLUtility.m in Sources */,
 				C39804091D9177C2006D1471 /* ZWDataBaseTool.m in Sources */,
@@ -2335,8 +2363,7 @@
 					"$(PROJECT_DIR)/Qimokaola",
 					"$(PROJECT_DIR)/Qimokaola/Modules/UMShareSDK_6_2_2/SocialLibraries/QQ",
 					"$(PROJECT_DIR)/Qimokaola/Modules/UMShareSDK_6_2_2/UMSocialSDK",
-					"$(PROJECT_DIR)/Qimokaola/Modules/UMCommunitySDK_2_7_1",
-					"$(PROJECT_DIR)/Qimokaola/Modules/UMCommunitySDK_2.7.1",
+					"$(PROJECT_DIR)/Qimokaola/Modules/UMCommunitySDK_2_7_1.1",
 				);
 				GCC_PREFIX_HEADER = "Qimokaola/Supporting Files/Qimokaola-Prefix.pch";
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
@@ -2349,7 +2376,6 @@
 					"$(PROJECT_DIR)/Qimokaola",
 					"$(PROJECT_DIR)/Qimokaola/Modules/UMPushSDK_1.4.0",
 					"$(PROJECT_DIR)/Qimokaola/Modules/UMShareSDK_6_2_2/SocialLibraries/QQ",
-					"$(PROJECT_DIR)/Qimokaola/Modules/UMCommunitySDK_2_7_1",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -2385,8 +2411,7 @@
 					"$(PROJECT_DIR)/Qimokaola",
 					"$(PROJECT_DIR)/Qimokaola/Modules/UMShareSDK_6_2_2/SocialLibraries/QQ",
 					"$(PROJECT_DIR)/Qimokaola/Modules/UMShareSDK_6_2_2/UMSocialSDK",
-					"$(PROJECT_DIR)/Qimokaola/Modules/UMCommunitySDK_2_7_1",
-					"$(PROJECT_DIR)/Qimokaola/Modules/UMCommunitySDK_2.7.1",
+					"$(PROJECT_DIR)/Qimokaola/Modules/UMCommunitySDK_2_7_1.1",
 				);
 				GCC_PREFIX_HEADER = "Qimokaola/Supporting Files/Qimokaola-Prefix.pch";
 				INFOPLIST_FILE = "Qimokaola/Supporting Files/Info.plist";
@@ -2398,7 +2423,6 @@
 					"$(PROJECT_DIR)/Qimokaola",
 					"$(PROJECT_DIR)/Qimokaola/Modules/UMPushSDK_1.4.0",
 					"$(PROJECT_DIR)/Qimokaola/Modules/UMShareSDK_6_2_2/SocialLibraries/QQ",
-					"$(PROJECT_DIR)/Qimokaola/Modules/UMCommunitySDK_2_7_1",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
