@@ -9,6 +9,7 @@
 #import "ZWAddCountDownViewController.h"
 
 #import "ZWCountDownPickerView.h"
+#import "ZWCountdownDatabaseManager.h"
 #import "ZWHUDTool.h"
 #import "NSDate+Extension.h"
 #import "NSString+Extension.h"
@@ -31,6 +32,11 @@
 
 @implementation ZWAddCountDownViewController
 
++ (instancetype)addCountdownViewControllerInstance {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+    return (ZWAddCountDownViewController *)[storyboard instantiateViewControllerWithIdentifier:@"ZWAddCountDownViewController"];
+}
+
 #pragma mark - Life Cycle
 
 - (void)viewDidLoad {
@@ -50,6 +56,10 @@
     
     [self.examTimeBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
     [self.examTimeBtn setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     
     if (self.countdown) {
         [self loadCountdownView];
@@ -74,8 +84,9 @@
 
 - (NSArray *)alarmTimeIntervals {
     if (_alarmTimeIntervals == nil) {
-        _alarmTimeIntervals = @[@(30 * 60), @(60 * 60), @(2 * 60 * 60), @(24 * 60 * 60), @(2 * 24 * 60 * 60),
-                                @(3 * 24 * 60 * 60), @(5 * 24 * 60 * 60), @(7 * 24 * 60 * 60)];
+        // 分别对应 半小时 一小时 两小时 一天 两天 三天 五天 七天 的秒数
+        _alarmTimeIntervals = @[@(1800), @(3600), @(7200), @(86400), @(172800),
+                                @(259200), @(43200), @(604800)];
     }
     return _alarmTimeIntervals;
 }
@@ -85,6 +96,7 @@
 #pragma mark 选择提醒时间
 
 - (IBAction)chooseAlarmTime:(id)sender {
+    [self.view endEditing:YES];
     UIAlertController *alerController = [UIAlertController alertControllerWithTitle:@"设置提醒时间" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
 //    // 关闭提醒
 //    UIAlertAction *shutdownAlarmAction = [UIAlertAction actionWithTitle:@"关闭" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -113,7 +125,6 @@
         [weakSelf.examTimeBtn setTitle:dateString forState:UIControlStateNormal];
         weakSelf.examTimeBtn.selected = YES;
         weakSelf.countdown.examDate = date;
-        NSLog(@"%@ %@", weakSelf.countdown.examDate, date);
     };
     [pickerView show];
 }
@@ -142,17 +153,40 @@
         return;
     }
     
-    NSInteger index = [self.alarmTimeOptions indexOfObject:self.alarmTimeBtn.titleLabel.text];
-    NSInteger interval = [self.alarmTimeIntervals[index] integerValue];
-    self.countdown.alarmDate = [self.countdown.examDate dateByAddingTimeInterval: interval];
+    // 设置更新倒计时参数
+    __block NSInteger index;
+    __weak __typeof(self) weakSelf = self;
+    [self.alarmTimeOptions enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([weakSelf.alarmTimeBtn.titleLabel.text isEqualToString:obj]) {
+            index = idx;
+            *stop = YES;
+        }
+    }];
+    NSNumber *interval = self.alarmTimeIntervals[index];
+    NSLog(@"%lf", interval.doubleValue);
+    self.countdown.alarmDate = [NSDate dateWithTimeInterval:-interval.doubleValue sinceDate:self.countdown.examDate];
+    self.countdown.examName = self.eaxmNameField.text;
+    self.countdown.examLocation = self.examLocationField.text;
     self.countdown.timeOfAhead = self.alarmTimeBtn.titleLabel.text;
-    self.countdown.id = [NSDate secondsSince1970];
     
+    if (!self.countdown.identifier) {
+        // 添加新的提醒
+        self.countdown.identifier = [NSDate secondsSince1970];
+        [[ZWCountdownDatabaseManager defaultManager] addCountdown:self.countdown];
+    } else {
+        // 更新提醒参数
+        [[ZWCountdownDatabaseManager defaultManager] updateCountdown:self.countdown];
+    }
     
+    if (self.completion) {
+        self.completion(self.countdown);
+    }
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)loadCountdownView {
     self.eaxmNameField.text = self.countdown.examName;
+    self.examLocationField.text = self.countdown.examLocation;
     [self.examTimeBtn setTitle:[self.countdown.examDate dateStringForCountdown] forState:UIControlStateNormal];
     self.examTimeBtn.selected = YES;
     [self.alarmTimeBtn setTitle:self.countdown.timeOfAhead forState:UIControlStateNormal];

@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+#import "ZWCountdown.h"
+
 @interface ZWCountDownCell : UITableViewCell
+
+@property (nonatomic, strong) ZWCountdown *countdown;
 
 @end

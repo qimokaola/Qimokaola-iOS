@@ -10,6 +10,8 @@
 
 @interface NSDate (Extension)
 
+- (NSNumber *)timeStamp;
+- (NSString *)timeIntervalStringSincNow;
 - (NSString *)dateStringForCountdown;
 + (NSString *)currentSimpleString;
 + (NSString *)secondsSince1970;

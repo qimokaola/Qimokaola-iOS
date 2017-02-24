@@ -31,6 +31,12 @@
 #import "ReactiveCocoa.h"
 #import <YYKit/YYKit.h>
 
+#define IS_IOS_10 [[UIDevice currentDevice].systemVersion floatValue] >= 10.0
+
+#define IS_IOS_9 [[UIDevice currentDevice].systemVersion floatValue] >= 9.0
+
+#define IS_IOS_8 [[UIDevice currentDevice].systemVersion floatValue] >= 8.0
+
 @interface AppDelegate () <UNUserNotificationCenterDelegate>
 
 @end
@@ -58,18 +64,25 @@
     [UMessage registerForRemoteNotifications];
     
     //iOS10必须加下面这段代码。
-    UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
-    center.delegate = self;
-    UNAuthorizationOptions types10 = UNAuthorizationOptionBadge | UNAuthorizationOptionAlert | UNAuthorizationOptionSound;
-    [center requestAuthorizationWithOptions:types10 completionHandler:^(BOOL granted, NSError * _Nullable error) {
-        if (granted) {
-            //点击允许
-            //这里可以添加一些自己的逻辑
-        } else {
-            //点击不允许
-            //这里可以添加一些自己的逻辑
-        }
-    }];
+    
+    if (IS_IOS_10) {
+        UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+        //设置代理
+        [UNUserNotificationCenter currentNotificationCenter].delegate = self;
+        [center requestAuthorizationWithOptions:(UNAuthorizationOptionBadge | UNAuthorizationOptionSound | UNAuthorizationOptionAlert) completionHandler:^(BOOL granted, NSError * _Nullable error) {
+            if (granted) {
+                [[UIApplication sharedApplication] registerForRemoteNotifications];
+            } else {
+                
+            }
+        }];
+    }   else if (IS_IOS_8){
+        //ios8注册通知
+        UIUserNotificationType type = UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound;
+        UIUserNotificationSettings *setting = [UIUserNotificationSettings settingsForTypes:type categories:nil];
+        [[UIApplication sharedApplication] registerUserNotificationSettings:setting];
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
+    }
     
     [UMessage setLogEnabled:YES];
 

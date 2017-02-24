@@ -8,8 +8,20 @@
 
 #import <Foundation/Foundation.h>
 
+#import "ZWCountdown.h"
+
 @interface ZWCountdownDatabaseManager : NSObject
 
 + (instancetype)defaultManager;
+
+- (NSMutableArray *)fetchCountdownList;
+
+- (BOOL)addCountdown:(ZWCountdown *)countdown;
+
+- (BOOL)deleteCountdown:(ZWCountdown *)countdown;
+
+- (BOOL)isCountdownExist:(ZWCountdown *)countdown;
+
+- (BOOL)updateCountdown:(ZWCountdown *)countdown;
 
 @end

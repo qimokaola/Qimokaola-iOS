@@ -11,6 +11,10 @@
 
 @interface ZWAddCountDownViewController : UITableViewController
 
++ (instancetype)addCountdownViewControllerInstance;
+
 @property (nonatomic, strong) ZWCountdown *countdown;
+
+@property (nonatomic, copy) void(^completion)(ZWCountdown *countdown);
 
 @end

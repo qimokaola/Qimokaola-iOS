@@ -23,6 +23,23 @@ static NSDateFormatter *formatter;
     return [formatter stringFromDate:[NSDate date]];
 }
 
+- (NSNumber *)timeStamp {
+    return @([self timeIntervalSince1970]);
+}
+
+- (NSString *)timeIntervalStringSincNow {
+    NSString *result;
+    long interval = (long)[self timeIntervalSinceDate:[NSDate date]];
+    if (interval < 3600 - 60) {
+        result = [NSString stringWithFormat:@"%ld分钟", interval / 60 + 1];
+    } else if (interval < 86400 - 3600) {
+        result = [NSString stringWithFormat:@"%ld小时", interval / 3600 + 1];
+    } else {
+        result = [NSString stringWithFormat:@"%ld天", interval / 86400 + 1];
+    }
+    return [result copy];
+}
+
 - (NSString *)dateStringForCountdown {
     static NSDateFormatter *formatter;
     static dispatch_once_t onceToken;

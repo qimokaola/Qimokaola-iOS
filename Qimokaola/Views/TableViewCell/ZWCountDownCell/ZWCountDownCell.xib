@@ -15,7 +15,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="101"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="100.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="大学生就业与创业指导" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bG5-nY-sL5">
@@ -113,6 +113,15 @@
                     <constraint firstItem="7d3-i3-RJK" firstAttribute="leading" secondItem="zqm-8D-AmZ" secondAttribute="leading" id="zNZ-u8-aJP"/>
                 </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="countdownFinishedLabel" destination="OxR-pb-Vk2" id="8Gm-RO-Wyt"/>
+                <outlet property="examDateLabel" destination="N6l-cX-eDU" id="h5M-MI-R2z"/>
+                <outlet property="examLocationLabel" destination="Q4K-WK-iY5" id="y7y-21-2op"/>
+                <outlet property="examNameLabel" destination="bG5-nY-sL5" id="q2S-G4-byC"/>
+                <outlet property="leftHintLabel" destination="ZDB-lq-tuk" id="mIw-TT-5vh"/>
+                <outlet property="timeLeftLabel" destination="HK2-Hd-Kgc" id="aYO-nX-i90"/>
+                <outlet property="timeOfAheadLabel" destination="eqy-Fy-ckV" id="VZ0-Re-FEI"/>
+            </connections>
             <point key="canvasLocation" x="34" y="84.5"/>
         </tableViewCell>
     </objects>

@@ -12,7 +12,7 @@
 @interface ZWCountdown : NSObject
 
 // 以时间戳作为ID
-@property (nonatomic, strong) NSString *id;
+@property (nonatomic, strong) NSString *identifier;
 @property (nonatomic, strong) NSString *examName;
 @property (nonatomic, strong) NSDate *examDate;
 @property (nonatomic, strong) NSString *examLocation;
