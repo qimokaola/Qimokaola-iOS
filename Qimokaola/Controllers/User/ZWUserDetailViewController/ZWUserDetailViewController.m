@@ -23,11 +23,11 @@
 #import <ReactiveCocoa/ReactiveCocoa.h>
 #import <YYKit/YYKit.h>
 
-#define kUMUserFeedCellIdentifier @"kUMUserFeedCellIdentifier"
-#define kAppUserInfoCellIdentifier @"kAppUserInfoCellIdentifier"
-#define kUMUserFeedHeaderIdentifier @"kUMUserFeedHeaderIdentifier"
+static NSString *const kUMUserFeedCellIdentifier = @"kUMUserFeedCellIdentifier";
+static NSString *const kAppUserInfoCellIdentifier = @"kAppUserInfoCellIdentifier";
+static NSString *const kUMUserFeedHeaderIdentifier = @"kUMUserFeedHeaderIdentifier";
 
-#define kBackgroundViewHeight 252
+static const CGFloat kBackgroundViewHeight = 252.;
 
 @interface ZWUserDetailViewController () <UITableViewDelegate, UITableViewDataSource>
 

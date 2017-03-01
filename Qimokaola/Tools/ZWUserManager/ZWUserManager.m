@@ -14,7 +14,7 @@
 #import <UMCommunitySDK/UMComDataRequestManager.h>
 #import <UMCommunitySDK/UMComSession.h>
 
-#define kUserInfoFileName @"UserInfo.dat"
+static NSString *const kUserInfoFileName = @"UserInfo.dat";
 
 @interface ZWUserManager ()
 

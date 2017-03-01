@@ -15,7 +15,7 @@
 #define kToolbarHeight 45
 #define kBottomViewHeight (kDatePickerViewHeight + kToolbarHeight)
 
-#define kAnimationDuration 0.2
+#define kAnimationDuration 0.3
 
 
 @interface ZWCountDownPickerView ()
@@ -50,7 +50,7 @@
     
     UIView *topView = [[UIView alloc] initWithFrame:self.frame];
     topView.backgroundColor = RGB(46, 49, 50);
-    topView.layer.opacity = 0.3;
+    topView.alpha  = 0;
     [topView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissSelf)]];
     [self addSubview:topView];
     self.topView = topView;
@@ -125,9 +125,11 @@
 }
 
 - (void)dismissSelf {
-    self.topView.alpha = 0.0;
     __weak __typeof(self) weakSelf = self;
-    [UIView animateWithDuration:kAnimationDuration animations:^{
+    [UIView animateWithDuration:kAnimationDuration delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        weakSelf.topView.userInteractionEnabled = NO;
+        weakSelf.topView.alpha = 0.0;
+       // weakSelf.topView.frame = weakSelf.frame;
         weakSelf.bottomView.frame = CGRectMake(0, kScreenH, kScreenW, kBottomViewHeight);
     } completion:^(BOOL finished) {
         [weakSelf removeFromSuperview];
@@ -137,8 +139,10 @@
 - (void)show {
     [[UIApplication sharedApplication].keyWindow addSubview:self];
     __weak __typeof(self) weakSelf = self;
-    [UIView animateWithDuration:kAnimationDuration delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
+    [UIView animateWithDuration:kAnimationDuration delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
         weakSelf.bottomView.frame = CGRectMake(0, kScreenH - kBottomViewHeight, kScreenW, kBottomViewHeight);
+        //weakSelf.topView.frame = CGRectMake(0, 0, kScreenW, kScreenH - kBottomViewHeight);
+        weakSelf.topView.alpha = 0.3;
     } completion:nil];
 }
 

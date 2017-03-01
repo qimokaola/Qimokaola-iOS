@@ -26,10 +26,9 @@
 #import <YYKit/YYKit.h>
 #import <LinqToObjectiveC/LinqToObjectiveC.h>
 
-#define kFeedTableViewCellID @"kFeedTableViewCellID"
-
-#define kFeedCacheName @"StudentCircle-Feed"
-#define kFeedCacheKey @"FeedCacheKey"
+static NSString *const kFeedTableViewCellID = @"kFeedTableViewCellID";
+static NSString *const kFeedCacheName = @"StudentCircle-Feed";
+static NSString *const kFeedCacheKey = @"FeedCacheKey";
 
 @interface ZWFeedTableViewController () <ZWFeedCellDelegate>
 

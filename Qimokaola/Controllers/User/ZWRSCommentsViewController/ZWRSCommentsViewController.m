@@ -13,8 +13,8 @@
 #import "ZWFeedComposeViewController.h"
 
 
-#define kUserCommentsReceivedIdentifier @"kUserCommentsReceivedIdentifier"
-#define kUserCommentsSentIdentifier @"kUserCommentsSentIdentifier"
+static NSString *const kUserCommentsReceivedIdentifier = @"kUserCommentsReceivedIdentifier";
+static NSString *const kUserCommentsSentIdentifier = @"kUserCommentsSentIdentifier";
 
 @interface ZWRSCommentsViewController ()
 

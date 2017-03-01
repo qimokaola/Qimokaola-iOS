@@ -8,7 +8,7 @@
 
 #import "ZWPasswordField.h"
 
-#define kButtonSize 30
+static const CGFloat kButtonSize = 30.;
 
 @interface ZWPasswordField ()
 

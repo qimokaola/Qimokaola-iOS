@@ -27,14 +27,12 @@
 #import <LinqToObjectiveC/LinqToObjectiveC.h>
 #import <MJRefresh/MJRefresh.h>
 
-#define kCommentTextViewInitilzedHeight 35
-#define kCommentTextViewMaxHeight 85
-#define kCommentTextLimit 140
-
-#define kCommentCellIdentifier @"kCommentCellIdentifier"
-#define kFeedDetailCommentsHeaderIdentifier @"kFeedDetailCommentsHeaderIdentifier"
-
-#define kButtonSizeAnimationTime 0.2
+static const CGFloat kCommentTextViewInitilzedHeight = 35;
+static const CGFloat kCommentTextViewMaxHeight = 85;
+static const CGFloat kCommentTextLimit = 140.;
+static NSString *const kCommentCellIdentifier = @"kCommentCellIdentifier";
+static NSString *const kFeedDetailCommentsHeaderIdentifier = @"kFeedDetailCommentsHeaderIdentifier";
+static const NSTimeInterval kButtonSizeAnimationTime = 0.2;
 
 @interface ZWFeedDetailViewController () <UITableViewDataSource, UITableViewDelegate, ZWCommentCellDelegate, YYTextViewDelegate>
 

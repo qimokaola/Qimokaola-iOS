@@ -26,7 +26,7 @@ NSString* createTimeString(NSString * create_time)
     }
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     if (!g_UMCalendar) {
-        g_UMCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+        g_UMCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     }
     [dateFormatter setCalendar:g_UMCalendar];
     [dateFormatter setDateFormat:g_UMFullDateFormat];
@@ -45,17 +45,16 @@ NSString* createTimeString(NSString * create_time)
     
     //当前的时间
     NSDate *today = [NSDate date];
+    NSDateComponents *todayComponents = [g_UMCurrentCalendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay|NSCalendarUnitHour|NSCalendarUnitMinute|NSCalendarUnitSecond fromDate:today];
     
-    NSDateComponents *todayComponents = [g_UMCurrentCalendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit|NSSecondCalendarUnit fromDate:today];
-    
-    NSDateComponents *createComponents = [g_UMCurrentCalendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit|NSSecondCalendarUnit fromDate:createDate];
+    NSDateComponents *createComponents = [g_UMCurrentCalendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay|NSCalendarUnitHour|NSCalendarUnitMinute|NSCalendarUnitSecond fromDate:createDate];
     if (!todayComponents || !createComponents) {
         return g_UMNullDateFormat;
     }
     
     //计算创建时间的段一个月的最大天数
-    NSRange createDateMaxDaysInCurMonth = [g_UMCurrentCalendar rangeOfUnit:NSDayCalendarUnit
-                                                                    inUnit:NSMonthCalendarUnit
+    NSRange createDateMaxDaysInCurMonth = [g_UMCurrentCalendar rangeOfUnit:NSCalendarUnitDay
+                                                                    inUnit:NSCalendarUnitMonth
                                                                    forDate:createDate];
     if (createDateMaxDaysInCurMonth.length == NSNotFound) {
         //如果计算不出来当前的最大值，说明字符串给出的时间格式或者日期有问题
@@ -189,7 +188,7 @@ NSString *countString(NSNumber *count)
             if (secondNum == 0) {
                 countString = [NSString stringWithFormat:@"%ldW",(long)highestNum];
             }else{
-                countString = [NSString stringWithFormat:@"%ld.%ldW",(long)highestNum,secondNum];
+                countString = [NSString stringWithFormat:@"%ld.%ldW",(long)highestNum,(long)secondNum];
             }
         }else if (displayCount < 100000000){
             countString = [NSString stringWithFormat:@"%ldW",(long)highestNum];
@@ -214,7 +213,7 @@ extern NSString *distanceString(NSNumber *distance)
         NSInteger highestNum = displayCount/1000;
        if (displayCount < 10000){
             NSInteger secondNum = (displayCount - 1000 *highestNum)/100;
-            countString = [NSString stringWithFormat:@"%ld.%ldkm",(long)highestNum,secondNum];
+            countString = [NSString stringWithFormat:@"%ld.%ldkm",(long)highestNum,(long)secondNum];
         }else{
             countString = [NSString stringWithFormat:@"10km+"];
         }
