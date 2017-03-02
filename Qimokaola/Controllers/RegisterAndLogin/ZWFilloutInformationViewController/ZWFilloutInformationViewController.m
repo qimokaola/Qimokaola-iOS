@@ -80,15 +80,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     NSLog(@"%@", self.registerParam);
-    
     self.view.backgroundColor = [UIColor whiteColor];
-    
     self.isAvatarSelected = self.isSchoolSelected = NO;
-    
     [self createSubViews];
-    
     @weakify(self)
     [[self.selectSchoolBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
         @strongify(self)

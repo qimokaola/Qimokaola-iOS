@@ -122,9 +122,10 @@
     ZWCountDownPickerView *pickerView = [[ZWCountDownPickerView alloc] initWithTime:self.countdown.examDate];
     __weak __typeof(self) weakSelf = self;
     pickerView.completion = ^(NSDate *date, NSString *dateString) {
-        [weakSelf.examTimeBtn setTitle:dateString forState:UIControlStateNormal];
-        weakSelf.examTimeBtn.selected = YES;
-        weakSelf.countdown.examDate = date;
+        __strong __typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf.examTimeBtn setTitle:dateString forState:UIControlStateNormal];
+        strongSelf.examTimeBtn.selected = YES;
+        strongSelf.countdown.examDate = date;
     };
     [pickerView show];
 }

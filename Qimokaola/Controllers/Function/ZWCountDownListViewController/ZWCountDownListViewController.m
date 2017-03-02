@@ -30,6 +30,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    self.title = @"考试倒计时";
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.backgroundColor = defaultPlaceHolderColor;
     self.tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);

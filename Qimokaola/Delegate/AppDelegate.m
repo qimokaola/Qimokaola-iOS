@@ -109,23 +109,27 @@
 
     [[[[NSNotificationCenter defaultCenter] rac_addObserverForName:kUserNeedLoginNotification object:nil] deliverOnMainThread] subscribeNext:^(id x) {
         [[ZWUserManager sharedInstance] logoutStudentCircle];
-        [weakSelf presentLoginViewControllerAndHint];
+        __strong __typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf presentLoginViewControllerAndHint];
     }];
     
     // 在确认存在本地用户与用户登录成功之后执行登录学生圈
     [[[NSNotificationCenter defaultCenter] rac_addObserverForName:kLocalUserLoginStateGuranteedNotification object:nil]subscribeNext:^(id x) {
         // 本地用户存在，执行学生圈登录流程"
-        [weakSelf loginTheStudentCircle];
+        __strong __typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf loginTheStudentCircle];
     }];
     
     [[[NSNotificationCenter defaultCenter] rac_addObserverForName:kUserLoginSuccessNotification object:nil] subscribeNext:^(id x) {
         // 用户登录成功，执行学生圈登录流程
-        [weakSelf loginTheStudentCircle];
+        __strong __typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf loginTheStudentCircle];
     }];
     
     [[[NSNotificationCenter defaultCenter] rac_addObserverForName:kUserLogoutSuccessNotification object:nil] subscribeNext:^(id x) {
         [[ZWUserManager sharedInstance] logoutStudentCircle];
-        [weakSelf presentLoginViewController:YES];
+        __strong __typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf presentLoginViewController:YES];
         
     }];
     
@@ -171,8 +175,9 @@
     __weak __typeof(self) weakSelf = self;
     [self setWindowRootControllerWithClass:[ZWTabBarController class]];
     [[[[self fetchADSignal] timeout:5.0 onScheduler:[RACScheduler mainThreadScheduler]] deliverOnMainThread] subscribeNext:^(ZWAdvertisement *ad) {
+        __strong __typeof(weakSelf) strongSelf = weakSelf;
         if (ad.enabled) {
-            ZWAdvertisementView *adView = [[ZWAdvertisementView alloc] initWithWindow:weakSelf.window];
+            ZWAdvertisementView *adView = [[ZWAdvertisementView alloc] initWithWindow:strongSelf.window];
             [adView showAdvertisement:ad];
         }
     } error:^(NSError *error) {

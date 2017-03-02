@@ -8,11 +8,23 @@
 
 #import "ZWSettingViewController.h"
 
+#import "ZWResetPasswordViewController.h"
+
+#import "ZWUserManager.h"
+#import "ZWHUDTool.h"
+#import "ZWAccount.h"
+#import "ZWFileTool.h"
+
+#import <YYKit/YYKit.h>
+
 @interface ZWSettingViewController ()
+
+@property (weak, nonatomic) IBOutlet UILabel *cacheSizeLabel;
 
 @end
 
 @implementation ZWSettingViewController
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -22,11 +34,73 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    YYImageCache *imageCache = [YYWebImageManager sharedManager].cache;
+    self.cacheSizeLabel.text = imageCache.diskCache.totalCost > 0 ? [ZWFileTool sizeWithDouble:imageCache.diskCache.totalCost] : @"0KB";
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Common Methods
+
+- (void)askForRemovingCache {
+    YYImageCache *imageCache = [YYWebImageManager sharedManager].cache;
+    if (imageCache.diskCache.totalCost == 0) {
+        [ZWHUDTool showHUDInView:self.navigationController.view withTitle:@"暂无缓存可清理" message:nil duration:kShowHUDMid];
+        return;
+    }
+    UIAlertController *alerController = [UIAlertController alertControllerWithTitle:@"是否清理缓存" message:nil preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancle = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    [alerController addAction:cancle];
+    __weak __typeof(self) weakSelf = self;
+    UIAlertAction *removalAction = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        __strong __typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf removeCache];
+    }];
+    [alerController addAction:removalAction];
+    [self presentViewController:alerController animated:YES completion:nil];
+}
+
+- (void)removeCache {
+    YYImageCache *imageCache = [YYWebImageManager sharedManager].cache;
+    [imageCache.memoryCache removeAllObjects];
+     MBProgressHUD *hud = [ZWHUDTool excutingHudInView:self.navigationController.view title:@"正在清理..."];
+    __weak __typeof(self) weakSelf = self;
+    [imageCache.diskCache removeAllObjectsWithBlock:^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [hud hideAnimated:YES];
+            __strong __typeof(weakSelf) strongSelf = weakSelf;
+            strongSelf.cacheSizeLabel.text = @"0KB";
+        });
+    }];
+}
+
+- (void)logout {
+    MBProgressHUD *hud = [ZWHUDTool excutingHudInView:self.navigationController.view title:@"正在退出登录"];
+    [[ZWUserManager sharedInstance] userLogout:^(id response, BOOL success) {
+        if (success && [[response objectForKey:kHTTPResponseCodeKey] intValue] == 0) {
+            ZWAccount *account = [[ZWAccount alloc] init];
+            account.account = [ZWUserManager sharedInstance].loginUser.username;
+            [account writeData];
+            
+            [ZWUserManager sharedInstance].loginUser = nil;
+            [hud hideAnimated:YES];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kUserLogoutSuccessNotification object:nil];
+        } else {
+            hud.mode = MBProgressHUDModeText;
+            hud.label.text = @"出现错误，退出登录失败";
+            [hud hideAnimated:YES afterDelay:kShowHUDMid];
+        }
+    }];
+}
+
+- (void)changePwd {
+    ZWResetPasswordViewController *resetViewController = [[ZWResetPasswordViewController alloc] init];
+    resetViewController.enterPhoneNumber = [ZWUserManager sharedInstance].loginUser.username;
+    resetViewController.title = @"修改密码";
+    [self.navigationController pushViewController:resetViewController animated:YES];
 }
 
 #pragma mark - Table view data source
@@ -50,6 +124,24 @@
     return cell;
 }
 */
+
+#pragma mark - Table view delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    });
+    if (indexPath.section == 0) {
+        if (indexPath.row == 0) {
+            [self askForRemovingCache];
+        } else {
+            [self changePwd];
+        }
+    } else {
+        
+        [self logout];
+    }
+}
 
 /*
 // Override to support conditional editing of the table view.

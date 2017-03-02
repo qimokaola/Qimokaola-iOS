@@ -19,9 +19,9 @@
 #import <YYKit/YYKit.h>
 #import <Masonry/Masonry.h>
 
-#define kToolBarHeight 46
-#define kToolBarSubViewSize 25
-#define kToolBarSubViewMargin 25
+static const CGFloat kToolBarHeight = 46.;
+static const CGFloat kToolBarSubViewSize = 25.;
+static const CGFloat kToolBarSubViewMargin = 25.;
 
 @interface ZWFeedComposeViewController () <YYTextViewDelegate , UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 

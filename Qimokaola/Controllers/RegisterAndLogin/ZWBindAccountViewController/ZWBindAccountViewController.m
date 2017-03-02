@@ -153,7 +153,6 @@
  *  注册完后上传用户图像
  */
 - (void)handleUploadAvatarImage {
-    //__weak __typeof(self) weakSelf = self;
     MBProgressHUD *hud = [ZWHUDTool excutingHudInView:self.navigationController.view title:@"正在准备用户信息"];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kShowHUDMid * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         

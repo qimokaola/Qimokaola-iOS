@@ -83,6 +83,7 @@ NSString *const kLoginedUserKey = @"kLoginedUserKey";
                                                                 userNameType:userNameNoRestrict
                                                               userNameLength:userNameLengthNoRestrict
                                                                   completion:^(NSDictionary *responseObject, NSError *error) {
+                                                                      __strong __typeof(weakSelf) strongSelf = weakSelf;
                                                                       if (error) {
                                                                           NSLog(@"登录发生错误 ;%@", error);
                                                                       } else {
@@ -92,14 +93,14 @@ NSString *const kLoginedUserKey = @"kLoginedUserKey";
                                                                                   NSLog(@"登录学生圈成功，登录用户: %@, 自定义字段: %@", user.name, user.custom);
                                                                                   [UMComSession sharedInstance].loginUser = user;
                                                                                   [[UMComDataBaseManager shareManager] saveRelatedIDTableWithType:UMComRelatedRegisterUserID withUsers:@[user]];
-                                                                                  [weakSelf startFetchCommunityUnreadDataTimer];
+                                                                                  [strongSelf startFetchCommunityUnreadDataTimer];
                                                                                   // 若自定义字段为null，则更新用户信息确保自定义字段存在
                                                                                   if (!user.custom) {
                                                                                       [[UMComDataRequestManager defaultManager]
                                                                                        updateProfileWithName:user.name
                                                                                        age:user.age
                                                                                        gender:user.gender
-                                                                                       custom:weakSelf.loginUser.collegeName
+                                                                                       custom:strongSelf.loginUser.collegeName
                                                                                        userNameType:userNameNoRestrict
                                                                                        userNameLength:userNameLengthNoRestrict
                                                                                        completion:^(NSDictionary *responseObject, NSError *error) {
@@ -112,7 +113,7 @@ NSString *const kLoginedUserKey = @"kLoginedUserKey";
                                                                               }
                                                                           }
                                                                       }
-                                                                      dispatch_semaphore_signal(weakSelf.semaphore);
+                                                                      dispatch_semaphore_signal(strongSelf.semaphore);
                                                                   }];
 }
 
@@ -121,7 +122,8 @@ NSString *const kLoginedUserKey = @"kLoginedUserKey";
     // 进入时先获取一遍未读数据
     [self fetchCommunityUnreadData];
     [NSTimer scheduledTimerWithTimeInterval:kFetchUnreadInfoInterval block:^(NSTimer * _Nonnull timer) {
-        [weakSelf fetchCommunityUnreadData];
+        __strong __typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf fetchCommunityUnreadData];
     } repeats:YES];
 }  
 
@@ -129,9 +131,10 @@ NSString *const kLoginedUserKey = @"kLoginedUserKey";
     __weak __typeof(self) weakSelf = self;
     [[UMComDataRequestManager defaultManager] fetchConfigDataWithCompletion:^(NSDictionary *responseObject, NSError *error) {
         if (responseObject) {
+            __strong __typeof(weakSelf) strongSelf = weakSelf;
             NSDictionary *msgBox = [responseObject objectForKey:@"msg_box"];
-            weakSelf.unreadCommentCount = [[msgBox objectForKey:@"comment"] integerValue];
-            weakSelf.unreadLikeCount = [[msgBox objectForKey:@"like"] integerValue];
+            strongSelf.unreadCommentCount = [[msgBox objectForKey:@"comment"] integerValue];
+            strongSelf.unreadLikeCount = [[msgBox objectForKey:@"like"] integerValue];
         }
     }];
 }
