@@ -32,19 +32,19 @@
                     </constraints>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="凌子文" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H40-9S-RAp">
-                    <rect key="frame" x="110.5" y="44" width="52" height="21"/>
+                    <rect key="frame" x="115.5" y="44" width="52" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="福州大学" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="47J-GP-eRC">
-                    <rect key="frame" x="110.5" y="75" width="58" height="17"/>
+                    <rect key="frame" x="115.5" y="75" width="58" height="17"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_gender_female" translatesAutoresizingMaskIntoConstraints="NO" id="2xV-Hk-en0">
-                    <rect key="frame" x="167.5" y="46.5" width="15" height="15"/>
+                    <rect key="frame" x="172.5" y="46.5" width="15" height="15"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="15" id="8da-h8-6yn"/>
                         <constraint firstAttribute="height" constant="15" id="pBh-SY-kyz"/>
@@ -57,7 +57,7 @@
                 <constraint firstItem="pOq-xk-Fht" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="MUE-Xu-nfz"/>
                 <constraint firstItem="2xV-Hk-en0" firstAttribute="leading" secondItem="H40-9S-RAp" secondAttribute="trailing" constant="5" id="Mkn-m8-UJn"/>
                 <constraint firstItem="H40-9S-RAp" firstAttribute="bottom" secondItem="pOq-xk-Fht" secondAttribute="centerY" constant="-5" id="Nyk-u6-wLE"/>
-                <constraint firstItem="H40-9S-RAp" firstAttribute="leading" secondItem="pOq-xk-Fht" secondAttribute="trailing" constant="10" id="SsH-eb-tvf"/>
+                <constraint firstItem="H40-9S-RAp" firstAttribute="leading" secondItem="pOq-xk-Fht" secondAttribute="trailing" constant="15" id="SsH-eb-tvf"/>
                 <constraint firstItem="47J-GP-eRC" firstAttribute="leading" secondItem="H40-9S-RAp" secondAttribute="leading" id="eIz-Lo-mHG"/>
                 <constraint firstItem="pt8-s0-TOn" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="iil-fs-cwN"/>
                 <constraint firstItem="2xV-Hk-en0" firstAttribute="centerY" secondItem="H40-9S-RAp" secondAttribute="centerY" id="kA2-Kh-IN0"/>

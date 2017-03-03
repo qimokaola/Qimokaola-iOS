@@ -54,7 +54,6 @@ NSString *const sql_update_countdown = @"UPDATE countdowns SET examName = ?, exa
     self = [super init];
     if (self) {
         _db = [FMDatabase databaseWithPath:[[ZWPathTool dbDirectory] stringByAppendingPathComponent:@"countdowns.db"]];
-        NSLog(@"%@", _db.databasePath);
         if ([_db open]) {
             [_db executeUpdate:sql_create_countdown_table];
         }

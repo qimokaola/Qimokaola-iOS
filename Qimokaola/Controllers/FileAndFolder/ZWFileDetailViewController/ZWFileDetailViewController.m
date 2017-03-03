@@ -26,6 +26,10 @@
 #import <UMSocialCore/UMSocialCore.h>
 #import <ReactiveCocoa/ReactiveCocoa.h>
 
+static NSString *const kDownloadFileEventID = @"Download_File";
+static NSString *const kShareFileEventID = @"Share_File";
+static NSString *const kOpenFileEventID = @"Open_File";
+
 @interface ZWFileDetailViewController () <UIDocumentInteractionControllerDelegate>
 
 

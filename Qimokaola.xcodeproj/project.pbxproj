@@ -66,6 +66,7 @@
 		C34832771CB2D8C1009EA4D7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C34832761CB2D8C1009EA4D7 /* Assets.xcassets */; };
 		C3493C171D8D8108007C7144 /* ZWModifyGenderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3493C161D8D8108007C7144 /* ZWModifyGenderViewController.m */; };
 		C3493C1B1D8D8E6E007C7144 /* ZWModifiAcademyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3493C1A1D8D8E6E007C7144 /* ZWModifiAcademyViewController.m */; };
+		C350B87A1E69C3D200F8AF15 /* ZWBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = C350B8791E69C3D200F8AF15 /* ZWBadgeView.m */; };
 		C3561A201D3770530032C97B /* ZWFilloutInformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3561A1F1D3770530032C97B /* ZWFilloutInformationViewController.m */; };
 		C3561A231D37743F0032C97B /* ZWRegisterViewCotroller.m in Sources */ = {isa = PBXBuildFile; fileRef = C3561A221D37743F0032C97B /* ZWRegisterViewCotroller.m */; };
 		C3561A261D3774560032C97B /* ZWLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3561A251D3774560032C97B /* ZWLoginViewController.m */; };
@@ -329,6 +330,8 @@
 		C3493C161D8D8108007C7144 /* ZWModifyGenderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWModifyGenderViewController.m; sourceTree = "<group>"; };
 		C3493C191D8D8E6E007C7144 /* ZWModifiAcademyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWModifiAcademyViewController.h; sourceTree = "<group>"; };
 		C3493C1A1D8D8E6E007C7144 /* ZWModifiAcademyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWModifiAcademyViewController.m; sourceTree = "<group>"; };
+		C350B8781E69C3D200F8AF15 /* ZWBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWBadgeView.h; sourceTree = "<group>"; };
+		C350B8791E69C3D200F8AF15 /* ZWBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWBadgeView.m; sourceTree = "<group>"; };
 		C3561A1E1D3770530032C97B /* ZWFilloutInformationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWFilloutInformationViewController.h; sourceTree = "<group>"; };
 		C3561A1F1D3770530032C97B /* ZWFilloutInformationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWFilloutInformationViewController.m; sourceTree = "<group>"; };
 		C3561A211D37743F0032C97B /* ZWRegisterViewCotroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWRegisterViewCotroller.h; sourceTree = "<group>"; };
@@ -955,6 +958,15 @@
 			path = ZWRegisterViewCotroller;
 			sourceTree = "<group>";
 		};
+		C350B8771E69C3C500F8AF15 /* ZWBadgeView */ = {
+			isa = PBXGroup;
+			children = (
+				C350B8781E69C3D200F8AF15 /* ZWBadgeView.h */,
+				C350B8791E69C3D200F8AF15 /* ZWBadgeView.m */,
+			);
+			path = ZWBadgeView;
+			sourceTree = "<group>";
+		};
 		C3561A1B1D36B0F80032C97B /* ZWFilloutInformationViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -1135,6 +1147,7 @@
 		C3792AD31D6F395F0079FCF5 /* Custom */ = {
 			isa = PBXGroup;
 			children = (
+				C350B8771E69C3C500F8AF15 /* ZWBadgeView */,
 				C362D3E81E685C9000D21D34 /* ZWMineHeaderView */,
 				C39B175C1E5C898F00ECAC6A /* ZWCountDownPickerView */,
 				C39B17541E5C84A600ECAC6A /* ZWPasswordField */,
@@ -2123,6 +2136,7 @@
 			files = (
 				C32666581D953125008C6B24 /* UMImagePickerGroupCell.m in Sources */,
 				C39B175F1E5C89A700ECAC6A /* ZWCountDownPickerView.m in Sources */,
+				C350B87A1E69C3D200F8AF15 /* ZWBadgeView.m in Sources */,
 				C32666561D953125008C6B24 /* UMAssetsCollectionOverlayView.m in Sources */,
 				C37027451DE97E0D00C902AF /* ZWRegisterViewModel.m in Sources */,
 				C33AC6021DA3C3CD00A96AB7 /* ZWUserLikesViewController.m in Sources */,

@@ -13,6 +13,7 @@
 #import "ZWHUDTool.h"
 #import "ZWBrowserTool.h"
 
+#import "ZWCountDownListViewController.h"
 #import "ZWFeedTableViewController.h"
 #import "ZWUserCommentsViewController.h"
 #import "ZWUserLikesViewController.h"
@@ -30,6 +31,8 @@
 @interface ZWMineViewController ()
 
 @property (nonatomic, strong) ZWMineHeaderView *tableHeaderView;
+@property (weak, nonatomic) IBOutlet UITableViewCell *commentCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *favoriteCell;
 
 @end
 
@@ -49,8 +52,25 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-
+    
     self.tableView.tableHeaderView = self.tableHeaderView;
+    MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(fetchData)];
+    self.tableView.mj_header = header;
+    
+    __weak __typeof(self) weakSelf = self;
+    [RACObserve([ZWUserManager sharedInstance], unreadCommentCount) subscribeNext:^(id x) {
+        __strong __typeof(weakSelf) strongSelf = weakSelf;
+        if (strongSelf.isViewLoaded) {
+            [strongSelf updateTableViewCell:strongSelf.commentCell forCount:[x integerValue]];
+        }
+    }];
+    
+    [RACObserve([ZWUserManager sharedInstance], unreadLikeCount) subscribeNext:^(id x) {
+        __strong __typeof(weakSelf) strongSelf = weakSelf;
+        if (strongSelf.isViewLoaded) {
+            [strongSelf updateTableViewCell:strongSelf.favoriteCell forCount:[x integerValue]];
+        }
+    }];
 }
 
 - (ZWMineHeaderView *)tableHeaderView {
@@ -58,9 +78,50 @@
         _tableHeaderView = [ZWMineHeaderView mineHeaderViewInstance];
         _tableHeaderView.userInteractionEnabled = YES;
         [_tableHeaderView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedTableHeaderView)]];
+        _tableHeaderView.user = [ZWUserManager sharedInstance].loginUser;
     }
     return _tableHeaderView;
 }
+
+- (void)updateTableViewCell:(UITableViewCell *)cell forCount:(NSUInteger)count
+{
+    // Count > 0, show count
+    if (count > 0) {
+        
+        // Create label
+        CGFloat fontSize = 13;
+        UILabel *label = [[UILabel alloc] init];
+        label.font = [UIFont systemFontOfSize:fontSize];
+        label.textAlignment = NSTextAlignmentCenter;
+        label.textColor = [UIColor whiteColor];
+        label.backgroundColor = [UIColor redColor];
+        
+        // Add count to label and size to fit
+        label.text = [NSString stringWithFormat:@"%@", @(count)];
+        [label sizeToFit];
+        
+        // Adjust frame to be square for single digits or elliptical for numbers > 9
+        CGRect frame = label.frame;
+        frame.size.height += (int)(0.2*fontSize);
+        frame.size.width = (count <= 9) ? frame.size.height : frame.size.width + (int)fontSize;
+        label.frame = frame;
+        
+        // Set radius and clip to bounds
+        label.layer.cornerRadius = frame.size.height/2.0;
+        label.clipsToBounds = true;
+        
+        // Show label in accessory view and remove disclosure
+        cell.accessoryView = label;
+        cell.accessoryType = UITableViewCellAccessoryNone;
+    }
+    
+    // Count = 0, show disclosure
+    else {
+        cell.accessoryView = nil;
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    }
+}
+
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
@@ -74,6 +135,23 @@
 }
 
 #pragma mark - Common Methods
+
+- (void)fetchData {
+    __weak __typeof(self) weakSelf = self;
+    [ZWAPIRequestTool requestUserInfo:^(id response, BOOL success) {
+        __strong __typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf.tableView.mj_header endRefreshing];
+        if (success && [[response objectForKey:kHTTPResponseCodeKey] intValue] == 0) {
+            ZWUser *user = [ZWUser modelWithDictionary:[response objectForKey:kHTTPResponseResKey]];
+            if (user) {
+                [ZWUserManager sharedInstance].loginUser = user;
+                strongSelf.tableHeaderView.user = user;
+            }
+        } else {
+            [ZWHUDTool showHUDInView:weakSelf.navigationController.view withTitle:@"出现错误" message:nil duration:kShowHUDMid];
+        }
+    }];
+}
 
 - (void)tappedTableHeaderView {
     ZWUserInfoViewController *userInfoViewController = [[ZWUserInfoViewController alloc] init];
@@ -150,6 +228,9 @@
                 break;
         }
     } else if (indexPath.section == 1) {
+        ZWCountDownListViewController *controller = [[ZWCountDownListViewController alloc] init];
+        [self.navigationController pushViewController:controller animated:YES];
+    } else if (indexPath.section == 2) {
         NSString *title = indexPath.row == 0 ? @"意见反馈" : @"加入我们";
         NSString *urlString = indexPath.row == 0 ? @"http://robinchen.mikecrm.com/Fc00ps" : @"http://robinchen.mikecrm.com/V36ze6";
         [ZWBrowserTool openWebAddress:urlString fixedTitle:title];

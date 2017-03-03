@@ -622,8 +622,6 @@ static const NSTimeInterval kButtonSizeAnimationTime = 0.2;
 }
 
 - (void)animateButtonWithButton:(UIButton *)button completion:(void (^)(void))completion {
-
-    
     button.enabled = NO;
     CABasicAnimation *zoominAnimation = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
     zoominAnimation.fromValue = @1.;

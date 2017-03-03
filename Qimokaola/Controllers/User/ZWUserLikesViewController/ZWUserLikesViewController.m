@@ -17,7 +17,7 @@
 #import <MJRefresh/MJRefresh.h>
 #import <SDAutoLayout/SDAutoLayout.h>
 
-static const NSString *kUserLikesCellIdentifier = @"kUserLikesCellIdentifier";
+static NSString *const kUserLikesCellIdentifier = @"kUserLikesCellIdentifier";
 
 @interface ZWUserLikesViewController () <ZWLikeCellDelegate>
 

@@ -32,7 +32,13 @@
     [super awakeFromNib];
     
     //self.backgroundColor = defaultBlueColor;
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
     self.avatarImageView.layer.cornerRadius = self.avatarImageView.frame.size.height / 2;
+    self.avatarImageView.layer.masksToBounds = YES;
 }
 
 - (void)setUser:(ZWUser *)user {
