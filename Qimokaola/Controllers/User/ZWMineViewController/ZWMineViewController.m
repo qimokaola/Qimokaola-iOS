@@ -126,7 +126,7 @@
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     // 设置header的高度
-    self.tableHeaderView.frame = CGRectMake(0, 0, kScreenW, kScreenH * 0.15);
+    //self.tableHeaderView.frame = CGRectMake(0, 0, kScreenW, kScreenH * 0.15);
 }
 
 - (void)didReceiveMemoryWarning {

@@ -11,6 +11,7 @@
 
 #import <YYKit/YYKit.h>
 
+#define IS_SCREEN_SIZE_LE_4_7 (kScreenH >= 667)
 
 @interface ZWMineHeaderView ()
 
@@ -19,10 +20,19 @@
 @property (weak, nonatomic) IBOutlet UILabel *schoolNameLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *genderImageView;
 
-
 @end
 
 @implementation ZWMineHeaderView
+
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
+    self = [super initWithCoder:coder];
+    if (self) {
+        self.frame = CGRectMake(0, 0, kScreenW, kScreenH * (IS_SCREEN_SIZE_LE_4_7 ? 0.2 : 0.23));
+        NSLog(@"%@", NSStringFromCGRect([UIScreen mainScreen].bounds));
+    }
+    return self;
+}
 
 + (instancetype)mineHeaderViewInstance {
     return [[NSBundle mainBundle] loadNibNamed:@"ZWMineHeaderView" owner:self options:nil][0];
