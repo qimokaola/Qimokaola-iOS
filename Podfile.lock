@@ -16,7 +16,7 @@ PODS:
     - AFNetworking/NSURLSession
   - Aspects (1.4.1)
   - AXNavigationBackItemInjection (0.0.1)
-  - AXWebViewController (0.4.1):
+  - AXWebViewController (0.4.2):
     - Aspects
     - AXNavigationBackItemInjection
     - NJKWebViewProgress
@@ -84,7 +84,7 @@ SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   Aspects: 7595ba96a6727a58ebcbfc954497fc5d2fdde546
   AXNavigationBackItemInjection: 0ab0742fafd9ec37e44b8767c96cbbc77ec13575
-  AXWebViewController: 9774b08caf6917319d2246d0817032500e6a8fd5
+  AXWebViewController: ede0e60abde7ac6a3f93078bc09dcdbbc13f2676
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
   IQKeyboardManager: 1a8189fa153bf09044355ee0ad36826f6767e7f7

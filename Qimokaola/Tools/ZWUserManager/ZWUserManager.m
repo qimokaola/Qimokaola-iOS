@@ -69,6 +69,9 @@ NSString *const kLoginedUserKey = @"kLoginedUserKey";
         dispatch_semaphore_signal(self.semaphore);
         return;
     }
+    
+    
+    
     __weak __typeof(self) weakSelf = self;
     [[UMComDataRequestManager defaultManager] userCustomAccountLoginWithName:_loginUser.nickname
                                                                     sourceId:_loginUser.uid
