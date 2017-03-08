@@ -92,8 +92,6 @@
 		C370274D1DEABA0B00C902AF /* ZWCourseHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = C370274C1DEABA0B00C902AF /* ZWCourseHeader.m */; };
 		C370274F1DEABAA200C902AF /* ZWCourseHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = C370274E1DEABAA200C902AF /* ZWCourseHeader.xib */; };
 		C37287461E6F09D70030D7B4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C37287451E6F09D70030D7B4 /* AppDelegate.m */; };
-		C372874B1E6F0B5C0030D7B4 /* ZWLoginRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C37287491E6F0B5C0030D7B4 /* ZWLoginRegisterViewController.m */; };
-		C372874C1E6F0B5C0030D7B4 /* ZWLoginRegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C372874A1E6F0B5C0030D7B4 /* ZWLoginRegisterViewController.xib */; };
 		C37802BC1E5F3BB100FA9075 /* UMComDataStorage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C37802B81E5F3BB100FA9075 /* UMComDataStorage.framework */; };
 		C37802BD1E5F3BB100FA9075 /* UMComFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C37802B91E5F3BB100FA9075 /* UMComFoundation.framework */; };
 		C37802BE1E5F3BB100FA9075 /* UMCommunitySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C37802BA1E5F3BB100FA9075 /* UMCommunitySDK.framework */; };
@@ -375,9 +373,6 @@
 		C370675A1D6B45CF007B18A8 /* Qimokaola.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Qimokaola.entitlements; sourceTree = "<group>"; };
 		C37287441E6F09D70030D7B4 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		C37287451E6F09D70030D7B4 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		C37287481E6F0B5C0030D7B4 /* ZWLoginRegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWLoginRegisterViewController.h; sourceTree = "<group>"; };
-		C37287491E6F0B5C0030D7B4 /* ZWLoginRegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWLoginRegisterViewController.m; sourceTree = "<group>"; };
-		C372874A1E6F0B5C0030D7B4 /* ZWLoginRegisterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZWLoginRegisterViewController.xib; sourceTree = "<group>"; };
 		C37802B81E5F3BB100FA9075 /* UMComDataStorage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMComDataStorage.framework; sourceTree = "<group>"; };
 		C37802B91E5F3BB100FA9075 /* UMComFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMComFoundation.framework; sourceTree = "<group>"; };
 		C37802BA1E5F3BB100FA9075 /* UMCommunitySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMCommunitySDK.framework; sourceTree = "<group>"; };
@@ -1082,16 +1077,6 @@
 			path = Delegate;
 			sourceTree = "<group>";
 		};
-		C37287471E6F0B0C0030D7B4 /* ZWLoginRegisterViewController */ = {
-			isa = PBXGroup;
-			children = (
-				C37287481E6F0B5C0030D7B4 /* ZWLoginRegisterViewController.h */,
-				C37287491E6F0B5C0030D7B4 /* ZWLoginRegisterViewController.m */,
-				C372874A1E6F0B5C0030D7B4 /* ZWLoginRegisterViewController.xib */,
-			);
-			path = ZWLoginRegisterViewController;
-			sourceTree = "<group>";
-		};
 		C37802B71E5F3BB100FA9075 /* UMCommunitySDK_2_7_1.1 */ = {
 			isa = PBXGroup;
 			children = (
@@ -1600,7 +1585,6 @@
 		C3C8C1321D92CCB300771C61 /* RegisterAndLogin */ = {
 			isa = PBXGroup;
 			children = (
-				C37287471E6F0B0C0030D7B4 /* ZWLoginRegisterViewController */,
 				C3561A1B1D36B0F80032C97B /* ZWFilloutInformationViewController */,
 				C3F78BE31D537C9900E9C2AB /* ZWLoginAndRegisterViewController */,
 				C34EF1A81D366A5800B6449B /* ZWLoginViewController */,
@@ -2026,7 +2010,6 @@
 				C3DE5B7C1DAD2F6400E93C05 /* ZWAppUserInfoCell.xib in Resources */,
 				C3C531271DB3F161000C3562 /* pic_upload_method_computer.png in Resources */,
 				C346C7771E59F32500417F62 /* ZWCountDownCell.xib in Resources */,
-				C372874C1E6F0B5C0030D7B4 /* ZWLoginRegisterViewController.xib in Resources */,
 				C3E32D3B1DEF439B00A0498D /* pic0.png in Resources */,
 				C39B174A1E5AC77000ECAC6A /* Main.storyboard in Resources */,
 				C397266E1E54046500B628BB /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
@@ -2139,7 +2122,6 @@
 				C3DE5B841DAD362D00E93C05 /* ZWUMUserFeedCell.m in Sources */,
 				C32666541D953125008C6B24 /* UMAssetsCollectionController.m in Sources */,
 				C32666571D953125008C6B24 /* UMImagePickerController.m in Sources */,
-				C372874B1E6F0B5C0030D7B4 /* ZWLoginRegisterViewController.m in Sources */,
 				C32666BB1D9560C1008C6B24 /* UMComAddedImageView.m in Sources */,
 				C3EDA91C1D830E79009FF851 /* ZWFolder.m in Sources */,
 				C3DE5B961DAE658200E93C05 /* ZWUMUserFeedHeader.m in Sources */,

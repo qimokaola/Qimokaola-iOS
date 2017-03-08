@@ -18,6 +18,5 @@ target "Qimokaola" do
     pod 'AXWebViewController'
     pod 'DZNEmptyDataSet'
     pod 'LCActionSheet'
-    pod 'JSPatchPlatform'
     pod 'UMengAnalytics-NO-IDFA'
 end

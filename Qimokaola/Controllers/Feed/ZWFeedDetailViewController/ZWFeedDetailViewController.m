@@ -445,6 +445,7 @@ static const NSTimeInterval kButtonSizeAnimationTime = 0.2;
     _schoolLabel.font = [UIFont systemFontOfSize:smallFontSize];
     _schoolLabel.textColor = [UIColor lightGrayColor];
     _schoolLabel.numberOfLines = 1;
+    _schoolLabel.alpha = 0.0;
     
     _contentLabel = [[UILabel alloc] init];
     _contentLabel.font = [UIFont systemFontOfSize:contentLabelFontSize];

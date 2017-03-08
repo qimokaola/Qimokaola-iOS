@@ -10,7 +10,6 @@
 #import "ZWPathTool.h"
 #import "ZWAdvertisementView.h"
 #import "ZWLoginAndRegisterViewController.h"
-#import "ZWLoginRegisterViewController.h"
 #import "ZWTabBarController.h"
 #import "ZWNetworkingManager.h"
 #import "ZWAdvertisement.h"
@@ -25,7 +24,6 @@
 #import <AXWebViewController/AXWebViewController.h>
 
 #import <UMSocialCore/UMSocialCore.h>
-#import <JSPatchPlatform/JSPatch.h>
 #import "UMMobClick/MobClick.h"
 #import <UMCommunitySDK/UMCommunitySDK.h>
 #import "UMessage.h"
@@ -49,13 +47,6 @@
     __weak __typeof(self) weakSelf = self;
     
     application.applicationIconBadgeNumber = 0;
-    
-    //JSPatch
-    [JSPatch startWithAppKey:@"c0e20e35c39ad9b8"];
-#ifdef DEBU
-    [JSPatch setupDevelopment];
-#endif
-    [JSPatch sync];
     
     // 初始化友盟推送
     //设置 AppKey 及 LaunchOptions
@@ -164,7 +155,7 @@
         } else {
             NSLog(@"not login");
             //显示登录，注册视图
-            [self setWindowRootControllerWithClass:[ZWLoginRegisterViewController class]];
+            [self setWindowRootControllerWithClass:[ZWLoginAndRegisterViewController class]];
         }
         
         
